@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="option">
+	<select id="getOptionList" parameterType="seoul.admin.vo.OptionVO" resultType="seoul.admin.vo.OptionVO">
+	    select options_id
+	    	  ,question_id
+	    	  ,options_num
+	    	  ,type
+	    	  ,label_front
+	    	  ,label_rear
+	    	  ,label_1
+	    	  ,label_2
+	    	  ,label_3
+	    	  ,label_4
+	    	  ,label_5
+	    	  ,keyword
+	    	  ,descyn
+	    	  ,next_num
+	    	  ,endpoint
+	    	  ,sumpoint
+	    	  ,form
+	    	  ,regdate
+	    	  ,cont_uuid
+	      from n_options
+	     where question_id=#{question_id}
+	  order by options_num
+	</select>
+	
+	<select id="getOption" parameterType="seoul.admin.vo.OptionVO" resultType="seoul.admin.vo.OptionVO">
+	    select options_id
+	    	  ,question_id
+	    	  ,options_num
+	    	  ,type
+	    	  ,label_front
+	    	  ,label_rear
+	    	  ,label_1
+	    	  ,label_2
+	    	  ,label_3
+	    	  ,label_4
+	    	  ,label_5
+	    	  ,keyword
+	    	  ,descyn
+	    	  ,next_num
+	    	  ,endpoint
+	    	  ,sumpoint
+	    	  ,form
+	    	  ,regdate
+	    	  ,cont_uuid
+	      from n_options
+	     where options_id=#{options_id}
+	</select>
+	
+	<insert id="insertOption" parameterType="seoul.admin.vo.OptionVO">
+	    insert into n_options(
+	    	 options_id
+	    	,question_id
+	    	,options_num
+	    	,type
+	    	,label_front
+	    	,label_rear
+	    	,label_1
+	    	,label_2
+	    	,label_3
+	    	,label_4
+	    	,label_5
+	    	,keyword
+	    	,descyn
+	    	,endpoint
+	    	,sumpoint
+	    	,form
+	    	,regdate
+	    	,cont_uuid
+	    )values(
+	    	 #{options_id,jdbcType=INTEGER}
+	    	,#{question_id,jdbcType=INTEGER}
+	    	,(select nvl(max(options_num),0)+1 from n_options where question_id=#{question_id})
+	    	,(select type from n_question where question_id=#{question_id})
+	    	,#{label_front,jdbcType=VARCHAR}
+	    	,#{label_rear,jdbcType=VARCHAR}
+	    	,#{label_1,jdbcType=VARCHAR}
+	    	,#{label_2,jdbcType=VARCHAR}
+	    	,#{label_3,jdbcType=VARCHAR}
+	    	,#{label_4,jdbcType=VARCHAR}
+	    	,#{label_5,jdbcType=VARCHAR}	    		    		    	
+	    	,#{keyword,jdbcType=VARCHAR}
+	    	,#{descyn,jdbcType=VARCHAR}
+	    	,#{endpoint,jdbcType=VARCHAR}
+	    	,#{sumpoint,jdbcType=VARCHAR}
+	    	,#{form,jdbcType=INTEGER}
+	    	,sysdate
+	    	,#{cont_uuid,jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<update id="updateOption" parameterType="seoul.admin.vo.OptionVO">
+	    update n_options
+	       set label_front=#{label_front,jdbcType=VARCHAR}
+	          ,label_rear=#{label_rear,jdbcType=VARCHAR}
+   	    	  ,label_1=#{label_1,jdbcType=VARCHAR}
+   	    	  ,label_2=#{label_2,jdbcType=VARCHAR}
+   	    	  ,label_3=#{label_3,jdbcType=VARCHAR}
+   	    	  ,label_4=#{label_4,jdbcType=VARCHAR}
+   	    	  ,label_5=#{label_5,jdbcType=VARCHAR}
+	          ,keyword=#{keyword,jdbcType=VARCHAR}
+	          ,descyn=#{descyn,jdbcType=VARCHAR}
+	          ,next_num=#{next_num,jdbcType=INTEGER}
+	          ,endpoint=#{endpoint,jdbcType=VARCHAR}
+	          ,sumpoint=#{sumpoint,jdbcType=VARCHAR}
+	          ,form=#{form,jdbcType=VARCHAR}
+	          ,cont_uuid=#{cont_uuid,jdbcType=VARCHAR}
+	     where options_id=#{options_id}
+	</update>
+	
+	<delete id="deleteOption" parameterType="seoul.admin.vo.OptionVO">
+	    delete
+	      from n_options
+	     where options_id=#{options_id}
+	</delete>
+
+	<!-- 과제 항목을 지웠을 시 해당 id 값에 해당하는 옵션 전부를 지운다. -->
+	<delete id="clearOption" parameterType="seoul.admin.vo.OptionVO">
+	    delete
+	      from n_options
+	     where question_id=#{question_id}
+	</delete>
+		
+	<update id="incOptionNum" parameterType="seoul.admin.vo.OptionVO">
+	    update n_options
+	       set options_num = options_num + 1
+	     where question_id=#{question_id}
+	       and options_num <![CDATA[<]]> #{options_num}
+		<if test="to_num != null and to_num != ''">
+		   and options_num <![CDATA[>=]]> #{to_num}
+		</if>
+	</update>
+	
+	<update id="decOptionNum" parameterType="seoul.admin.vo.OptionVO">
+	    update n_options
+	       set options_num = options_num - 1
+	     where question_id=#{question_id}
+	       and options_num <![CDATA[>]]> #{options_num}
+		<if test="to_num != null and to_num != ''">
+		   and options_num <![CDATA[<=]]> #{to_num}
+		</if>
+	</update>
+	
+	<update id="updateOptionNum" parameterType="seoul.admin.vo.OptionVO">
+	    update n_options
+	       set options_num = #{to_num}
+	     where options_id=#{options_id}
+	</update>
+	
+	
+	<select id="getOptionNextval" resultType="java.lang.Integer">
+		select OPTIONS_SEQ.NEXTVAL
+		from dual 
+	</select>
+	
+	
+</mapper>

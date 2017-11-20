@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="notice">
+
+    <select id="getNoticeList" parameterType="seoul.admin.vo.NoticeVO" resultType="seoul.admin.vo.NoticeVO">
+	select a.*, to_char(rn1) rn        
+		from (
+        	select notice_id
+        		  ,title
+        		  ,type
+        		  ,open
+        		  ,description
+        		  ,applyform
+        		  ,subject_id
+        		  ,regdate
+        		  ,row_number() over (order by regdate asc) rn1
+                  ,row_number() over (order by regdate desc) rnd
+        		  ,cont_uuid
+        		  ,hits
+        	  from n_notice
+        	 where 1=1
+        	<if test="searchCategory != null and searchCategory != ''">
+        	   and ${searchCategory} like '%' || #{searchText} || '%'
+        	</if>
+        	<if test="type != null and type != ''">
+        	   and type = #{type}
+        	</if>
+	
+        	<if test="query != null and query !=''">
+		   		and ${query} 
+			</if>
+        	
+        )a
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        order by rn1 desc
+    </select>
+    
+    <select id="getNoticeListSubjectOnly" parameterType="seoul.admin.vo.NoticeVO" resultType="seoul.admin.vo.NoticeVO">
+	select a.*, to_char(rn1) rn        
+		from (
+        	select notice_id
+        		  ,title
+        		  ,type
+        		  ,open
+        		  ,description
+        		  ,applyform
+        		  ,subject_id
+        		  ,regdate
+        		  ,row_number() over (order by regdate asc) rn1
+                  ,row_number() over (order by regdate desc) rnd
+         		  ,cont_uuid
+        		  ,hits
+        	  from n_notice
+        	 where 1=1
+        	<if test="searchCategory != null and searchCategory != ''">
+        	   and ${searchCategory} like '%' || #{searchText} || '%'
+        	</if>
+        	   and type != 'S'
+        	   
+        	<if test="query != null and query !=''">
+				and ${query} 
+			</if>  
+        	   
+          order by ${ord}
+        )a
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        order by rn1 desc
+    </select>
+    
+    <select id="getNoticeCnt" parameterType="seoul.admin.vo.NoticeVO" resultType="java.lang.Integer">
+        select count(*)
+          from n_notice
+         where 1=1
+		<if test="searchCategory != null and searchCategory != ''">
+      	   and ${searchCategory} like '%' || #{searchText} || '%'
+		</if>
+		<if test="type != null and type != ''">
+      	   and type = #{type}
+		</if>
+		<if test="query != null and query !=''">
+		   and ${query} 
+		</if>
+    </select>
+    
+    <select id="getNotice" parameterType="seoul.admin.vo.NoticeVO" resultType="seoul.admin.vo.NoticeVO">
+		select notice_id
+        	  ,title
+        	  ,type
+        	  ,open
+        	  ,description
+        	  ,applyform
+        	  ,subject_id
+        	  ,regdate
+        	  ,cont_uuid
+        	  ,hits
+          from n_notice
+         where notice_id = #{notice_id}
+    </select>
+    
+        
+    <update id="updateNoticeHit" parameterType="seoul.admin.vo.NoticeVO">
+        update n_notice
+           set hits=hits+1
+         where notice_id=#{notice_id}
+    </update>
+    
+    <insert id="insertNotice" parameterType="seoul.admin.vo.NoticeVO">
+        insert into n_notice(
+        	 notice_id
+        	,title
+        	,type
+        	,open
+        	,applyform
+        	,subject_id
+        	,regdate
+        	,cont_uuid
+        	,description
+        )values(
+        	 NOTICE_SEQ.NEXTVAL
+        	,#{title,jdbcType=VARCHAR}
+        	,#{type,jdbcType=VARCHAR}
+        	,#{open,jdbcType=VARCHAR}
+        	,#{applyform,jdbcType=VARCHAR}
+        	,#{subject_id,jdbcType=VARCHAR}
+        	,sysdate
+        	,#{cont_uuid,jdbcType=VARCHAR}
+        	,#{description,jdbcType=LONGVARCHAR }
+        )
+    </insert>
+    
+    <update id="updateNotice" parameterType="seoul.admin.vo.NoticeVO">
+        update n_notice
+           set title=#{title,jdbcType=VARCHAR}
+              ,type=#{type,jdbcType=VARCHAR}
+              ,open=#{open,jdbcType=VARCHAR}
+              ,applyform=#{applyform,jdbcType=VARCHAR}
+              ,subject_id=#{subject_id,jdbcType=VARCHAR}
+              ,cont_uuid=#{cont_uuid,jdbcType=VARCHAR}
+              ,description=#{description,jdbcType=LONGVARCHAR}
+         where notice_id=#{notice_id}
+    </update>
+    
+    <delete id="deleteNotice" parameterType="seoul.admin.vo.NoticeVO">
+        delete
+          from n_notice
+         where notice_id=#{notice_id}
+    </delete>
+    
+    <select id="getUnLinkedSubjectList" parameterType="seoul.admin.vo.NoticeVO" resultType="seoul.admin.vo.SubjectVO">
+		select a.subject_id
+        	  ,a.title
+        	  ,a.reqdep
+        	  ,a.apply_s_date
+        	  ,a.apply_e_date
+        	  ,a.submit_s_date
+        	  ,a.submit_e_date
+        	  ,a.question_cnt
+        	  ,a.team_cnt
+        	  ,a.men_cnt
+        	  ,a.men_total
+        	  ,a.pay_yn
+        	  ,a.pay_sum
+        	  ,a.pay_date
+        	  ,a.regdate
+          from n_subject a
+         where not exists (select b.subject_id
+         					 from n_notice b
+         					where a.subject_id=b.subject_id )
+         					
+		 and a.type = #{type}         						
+         					
+         union
+         
+         select a.subject_id
+        	  ,a.title
+        	  ,a.reqdep
+        	  ,a.apply_s_date
+        	  ,a.apply_e_date
+        	  ,a.submit_s_date
+        	  ,a.submit_e_date
+        	  ,a.question_cnt
+        	  ,a.team_cnt
+        	  ,a.men_cnt
+        	  ,a.men_total
+        	  ,a.pay_yn
+        	  ,a.pay_sum
+        	  ,a.pay_date
+        	  ,a.regdate
+          from n_subject a
+         where a.subject_id = (select b.subject_id
+         					 	 from n_notice b
+         						where b.notice_id=#{notice_id} and b.type = #{type})
+         						
+    </select>
+    
+</mapper>
