@@ -128,6 +128,8 @@ var InputImage =
 			};
 		
 	
+		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
+		
 		
 		if($("input[type='file']").val().length < 1){			
 			alert("파일을 선택 하세요.");
