@@ -234,7 +234,7 @@ public class FileController {
 		uploadFile.setFileSize(fileSize);
 		uploadFile.setFileType(fileType);
 		
-		uploadFile = fileService.jindoFileUpload(req, uploadFile,session);
+		uploadFile = fileService.jindoFileUpload(req, uploadFile);
 				
 		if(!BaseUtil.isEmpty(uploadFile)){
 			returnUrl = "&bNewLine=true&sFileName="+uploadFile.getOrgFileName()+"&sFileURL=/monitor/"+uploadFile.getSavePath()+"/"+uploadFile.getUnqFileName();
