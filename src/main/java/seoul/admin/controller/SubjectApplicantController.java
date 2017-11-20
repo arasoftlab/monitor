@@ -73,7 +73,9 @@ public class SubjectApplicantController {
 			MonitorsVO monitorsVO = new MonitorsVO();
 			
 			monitorsVO.setIdx(arrayParams.get(i));
-			monitorsVO.setTeam_num(Integer.parseInt(team_num));
+			//org
+			//monitorsVO.setTeam_num(Integer.parseInt(team_num));
+			monitorsVO.setTeam_num(team_num.trim());
 			monitorsVO.setDescription(disc_arrayParams.get(i));
 			
 			if (!(monitorsService.updateMonitors(monitorsVO) > 0))
