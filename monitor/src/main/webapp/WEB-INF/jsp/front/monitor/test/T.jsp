@@ -145,8 +145,7 @@ var InputImage =
 			return;
 		}
 	
-		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
-		
+
 	}
 	
 	function fnFileUpload(){
@@ -402,7 +401,7 @@ chkMob();
 			</div>
 			<div class="filebox" style="width: 49%; float: right">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진등록] <br>보내기</label>
-			  <input type="file" name="file"  id="image" onchange="fnFileCheck();">  
+			  <input type="file" name="file"  id="image" accept="image/*" onchange="fnFileCheck();">  
 			</div>			
 			
 		</c:when>
