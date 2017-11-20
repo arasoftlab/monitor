@@ -7,7 +7,7 @@ import common.SessionContants;
 
 public class SessionUtil {
 	/**
-	  * attribute 값을 가져 오기 위한 method
+	  * attribute  method
 	  * 
 	  * @param String  attribute key name 
 	  * @return Object attribute obj
@@ -17,7 +17,7 @@ public class SessionUtil {
 	 }
 	 
 	 /**
-	  * attribute 설정 method
+	  * attribute  method
 	  * 
 	  * @param String  attribute key name 
 	  * @param Object  attribute obj
@@ -28,7 +28,7 @@ public class SessionUtil {
 	 }
 	 
 	 /**
-	  * 설정한 attribute 삭제 
+	  *  
 	  * 
 	  * @param String  attribute key name 
 	  * @return void
@@ -41,14 +41,14 @@ public class SessionUtil {
 	  * session id 
 	  * 
 	  * @param void
-	  * @return String SessionId 값
+	  * @return String SessionId 占쏙옙
 	 */
 	 public static String getSessionId() throws Exception  {
 	  return RequestContextHolder.getRequestAttributes().getSessionId();
 	 }
 	 
 	 /**
-	  * 세션이 살아 있는지 여부
+	  *  
 	  * @return
 	  * @throws Exception
 	  */
@@ -61,7 +61,7 @@ public class SessionUtil {
 	 }
 	 
 	 /**
-	  * 세션 및 권한 체크
+	  *  
 	  * @param memEmail1
 	  * @param memEmail2
 	  * @return
