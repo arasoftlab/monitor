@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="monitors">
+    
+    <insert id="insertMonitors"  parameterType="seoul.admin.vo.MonitorsVO">
+        insert into n_monitors(
+        				  idx
+          				 ,member_id
+          				 ,description
+        				 ,subject_id
+        				 ,team_num
+        				 ,poll_num
+        				 ,regdate)
+        		   values(
+        		   		 N_MONITORS_SEQ.NEXTVAL
+        		   		 ,#{member_id ,jdbcType=VARCHAR}
+        		   		 ,#{description ,jdbcType=VARCHAR }
+        		   		 ,#{subject_id ,jdbcType=VARCHAR}
+        		   		 ,#{team_num , jdbcType=INTEGER}
+        		   		 ,#{poll_num , jdbcType=INTEGER}
+        		   		 ,sysdate)
+    </insert>
+    
+    <select id="getMonitors" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
+		    select idx
+				 ,member_id
+				 ,subject_id
+				 ,description
+				 ,team_num
+	    		 ,regdate
+	    		 ,is_selection
+	          from n_monitors
+	         where subject_id = #{subject_id}
+
+	         	<if test="member_id != null and member_id !=''">
+	         		and member_id = #{member_id}
+	         	</if>
+
+	         	<if test="query != null and query !=''">
+			   		and ${query} 
+				</if>
+     
+    </select>
+    
+    <select id="getMonitorsApplyList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
+        
+        
+        
+        select b.idx, b.member_id, b.subject_id, to_char(rn1) rn
+            , b.description, b.team_num 
+            , b.poll_num, b.is_selection
+            , b.apply_cnt, b.selected_cnt, b.regdate
+            ,(select tmp_sum
+             from (select a.MEMBER_ID member_id, a.subject_id subject_id
+                        , sum(case when a.temporary = 'N' then 0 else 1 end) tmp_sum
+                        from N_ANSWERS a,
+                            (
+                            select subject_id , MEMBER_ID
+                            from N_MONITORS
+                            where subject_id in
+                            (select subject_id from                         
+                                (select subject_id from( 
+                                    select subject_id, DENSE_RANK() OVER (ORDER BY subject_id desc) as rank
+                                    from N_MONITORS
+                                    where subject_id <![CDATA[< ]]> #{subject_id}
+                                    group by subject_id)
+                                 where rank <![CDATA[<= ]]> 3))
+                            )b1
+                        where a.subject_id = b1.subject_id 
+                        and a.member_id = b1.member_id
+                        group by a.subject_id, a.member_id
+                        order by a.subject_id desc, a.member_id asc)
+                    where b.member_id = member_id
+                    and b.subject_ID = subject_id
+            ) tmp_sum1
+        from (select 
+                A.idx, A.member_id, A.subject_id
+                ,row_number() over (order by A.team_num asc) rn1
+                ,row_number() over (order by regdate desc ) rnd
+                ,A.description, A.team_num, A.poll_num, A.is_selection
+                ,(select COUNT(member_id) 
+                    FROM n_monitors C
+                    where C.member_id = A.member_id ) apply_cnt
+                ,(select COUNT(member_id)       
+                    FROM n_monitors C
+                    where is_selection = 'Y' 
+                    AND C.member_id = A.member_id )selected_cnt
+                    , A.regdate
+                    from n_monitors A
+                    where subject_id = #{subject_id}
+                    
+                    <if test="searchCategory != null and searchCategory != ''">
+			      	   and ${searchCategory} like '%' || #{searchText} || '%'
+					</if>			
+						
+					<if test="team_num != null and team_num != ''">
+			      	   and team_num = #{team_num}
+					</if>
+					<if test="is_selection != null and is_selection != ''">
+			      	   and is_selection = #{is_selection}
+					</if>
+                    
+                    )b
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}    
+        order by rn1 desc
+                
+    </select>
+    
+    <select id="getMonitorsList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
+       select * from (
+	        select idx
+				 ,member_id
+				 ,subject_id
+	       		 ,row_number() over (order by ${ord}) rn
+				 ,description
+				 ,team_num
+				 ,is_selection
+	    		 ,regdate
+	          from n_monitors
+	         where subject_id = #{subject_id}
+   		)
+        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}    
+    </select>
+    
+    <delete id="deleteMonitors" parameterType="seoul.admin.vo.MonitorsVO">
+        delete
+          from n_monitors
+         where idx=#{idx}
+    </delete>
+
+    <update id="updateMonitors" parameterType="seoul.admin.vo.MonitorsVO">
+        update n_monitors
+           set 
+           team_num=#{team_num,jdbcType=INTEGER}
+           ,description=#{description,jdbcType=VARCHAR}
+         where idx=#{idx}
+    </update>
+
+    <update id="updateMonitorsApply" parameterType="seoul.admin.vo.MonitorsVO">
+        update n_monitors
+           set 
+           is_selection=#{is_selection,jdbcType=VARCHAR}
+          where idx=#{idx}
+    </update>
+    
+    
+    <select id="getMonitorsCnt" parameterType="seoul.admin.vo.MonitorsVO" resultType="java.lang.Integer">
+        select count(*)
+          from n_monitors
+         where 1=1
+			and subject_id = #{subject_id}
+
+		<if test="searchCategory != null and searchCategory != ''">
+      	   and ${searchCategory} like '%' || #{searchText} || '%'
+		</if>			
+			
+		<if test="team_num != null and team_num != ''">
+      	   and team_num = #{team_num}
+		</if>
+		<if test="is_selection != null and is_selection != ''">
+      	   and is_selection = #{is_selection}
+		</if>
+
+		<if test="query != null and query !=''">
+		   and ${query} 
+		</if>
+    </select>
+ 
+    <select id="getMonitorsFileList" parameterType="file.vo.FileMappingVO" resultType="file.vo.FileVO">
+        select answers_id
+              ,subject_id
+              ,questions
+              ,answers
+              ,member_id
+              ,temporary
+          from n_answers
+         where 
+    </select>
+    
+    <select id="getMonitorsMember" parameterType="seoul.admin.vo.MonitorsMemberVO" resultType="seoul.admin.vo.MonitorsMemberVO">
+       select * from (
+        	 select m.poll_num 
+			,s.title
+			,s.submit_s_date
+			,s.submit_e_date
+			,s.question_cnt
+			,(select COUNT(subject_id) from n_answers a where m.subject_id = a.subject_id AND a.MEMBER_ID=#{member_id})apply_cnt
+			,s.pay_sum 
+			,s.pay_date
+	   		 ,row_number() over (order by s.regdate) rn
+			from 
+			N_monitors m,
+			n_subject s
+			where 
+			m.member_id = #{member_id} AND m.IS_SELECTION = 'Y' AND s.subject_id = m.subject_id AND s.pay_YN = 'Y'
+	   	)
+        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+	</select>    
+	
+    
+    <select id="getMonitorsMemberCnt" parameterType="seoul.admin.vo.MonitorsMemberVO" resultType="java.lang.Integer">
+			select count(*)
+			from 
+			N_monitors m,
+			n_subject s
+			where 
+			m.member_id = #{member_id} AND m.IS_SELECTION = 'Y' AND s.subject_id = m.subject_id AND s.pay_YN = 'Y'
+		<if test="searchCategory != null and searchCategory != ''">
+      	   and ${searchCategory} like '%' || #{searchText} || '%'
+		</if>			
+			
+		<if test="query != null and query !=''">
+		   and ${query} 
+		</if>
+    </select>
+    
+    
+    
+</mapper>
