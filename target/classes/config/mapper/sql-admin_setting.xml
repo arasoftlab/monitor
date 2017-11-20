@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="admin_setting">
+
+    <select id="getAdminSetting" parameterType="seoul.admin.vo.AdminSettingVO" resultType="seoul.admin.vo.AdminSettingVO">
+	    select poll_num
+	    	  ,poll_start_date
+	    	  ,poll_end_date
+	      from admin_setting
+	</select>
+
+	<update id="updateAdminSetting" parameterType="seoul.admin.vo.AdminSettingVO">
+	    update admin_setting
+	       set poll_num=#{poll_num,jdbcType=INTEGER}
+	          ,poll_start_date=#{poll_start_date,jdbcType=DATE}
+	          ,poll_end_date=#{poll_end_date,jdbcType=DATE}
+	</update>
+		
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="comment">
+
+    <select id="getCommentList" parameterType="seoul.admin.vo.CommentVO" resultType="seoul.admin.vo.CommentVO">
+        	select comm_id
+        		  ,is_secret
+        		  ,description
+        		  ,member_id
+        		  ,regdate
+        		  ,cont_uuid
+        		  ,bbs_id
+        	  from n_comment
+        	 where 1=1
+        	<if test="searchCategory != null and searchCategory != ''">
+        	   and ${searchCategory} like '%' || #{searchText} || '%'
+        	</if>
+        	<if test="is_secret != null and is_secret != ''">
+        	   and is_secret = #{is_secret}
+        	</if>
+	
+        	<if test="query != null and query !=''">
+		   		and ${query} 
+			</if>
+        	
+          order by ${ord}
+    </select>
+    
+    
+    <select id="getCommentCnt" parameterType="seoul.admin.vo.CommentVO" resultType="java.lang.Integer">
+        select count(*)
+          from n_comment
+         where 1=1
+		<if test="searchCategory != null and searchCategory != ''">
+      	   and ${searchCategory} like '%' || #{searchText} || '%'
+		</if>
+		<if test="is_secret != null and is_secret != ''">
+      	   and is_secret = #{is_secret}
+		</if>
+		<if test="query != null and query !=''">
+		   and ${query} 
+		</if>
+    </select>
+    
+    <select id="getComment" parameterType="seoul.admin.vo.CommentVO" resultType="seoul.admin.vo.CommentVO">
+		select comm_id
+        	  ,is_secret
+        	  ,description
+        	  ,regdate
+        	  ,cont_uuid
+        	  ,member_id
+			,bbs_id
+          from n_comment
+         where cont_uuid = #{cont_uuid}
+    </select>
+    
+        
+    <update id="updateCommentHit" parameterType="seoul.admin.vo.CommentVO">
+        update n_comment
+           set hits=hits+1
+         where cont_uuid = #{cont_uuid}
+    </update>
+    
+    <insert id="insertComment" parameterType="seoul.admin.vo.CommentVO">
+        insert into n_comment(
+        	 comm_id
+        	,is_secret
+        	,description
+        	,member_id
+        	,regdate
+        	,cont_uuid
+        	,bbs_id
+        )values(
+        	 COMM_SEQ.NEXTVAL
+        	,#{is_secret,jdbcType=VARCHAR}
+        	,#{description,jdbcType=VARCHAR}
+        	,#{member_id,jdbcType=VARCHAR}
+        	,sysdate
+        	,#{cont_uuid,jdbcType=VARCHAR}
+        	,#{bbs_id,jdbcType=INTEGER}
+        )
+    </insert>
+    
+    <update id="updateComment" parameterType="seoul.admin.vo.CommentVO">
+        update n_comment
+           set description=#{description,jdbcType=VARCHAR}                            
+         where comm_id=#{comm_id}
+    </update>
+    
+    <delete id="deleteComment" parameterType="seoul.admin.vo.CommentVO">
+        delete
+          from n_comment
+         where comm_id=#{comm_id}
+    </delete>
+
+    
+</mapper>

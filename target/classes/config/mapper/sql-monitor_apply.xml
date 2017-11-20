@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="monitor_apply">
+
+    <select id="getMonitorApplyList" parameterType="seoul.admin.vo.MonitorApplyVO" resultType="seoul.admin.vo.MonitorApplyVO">
+        select * from (
+	        	   select A.idx
+		    	  ,A.member_id
+	 		       	,A.team
+	 		       	,row_number() over (order by ${ord}) rn
+	        		,A.bank
+	        		,A.bank_num
+	        		,A.subject_id
+	        		,(select pay_sum FROM n_subject B where B.subject_id = A.subject_id) pay
+	        		,A.regdate
+		      from n_monitors_apply A
+		      where 1=1
+	   		<if test="query != null and query !=''">
+			   and ${query} 
+			</if>
+		)
+        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}    
+	</select>
+
+    <select id="getMonitorApply" parameterType="seoul.admin.vo.MonitorApplyVO" resultType="seoul.admin.vo.MonitorApplyVO">
+	    select idx
+	    	  ,member_id
+ 		       	,team
+        		,bank
+        		,bank_num
+        		,subject_id
+        		,regdate
+	      from n_monitors_apply
+	      where subject_id = #{subject_id}
+	      and member_id = #{member_id}
+	</select>
+    
+	<update id="updateMonitorApply" parameterType="seoul.admin.vo.MonitorApplyVO">
+	    update n_monitors_apply
+	       set bank=#{bank,jdbcType=VARCHAR}
+	          ,bank_num=#{bank_num,jdbcType=VARCHAR}
+	    where idx = #{idx}
+	</update>
+	
+    <insert id="insertMonitorApply" parameterType="seoul.admin.vo.MonitorApplyVO">
+        insert into n_monitors_apply(
+        	idx
+         	,member_id
+        	,team
+        	,bank
+        	,bank_num
+        	,subject_id
+        	,regdate
+        )values(
+        	 MONITORS_APPLY_SEQ.NEXTVAL
+        	,#{member_id,jdbcType=VARCHAR}
+        	,#{team,jdbcType=INTEGER}
+        	,#{bank,jdbcType=VARCHAR}
+        	,#{bank_num,jdbcType=VARCHAR}
+        	,#{subject_id,jdbcType=INTEGER}
+        	,sysdate
+        )
+    </insert>
+
+    <select id="getMonitorApplyCnt" parameterType="seoul.admin.vo.MonitorApplyVO" resultType="java.lang.Integer">
+        select count(*)
+          from n_monitors_apply
+         where 1=1
+		<if test="searchCategory != null and searchCategory != ''">
+      	   and ${searchCategory} like '%' || #{searchText} || '%'
+		</if>
+		
+		<if test="query != null and query !=''">
+		   and ${query} 
+		</if>
+    </select>
+    		
+</mapper>
