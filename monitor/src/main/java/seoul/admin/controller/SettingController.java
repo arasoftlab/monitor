@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import seoul.admin.service.AdminSettingService;
-import seoul.admin.service.SubjectService;
+//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AdminSettingVO;
-import seoul.admin.vo.MonitorsVO;
+//import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberService;
 import seoul.member.MemberVO;
-import util.BaseUtil;
+//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/setting/")
 public class SettingController {
 	
-	@Autowired
-	private SubjectService subjectService;
+	//@Autowired
+	//private SubjectService subjectService;
 	
 	@Autowired
 	private MemberService memberService;

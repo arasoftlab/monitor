@@ -2,8 +2,6 @@ package seoul.member;
 
 import java.util.List;
 
-import seoul.admin.vo.AnswersVO;
-
 
 
 public interface MemberService {

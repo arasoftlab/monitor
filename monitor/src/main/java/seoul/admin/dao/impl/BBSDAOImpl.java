@@ -5,10 +5,7 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import seoul.admin.dao.BBSDAO;
-import seoul.admin.dao.NoticeDAO;
 import seoul.admin.vo.BBSVO;
-import seoul.admin.vo.NoticeVO;
-import seoul.admin.vo.SubjectVO;
 
 public class BBSDAOImpl extends SqlSessionDaoSupport implements BBSDAO{
 

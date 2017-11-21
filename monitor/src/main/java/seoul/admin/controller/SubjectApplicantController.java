@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
+//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
+//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/applicant")
@@ -73,7 +73,7 @@ public class SubjectApplicantController {
 			MonitorsVO monitorsVO = new MonitorsVO();
 			
 			monitorsVO.setIdx(arrayParams.get(i));
-			monitorsVO.setTeam_num(Integer.parseInt(team_num));
+			monitorsVO.setTeam_num(team_num.trim());
 			monitorsVO.setDescription(disc_arrayParams.get(i));
 			
 			if (!(monitorsService.updateMonitors(monitorsVO) > 0))
@@ -99,6 +99,7 @@ public class SubjectApplicantController {
 		
 		List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO);
 		
+		model.addAttribute("list2", list);
 		model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO));
 		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
 		

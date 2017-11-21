@@ -77,7 +77,7 @@ public class SubjectInfoController {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		int i = 0;
+		//int i = 0;
 				
 		if(subjectInfoService.deleteSubject(subjectVO) > 0){
 			resultMap.put("result", "success");

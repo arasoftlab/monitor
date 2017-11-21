@@ -6,7 +6,6 @@ import common.vo.PagingVO;
 import file.dao.FileDAO;
 import file.vo.FileMappingVO;
 import seoul.admin.dao.NoticeDAO;
-import seoul.admin.dao.SubjectDAO;
 import seoul.admin.dao.SubjectInfoDAO;
 import seoul.admin.service.NoticeService;
 import seoul.admin.vo.NoticeVO;

@@ -2,8 +2,6 @@ package seoul.admin.vo;
 
 import java.util.Date;
 
-import common.vo.CommonVO;
-
 public class AdminSettingVO{
 	
 	private String poll_num;

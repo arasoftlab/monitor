@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -43,14 +42,14 @@ public class FileServiceImpl implements FileService{
 		long size = 0;
 		String fileSize = null;
 
-		MultipartHttpServletRequest multipartRequest =  (MultipartHttpServletRequest) req;  //�������� ���ε�
+		MultipartHttpServletRequest multipartRequest =  (MultipartHttpServletRequest) req;   
 
-		Iterator<String> fileNames = multipartRequest.getFileNames();	//�Ѿ�� ��� ������ �����´�.
+		Iterator<String> fileNames = multipartRequest.getFileNames();	 
 		
 		System.out.println("fileSize service");
 		
 		while(fileNames.hasNext()){
-			String variableName = fileNames.next();	//�Ѿ�� ������
+			String variableName = fileNames.next();	 
 			
 			System.out.println("variableName : " + variableName);
 			
@@ -58,7 +57,7 @@ public class FileServiceImpl implements FileService{
 
 			for (MultipartFile multipartFile : multipartFiles){
 				System.out.println(multipartFile.getOriginalFilename());
-				//���ε��� ������ �����Ѵٸ�
+				 
 				if (!multipartFile.isEmpty()){	
 					size = multipartFile.getSize();
 					System.out.println("size / " + size);
@@ -157,26 +156,25 @@ public class FileServiceImpl implements FileService{
 		return fileVO;
 	}
 
-	@Override
 	public FileVO jindoFileUpload(HttpServletRequest req, FileVO uploadFile) throws IOException {
 		String webSavePath = "/upload/" + BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth());
-		String savePath = req.getRealPath(webSavePath);
-
-		String newFileName = new SimpleDateFormat("yyyyMMddHHmmss0SSS").format(new Date());  //����ð�
+//		String savePath = req.getRealPath(webSavePath);
+		String savePath = req.getSession().getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
+		
+		
+		String newFileName = new SimpleDateFormat("yyyyMMddHHmmss0SSS").format(new Date());  
 		String originalName = uploadFile.getOrgFileName();
 		
-		int i = originalName.lastIndexOf("."); // ���� Ȯ���� ��ġ						
+		int i = originalName.lastIndexOf(".");  			
 
-		// ���ε��� ������ Ȯ���ڸ� ������ �ҹ��ڷ� �ٲ��ش�. 
+		
 		originalName = originalName.replace(originalName.substring(i, originalName.length()), originalName.substring(i, originalName.length()).toLowerCase());
-		String uploadFileName = newFileName + originalName.substring(i, originalName.length());  //����ð��� Ȯ���� ��ġ��
+		String uploadFileName = newFileName + originalName.substring(i, originalName.length()); 
 		
 		File uploadDir = new File(savePath);
 		if(!uploadDir.exists()){
 			uploadDir.mkdir();
 		}
-		
-		
 		File mkfile = new File(uploadDir, uploadFileName);
 
 		InputStream in = req.getInputStream();
@@ -196,7 +194,7 @@ public class FileServiceImpl implements FileService{
 		fileVO.setFileSize(uploadFile.getFileSize());
 		fileVO.setFileType(uploadFile.getFileType());
 		fileVO.setSavePath(webSavePath);
-		fileVO.setFile_id(BaseUtil.uuid()); // �߰���.
+		fileVO.setFile_id(BaseUtil.uuid());  
 		fileDAO.insertFile(fileVO);
 		
 		return fileVO;
@@ -205,69 +203,90 @@ public class FileServiceImpl implements FileService{
 	@Override
 	public void downloadFile(String file_id, HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
-		if ("".equals(file_id)) {
+		
+		FileVO info = fileDAO.getFile(new FileVO(file_id));
+		File tf = new File(request.getSession().getServletContext().getRealPath(info.getSavePath()+"/"+info.getUnqFileName()));
+		boolean isFile = tf.exists();
+		
+		//파일이 존재하지 않을때 값을 널을 리턴하도록 하여 에러 방지토록 수정
+		if(!isFile) {
+			response.sendError(508, "해당하는 파일이 서버에 존재하지 않습니다. 관리자에게 문의하여 주십시요.");
+
 			String message = "<script type='text/javascript'>"; 
-			message += "alert('������ �������� �ʾҽ��ϴ�. �����ڿ��� ���� ���ּ���.');";
+			message += "alert('해당하는 파일이 서버에 존재하지 않습니다. 관리자에게 문의하여 주십시요.');";
 			message += "history.go(-1);";
 			message += "</script>";
 			byte[] error = message.getBytes();
+			
+			response.setContentType("text/html; charset=UTF-8;");
+			OutputStream outStream = response.getOutputStream();
+			outStream.write(error);
+			outStream.close();
+			return;
+			
+		}
+		
+		
+		if ("".equals(file_id) ) {
+			String message = "<script type='text/javascript'>"; 
+			message += "alert('다운로드할 파일이 없습니다. 다운로드할 파일의 이름을 확인해 주세요.');";
+			message += "history.go(-1);";
+			message += "</script>";
+			byte[] error = message.getBytes();
+			
 			response.setContentType("text/html; charset=UTF-8;");
 			OutputStream outStream = response.getOutputStream();
 			outStream.write(error);
 			outStream.close();		
-		}
-		
-		FileVO info = fileDAO.getFile(new FileVO(file_id));
-		  
-		if (info == null || !cacheHeaders(request, response, info)) {
-			return;
-		}else{
 			
-		}
-		  
-		String fileName = info.getOrgFileName();
-		
-		
-		response.setHeader("Pragma", "public");
-		response.setContentLength((int)info.getFileSize());    
-
-		if(info.getFileType() == null || !info.getFileType().startsWith("image")){    
-			String strClient=request.getHeader("user-agent");
-			response.setContentType("application/x-msdownload; charset=UTF-8;");
-			if(strClient.indexOf("MSIE 5.5")>-1) {
-				//IE ��������
-				fileName = URLEncoder.encode(fileName, "UTF8");
-				response.setHeader("Accept-Ranges", "bytes");
-				response.setHeader("Content-Disposition", "filename=\""+ fileName + "\";");
-			}else if(strClient.indexOf("Trident")>-1){
-				//IE ��������
-				response.setHeader("Content-Disposition", "attachment; filename="+ java.net.URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "\\ ") + ";");
-			}else {
-				//IE �̿�
-				fileName = new String(fileName.getBytes("UTF-8"), "8859_1"); 
-				response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\";");
-				response.setHeader("Content-Transfer-Encoding", "binary;");
-			}        
 		}else {
-			boolean MSIE = request.getHeader("user-agent").indexOf("MSIE") != -1;
 			
-			if(MSIE){
-				fileName = URLEncoder.encode(fileName, "UTF8");
-			}else{
-				fileName = new String(fileName.getBytes("UTF-8"), "8859_1"); 
+			System.out.println("Inside File PUT ");
+	
+			String fileName = info.getOrgFileName();
+			response.setHeader("Pragma", "public");
+			response.setContentLength((int)info.getFileSize());    
+	
+			if(info.getFileType() == null || !info.getFileType().startsWith("image")){    
+				String strClient=request.getHeader("user-agent");
+				response.setContentType("application/x-msdownload; charset=UTF-8;");
+				if(strClient.indexOf("MSIE 5.5")>-1) {
+					 
+					fileName = URLEncoder.encode(fileName, "UTF8");
+					response.setHeader("Accept-Ranges", "bytes");
+					response.setHeader("Content-Disposition", "filename=\""+ fileName + "\";");
+				}else if(strClient.indexOf("Trident")>-1){
+					 
+					response.setHeader("Content-Disposition", "attachment; filename="+ java.net.URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "\\ ") + ";");
+				}else {
+					 
+					fileName = new String(fileName.getBytes("UTF-8"), "8859_1"); 
+					response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\";");
+					response.setHeader("Content-Transfer-Encoding", "binary;");
+				}        
+			}else {
+				boolean MSIE = request.getHeader("user-agent").indexOf("MSIE") != -1;
+				
+				if(MSIE){
+					fileName = URLEncoder.encode(fileName, "UTF8");
+				}else{
+					fileName = new String(fileName.getBytes("UTF-8"), "8859_1"); 
+				}
+				
+				response.setContentType(info.getFileType());
+			    response.setHeader("Accept-Ranges", "bytes");
+			    response.setHeader("Content-Transfer-Encoding", "binary;");
+			    response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\";");
 			}
 			
-			response.setContentType(info.getFileType());
-		    response.setHeader("Accept-Ranges", "bytes");
-		    response.setHeader("Content-Transfer-Encoding", "binary;");
-		    response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\";");
-		}
+			if(info.getSavePath() != null){
+	
+				BaseUtil.transfer(new FileInputStream(
+						request.getSession().getServletContext().getRealPath(info.getSavePath()+"/"+info.getUnqFileName())), response.getOutputStream(), false);
+				response.flushBuffer();
+			}
 		
-		
-		if(info.getSavePath() != null){
-			BaseUtil.transfer(new FileInputStream(request.getRealPath(info.getSavePath()+"/"+info.getUnqFileName())), response.getOutputStream(), false);
-			response.flushBuffer();
-		}
+		}	
 	}
 
 	@Override
@@ -275,7 +294,7 @@ public class FileServiceImpl implements FileService{
 			HttpServletRequest request) throws Exception {
 		if ("".equals(file_id)) {
 			String message = "<script type='text/javascript'>"; 
-			message += "alert('������ �������� �ʾҽ��ϴ�. �����ڿ��� ���� ���ּ���.');";
+			message += "alert('파일 전송 오류');";
 			message += "history.go(-1);";
 			message += "</script>";
 			byte[] error = message.getBytes();
@@ -303,15 +322,15 @@ public class FileServiceImpl implements FileService{
 			String strClient=request.getHeader("user-agent");
 			response.setContentType("application/x-msdownload; charset=UTF-8;");
 			if(strClient.indexOf("MSIE 5.5")>-1) {
-				//IE ��������
+				 
 				fileName = URLEncoder.encode(fileName, "UTF8");
 				response.setHeader("Accept-Ranges", "bytes");
 				response.setHeader("Content-Disposition", "filename=\""+ fileName + "\";");
 			}else if(strClient.indexOf("Trident")>-1){
-				//IE ��������
+				 
 				response.setHeader("Content-Disposition", "attachment; filename="+ java.net.URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "\\ ") + ";");
 			}else {
-				//IE �̿�
+				 
 				fileName = new String(fileName.getBytes("UTF-8"), "8859_1"); 
 				response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\";");
 				response.setHeader("Content-Transfer-Encoding", "binary;");
@@ -333,11 +352,11 @@ public class FileServiceImpl implements FileService{
 		
 		
 		if(info.getSavePath() != null){
-			BaseUtil.transfer(new FileInputStream(request.getRealPath(info.getSavePath()+"/"+info.getUnqFileName())), response.getOutputStream(), false);
+			BaseUtil.transfer(new FileInputStream(request.getSession().getServletContext().getRealPath(info.getSavePath()+"/"+info.getUnqFileName())), response.getOutputStream(), false);
 			response.flushBuffer();
 		}
 	}
-	
+
 	
 	private boolean cacheHeaders(
 			HttpServletRequest req,
@@ -367,5 +386,7 @@ public class FileServiceImpl implements FileService{
 		if (lastModified > 0) response.setDateHeader(LAST_MODIFIED, lastModified);
 		return true;
 	}
+
+
 
 }

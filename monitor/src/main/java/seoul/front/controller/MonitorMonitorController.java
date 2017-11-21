@@ -1,7 +1,6 @@
 package seoul.front.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import common.SessionContants;
 import seoul.admin.service.AnswersService;
 import seoul.admin.service.MonitorsService;
-import seoul.admin.service.NoticeService;
-import seoul.admin.service.QuestionService;
 import seoul.admin.service.SubjectInfoService;
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorsVO;
-import seoul.admin.vo.NoticeVO;
-import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberVO;
-import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
@@ -51,7 +45,7 @@ public class MonitorMonitorController {
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
 		MemberVO mem = (MemberVO)ret;
 
-		MonitorsVO monitorsVO = new MonitorsVO();
+		//MonitorsVO monitorsVO = new MonitorsVO();
 						
 		if (mem == null)
 		{				
@@ -80,7 +74,7 @@ public class MonitorMonitorController {
 		
 		MonitorsVO monitorsVO = new MonitorsVO();
 		
-		List<AnswersVO> answers_list;
+		//List<AnswersVO> answers_list;
 		
 		if (mem != null)
 		{

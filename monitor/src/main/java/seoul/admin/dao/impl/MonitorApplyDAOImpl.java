@@ -4,15 +4,8 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import seoul.admin.dao.AnswersDAO;
 import seoul.admin.dao.MonitorApplyDAO;
-import seoul.admin.dao.MonitorsDAO;
-import seoul.admin.dao.NoticeDAO;
-import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorApplyVO;
-import seoul.admin.vo.MonitorsVO;
-import seoul.admin.vo.NoticeVO;
-import seoul.admin.vo.SubjectVO;
 
 public class MonitorApplyDAOImpl extends SqlSessionDaoSupport implements MonitorApplyDAO{
 

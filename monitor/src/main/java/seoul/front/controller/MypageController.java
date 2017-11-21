@@ -1,7 +1,6 @@
 package seoul.front.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import common.SessionContants;
 import seoul.admin.service.NoticeService;
 import seoul.admin.vo.NoticeVO;
-import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberService;
 import seoul.member.MemberVO;
-import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller

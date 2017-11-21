@@ -4,11 +4,9 @@ import java.util.List;
 
 import common.vo.PagingVO;
 import file.dao.FileDAO;
-import file.vo.FileMappingVO;
 import seoul.admin.dao.SubjectDAO;
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
 
 public class SubjectServiceImpl implements SubjectService{
 	private SubjectDAO subjectDAO;

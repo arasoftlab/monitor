@@ -38,21 +38,22 @@ public class FileController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "fileSize.do",produces = MediaType.APPLICATION_JSON_VALUE )
 	public @ResponseBody ResponseEntity<JSONObject> fileSize(HttpServletRequest req) throws IOException {
-		//Map<String, Object> resultMap = new HashMap<String, Object>();
-		JSONObject obj = new JSONObject();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
 		
 		String fileSize;
 		try {
 			fileSize = fileService.fileSize(req);
 		} catch (Exception e) {
 			// TODO 파일사이즈체크중 발생하는 오류
-			//resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-44 입니다.\n관리자에게 이코드를 알려주십시요.");
-			//resultMap.put("status", "508");
+			resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-49 입니다.\n관리자에게 이코드를 알려주십시요.");
+			resultMap.put("status", "508");
 			//return resultMap;
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-			obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-54 입니다.\n관리자에게 이코드를 알려주십시요.");
-			obj.put("status", "508");
+			//obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-54 입니다.\n관리자에게 이코드를 알려주십시요.");
+			//obj.put("status", "508");
+			JSONObject obj =  (JSONObject)resultMap;
 			return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 			
 			
@@ -60,8 +61,9 @@ public class FileController {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-		obj.put("result", "success");
-		obj.put("fileSize", fileSize);
+		resultMap.put("result", "success");
+		resultMap.put("fileSize", fileSize);
+		JSONObject obj =  (JSONObject)resultMap;
 		return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 		
 		//resultMap.put("fileSize", fileSize);
@@ -92,28 +94,30 @@ public class FileController {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		JSONObject obj = new JSONObject();
+		
 		
 		FileVO fvo;
 		try {
 			fvo = fileService.saveFile(req, session, data_id);
 		} catch (Exception e) {
 			// TODO 파일저장중 발생하는 오류
-			//resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-81 입니다.\n관리자에게 이코드를 알려주십시요.");
-			//resultMap.put("status", "508");
+			resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-104 입니다.\n관리자에게 이코드를 알려주십시요.");
+			resultMap.put("status", "508");
 			//return resultMap;
 			
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-			obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-108 입니다.\\n관리자에게 이코드를 알려주십시요.");
-			obj.put("status", "508");
+			//obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-108 입니다.\\n관리자에게 이코드를 알려주십시요.");
+			//obj.put("status", "508");
+			JSONObject obj =  (JSONObject)resultMap;
 			return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 		}
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-		obj.put("result", "success");
-		obj.put("fileVO", fvo);
+		resultMap.put("result", "success");
+		resultMap.put("fileVO", fvo);
+		JSONObject obj =  (JSONObject)resultMap;
 		return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 		
 		//resultMap.put("fileVO", fvo);
@@ -128,9 +132,9 @@ public class FileController {
 	public @ResponseBody ResponseEntity<JSONObject> deleteFile(
 			@RequestParam(value="fileListId",required=true) String fileListId) throws IOException {
 		
-		//Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		JSONObject obj = new JSONObject();
+		//JSONObject obj = new JSONObject();
 		
 		int effectRows = 0;
 		
@@ -140,14 +144,15 @@ public class FileController {
 			}
 		} catch (Exception e) {
 			// TODO 파일삭제중 발생하는 오류
-			//resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-107 입니다.\n관리자에게 이코드를 알려주십시요.");
-			//resultMap.put("status", "508");
+			resultMap.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-147 입니다.\n관리자에게 이코드를 알려주십시요.");
+			resultMap.put("status", "508");
 			//return resultMap;
 			
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-			obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-149 입니다.\n관리자에게 이코드를 알려주십시요.");
-			obj.put("status", "508");
+			//obj.put("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-149 입니다.\n관리자에게 이코드를 알려주십시요.");
+			//obj.put("status", "508");
+			JSONObject obj =  (JSONObject)resultMap;
 			return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 		}
 		
@@ -160,7 +165,9 @@ public class FileController {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-		obj.put("result", rstV);
+		resultMap.put("status",  "200");
+		resultMap.put("result", rstV);
+		JSONObject obj =  (JSONObject)resultMap;
 		return new ResponseEntity<JSONObject>(obj, responseHeaders, HttpStatus.CREATED);
 		//return resultMap;
 	}

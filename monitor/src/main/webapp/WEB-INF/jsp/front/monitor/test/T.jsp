@@ -110,6 +110,7 @@ var InputImage =
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType:'json',
+			    async: false,
 			    success: function(data) {
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);						
@@ -160,6 +161,7 @@ var InputImage =
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id }, 
 			    dataType:'json',
+			    async: false,
 			    success: function(data) {
 			    	if(data.result == "success"){
 			    		var file = data.fileVO;

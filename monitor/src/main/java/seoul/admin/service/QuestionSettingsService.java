@@ -2,7 +2,6 @@ package seoul.admin.service;
 
 import java.util.List;
 
-import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 
 public interface QuestionSettingsService {

@@ -36,7 +36,7 @@ index
 <link rel="stylesheet" href="./css/purple_index_style.css" type="text/css" media="all" />
 <link rel="stylesheet" href="./css/join.css" type="text/css" media="all" />
 
-<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
 </head>
 <body bgcolor="#ffffff">

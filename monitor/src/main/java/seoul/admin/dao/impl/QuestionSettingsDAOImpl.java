@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import seoul.admin.dao.OptionDAO;
 import seoul.admin.dao.QuestionSettingsDAO;
-import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 
 public class QuestionSettingsDAOImpl extends SqlSessionDaoSupport implements QuestionSettingsDAO{

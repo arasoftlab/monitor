@@ -2,7 +2,7 @@ package seoul.admin.dao;
 
 import java.util.List;
 
-import seoul.admin.vo.OptionVO;
+//import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 
 public interface QuestionSettingsDAO {

@@ -94,6 +94,7 @@ public class WinnerExcel {
 		workbook.write(fileoutputstream);
 		//필수로 닫아주어야함 
 		fileoutputstream.close();
+		workbook.close();
 		System.out.println("엑셀파일생성성공");
 
 	}
