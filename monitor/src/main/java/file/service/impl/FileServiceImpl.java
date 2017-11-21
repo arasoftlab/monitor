@@ -37,7 +37,6 @@ public class FileServiceImpl implements FileService{
 	private static final String IF_NONE_MATCH = "If-None-Match";
 	private static final String IF_MODIFIED_SINCE = "If-Modified-Since";
 	
-	@Override
 	public String fileSize(HttpServletRequest req) {
 		long size = 0;
 		String fileSize = null;
@@ -69,7 +68,6 @@ public class FileServiceImpl implements FileService{
 		return fileSize;
 	}
 	
-	@Override
 	public FileVO saveFile(HttpServletRequest req, HttpSession session, String data_id) {
 		FileVO fileVO = this.fileUpload(req, session);
 		
@@ -85,7 +83,6 @@ public class FileServiceImpl implements FileService{
 		return fileVO;
 	}
 
-	@Override
 	public FileVO updateFile(HttpServletRequest req, HttpSession session, String data_id) {
 		FileVO fileVO = this.fileUpload(req, session);
 		
@@ -101,7 +98,6 @@ public class FileServiceImpl implements FileService{
 		return fileVO;
 	}
 	
-	@Override
 	public int deleteFile(String file_idx) {
 		int effectRows = 0;
 		effectRows += fileDAO.deleteFile(new FileVO(file_idx));
@@ -113,7 +109,7 @@ public class FileServiceImpl implements FileService{
 		FileVO fileVO = new FileVO();
 		
 		String savePath = "/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth());
-		String uploadPath = session.getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
+		String uploadPath = req.getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
 		
 		String orgFileName = "";
 		String unqFileName = "";
@@ -123,12 +119,19 @@ public class FileServiceImpl implements FileService{
 		Iterator<String> fileNames = multipartRequest.getFileNames();
 		MultipartFile multipartFile = null;
 		
+		System.out.println("file total ::" + req.toString());
+		
 		while(fileNames.hasNext()){
 			File dir = new File(uploadPath);
 			if(!dir.exists()) dir.mkdirs();
-			
+		
 			multipartFile = multipartRequest.getFile(fileNames.next());
+			System.out.println("file fsize ::" + multipartFile.getSize());
+			System.out.println("file names ::" + multipartFile.getOriginalFilename());
+			
 			if(!multipartFile.isEmpty()){
+				
+			System.out.println(multipartFile.isEmpty());
 				orgFileName = multipartFile.getOriginalFilename();
 				unqFileName = System.currentTimeMillis()+"."+orgFileName.split("\\.")[orgFileName.split("\\.").length-1];
 				fileSize = (int) multipartFile.getSize();
@@ -140,6 +143,7 @@ public class FileServiceImpl implements FileService{
 					multipartFile.transferTo(new File(uploadPath+"/"+unqFileName));
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 				fileVO.setFile_id(BaseUtil.uuid());
@@ -151,6 +155,8 @@ public class FileServiceImpl implements FileService{
 				
 				fileDAO.insertFile(fileVO);
 				
+			}else {
+				System.out.println("정보가 없습니다.");
 			}
 		}
 		return fileVO;
@@ -200,7 +206,6 @@ public class FileServiceImpl implements FileService{
 		return fileVO;
 	}
 
-	@Override
 	public void downloadFile(String file_id, HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
 		
@@ -289,7 +294,6 @@ public class FileServiceImpl implements FileService{
 		}	
 	}
 
-	@Override
 	public void downloadFileFromUFN(String file_id, HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
 		if ("".equals(file_id)) {
