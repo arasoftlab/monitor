@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="subjectinfo">
+    
+    <select id="getSubject" parameterType="seoul.admin.vo.SubjectVO" resultType="seoul.admin.vo.SubjectVO">
+		select subject_id
+        		  ,title
+        		  ,reqdep
+        		  ,type
+        		  ,apply_s_date
+        		  ,apply_e_date
+        		  ,submit_s_date
+        		  ,submit_e_date
+        		  ,question_cnt
+        		  ,team_cnt
+        		  ,men_cnt
+        		  ,men_total
+        		  ,pay_yn
+        		  ,pay_sum
+        		  ,pay_date
+        		  ,description
+        		  ,regdate
+        		  ,close_comment
+        		  ,cont_uuid
+        		  ,case 
+						when sysdate <![CDATA[< ]]> apply_s_date  							     			  then '01'
+						when sysdate <![CDATA[>=]]> apply_s_date  and sysdate <![CDATA[<=]]> apply_e_date     then '02'
+						when sysdate <![CDATA[> ]]> apply_e_date  and sysdate <![CDATA[<=]]> submit_s_date    then '03'
+						when sysdate <![CDATA[>=]]> submit_s_date and sysdate <![CDATA[<=]]> submit_e_date    then '04'
+						when sysdate <![CDATA[> ]]> submit_e_date and sysdate <![CDATA[<=]]> submit_e_date+7  then '05'
+						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is null 	  then '06'
+						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is not null then '07'
+						else '05'
+        		   end as status
+          from n_subject
+         where subject_id = #{subject_id}
+    </select>
+   
+    
+    <insert id="insertSubject" parameterType="seoul.admin.vo.SubjectVO">
+        insert into n_subject(
+        	 	subject_id
+				,title
+				,reqdep
+				,type
+				,apply_s_date
+				,apply_e_date
+				,submit_s_date
+				,submit_e_date
+				,question_cnt
+				,team_cnt
+				,men_cnt
+				,men_total
+				,pay_yn
+				,pay_sum
+				,pay_date
+				,description
+				,cont_uuid
+				,regdate				
+        )values(
+        	 SUBJECT_SEQ.NEXTVAL
+        	,#{title,jdbcType=VARCHAR}
+        	,#{reqdep,jdbcType=VARCHAR}
+        	,#{type,jdbcType=VARCHAR}
+        	,#{apply_s_date,jdbcType=DATE}
+        	,#{apply_e_date,jdbcType=DATE}
+        	,#{submit_s_date,jdbcType=DATE}
+        	,#{submit_e_date,jdbcType=DATE}
+        	,#{question_cnt,jdbcType=INTEGER}
+        	,#{team_cnt,jdbcType=INTEGER}
+        	,#{men_cnt,jdbcType=INTEGER}
+        	,#{men_total,jdbcType=INTEGER}
+        	,#{pay_yn,jdbcType=VARCHAR}
+        	,#{pay_sum,jdbcType=INTEGER}
+        	,#{pay_date,jdbcType=DATE}
+        	,#{description,jdbcType=VARCHAR}
+        	,#{cont_uuid,jdbcType=VARCHAR}
+        	,sysdate
+        )
+    </insert>
+    
+    <update id="updateSubject" parameterType="seoul.admin.vo.SubjectVO">
+        update n_subject
+           set title=#{title,jdbcType=VARCHAR}
+	        	,reqdep=#{reqdep,jdbcType=VARCHAR}
+	        	,type=#{type,jdbcType=VARCHAR}
+	        	,apply_s_date=#{apply_s_date,jdbcType=DATE}
+	        	,apply_e_date=#{apply_e_date,jdbcType=DATE}
+	        	,submit_s_date=#{submit_s_date,jdbcType=DATE}
+	        	,submit_e_date=#{submit_e_date,jdbcType=DATE}
+	        	,question_cnt=#{question_cnt,jdbcType=INTEGER}
+	        	,team_cnt=#{team_cnt,jdbcType=INTEGER}
+	        	,men_cnt=#{men_cnt,jdbcType=INTEGER}
+	        	,men_total=#{men_total,jdbcType=INTEGER}
+	        	,pay_yn=#{pay_yn,jdbcType=VARCHAR}
+	        	,pay_sum=#{pay_sum,jdbcType=INTEGER}
+	        	,pay_date=#{pay_date,jdbcType=DATE}
+	        	,description=#{description,jdbcType=VARCHAR}
+	        	,close_comment=#{close_comment,jdbcType=VARCHAR}
+ 	        	,cont_uuid=#{cont_uuid,jdbcType=VARCHAR}
+         where subject_id=#{subject_id}
+    </update>
+    
+    <delete id="deleteSubject" parameterType="seoul.admin.vo.SubjectVO">
+        delete
+          from n_subject
+         where subject_id=#{subject_id}
+    </delete>
+    
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="file">
+    <insert id="insertFile"  parameterType="file.vo.FileVO">
+        insert into fileinfo(
+        				  file_id
+        				 ,unqfilename
+        				 ,orgfilename
+        				 ,savepath
+        				 ,filesize
+        				 ,filetype)
+        		   values(#{file_id}
+        		   		 ,#{unqFileName}
+        		   		 ,#{orgFileName}
+        		   		 ,#{savePath}
+        		   		 ,#{fileSize}
+        		   		 ,#{fileType})
+    </insert>
+    
+    <delete id="deleteFile" parameterType="file.vo.FileVO">
+        delete
+          from fileinfo
+         where file_id=#{file_id}
+    </delete>
+    
+    <select id="getFile" resultType="file.vo.FileVO" parameterType="file.vo.FileVO">
+        select file_id
+              ,unqfilename
+              ,orgfilename
+              ,savepath
+              ,filesize
+              ,filetype
+          from fileinfo
+         where file_id=#{file_id}
+    </select>
+    
+    <select id="getFileFromUFN" resultType="file.vo.FileVO" parameterType="file.vo.FileVO">
+        select file_id
+              ,unqfilename
+              ,orgfilename
+              ,savepath
+              ,filesize
+              ,filetype
+          from fileinfo
+         where unqfilename=#{unqFileName}
+    </select>
+        
+    <update id="updateFileMapping" parameterType="file.vo.FileMappingVO">
+        update file_mapping
+        set file_id = #{file_id}
+		where data_id = #{data_id}
+        
+    </update>    
+    
+    <insert id="insertFileMapping" parameterType="file.vo.FileMappingVO">
+        insert into file_mapping(data_id_idx, file_id,data_id)
+        values(
+        FILE_MAPPING_SEQ.NEXTVAL,
+        #{file_id}, 
+        #{data_id})
+    </insert>
+    
+    <delete id="deleteFileMapping" parameterType="file.vo.FileMappingVO">
+        delete
+          from file_mapping
+         where file_id=#{file_id}
+    </delete>
+    
+    <select id="getFileList" parameterType="file.vo.FileMappingVO" resultType="file.vo.FileVO">
+        select file_id
+              ,unqfilename
+              ,orgfilename
+              ,savepath
+              ,filesize
+              ,filetype
+          from fileinfo
+         where file_id in (select file_id
+          					  from file_mapping
+          					 where data_id=#{data_id})
+    </select>
+    
+</mapper>
