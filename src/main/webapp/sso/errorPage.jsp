@@ -12,8 +12,8 @@ errorPage
 </head>
 <body bgcolor="#ffffff">
 <h1>
-<li> error message :: <%=errorMsg%>
-<li> error code :: <%=errorCode%>
+<li> error message :: <%=errorMsg%></li>
+<li> error code :: <%=errorCode%></li>
 </h1>
 </body>
 </html>

@@ -2,7 +2,6 @@ package util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.UUID;
@@ -13,15 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.BodyContentHandler;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
 
 import common.vo.MenuVO;
 
@@ -31,7 +22,7 @@ public class BaseUtil {
 	private static final int BUFFER_SIZE = 4096;
 	
 	/**
-	 * Disposition �����ϱ�.
+	 * Disposition  
 	 * 
 	 * @param filename
 	 * @param request
@@ -79,7 +70,7 @@ public class BaseUtil {
 	}
 
 	/**
-	 * ������ ���� ���.
+	 * 
 	 * 
 	 * @param request
 	 * @return ""
@@ -114,7 +105,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * ���� �⵵
+	 * 
 	 * @return
 	 */
 	public static final int currentYear() {
@@ -128,7 +119,7 @@ public class BaseUtil {
 	
 	/**
 	 * 
-	 * Desc : ���ڸ����� ������ ���� 0�� �ٿ��ش�.
+	 * Desc : 
 	 * @Mehtod Name : addZeroString
 	 * @param value
 	 * @return
@@ -139,7 +130,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * ��ȣ tag �� ��ȯ
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -186,7 +177,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * �ؽ�Ʈ ���ڿ� ���̸�ŭ �����ֱ�
+	 * 
 	 * @param str
 	 * @param endIndex
 	 * @return

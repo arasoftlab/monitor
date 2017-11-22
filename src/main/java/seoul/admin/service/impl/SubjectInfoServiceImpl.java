@@ -1,12 +1,9 @@
 package seoul.admin.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import file.dao.FileDAO;
 import file.vo.FileMappingVO;
 import seoul.admin.dao.SubjectInfoDAO;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
 import seoul.admin.vo.SubjectVO;
 import util.BaseUtil;
 

@@ -3,13 +3,10 @@ package seoul.admin.service.impl;
 import java.util.List;
 
 import file.dao.FileDAO;
-import seoul.admin.dao.OptionDAO;
+import file.vo.FileMappingVO;
 import seoul.admin.dao.QuestionSettingsDAO;
-import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionSettingsService;
-import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
-import file.vo.*;
 import util.BaseUtil;
 
 public class QuestionSettingsServiceImpl implements QuestionSettingsService{

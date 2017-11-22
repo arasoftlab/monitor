@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
 
 /*import com.mysql.jdbc.log.Log4JLogger;*/
 
@@ -22,7 +22,7 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
+//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
@@ -53,6 +53,7 @@ public class SubjectTestController {
 
 		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
 		
+		model.addAttribute("list2", list);
 		model.addAttribute("list", questionService.getQuestionList(questionVO));
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
 		
@@ -77,7 +78,7 @@ public class SubjectTestController {
 		// 질의어는 where subject_id and member_id
 		// 
 		
-		String retText = "";
+		//String retText = "";
 		
 		return ""+"|" ;
 	}
@@ -210,7 +211,7 @@ public class SubjectTestController {
 		
 		System.out.println("JINX55");
 		System.out.println(bifurcation);
-		String str ="";
+		//String str ="";
 		
 		if (bifurcation != 0)
 		{

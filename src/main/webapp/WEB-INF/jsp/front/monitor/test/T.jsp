@@ -109,46 +109,57 @@ var InputImage =
 		
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
-			    dataType:'json',
-			    success: function(data) {
-			    	if(data.result=="success"){
-						fileSize = Number(data.fileSize);						
-						
-						if(fileSize <= fileMaxSize){
-							fnFileUpload();
-						}else{
-							if(data.status == "508"){
-				    			alert(data.result);
-				    		}else{
-				    			alert("파일체크가 실패하였습니다.\n관리자에게 문의하세요.");	
-				    		}
-						}			    		
-			    	}
-			    }
+			    dataType: 'json',
+			    async: false,
+			    cache: false
 			};
 		
 	
-		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
+		var xhr = $("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options).data('jqxhr');
+		
+		xhr.done(function(datas, status, xhr) {
+
+			var data = null;
+			if($.browser.msie && $.browser.version <= 9){
+				data = JSON.parse(datas);
+
+			}else{
+				data = datas;
+			}
+			
+			console.log(status);
+			console.log(data.fileSize);
+			if(data.result=="success"){
+				fileSize = Number(data.fileSize);
+				if(fileSize <= fileMaxSize){
+
+					fnFileUpload();
+				}else{
+					if(data.status == "508"){
+		    			alert(data.result);
+		    		}else{
+		    			alert("파일체크 오류 입니다.");	
+		    		}
+				}
+			}else{
+				console.log(data.result);
+				alert("파일체크가 실패하였습니다.\n관리자에게 문의하세요.");	
+			}
+		});
+		
+		xhr.fail(function(xhr, status, err) {
+			alert("파일체크가 실패하였습니다.\n정상파일로 다시시도해 주세요.");
+		});
+		
+		xhr.always(function(xhr, status) {
+			
+		});
 		
 		
-		if($("input[type='file']").val().length < 1){			
-			alert("파일을 선택 하세요.");
-			return;
-		}
-		
-		if(!checkFileExtension()){
-			alert("업로드가 가능한 파일이 아닙니다");
-			return;	
-		}
-		
-		if($("#fileList").find("tr").length >= fileUpMaxCnt){
-			alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
-			$("input[type='file']").val("");
-			return;
-		}
 	
 
 	}
+	
 	
 	function fnFileUpload(){
 		
@@ -158,37 +169,79 @@ var InputImage =
 		
 		var options = {
 			    url: "<c:url value='/file/fileUpload.do' />",
-			    data: { "data_id" : data_id }, 
-			    dataType:'json',
-			    success: function(data) {
-			    	if(data.result == "success"){
-			    		var file = data.fileVO;
-			    		  
-						$("#file_img").attr("src" ,"/monitor/"+file.savePath + "/"+ file.unqFileName);
-						$("#file_img").css("display" , "block");
-						$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
-						
-						alert($("#files").val());
-						
-			    		var html = 	"<tr>";
-						html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
-						html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
-						html += 	"</tr>";
-						$("#fileList").append(html);
-						
-						
-						$("input[type='file']").val("");
-			    	}else{
-			    		if(data.status == "508"){
-			    			alert(data.result);
-			    		}else{
-			    			alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");	
-			    		}
-			    	}
-			    }
+			    data: { "data_id" : data_id },
+			    dataType: 'json',
+			    async: false,
+			    cache: false
 		};
 				
-		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
+		var files = $("#image");
+		console.log(files.val());
+		var xhr2 = $("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options).data('jqxhr');
+		
+		xhr2.done(function(datas, status, xhr){
+			console.log(datas);
+			var data = null;
+			if($.browser.msie && $.browser.version <= 9){
+				var data = JSON.parse(datas);
+			}else{
+				data = datas;
+			}
+			console.log(files.val());
+			console.log(data.result);
+			console.log(data.status);
+			console.log(data.fileVO.orgFileName);
+			console.log(data.fileVO.unqFileName);
+			console.log(data.fileVO.savePath);
+			console.log(data.fileVO.file_id);
+			if(data.result == "success" && data.status != "508"){
+	    		var file = data.fileVO;
+	    		$("#file_img").attr("src" ,"/monitor/"+file.savePath + "/"+ file.unqFileName);
+				$("#file_img").css("display" , "block");
+				$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
+				
+				//alert($("#files").val());
+				
+	    		var html = 	"<tr>";
+				html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
+				html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
+				html += 	"</tr>";
+				$("#fileList").append(html);
+
+				$("input[type='file']").val("");
+				
+				if($("#files").val().length < 1){			
+					alert("파일을 선택 하세요.");
+					return;
+				}
+				
+				if(!checkFileExtension()){
+					alert("업로드가 가능한 파일이 아닙니다");
+					return;	
+				}
+				
+				if($("#fileList").find("tr").length >= fileUpMaxCnt){
+					alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
+					$("input[type='file']").val("");
+					return;
+				}
+				
+	    	}else{
+	    		if(data.status == "508"){
+	    			alert(data.result);
+	    		}else{
+	    			alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");	
+	    		}
+	    	}
+		});
+		
+		xhr2.fail(function(xhr, status, err){
+			alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
+		});
+		
+		xhr2.always(function(xhr, status){
+			
+		});
 	}
 	
 	function fnDeleteFile(){
@@ -244,7 +297,8 @@ var InputImage =
 	
 	//파일 확장자 검사
 	function checkFileExtension(){
-		var fileExt = $("input[type='file']").val().substring($("input[type='file']").val().lastIndexOf('.') + 1).toLowerCase();
+		//var fileExt = $("input[type='file']").val().substring($("input[type='file']").val().lastIndexOf('.') + 1).toLowerCase();
+		var fileExt = $("#files").val().substring($("#files").val().lastIndexOf('.') + 1).toLowerCase();
 		var validExtensions = fileObjects.split(",");
 		for(var i = 0; i < validExtensions.length; i++) {  
 			if(fileExt == validExtensions[i])  

@@ -33,7 +33,7 @@ import seoul.admin.vo.MemberManagerVO;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.QuestionVO;
-import util.BaseUtil;
+//import util.BaseUtil;
 
 public class ExcelView extends AbstractXlsView{
 
@@ -114,8 +114,8 @@ protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, 
 	 Sheet worksheet = null;
 	 Row row = null;
              
-             @SuppressWarnings("unchecked")
-             String textex = "test";
+             
+             //String textex = "test";
              worksheet = workbook.createSheet(excelName+ " WorkSheet");
              
              DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
@@ -676,7 +676,7 @@ protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, 
  			                     
  		   	                    HSSFClientAnchor anchor;
  		   	                    anchor = new HSSFClientAnchor(0,0,0,255,(short)img_position,i,(short)(img_position+1),i); // 이미지 크기조절은 여기서..
- 		   	                    String uploadPath = request.getSession().getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
+ 		   	                    //String uploadPath = request.getSession().getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
  		   	                    
  		   	                    //이거를 상대경로로 끌어와야한다. 시청에서 잘보자. 
  		   	                    //이클립스로 아무리 돌려봐야 실제 경로에서 못끌어온다.
@@ -687,7 +687,7 @@ protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, 
  		   	                    
  		                        String []t_temp_arr = t_temp.split("/");
 
- 		                        String []t_a_temp_arr = t_temp.split("Ω");
+ 		                        //String []t_a_temp_arr = t_temp.split("Ω");
 
 
  	                            Cell cell5_ = row.createCell(++temp_num);

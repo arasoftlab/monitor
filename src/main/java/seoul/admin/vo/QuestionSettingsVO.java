@@ -1,7 +1,5 @@
 package seoul.admin.vo;
 
-import java.util.Date;
-
 import common.vo.CommonVO;
 
 public class QuestionSettingsVO extends CommonVO{

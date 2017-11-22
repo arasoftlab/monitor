@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hdf.extractor.NewOleFile;
+//import org.apache.poi.hdf.extractor.NewOleFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
+//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
@@ -28,8 +28,8 @@ import util.BaseUtil;
 @RequestMapping("/admin/subject/mng/question/")
 public class QuestionController {
 
-	@Autowired
-	private SubjectService subjectService;
+	//@Autowired
+	//private SubjectService subjectService;
 	
 	@Autowired
 	private SubjectInfoService subjectInfoService;

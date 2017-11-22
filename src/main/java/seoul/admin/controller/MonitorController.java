@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
+//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/monitor/")

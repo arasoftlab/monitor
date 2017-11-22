@@ -14,7 +14,7 @@ import seoul.admin.service.SubjectInfoService;
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
+//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/money")
@@ -55,6 +55,7 @@ public class SubjectMoneyController {
 		
 		List<SubjectVO> list = subjectService.getSubjectMoneyList(subjectVO);
 		
+		model.addAttribute("list2", list);
 		model.addAttribute("list" , subjectService.getSubjectMoneyList(subjectVO));
 				
 		model.addAttribute("vo", subjectVO);

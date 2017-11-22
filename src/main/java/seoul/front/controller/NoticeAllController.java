@@ -10,20 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.SessionContants;
 import seoul.admin.service.AdminSettingService;
-import seoul.admin.service.AnswersService;
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.NoticeService;
 import seoul.admin.vo.AdminSettingVO;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.NoticeVO;
-import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberVO;
-import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
@@ -97,7 +93,8 @@ public class NoticeAllController {
 				model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO_temp));
 				
 				
-				List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);				
+				List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);
+				model.addAttribute("list2", list);
 				model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO_temp));
 				
 			}

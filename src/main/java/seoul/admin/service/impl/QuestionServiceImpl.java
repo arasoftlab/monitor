@@ -7,7 +7,6 @@ import file.vo.FileMappingVO;
 import seoul.admin.dao.QuestionDAO;
 import seoul.admin.service.QuestionService;
 import seoul.admin.vo.QuestionVO;
-import seoul.admin.vo.SubjectVO;
 import util.BaseUtil;
 
 public class QuestionServiceImpl implements QuestionService{

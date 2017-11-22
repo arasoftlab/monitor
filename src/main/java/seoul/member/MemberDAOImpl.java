@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import seoul.admin.vo.AnswersVO;
-import seoul.admin.vo.MonitorsVO;
-
 
 
 public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{

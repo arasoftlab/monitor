@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import common.SessionContants;
 import seoul.admin.service.BBSService;
 import seoul.admin.service.CommentService;
-import seoul.admin.service.SubjectService;
+//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.BBSVO;
 import seoul.admin.vo.CommentVO;
-import seoul.admin.vo.SubjectVO;
+//import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberVO;
 import util.BaseUtil;
 import util.SessionUtil;
@@ -24,8 +24,8 @@ import util.SessionUtil;
 @RequestMapping("/admin/community/story")
 public class CommunityStoryController {
 	
-	@Autowired
-	private SubjectService subjectService;
+	//@Autowired
+	//private SubjectService subjectService;
 	
 	@Autowired
 	private BBSService bbsService;
