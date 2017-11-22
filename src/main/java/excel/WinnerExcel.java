@@ -1,16 +1,22 @@
 package excel;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
+/*
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+*/
 
 public class WinnerExcel {
 
@@ -24,8 +30,8 @@ public class WinnerExcel {
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 		Font font = wb.createFont();
-		font.setFontName("���� ���");
-		font.setFontHeightInPoints((short) 11); // ��Ʈ ũ��
+		font.setFontName("맑은 고딕");
+		font.setFontHeightInPoints((short) 11); // 폰트 크기
 		style.setFont(font);
 
 		CellStyle style2 = wb.createCellStyle();
@@ -36,11 +42,11 @@ public class WinnerExcel {
 		style2.setAlignment(CellStyle.ALIGN_LEFT);
 		style2.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 		Font font2 = wb.createFont();
-		font2.setFontName("���� ���");
-		font2.setFontHeightInPoints((short) 11); // ��Ʈ ũ��
+		font2.setFontName("맑은 고딕");
+		font2.setFontHeightInPoints((short) 11); // 폰트 크기
 		style.setFont(font2);*/
 
-				
+		
 		//임의의 VO가 되주는 MAP 객체
 		Map<String,Object>map=null;
 		//가상 DB조회후 목록을 담을 LIST객체
@@ -64,13 +70,13 @@ public class WinnerExcel {
 		    }
 		}
 		//1차로 workbook을 생성 
-		XSSFWorkbook workbook=new XSSFWorkbook();
+		SXSSFWorkbook workbook=new SXSSFWorkbook();
 		//2차는 sheet생성 
-		XSSFSheet sheet=workbook.createSheet("시트명");
+		Sheet sheet=workbook.createSheet("시트명");
 		//엑셀의 행 
-		XSSFRow row=null;
+		Row row=null;
 		//엑셀의 셀 
-		XSSFCell cell=null;
+		Cell cell=null;
 		//임의의 DB데이터 조회 
 		if(list !=null &&list.size() >0){
 		    int i=0;
@@ -88,14 +94,12 @@ public class WinnerExcel {
 		        }
 		    }
 		}
-		
-		FileOutputStream fileoutputstream=new FileOutputStream("E:\\test1.xlsx");
 		//파일을 쓴다
-		workbook.write(fileoutputstream);
+		workbook.write(os);
 		//필수로 닫아주어야함 
-		fileoutputstream.close();
+		workbook.dispose();
 		workbook.close();
+		
 		System.out.println("엑셀파일생성성공");
-
 	}
 }

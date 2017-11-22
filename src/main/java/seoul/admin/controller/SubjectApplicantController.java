@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.SubjectInfoService;
-//import seoul.admin.service.SubjectService;
+import seoul.admin.service.SubjectService;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
-//import util.BaseUtil;
+import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/applicant")
@@ -99,7 +99,6 @@ public class SubjectApplicantController {
 		
 		List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO);
 		
-		model.addAttribute("list2", list);
 		model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO));
 		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
 		

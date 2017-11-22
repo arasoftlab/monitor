@@ -20,9 +20,24 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping("loginView.do")
+	@RequestMapping("adminlogin.do")
 	public String loginView(){
 		return "member/loginView.login";
+	}
+
+	@RequestMapping("checkAdminMember.do")
+	public @ResponseBody Map<String, Object> checkAdminMember(@ModelAttribute MemberVO memberVO) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		memberVO = memberService.checkAdminMember(memberVO);
+				
+		if(BaseUtil.isEmpty(memberVO)){
+			resultMap.put("result", "fail");
+		}else{						
+			SessionUtil.setAttribute(SessionContants.ADMIN, memberVO);
+			resultMap.put("result", "success");
+		}
+		return resultMap;
 	}
 	
 	@RequestMapping("checkMember.do")
@@ -31,25 +46,31 @@ public class MemberController {
 		
 		memberVO = memberService.checkMember(memberVO);
 				
+		MemberVO backendData = memberService.getBackEndMember(memberVO);
+		
+		memberVO.setName(backendData.getName());
+		
 		if(BaseUtil.isEmpty(memberVO)){
 			resultMap.put("result", "fail");
 		}else{
+ 
+			MemberVO login_mem = new MemberVO();
+			login_mem.setId(memberVO.getId());
+			memberService.updateMemberState(login_mem);
+			
 			SessionUtil.setAttribute(SessionContants.MEMBER, memberVO);
 			SessionUtil.setAttribute("grade", memberVO.getGrade());
 			
 			resultMap.put("result", "success");
-			resultMap.put("grade", memberVO.getGrade());
+			resultMap.put("grade", memberVO.getGrade());			
 		}
 		return resultMap;
 	}
-
-
 	
 	@RequestMapping("checkSession.do")
 	public @ResponseBody Map<String, Object> checkSession() throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 			
-
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );
 		MemberVO mem = (MemberVO)ret;		
 
@@ -66,32 +87,16 @@ public class MemberController {
 		return resultMap;
 	}
 	
-	@RequestMapping("checkAdminMember.do")
-	public @ResponseBody Map<String, Object> checkAdminMember(@ModelAttribute MemberVO memberVO) throws Exception{
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
-//		memberVO = memberService.checkAdminMember(memberVO);
-				
-		if(BaseUtil.isEmpty(memberVO)){
-			resultMap.put("result", "fail");
-		}else{
-			SessionUtil.setAttribute(SessionContants.ADMIN, memberVO);
-			SessionUtil.setAttribute("grade", memberVO.getGrade());
-			
-			resultMap.put("result", "success");
-			resultMap.put("grade", memberVO.getGrade());
-		}
-		return resultMap;
-	}
-	
 	@RequestMapping("checkAdminSession.do")
 	public @ResponseBody Map<String, Object> checkAdminSession() throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 			
 		Object ret = SessionUtil.getAttribute(SessionContants.ADMIN );
 		MemberVO mem = (MemberVO)ret;		
+
+		//SessionUtil.
 		
-		if(!SessionUtil.isAlive()){
+		if(!SessionUtil.isAlive_admin()){
 			resultMap.put("result", "fail");
 		}else{
 			resultMap.put("result", "success");

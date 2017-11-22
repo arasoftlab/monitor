@@ -25,6 +25,7 @@ public class SubjectVO extends CommonVO{
 	private String close_comment;
 	private String status;
 	
+	private String member_id;
 	
 	/*
 	 * subjectMoney only  
@@ -35,6 +36,15 @@ public class SubjectVO extends CommonVO{
 	/*
 	 * subjectMoney only  
 	 * */
+	
+	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+	
 	
 	private String cont_uuid;
 	

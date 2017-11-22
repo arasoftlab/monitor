@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.nhncorp.lucy.security.xss.XssFilter;
+
 import common.SessionContants;
 import seoul.admin.service.AdminSettingService;
 import seoul.admin.service.MonitorsService;
@@ -38,6 +40,12 @@ public class NoticeAllController {
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute NoticeVO noticeVO) throws Exception{
 		
+		
+		// xss 필터 적용
+        XssFilter xssFilter = XssFilter.getInstance("/lucy-xss-superset.xml");
+        noticeVO.setSearchText(xssFilter.doFilter(noticeVO.getSearchText()));
+         
+		
 		noticeVO.setQuery("OPEN = 'Y' ");
 		noticeVO.setPageSize(10);
 		model.addAttribute("list", noticeService.getNoticeList(noticeVO));
@@ -48,6 +56,8 @@ public class NoticeAllController {
 		if (mem != null)
 		{
 			model.addAttribute("member_id", mem.getId());
+			
+			model.addAttribute("m_info" , mem);
 		}
 		
 		model.addAttribute("page", noticeVO.getPagingVO());
@@ -75,6 +85,8 @@ public class NoticeAllController {
 			model.addAttribute("member_id", mem.getId());
 			model.addAttribute("member_poll", mem.getPoll_num());
 			
+			model.addAttribute("m_info" , mem);
+			
 			model.addAttribute("now_poll" , adminSettingVO.getPoll_num());
 			
 			if (noticeVO.getSubjectVO() != null)
@@ -91,11 +103,9 @@ public class NoticeAllController {
 				MonitorsVO monitorsVO_temp = new MonitorsVO();
 				monitorsVO_temp.setSubject_id(noticeVO.getSubjectVO().getSubject_id());
 				model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO_temp));
-				
-				
-				List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);
-				model.addAttribute("list2", list);
-				model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO_temp));
+								
+				List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);				
+				model.addAttribute("list", list);
 				
 			}
 		}
@@ -115,7 +125,7 @@ public class NoticeAllController {
 			//MonitorsVO monitorsVO = new MonitorsVO();	
 			monitorsVO.setMember_id(mem.getId());
 			monitorsVO.setPoll_num(mem.getPoll_num());
-//			monitorsVO.set
+
 			//monitorsVO.setSubject_id(subject_id);
 			
 			//monitorsVO = monitorsService.getMonitors(monitorsVO);
@@ -182,7 +192,12 @@ public class NoticeAllController {
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
 		MemberVO mem = (MemberVO)ret;
 		
+		AdminSettingVO adminSettingVO = new AdminSettingVO();		
+		adminSettingVO = adminSettingService.getAdminSetting(adminSettingVO);		
+
 		MonitorsVO monitorsVO = new MonitorsVO();
+		
+		model.addAttribute("s_vo" , monitorsVO);
 		
 		if (mem != null)
 		{
@@ -190,10 +205,25 @@ public class NoticeAllController {
 			monitorsVO.setSubject_id(noticeVO.getSubjectVO().getSubject_id());
 			monitorsVO = monitorsService.getMonitors(monitorsVO);
 			
+			model.addAttribute("member_id", mem.getId());
+			model.addAttribute("member_poll", mem.getPoll_num());
+			
+			model.addAttribute("m_info" , mem);
+			
+			model.addAttribute("now_poll" , adminSettingVO.getPoll_num());
+			
 			if (monitorsVO != null)
 			{
 				model.addAttribute("m_vo" , monitorsVO);
 			}
+			
+			MonitorsVO monitorsVO_temp = new MonitorsVO();
+			monitorsVO_temp.setSubject_id(noticeVO.getSubjectVO().getSubject_id());
+			model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO_temp));
+							
+			List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);				
+			model.addAttribute("list", list);
+			
 		}
 				
 		return "front/notice/all/modify.default";

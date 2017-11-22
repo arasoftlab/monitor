@@ -9,6 +9,5 @@ public class SessionContants {
 	public static final String SHOP_NAME = "shopName";
 	
 	public static final String MEMBER = "member";
-	
-	public static final String ADMIN = "admin";	
+	public static final String ADMIN = "admin";
 }

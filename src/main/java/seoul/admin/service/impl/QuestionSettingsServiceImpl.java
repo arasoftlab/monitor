@@ -55,9 +55,7 @@ public class QuestionSettingsServiceImpl implements QuestionSettingsService{
 		effectRows += questionSettingsDAO.deleteQuestionSettings(questionSettingsVO);
 		return effectRows;
 	}
-	
-	// 과제하나를 지웠을 시 해당 과제에 등록된 옵션을 전부 지운다.
-	// by JINX 
+ 
 	@Override
 	public int clearQuestionSettings(QuestionSettingsVO questionSettingsVO) {
 		return questionSettingsDAO.clearQuestionSettings(questionSettingsVO);

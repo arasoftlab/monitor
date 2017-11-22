@@ -1,7 +1,5 @@
 package seoul.admin.controller;
 
-//import java.awt.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.SubjectVO;
-//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/")

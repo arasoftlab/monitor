@@ -13,7 +13,7 @@
 	<meta name="author" content="http://bootstraptaste.com" />
 	<!-- css -->
 	
-	<link href="<c:url value='/css/bootstrap.min.css'/>"  rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	
 	<link href="<c:url value='/css/fancybox/jquery.fancybox.css'/>" rel="stylesheet">
 	<link href="<c:url value='/css/flexslider.css'/>" rel="stylesheet" />
@@ -45,6 +45,7 @@
 	
 	<script src="<c:url value='/js/jquery-ui.js'/>"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="<c:url value='/js/browser_check.js' />"></script>
 	<script src="<c:url value='/js/jquery.slimscroll.js'/>"></script>
 	<script src="<c:url value='/js/jquery.cookie.js'/>"></script>
@@ -54,9 +55,7 @@
 	<script src="<c:url value='/js/moment.js'/>"></script>
 	<script src="<c:url value='/js/daterangepicker.js'/>"></script>
 	<script src="<c:url value='/js/validate.js'/>"></script>
-	
-	<script src="<c:url value='/js/bootstrap.min.js'/>"></script>
-	
+		
 	<%-- <script src="<c:url value='/js/jquery.easing.1.3.js'/>"></script>
 	<script src="<c:url value='/js/jquery.fancybox.pack.js'/>"></script>
 	<script src="<c:url value='/js/jquery.fancybox-media.js'/>"></script>

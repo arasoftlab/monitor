@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.SessionContants;
+import common.vo.PagingVO;
 import seoul.admin.service.AdminSettingService;
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.NoticeService;
@@ -41,14 +42,14 @@ public class NoticeSubjectController {
 		noticeVO.setQuery("type != 'S' AND OPEN = 'Y' ");
 		List<NoticeVO> list = noticeService.getNoticeListSubjectOnly(noticeVO);
 				
-		//한번에 두개를 받아와서 합쳐 준다. f 형태 v 형태 
+		//�븳踰덉뿉 �몢媛쒕�� 諛쏆븘���꽌 �빀爾� 以��떎. f �삎�깭 v �삎�깭 
 		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", noticeVO);
 		
-		//PagingVO page = noticeVO.getPagingVO();
+		PagingVO page = noticeVO.getPagingVO();
 		
-		model.addAttribute("page", noticeVO.getPagingVO());
+		model.addAttribute("page", page);
 		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
 		MemberVO mem = (MemberVO)ret;
@@ -98,8 +99,7 @@ public class NoticeSubjectController {
 				model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO_temp));
 				
 				
-				List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);
-				model.addAttribute("list2", list);
+				//List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);				
 				model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO_temp));
 
 				
@@ -199,6 +199,14 @@ public class NoticeSubjectController {
 			{
 				model.addAttribute("m_vo" , monitorsVO);
 			}
+			
+			MonitorsVO monitorsVO_temp = new MonitorsVO();
+			monitorsVO_temp.setSubject_id(noticeVO.getSubjectVO().getSubject_id());
+			model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO_temp));
+			
+			
+			//List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO_temp);				
+			model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO_temp));
 		}
 				
 		return "front/notice/subject/modify.default";

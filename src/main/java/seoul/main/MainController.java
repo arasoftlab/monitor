@@ -49,8 +49,8 @@ public class MainController {
 		bbsVO.setType("P");
 		
 		List<BBSVO> list = bbsService.getBBSList(bbsVO);
-		
-		for (int i=0 ; i < list.size() ; i++)
+ 
+		for (int i=0 ; i < 3 ; i++)
 		{
 			list.set(i, bbsService.getBBS(list.get(i),false));   
 		}

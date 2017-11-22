@@ -2,6 +2,8 @@ package seoul.member;
 
 import java.util.List;
 
+import seoul.admin.vo.MemberManagerVO;
+
 
 
 public interface MemberDAO {
@@ -14,6 +16,10 @@ public interface MemberDAO {
 	
 	MemberVO checkMember(MemberVO memberVO);
 
+	MemberVO checkAdminMember(MemberVO memberVO);
+	
+	MemberVO getBackEndMember(MemberVO memberVO);
+	
 	int updateMember(MemberVO memberVO);
 
 	int updateMemberETC(MemberVO memberVO);	
@@ -24,5 +30,25 @@ public interface MemberDAO {
 
 	int insertJoinMember(MemberVO memberVO);
 	
+	int updatejoinMember(MemberVO memberVO);
+	
 	int deleteMember(MemberVO memberVO);
+	
+	
+	List<MemberManagerVO> getMemberManagerlist(MemberManagerVO memberManagerVO);
+	
+	int getMemberManagerCnt(MemberManagerVO memberManagerVO);
+	
+	
+	int updateMemberState(MemberVO memberVO);
+	
+	MemberVO getMemberAct(MemberVO memberVO);
+	
+	List<MemberVO> getMemberManagerPlaceCnt(MemberVO memberVO);
+
+	List<MemberVO> getM001_secession(MemberVO memberVO);
+	
+	
+	
+	List<MemberManagerVO> getMemberManagerlist_secession(MemberManagerVO memberManagerVO);
 }

@@ -28,13 +28,18 @@
            		,row_number() over (order by ${ord}) rn
 	       	 from n_subject A
         	 where 1=1
-        	 and A.pay_yn = 'Y'        	
+        	 and A.pay_yn = 'Y'
+        	 
+         	<if test="searchCategory != null and searchCategory != ''">
+        	   and ${searchCategory} like '%' || #{searchText} || '%'
+        	</if>
         )
         where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
 	</select>
 
     <select id="getSubjectList" parameterType="seoul.admin.vo.SubjectVO" resultType="seoul.admin.vo.SubjectVO">
-        select * from (
+	select a.*, to_char(rn1) rn        
+		from (
         	select subject_id
         		  ,title
         		  ,reqdep
@@ -47,6 +52,7 @@
         		  ,team_cnt
         		  ,men_cnt
         		  ,men_total
+     				,(select COUNT(subject_id) FROM n_monitors C where C.subject_id = b.subject_id AND is_selection = 'Y') apply_cnt
         		  ,pay_yn
         		  ,pay_sum
         		  ,pay_date
@@ -56,16 +62,20 @@
         		  ,cont_uuid
         		  ,case 
 						when sysdate <![CDATA[< ]]> apply_s_date  							     			  then '01'
-						when sysdate <![CDATA[>=]]> apply_s_date  and sysdate <![CDATA[<=]]> apply_e_date     then '02'
-						when sysdate <![CDATA[> ]]> apply_e_date  and sysdate <![CDATA[<=]]> submit_s_date    then '03'
-						when sysdate <![CDATA[>=]]> submit_s_date and sysdate <![CDATA[<=]]> submit_e_date    then '04'
-						when sysdate <![CDATA[> ]]> submit_e_date and sysdate <![CDATA[<=]]> submit_e_date+7  then '05'
+						when sysdate <![CDATA[>=]]> apply_s_date  and sysdate <![CDATA[<=]]> apply_e_date+1     then '02'
+						when sysdate <![CDATA[> ]]> apply_e_date+1  and sysdate <![CDATA[<=]]> submit_s_date    then '03'
+						when sysdate <![CDATA[>=]]> submit_s_date and sysdate <![CDATA[<=]]> submit_e_date+1    then '04'
+						when sysdate <![CDATA[> ]]> submit_e_date+1 and sysdate <![CDATA[<=]]> submit_e_date+7  then '05'
 						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is null 	  then '06'
 						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is not null then '07'
 						else '05'
         		   end as status
-        		  ,row_number() over (order by ${ord}) rn
-        	  from n_subject
+        		  ,row_number() over (order by regdate asc) rn1
+                 ,row_number() over (order by regdate desc) rnd
+               	<if test="member_id != null and member_id != ''">
+               	,(select count(answers_id) from n_answers where subject_id = b.subject_id AND member_id = #{member_id} AND temporary = 'N') send_cnt
+               	</if>
+        	  from n_subject b
         	 where 1=1
         	<if test="searchCategory != null and searchCategory != ''">
         	   and ${searchCategory} like '%' || #{searchText} || '%'
@@ -78,9 +88,9 @@
 	      	   and ${query}
 			</if>
         	
-          order by ${ord}
-        )
-        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        )a
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        order by rn1 desc
     </select>
     
     <select id="getSubjectCnt" parameterType="seoul.admin.vo.SubjectVO" resultType="java.lang.Integer">

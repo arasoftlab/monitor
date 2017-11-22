@@ -1,17 +1,12 @@
 package common;
 
-//import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import util.BaseUtil;
-//import util.SessionUtil;
-//import common.vo.MenuVO;
 
 public class InterceptorMenu extends HandlerInterceptorAdapter{
 	

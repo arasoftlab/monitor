@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/*import com.mysql.jdbc.log.Log4JLogger;*/
+
 
 import common.SessionContants;
 import seoul.admin.service.AnswersService;
@@ -21,6 +28,7 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
+import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.OptionVO;
@@ -91,8 +99,6 @@ public class MonitorSubjectController {
 	public String modify(Model model, @ModelAttribute QuestionVO questionVO , SubjectVO subjectVO , AnswersVO answersVO) throws Exception{
 		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
 		
-		model.addAttribute("list2", list);
-		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
 		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );
@@ -112,7 +118,7 @@ public class MonitorSubjectController {
 			String history_params = answersVO.getAnswers();
 
 			String back_temp;
-			//String back_temp_arr[];
+			String back_temp_arr[];
 			
 			if (history_params != null && history_params != "") 
 			{
@@ -144,8 +150,6 @@ public class MonitorSubjectController {
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute QuestionVO questionVO , SubjectVO subjectVO) throws Exception{
 		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
-		
-		model.addAttribute("list2", list);
 		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
 		
@@ -228,11 +232,11 @@ public class MonitorSubjectController {
 			{
 //				String temp_str = answer.replace("type=", "").replace("q_num=", "").replace("answers=", "").replace("&","");
 				
-				//String temp_str = answer.replace("type=", "").replace("q_num=", "");
+				String temp_str = answer.replace("type=", "").replace("q_num=", "");
 				
 				//temp_str = temp_str.substring(0 , temp_str.indexOf("answers_"));
 				
-				//String answer_str = temp_str.substring(0, temp_str.indexOf("answers_"));
+				String answer_str = temp_str.substring(0, temp_str.indexOf("answers_"));
 				
 				
 				String temp_o[] = answer.split("&");  
@@ -560,7 +564,7 @@ public class MonitorSubjectController {
 		
 		QuestionVO nextQuestionVO = new QuestionVO();
 		
-		//String str ="";
+		String str ="";
 		
 		if (bifurcation != 0)
 		{

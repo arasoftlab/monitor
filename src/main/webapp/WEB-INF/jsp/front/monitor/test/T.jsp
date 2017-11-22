@@ -38,6 +38,10 @@
   clip:rect(0,0,0,0);
   border: 0;
 }
+
+#imagePreview {
+	padding: 10px;
+}
 </style>
 
 <script>
@@ -106,57 +110,72 @@ var InputImage =
 	function fnFileCheck(){
 		
 		var fileSize;
-		
+		var fchk = false;
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType: 'json',
 			    async: false,
-			    cache: false
+			    cache: false,
+			    success: function(datas){
+			    	console.log("3:"+datas);
+			    	var data = null;
+					if($.browser.msie && $.browser.version <= 9){
+						//datas = datas.replace('<pre>', '');
+						//datas = datas.replace('</pre>', '');
+						//data = JSON.parse(datas);
+						//data = JSON.stringify(datas);
+						data = datas;
+						
+					}else{
+						data = datas;
+					}
+					//data = JSON.parse(data);
+					console.log("4:"+datas.result);
+					console.log("5:"+datas.status);
+					console.log("6:"+data);
+					//data = JSON.parse(datas);
+					console.log("7:"+data);
+					//data = JSON.stringify(datas);
+					console.log("8:"+data);
+					
+					if( data.status != "508" && data.status != "undefined" ){
+						fileSize = Number(data.fileSize);
+						//console.log(" 파일용량 :" + fileSize);
+						//console.log(" 최대크기 :" + fileMaxSize);
+						if(fileSize <= fileMaxSize){
+							fchk=true;
+														
+						}
+						
+					}else{
+						
+						if(data.status == "508"){
+			    			alert(data.result);
+			    			return;
+			    		}else{
+			    			//console.log("-3:" + data);
+			    			alert("파일체크 오류 입니다.");
+			    			return;
+			    		}
+					}
+					
+			    },
+			    error: function(xhr, textStatus, errorThrown){
+			    	console.log(xhr);
+			    	console.log(textStatus);
+			    	console.log(errorThrown);
+			    	alert("잘못된 파일입니다.\n다시 시도하세요.");
+			    	return;
+			    }
 			};
 		
 	
-		var xhr = $("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options).data('jqxhr');
+		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
 		
-		xhr.done(function(datas, status, xhr) {
-
-			var data = null;
-			if($.browser.msie && $.browser.version <= 9){
-				data = JSON.parse(datas);
-
-			}else{
-				data = datas;
-			}
-			
-			console.log(status);
-			console.log(data.fileSize);
-			if(data.result=="success"){
-				fileSize = Number(data.fileSize);
-				if(fileSize <= fileMaxSize){
-
-					fnFileUpload();
-				}else{
-					if(data.status == "508"){
-		    			alert(data.result);
-		    		}else{
-		    			alert("파일체크 오류 입니다.");	
-		    		}
-				}
-			}else{
-				console.log(data.result);
-				alert("파일체크가 실패하였습니다.\n관리자에게 문의하세요.");	
-			}
-		});
-		
-		xhr.fail(function(xhr, status, err) {
-			alert("파일체크가 실패하였습니다.\n정상파일로 다시시도해 주세요.");
-		});
-		
-		xhr.always(function(xhr, status) {
-			
-		});
-		
-		
-	
+		console.log("9:"+fchk);
+		if(fchk){
+			fnFileUpload();
+		}
 
 	}
 	
@@ -172,76 +191,78 @@ var InputImage =
 			    data: { "data_id" : data_id },
 			    dataType: 'json',
 			    async: false,
-			    cache: false
+			    cache: false,
+			    success: function(datas){
+			    	var data = null;
+			    	console.log("1:"+datas)
+					if($.browser.msie && $.browser.version <= 9){
+						//datas = datas.replace('<pre>', '');
+						//datas = datas.replace('</pre>', '');
+						//data = JSON.parse(datas);
+						//data = JSON.stringify(datas);
+						data = datas;
+					}else{
+						data = datas;
+					}
+					console.log("2:"+data);
+
+					if(data.status != "508" && data.status != "undefined"){
+			    		var file = data.fileVO;
+			    		var fimg = $("#file_img");
+			    		fimg.attr("src" ,"/monitor/"+file.savePath + "/"+ file.unqFileName);
+						fimg.css("display" , "block");
+						fimg.addClass("img-responsive");
+						fimg.addClass("img-thumbnail");
+						fimg.addClass("center-block");
+						fimg.css("padding", "5px");
+						
+						$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
+						
+						
+			    		var html = 	"<tr>";
+						html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
+						html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
+						html += 	"</tr>";
+						$("#fileList").append(html);
+
+						$("input[type='file']").val("");
+						
+						if($("#files").val().length < 1){			
+							alert("파일을 선택 하세요.");
+							return;
+						}
+						
+						if(!checkFileExtension()){
+							alert("업로드가 가능한 파일이 아닙니다");
+							return;	
+						}
+						
+						if($("#fileList").find("tr").length >= fileUpMaxCnt){
+							alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
+							$("input[type='file']").val("");
+							return;
+						}
+						
+						return;
+						
+			    	}else{
+			    		if(data.status == "508"){
+			    			alert(data.result);
+			    		}else{
+			    			alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");	
+			    		}
+			    		return;
+			    	}
+					
+			    },
+			    error: function(xhr, status, err){
+			    	alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
+			    	return;
+			    }
 		};
 				
-		var files = $("#image");
-		console.log(files.val());
-		var xhr2 = $("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options).data('jqxhr');
+		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
 		
-		xhr2.done(function(datas, status, xhr){
-			console.log(datas);
-			var data = null;
-			if($.browser.msie && $.browser.version <= 9){
-				var data = JSON.parse(datas);
-			}else{
-				data = datas;
-			}
-			console.log(files.val());
-			console.log(data.result);
-			console.log(data.status);
-			console.log(data.fileVO.orgFileName);
-			console.log(data.fileVO.unqFileName);
-			console.log(data.fileVO.savePath);
-			console.log(data.fileVO.file_id);
-			if(data.result == "success" && data.status != "508"){
-	    		var file = data.fileVO;
-	    		$("#file_img").attr("src" ,"/monitor/"+file.savePath + "/"+ file.unqFileName);
-				$("#file_img").css("display" , "block");
-				$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
-				
-				//alert($("#files").val());
-				
-	    		var html = 	"<tr>";
-				html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
-				html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
-				html += 	"</tr>";
-				$("#fileList").append(html);
-
-				$("input[type='file']").val("");
-				
-				if($("#files").val().length < 1){			
-					alert("파일을 선택 하세요.");
-					return;
-				}
-				
-				if(!checkFileExtension()){
-					alert("업로드가 가능한 파일이 아닙니다");
-					return;	
-				}
-				
-				if($("#fileList").find("tr").length >= fileUpMaxCnt){
-					alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
-					$("input[type='file']").val("");
-					return;
-				}
-				
-	    	}else{
-	    		if(data.status == "508"){
-	    			alert(data.result);
-	    		}else{
-	    			alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");	
-	    		}
-	    	}
-		});
-		
-		xhr2.fail(function(xhr, status, err){
-			alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
-		});
-		
-		xhr2.always(function(xhr, status){
-			
-		});
 	}
 	
 	function fnDeleteFile(){
@@ -411,8 +432,8 @@ chkMob();
 			<c:when test="${empty t_type_img }">
 				<c:if test="${optionList[0].label_1 ne 'file'}">
 			
-					<div id="imagePreview" style="padding-top:10px;padding-bottom:10px;text-align:center">
-						<img src="${t_type_img }" id="file_img" style="display:none;margin: auto; max-width: 95%;"/>
+					<div id="imagePreview">
+						<img src="${t_type_img }" id="file_img" class="img-responsive img-thumbnail center-block"/>
 					</div><br>
 				</c:if>
 				<input type="hidden" id="files" name="files" value="">
@@ -421,8 +442,8 @@ chkMob();
 			<c:otherwise>
 				<c:if test="${!empty optionList[0].label_1 && optionList[0].label_1 ne 'file'}">
 				 
-					<div id="imagePreview" style="padding-top:10px;padding-bottom:10px;text-align:center">
-						<img src="${t_type_img }" id="file_img" style="margin: auto;    max-width: 95%;"/>
+					<div id="imagePreview">
+						<img src="${t_type_img }" id="file_img" class="img-responsive img-thumbnail center-block" />
 					</div><br>
 				</c:if>					
 					<input type="hidden" id="files" name="files" value="${t_type_img }">
@@ -452,12 +473,12 @@ chkMob();
 			<div id="camera">
 			<div class="filebox" style="width: 49%; float:left">
 			  <label for="cam" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진촬영] <br>보내기</label>
-			  <input type="file" name="file" id="cam" accept="image/*" capture="camera"  onchange="fnFileCheck();">  
+			  <input type="file" name="cam" id="cam" accept="image/*" capture="camera"  onchange="fnFileCheck();">  
 			</div>
 			</div>
 			<div class="filebox" style="width: 49%; float: right">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진등록] <br>보내기</label>
-			  <input type="file" name="file"  id="image" accept="image/*" onchange="fnFileCheck();">  
+			  <input type="file" name="image"  id="image" accept="image/*" onchange="fnFileCheck();">  
 			</div>			
 			
 		</c:when>
@@ -465,7 +486,7 @@ chkMob();
 		<c:otherwise>
 			<div class="filebox" style="width: 100%;">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">텍스트 선택해서 <br>보내기</label>
-			  <input type="file" name="file" id="image" onchange="fnFileCheck();">  
+			  <input type="file" name="image" id="image" onchange="fnFileCheck();">  
 			</div>
 		</c:otherwise>
 	</c:choose>

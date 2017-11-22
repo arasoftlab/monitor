@@ -28,6 +28,7 @@ import util.BaseUtil;
 @RequestMapping("/admin/subject/mng/question/")
 public class QuestionController {
 
+	// never userd 
 	//@Autowired
 	//private SubjectService subjectService;
 	
@@ -55,7 +56,7 @@ public class QuestionController {
 		questionVO = questionService.getQuestion(questionVO);
 		model.addAttribute("vo", questionVO);
 		
-		// option 리스트각 하나당 갖고있는 이미지를 객체에 다시 할당하여 넣어준다.
+ 
 		List <OptionVO> optionList = optionService.getOptionList(new OptionVO(questionVO.getQuestion_id()));
 
 		for (int i=0 ; i < optionList.size() ; i++)
@@ -64,8 +65,7 @@ public class QuestionController {
 		}
 		
 		model.addAttribute("optionList", optionList);
-		
-		// 옵션 첨부는 동영상 / 이미지 두가지 방식이기때문에 가져올때 분기한다.
+ 
 		if (questionVO.getCont_type() != null)
 		{
 			if (questionVO.getCont_type().indexOf('V') == 0 || questionVO.getCont_type().indexOf('I') == 0) 
@@ -97,7 +97,7 @@ public class QuestionController {
 		
 		for (int i = 0 ; i < q_list.size() ; i++ )
 		{
-			// option 리스트각 하나당 갖고있는 이미지를 객체에 다시 할당하여 넣어준다.
+ 
 			List <OptionVO> optionList = optionService.getOptionList(new OptionVO(q_list.get(i).getQuestion_id()));
 	
 			for (int j =0 ; j < optionList.size() ; j++)
@@ -108,8 +108,7 @@ public class QuestionController {
 			model.addAttribute("optionList", optionList);
 
 			List <QuestionSettingsVO> settingsList = questionSettingsService.getQuestionSettingsList(new QuestionSettingsVO(q_list.get(i).getQuestion_id() , q_list.get(i).getCont_type()));
-			
-			// 옵션 첨부는 동영상 / 이미지 두가지 방식이기때문에 가져올때 분기한다.
+ 
 			if (questionVO.getCont_type() != null)
 			{
 				if (questionVO.getCont_type().indexOf('V') == 0 || questionVO.getCont_type().indexOf('I') == 0) 
@@ -213,9 +212,7 @@ public class QuestionController {
 		
 		
 		questionVO = questionService.getQuestion(questionVO);
-		
-		// 퀘스쳔 VO 가 깊은 복사 개념이라 인서트 함수에 들어가는순간 IDX 값이 바뀌어서 나온다. 
-		// 따라서 이전 options / question_setting 값을 들고 올라면 오리지날 IDX 를 따로 저장해야한다. 
+ 
 		String original_qID = questionVO.getQuestion_id();
 		
 		if(questionService.insertQuestion(questionVO) > 0){

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-//import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,8 +51,7 @@ public class OptionController {
 		return resultMap;
 	}
 	
-	
-	// 척도형 인서트 
+ 
 	@RequestMapping(value = "insertR.do" , method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> insertR(@ModelAttribute QuestionVO questionVO ,@RequestParam(value="form", required=false) int form) throws Exception{
 		

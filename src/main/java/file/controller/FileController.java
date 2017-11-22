@@ -91,7 +91,7 @@ public class FileController {
 		return resultMap;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "fileUpload.do")
+	@RequestMapping(method = RequestMethod.POST, value = "fileUpload.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE )
 	public @ResponseBody ResponseEntity<JsonObject> fileUpload(
 			@RequestParam(value="data_id",required=false) String data_id,
 			HttpServletRequest req,

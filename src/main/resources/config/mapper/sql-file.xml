@@ -44,7 +44,7 @@
           from fileinfo
          where unqfilename=#{unqFileName}
     </select>
-        
+    
     <update id="updateFileMapping" parameterType="file.vo.FileMappingVO">
         update file_mapping
         set file_id = #{file_id}

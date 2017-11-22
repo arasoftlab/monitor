@@ -14,7 +14,7 @@
         		  ,subject_id
         		  ,regdate
         		  ,row_number() over (order by regdate asc) rn1
-                 ,row_number() over (order by regdate desc) rnd
+                  ,row_number() over (order by regdate desc) rnd
         		  ,cont_uuid
         		  ,hits
         	  from n_notice
@@ -36,7 +36,8 @@
     </select>
     
     <select id="getNoticeListSubjectOnly" parameterType="seoul.admin.vo.NoticeVO" resultType="seoul.admin.vo.NoticeVO">
-        select * from (
+	select a.*, to_char(rn1) rn        
+		from (
         	select notice_id
         		  ,title
         		  ,type
@@ -45,8 +46,9 @@
         		  ,applyform
         		  ,subject_id
         		  ,regdate
-        		  ,row_number() over (order by ${ord}) rn
-        		  ,cont_uuid
+        		  ,row_number() over (order by regdate asc) rn1
+                  ,row_number() over (order by regdate desc) rnd
+         		  ,cont_uuid
         		  ,hits
         	  from n_notice
         	 where 1=1
@@ -60,8 +62,9 @@
 			</if>  
         	   
           order by ${ord}
-        )
-        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        )a
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        order by rn1 desc
     </select>
     
     <select id="getNoticeCnt" parameterType="seoul.admin.vo.NoticeVO" resultType="java.lang.Integer">
@@ -158,14 +161,13 @@
         	  ,a.pay_yn
         	  ,a.pay_sum
         	  ,a.pay_date
-        	  ,a.description
         	  ,a.regdate
           from n_subject a
          where not exists (select b.subject_id
          					 from n_notice b
          					where a.subject_id=b.subject_id )
          					
-		 and a.type = #{type}         						
+      		and a.type = #{type}				
          					
          union
          
@@ -183,7 +185,6 @@
         	  ,a.pay_yn
         	  ,a.pay_sum
         	  ,a.pay_date
-        	  ,a.description
         	  ,a.regdate
           from n_subject a
          where a.subject_id = (select b.subject_id

@@ -77,11 +77,15 @@ public class MonitorsServiceImpl implements MonitorsService{
 		return monitorsDAO.updateMonitorsApply(monitorsVO);
 	}
 	
-	
+	@Override	
 	public 	List<MonitorsMemberVO> getMonitorsMember(MonitorsMemberVO monitorsVO) {			
 		monitorsVO.setPagingVO(new PagingVO(monitorsVO.getPageNum() , monitorsDAO.getMonitorsMemberCnt(monitorsVO)));
 		return monitorsDAO.getMonitorsMember(monitorsVO);		
 	}
 	
-
+	@Override
+	public List<MonitorsMemberVO> getMonitorsAnE_list(MonitorsMemberVO monitorsVO){
+		monitorsVO.setPagingVO(new PagingVO(monitorsVO.getPageNum() , monitorsDAO.getMonitorsMemberCnt(monitorsVO)));
+		return monitorsDAO.getMonitorsAnE_list(monitorsVO);		
+	}
 }

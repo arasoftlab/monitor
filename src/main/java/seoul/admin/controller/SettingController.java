@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import seoul.admin.service.AdminSettingService;
-//import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AdminSettingVO;
-//import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberService;
 import seoul.member.MemberVO;
-//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/setting/")
@@ -137,7 +134,7 @@ public class SettingController {
 			
 			if (!(memberService.deleteMember(memberVO) > 0))
 			{
-				// 한번이라도 업데이트가 실패하면 실패를 리턴함.
+ 
 				resultMap.put("result", "fail");
 				return resultMap;
 			}

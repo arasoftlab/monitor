@@ -18,7 +18,23 @@ public class MonitorsMemberVO extends CommonVO{
 	
 	private String query;
 
+	private String is_selection;
+
+	private String subject_id;
+
+	public String getSubject_id() {
+		return subject_id;
+	}
+	public void setSubject_id(String subject_id) {
+		this.subject_id = subject_id;
+	}
 	
+	public String getIs_selection() {
+		return is_selection;
+	}
+	public void setIs_selection(String is_selection) {
+		this.is_selection = is_selection;
+	}
 	
 	public String getPoll_num() {
 		return poll_num;

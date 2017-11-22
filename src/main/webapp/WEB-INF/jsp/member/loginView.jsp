@@ -82,7 +82,7 @@ function chk_login() {
 			}
 		},
 		error : function(e) {
-			alert("시스템 동작오류 입니다.");
+			alert("시스템 동작오류 입니다. \n오류코드는 MA:32:9 입니다. ");
 		}
 	});
 	
@@ -112,7 +112,7 @@ function fnLogin() {
 				}
 			},
 			error : function() {
-				alert("error!!");
+				alert("시스템 동작오류 입니다. \n오류코드는 MA:32:9 입니다.");
 			}
 		});
 	}

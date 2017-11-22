@@ -1,9 +1,9 @@
 package common.vo;
 
 public class MenuVO {
-	private String depth1;	// ��
-	private String depth2;	// �� 
-	private String depth3;	// ��
+	private String depth1;
+	private String depth2; 
+	private String depth3;
 	private String depth4;
 	public String getDepth1() {
 		return depth1;

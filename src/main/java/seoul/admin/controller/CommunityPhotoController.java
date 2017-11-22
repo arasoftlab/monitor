@@ -46,7 +46,7 @@ public class CommunityPhotoController {
 		}
 		
 		model.addAttribute("list", list);
-//		model.addAttribute("vo", noticeVO);
+		model.addAttribute("vo", bbsVO);
 		model.addAttribute("page", bbsVO.getPagingVO());
 		
 		return "admin/community/photo/plist.admin";
