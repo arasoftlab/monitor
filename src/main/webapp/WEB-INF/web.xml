@@ -72,6 +72,10 @@
   		<location>/error/500.jsp</location>
   </error-page>
   
+  <session-config>
+  	<tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+  
   <error-page>
   		<error-code>508</error-code>
   		<location>/error/508.jsp</location>

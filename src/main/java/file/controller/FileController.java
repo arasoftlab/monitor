@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,8 @@ import util.BaseUtil;
 public class FileController {
 	
 	private static final String SYNC = "SYNC";
+	
+	private Logger log;
 	
 	@Autowired
 	private FileService fileService;
@@ -91,7 +94,7 @@ public class FileController {
 		return resultMap;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "fileUpload.do")
+	@RequestMapping(method = RequestMethod.POST, value = "fileUpload.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE )
 	public @ResponseBody ResponseEntity<JsonObject> fileUpload(
 			@RequestParam(value="data_id",required=false) String data_id,
 			HttpServletRequest req,
@@ -102,20 +105,8 @@ public class FileController {
 		JsonObject obj = new JsonObject();
 		Gson gson = new Gson();
 		
-		
-		MultipartHttpServletRequest mfr =  (MultipartHttpServletRequest) req;
-		Iterator <String> iterator = mfr.getFileNames();
-
-		MultipartFile mf = mfr.getFile(iterator.next());
-		
-		System.out.println(mf.getOriginalFilename());
-		System.out.println(mf.getContentType());
-		System.out.println(mf.getBytes());
-		
 		FileVO fvo = new FileVO();
-		System.out.println(data_id);
-		System.out.println(req.getParameterValues("image"));
-		System.out.println(req.getDispatcherType());
+
 		try {
 			fvo = fileService.saveFile(req, session, data_id);
 		} catch (Exception e) {
@@ -125,6 +116,11 @@ public class FileController {
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
 			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-112 입니다.\n관리자에게 이코드를 알려주십시요.");
 			obj.addProperty("status", "508");
+
+	        log.debug("------------- file start -------------");
+	        log.debug("req raw data : " + req.toString());
+	        log.debug("-------------- file end --------------\n");
+	        
 			//JsonObject obj = new JsonObject(resultMap);
 			return new ResponseEntity<JsonObject>(obj, responseHeaders, HttpStatus.CREATED);
 		}

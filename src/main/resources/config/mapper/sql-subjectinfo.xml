@@ -24,10 +24,10 @@
         		  ,cont_uuid
         		  ,case 
 						when sysdate <![CDATA[< ]]> apply_s_date  							     			  then '01'
-						when sysdate <![CDATA[>=]]> apply_s_date  and sysdate <![CDATA[<=]]> apply_e_date     then '02'
-						when sysdate <![CDATA[> ]]> apply_e_date  and sysdate <![CDATA[<=]]> submit_s_date    then '03'
-						when sysdate <![CDATA[>=]]> submit_s_date and sysdate <![CDATA[<=]]> submit_e_date    then '04'
-						when sysdate <![CDATA[> ]]> submit_e_date and sysdate <![CDATA[<=]]> submit_e_date+7  then '05'
+						when sysdate <![CDATA[>=]]> apply_s_date  and sysdate <![CDATA[<=]]> apply_e_date+1    then '02'
+						when sysdate <![CDATA[> ]]> apply_e_date+1  and sysdate <![CDATA[<=]]> submit_s_date    then '03'
+						when sysdate <![CDATA[>=]]> submit_s_date and sysdate <![CDATA[<=]]> submit_e_date+1    then '04'
+						when sysdate <![CDATA[> ]]> submit_e_date+1 and sysdate <![CDATA[<=]]> submit_e_date+7  then '05'
 						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is null 	  then '06'
 						when pay_yn = 'Y' and sysdate <![CDATA[> ]]> submit_e_date+7 and pay_date is not null then '07'
 						else '05'
@@ -54,9 +54,9 @@
 				,pay_yn
 				,pay_sum
 				,pay_date
-				,description
 				,cont_uuid
-				,regdate				
+				,regdate
+				,description				
         )values(
         	 SUBJECT_SEQ.NEXTVAL
         	,#{title,jdbcType=VARCHAR}
@@ -73,9 +73,9 @@
         	,#{pay_yn,jdbcType=VARCHAR}
         	,#{pay_sum,jdbcType=INTEGER}
         	,#{pay_date,jdbcType=DATE}
-        	,#{description,jdbcType=VARCHAR}
         	,#{cont_uuid,jdbcType=VARCHAR}
         	,sysdate
+        	,#{description,jdbcType=LONGVARCHAR}
         )
     </insert>
     
@@ -95,9 +95,9 @@
 	        	,pay_yn=#{pay_yn,jdbcType=VARCHAR}
 	        	,pay_sum=#{pay_sum,jdbcType=INTEGER}
 	        	,pay_date=#{pay_date,jdbcType=DATE}
-	        	,description=#{description,jdbcType=VARCHAR}
 	        	,close_comment=#{close_comment,jdbcType=VARCHAR}
  	        	,cont_uuid=#{cont_uuid,jdbcType=VARCHAR}
+	        	,description=#{description,jdbcType=LONGVARCHAR}
          where subject_id=#{subject_id}
     </update>
     

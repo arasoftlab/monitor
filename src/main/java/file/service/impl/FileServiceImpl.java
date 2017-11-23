@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -26,6 +27,8 @@ import file.vo.FileMappingVO;
 import file.vo.FileVO;
 
 public class FileServiceImpl implements FileService{
+	
+	private Logger log;
 	
 	private FileDAO fileDAO;
 	
@@ -42,24 +45,16 @@ public class FileServiceImpl implements FileService{
 		String fileSize = null;
 
 		MultipartHttpServletRequest multipartRequest =  (MultipartHttpServletRequest) req;   
-
-		Iterator<String> fileNames = multipartRequest.getFileNames();	 
-		
-		System.out.println("fileSize service");
+		Iterator<String> fileNames = multipartRequest.getFileNames();	 	
 		
 		while(fileNames.hasNext()){
-			String variableName = fileNames.next();	 
-			
-			System.out.println("variableName : " + variableName);
-			
+			String variableName = fileNames.next();	 					
 			List<MultipartFile> multipartFiles = multipartRequest.getFiles(variableName);
 
 			for (MultipartFile multipartFile : multipartFiles){
-				System.out.println(multipartFile.getOriginalFilename());
-				 
+
 				if (!multipartFile.isEmpty()){	
 					size = multipartFile.getSize();
-					System.out.println("size / " + size);
 					fileSize = Integer.toString((int)size);
 				}
 			}
@@ -106,11 +101,9 @@ public class FileServiceImpl implements FileService{
 	}
 
 	private FileVO fileUpload(HttpServletRequest req, HttpSession session) {
-		FileVO fileVO = new FileVO();
-		
+		FileVO fileVO = new FileVO();		
 		String savePath = "/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth());
 		String uploadPath = req.getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
-		
 		String orgFileName = "";
 		String unqFileName = "";
 		int fileSize = 0;
@@ -119,31 +112,32 @@ public class FileServiceImpl implements FileService{
 		Iterator<String> fileNames = multipartRequest.getFileNames();
 		MultipartFile multipartFile = null;
 		
-		System.out.println("file total ::" + req.toString());
+
 		
 		while(fileNames.hasNext()){
 			File dir = new File(uploadPath);
 			if(!dir.exists()) dir.mkdirs();
 		
 			multipartFile = multipartRequest.getFile(fileNames.next());
-			System.out.println("file fsize ::" + multipartFile.getSize());
-			System.out.println("file names ::" + multipartFile.getOriginalFilename());
 			
-			if(!multipartFile.isEmpty()){
+	        log.debug("------------- file start -------------");
+	        log.debug("name : " + multipartFile.getName());
+	        log.debug("filename : " + multipartFile.getOriginalFilename());
+	        log.debug("size : " + multipartFile.getSize());
+	        log.debug("-------------- file end --------------\n");
+
+	        if(!multipartFile.isEmpty()){
 				
 			System.out.println(multipartFile.isEmpty());
 				orgFileName = multipartFile.getOriginalFilename();
 				unqFileName = System.currentTimeMillis()+"."+orgFileName.split("\\.")[orgFileName.split("\\.").length-1];
 				fileSize = (int) multipartFile.getSize();
-				//String fileType = BaseUtil.findMimeType(orgFileName);
 				String fileType = BaseUtil.findMimeTypeByTika(multipartFile);
 				
 				try {
-					System.out.println(uploadPath+"/"+unqFileName);
 					multipartFile.transferTo(new File(uploadPath+"/"+unqFileName));
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println(e.getMessage());
 				}
 				
 				fileVO.setFile_id(BaseUtil.uuid());

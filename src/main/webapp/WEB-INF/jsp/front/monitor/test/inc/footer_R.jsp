@@ -21,10 +21,3 @@
 	
 </footer>
 
-
-
-
-
-</body>
-</html>
-

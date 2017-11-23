@@ -22,7 +22,8 @@ public interface MonitorsService {
 	int getMonitorsCnt(MonitorsVO monitorsVO);
 	
 	int updateMonitorsApply(MonitorsVO monitorsVO);
-	
-	
+		
 	List<MonitorsMemberVO> getMonitorsMember(MonitorsMemberVO monitorsVO);
+	
+	List<MonitorsMemberVO> getMonitorsAnE_list(MonitorsMemberVO monitorsVO);
 }

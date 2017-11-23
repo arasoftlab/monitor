@@ -67,8 +67,6 @@ public class SubjectInfoController {
 			resultMap.put("result", "fail");
 		}
 		
-		System.out.println("JINX!!");
-		
 		return resultMap;
 	}
 	
@@ -85,7 +83,6 @@ public class SubjectInfoController {
 			resultMap.put("result", "fail");
 		}
 		
-		//System.out.print("JINX123");
 		
 		
 		return resultMap;

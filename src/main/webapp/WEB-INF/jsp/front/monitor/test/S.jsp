@@ -3,13 +3,6 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-
-<style>
-
-</style>
 
 <!-- 
 각 8개 페이지를 나누고 그마다 벨리데이션을 따로 지정한다.
@@ -190,12 +183,14 @@ function onChk(num){
 <script>
 
 function onChkESQ(obj){
-	 re = /[@#',:|]/gi; 
+	 $(obj).val($(obj).val().replace('\'','`'));
+	 
+	 re = /[@#":|]/gi; 
 	 var temp=$(obj).val();
 	 if(re.test(temp))
 	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
 	 	$(obj).val(temp.replace(re,""));
-	 	alert("[ # / \' / @ / , / : / | ] 문자는 사용할수 없습니다.");
+	 	alert("[ # / \" / @ / : / | ] 문자는 사용할수 없습니다.");
 	 }	
 }
 </script>

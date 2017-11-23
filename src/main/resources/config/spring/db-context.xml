@@ -28,6 +28,10 @@
 		<property name="configLocation" value="${sqlmap.location}" />
 	</bean>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 	
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>

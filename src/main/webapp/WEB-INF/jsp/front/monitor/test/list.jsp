@@ -119,7 +119,7 @@ function goEndpage(history_params , answers_id){
 		data : {
 			"history_params" : history_params,
 			"params" : params, 
-			"answers_id" : answers_id,
+			"answers_id" : answers_id
 			},
 		success : function(data){
 			
@@ -206,7 +206,7 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params){
 			"history_arr" : history_arr,
 			"history_params" : history_params,
 			"back_num" : back_num , 
-			"answers_id" : answers_id,
+			"answers_id" : answers_id
 			},
 		success : function(data){
 			$("#test_target").html(data);			
@@ -251,7 +251,7 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 						"history_params" : history_params,
 						"params" : params ,
 						"bifurcation" : bifurcation,
-						"answers_id" : answers_id,
+						"answers_id" : answers_id
 						},
 				success : function(data){
 					if (data != "")
@@ -275,6 +275,11 @@ function on_testPop_close(){
 	window.close();
 }
 
+$(window).load(function(){
+	onEnter();
+	opener.location.reload();
+	
+});
 </script>
 	
 
@@ -309,12 +314,4 @@ function on_testPop_close(){
 		<br/><span style="font-size:8pt;">창 닫기</span></button>
 	</div>
 
-<script>
 
-$(window).load(function(){
-	onEnter();
-	opener.location.reload();
-	
-});
-
-</script>

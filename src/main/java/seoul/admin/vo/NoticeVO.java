@@ -5,7 +5,7 @@ import java.util.Date;
 import common.vo.CommonVO;
 
 public class NoticeVO extends CommonVO{
-	private String notice_id;
+	private int notice_id;
 	private String title;
 	private String type;
 	private String open;
@@ -20,10 +20,10 @@ public class NoticeVO extends CommonVO{
 	
 	private String query;
 	
-	public String getNotice_id() {
+	public int getNotice_id() {
 		return notice_id;
 	}
-	public void setNotice_id(String notice_id) {
+	public void setNotice_id(int notice_id) {
 		this.notice_id = notice_id;
 	}
 	public String getTitle() {

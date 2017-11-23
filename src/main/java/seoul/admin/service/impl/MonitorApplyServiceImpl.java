@@ -19,7 +19,8 @@ public class MonitorApplyServiceImpl implements MonitorApplyService{
 	
 	@Override
 	public List<MonitorApplyVO> getMonitorApplyList(MonitorApplyVO monitorApplyVO) {		
-		monitorApplyVO.setPagingVO(new PagingVO(monitorApplyVO.getPageNum() , monitorApplyDAO.getMonitorApplyCnt(monitorApplyVO)));
+		monitorApplyVO.setPagingVO(new PagingVO(monitorApplyVO.getPageSize() ,monitorApplyVO.getPageNum() , monitorApplyDAO.getMonitorApplyCnt(monitorApplyVO)));
+		
 		return monitorApplyDAO.getMonitorApplyList(monitorApplyVO);
 	}
 

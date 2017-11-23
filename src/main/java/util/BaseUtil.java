@@ -70,7 +70,7 @@ public class BaseUtil {
 	}
 
 	/**
-	 * 
+	 *  
 	 * 
 	 * @param request
 	 * @return ""
@@ -105,7 +105,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * 
+	 *  
 	 * @return
 	 */
 	public static final int currentYear() {
@@ -119,7 +119,7 @@ public class BaseUtil {
 	
 	/**
 	 * 
-	 * Desc : 
+	 * Desc :  
 	 * @Mehtod Name : addZeroString
 	 * @param value
 	 * @return
@@ -130,7 +130,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * 
+	 *  
 	 * @param str
 	 * @return
 	 */
@@ -159,7 +159,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * ����Ǿ� �ִ� Tag�� <,> �� �ٲپ��ش�.
+	 *  
 	 * @param str
 	 * @return
 	 */
@@ -177,7 +177,7 @@ public class BaseUtil {
 	}
 	
 	/**
-	 * 
+	 *  
 	 * @param str
 	 * @param endIndex
 	 * @return
@@ -331,4 +331,5 @@ public class BaseUtil {
 		}
 	}
 
+	
 }

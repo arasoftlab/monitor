@@ -1,5 +1,7 @@
 package seoul.member;
 
+import java.util.Date;
+
 import common.vo.CommonVO;
 
 public class MemberVO extends CommonVO{
@@ -8,12 +10,12 @@ public class MemberVO extends CommonVO{
 
 	private String grade; 
 	private String poll_num;
-
-
 	
 	private String gugun;
 	private String sido;
 	private String dong;
+	
+	private String sido_cnt;
 	
 	private String sex;
 	private String job;
@@ -31,6 +33,93 @@ public class MemberVO extends CommonVO{
 	private String email;
 	private String birthday;
 	
+	private String birthday_ymd;
+	
+	private String phone_type;
+	
+	private String secession_disc;
+	private Date secession_date;
+	
+	private String apply_cnt;
+	private String selected_cnt;
+	private String tmp_sum1;
+	
+	private Date regdate;
+	private Date login_date;
+	
+	
+	
+	public void setSido_cnt(String sido_cnt)
+	{
+		this.sido_cnt = sido_cnt;
+	}
+	
+	public String getSido_cnt()
+	{
+		return sido_cnt;
+	}
+	
+	
+	public Date getSecession_date() {
+		return secession_date;
+	}
+	public void setSecession_date(Date secession_date) {
+		this.secession_date = secession_date;
+	}
+	
+	
+	public Date getLogin_date() {
+		return login_date;
+	}
+	public void setLogin_date(Date login_date) {
+		this.login_date = login_date;
+	}
+	
+	
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}	
+
+	
+	public String getTmp_sum1() {
+		return tmp_sum1;
+	}
+	public void setTmp_sum1(String tmp_sum1) {
+		this.tmp_sum1 = tmp_sum1;
+	}
+	
+	public void setAapply_cnt(String apply_cnt)
+	{
+		this.apply_cnt = apply_cnt;
+	}
+	
+	public String getApply_cnt()
+	{
+		return apply_cnt;
+	}
+	
+	public void setSelected_cnt(String selected_cnt)
+	{
+		this.selected_cnt = selected_cnt;
+	}
+	
+	public String getSelected_cnt()
+	{
+		return selected_cnt;
+	}
+	
+	
+	
+	public String getSecession_disc(){
+		return secession_disc;
+	}
+	
+	public void setSecession_disc(String secession_disc){
+		this.secession_disc = secession_disc;
+	}
 	
 	
 	public String getEmail(){
@@ -50,6 +139,14 @@ public class MemberVO extends CommonVO{
 	}
 
 
+	public String getBirthday_ymd(){
+		return birthday_ymd;
+	}
+	
+	public void setBirthday_ymd(String birthday_ymd){
+		this.birthday_ymd = birthday_ymd;
+	}
+	
 	
 	
 	public String getJob(){
@@ -106,6 +203,14 @@ public class MemberVO extends CommonVO{
 		this.phone = phone;
 	}
 	
+	
+	public String getPhone_type(){
+		return phone_type;
+	}
+	
+	public void setPhone_type(String phone_type){
+		this.phone_type = phone_type;
+	}
 	
 	
 	public String getQuery(){

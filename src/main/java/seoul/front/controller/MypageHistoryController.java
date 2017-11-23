@@ -32,23 +32,22 @@ public class MypageHistoryController {
 		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
 		MemberVO mem = (MemberVO)ret;
-			
+		
+		List<MonitorsMemberVO> list;
+		
 		if (mem != null)
 		{			
 			monitorsVO.setMember_id(mem.getId());
 		
-			List<MonitorsMemberVO> list = monitorsService.getMonitorsMember(monitorsVO);
+			monitorsVO.setPoll_num(mem.getPoll_num());
+			
+			list = monitorsService.getMonitorsMember(monitorsVO);
 			
 			model.addAttribute("list", list);
 		}
-		
-		
-		/*	
-		List<SubjectVO> list = subjectService.getSubjectMoneyList(subjectVO);
-		
-		model.addAttribute("list", subjectService.getSubjectMoneyList(subjectVO));
-		model.addAttribute("vo", subjectVO);
-		model.addAttribute("page", subjectVO.getPagingVO());*/
+				
+		model.addAttribute("vo", monitorsVO);
+		model.addAttribute("page", monitorsVO.getPagingVO());
 		return "front/mypage/history/list.default";
 	}
 	

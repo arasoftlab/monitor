@@ -23,7 +23,26 @@ public class AnswersVO extends CommonVO{
 	private String member_name;
 	
 	private String phone;
+	
+	private String job;
+	
+	private String birth;
 
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	
+	public String getBirth() {
+		return birth;
+	}	
+	
+	public void setJob(String job) {
+		this.job = job;
+	}
+	
+	public String getJob() {
+		return job;
+	}	
 	
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -32,7 +51,6 @@ public class AnswersVO extends CommonVO{
 	public String getPhone() {
 		return phone;
 	}
-	
 	
 	public void setMember_name(String member_name) {
 		this.member_name = member_name;
@@ -50,7 +68,6 @@ public class AnswersVO extends CommonVO{
 	public void setTeam_num(String team_num) {
 		this.team_num = team_num;
 	}
-	
 	
 	public String getPoll_num() {
 		return poll_num;

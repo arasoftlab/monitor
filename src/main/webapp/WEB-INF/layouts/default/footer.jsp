@@ -66,11 +66,5 @@
   </div>
 </div>
 
-<!-- for loading -->
-<div class="loadding"><!-- Place at bottom of page --></div>
-<div class="progress">
-    <div class="bar"></div >
-    <div class="percent">0%</div >
-</div>
 
 

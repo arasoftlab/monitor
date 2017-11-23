@@ -14,7 +14,6 @@ import seoul.admin.service.SubjectInfoService;
 import seoul.admin.service.SubjectService;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.SubjectVO;
-//import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/money")
@@ -42,7 +41,8 @@ public class SubjectMoneyController {
 		
 		model.addAttribute("s_vo" , subjectinfoService.getSubject(subjectVO));
 		
-		model.addAttribute("list" , list);				
+		model.addAttribute("list" , list);
+				
 		model.addAttribute("vo", monitorApplyVO);
 		model.addAttribute("page", monitorApplyVO.getPagingVO());
 
@@ -53,9 +53,8 @@ public class SubjectMoneyController {
 	@RequestMapping("all_list.do")
 	public String all_list(Model model, @ModelAttribute SubjectVO subjectVO) throws Exception{
 		
-		List<SubjectVO> list = subjectService.getSubjectMoneyList(subjectVO);
+		//List<SubjectVO> list = subjectService.getSubjectMoneyList(subjectVO);
 		
-		model.addAttribute("list2", list);
 		model.addAttribute("list" , subjectService.getSubjectMoneyList(subjectVO));
 				
 		model.addAttribute("vo", subjectVO);

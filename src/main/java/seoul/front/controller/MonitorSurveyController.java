@@ -19,16 +19,6 @@ public class MonitorSurveyController {
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute SubjectVO subjectVO) throws Exception{
 		subjectVO.setType("V");
-		/*
-		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
-		MemberVO mem = (MemberVO)ret;
-				
-		if (mem == null)
-		{				
-			subjectVO.setQuery("pay_yn = 'Y' and sysdate > submit_e_date+7 and pay_date is not null");
-		}*/
-		
-		subjectVO.setQuery("1=1 and NOT sysdate < apply_s_date");
 		
 		model.addAttribute("list", subjectService.getSubjectList(subjectVO));
 		model.addAttribute("vo", subjectVO);

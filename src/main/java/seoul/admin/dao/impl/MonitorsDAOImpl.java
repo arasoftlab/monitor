@@ -64,4 +64,11 @@ public class MonitorsDAOImpl extends SqlSessionDaoSupport implements MonitorsDAO
 	{
 		return getSqlSession().selectOne("monitors.getMonitorsMemberCnt", monitorsVO);		
 	}
+	
+	@Override	
+	public List<MonitorsMemberVO> getMonitorsAnE_list(MonitorsMemberVO monitorsVO){
+		return getSqlSession().selectList("monitors.getMonitorsAnE_list", monitorsVO);
+	}
+	
+	
 }

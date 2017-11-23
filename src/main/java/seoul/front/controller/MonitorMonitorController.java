@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.SessionContants;
+import seoul.admin.service.AdminSettingService;
 import seoul.admin.service.AnswersService;
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.SubjectInfoService;
 import seoul.admin.service.SubjectService;
+import seoul.admin.vo.AdminSettingVO;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
@@ -38,6 +40,9 @@ public class MonitorMonitorController {
 	@Autowired
 	private AnswersService answersService;
 	
+	@Autowired
+	private AdminSettingService adminSettingService;
+	
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute SubjectVO subjectVO) throws Exception{
 		subjectVO.setType("F");
@@ -49,11 +54,12 @@ public class MonitorMonitorController {
 						
 		if (mem == null)
 		{				
-			subjectVO.setQuery("pay_yn = 'Y' and sysdate > submit_e_date+7 and pay_date is not null");
+
 		}else{
+			subjectVO.setMember_id(mem.getId());
+			
 			model.addAttribute("member",mem);
 			 
-			subjectVO.setQuery("1=1 and NOT sysdate < apply_s_date");
 		}
 			
 		model.addAttribute("list", subjectService.getSubjectList(subjectVO));
@@ -78,6 +84,14 @@ public class MonitorMonitorController {
 		
 		if (mem != null)
 		{
+			model.addAttribute("m_info" , mem );
+			
+			
+			AdminSettingVO adminSettingVO = new AdminSettingVO();		
+			adminSettingVO = adminSettingService.getAdminSetting(adminSettingVO);		
+
+			model.addAttribute("now_poll" , adminSettingVO.getPoll_num());
+			
 			monitorsVO.setMember_id(mem.getId());
 			monitorsVO.setSubject_id(subjectVO.getSubject_id());
 			monitorsVO = monitorsService.getMonitors(monitorsVO);

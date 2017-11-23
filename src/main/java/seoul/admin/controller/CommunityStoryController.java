@@ -37,11 +37,10 @@ public class CommunityStoryController {
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute BBSVO bbsVO) throws Exception{
 
-		//이야기 게시판은 S 
 		bbsVO.setType("S");
 				
 		model.addAttribute("list", bbsService.getBBSList(bbsVO));
-//		model.addAttribute("vo", noticeVO);
+		model.addAttribute("vo", bbsVO);
 		model.addAttribute("page", bbsVO.getPagingVO());
 		
 		return "admin/community/story/list.admin";
@@ -72,7 +71,7 @@ public class CommunityStoryController {
 	@RequestMapping("sview.do")
 	public String sview(Model model, @ModelAttribute BBSVO bbsVO) throws Exception{
 		
-		bbsVO = bbsService.getBBS(bbsVO, true);		
+		bbsVO = bbsService.getBBS(bbsVO, false);		
 		model.addAttribute("vo", bbsVO);
 		
 		

@@ -12,6 +12,7 @@ public class BBSVO extends CommonVO{
 	private String description;
 	private String is_password;
 	private String member_id;
+	private String member_name;
 	private String password;
 	private Date regdate;
 	private int hits;
@@ -105,6 +106,12 @@ public class BBSVO extends CommonVO{
 		return query;
 	}
 	
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
 	public void setQuery(String query){
 		this.query = query;
 	}

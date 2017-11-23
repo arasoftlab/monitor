@@ -41,16 +41,20 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public NoticeVO getNotice(NoticeVO noticeVO, boolean updateHit) {
 		if(updateHit) noticeDAO.updateNoticeHit(noticeVO);
-		noticeVO = noticeDAO.getNotice(noticeVO);
-		if(!BaseUtil.isEmpty(noticeVO.getSubject_id())) noticeVO.setSubjectVO(subjectInfoDAO.getSubject(new SubjectVO(noticeVO.getSubject_id())));
-			noticeVO.setFileList(fileDAO.getFileList(new FileMappingVO(noticeVO.getCont_uuid(), null)));
 		
+		noticeVO = noticeDAO.getNotice(noticeVO);
+		if(!BaseUtil.isEmpty(noticeVO.getSubject_id())) {		
+			SubjectVO svo = new SubjectVO(noticeVO.getSubject_id());
+			noticeVO.setSubjectVO(subjectInfoDAO.getSubject(svo));
+		}else {
+			noticeVO.setFileList(fileDAO.getFileList(new FileMappingVO(noticeVO.getCont_uuid(), null)));
+		}
 		return noticeVO;
 	}
 	@Override
 	public int saveNotice(NoticeVO noticeVO) {
 		int effectRows = 0;
-		if(BaseUtil.isEmpty(noticeVO.getNotice_id()) || noticeVO.getNotice_id().equals("0") ){
+		if(BaseUtil.isEmpty(noticeVO.getNotice_id()) || noticeVO.getNotice_id() == 0 ){
 			//noticeVO.setNotice_id(BaseUtil.uuid());
 			noticeVO.setCont_uuid(BaseUtil.uuid());
 			

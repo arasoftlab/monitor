@@ -13,20 +13,20 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
-//import seoul.admin.service.SubjectService;
+import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
-//import util.BaseUtil;
+import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/answer")
 public class SubjectAnswerController {
 	
-	//@Autowired
-	//private SubjectService subjectService;
+	@Autowired
+	private SubjectService subjectService;
 	
 	@Autowired
 	private SubjectInfoService subjectInfoService;
@@ -123,9 +123,8 @@ public class SubjectAnswerController {
 		
 		subjectVO.setSubject_id(answersVO.getSubject_id());
 		
-		subjectVO = subjectInfoService.getSubject(subjectVO);	
-		
-		model.addAttribute("test", temp);
+		subjectVO = subjectInfoService.getSubject(subjectVO);		
+
 		model.addAttribute("s_vo",subjectVO);
 		
 		model.addAttribute("list", answersService.getNoAnswerList(answersVO));

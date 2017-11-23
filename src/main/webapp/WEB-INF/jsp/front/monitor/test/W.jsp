@@ -1,22 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<!-- 
-각 8개 페이지를 나누고 그마다 벨리데이션을 따로 지정한다.
- -->
+<style>
+.modal {
+	display: none;
+    position: fixed; 
+    top: 3%; 
+    right: 3%; 
+    left: 3%; 
+    width: 320px; 
+    margin: 0; 
+}
+.modal-body { 
+    height: 60%; 
+}
+</style>
 <script>
-
-$(document).ready(function() {
-	//document.getElementById('bbs_cont').onkeyup();
-	//document.getElementById('bbs_dsc').onkeyup();
-});
-
-
 function chkValidation()
 {
 	var answers ="";
@@ -164,37 +164,9 @@ function resize(obj) {
 </form>
 
 
-<script>
-
-function onChkESQ(obj){
-	 re = /[@#:|]/gi; 
-	 var temp=$(obj).val();
-	 if(re.test(temp))
-	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
-	 	$(obj).val(temp.replace(re,""));
-	 	alert("[ # / @ / : / | ] 문자는 사용할수 없습니다.");
-	 }	
-}
-</script>
-
+<%@ include file="inc/footer_common.jsp" %>
 
 <jsp:include page="inc/footer_W.jsp"></jsp:include>
 
 
-<c:if test="${!empty history_answer }">
 
-	<script>
-	
-	$(document).ready(function() {
-	
-		var w_temp_cnt = "${fn:length(optionList)}";
-		
-		for (var a = 0 ; a < w_temp_cnt ; a++)
-		{
-			$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	
-		}
-	});
-	
-	</script>
-
-</c:if>

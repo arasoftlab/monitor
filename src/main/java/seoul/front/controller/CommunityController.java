@@ -44,7 +44,7 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("list", list);
-//		model.addAttribute("vo", noticeVO);
+		model.addAttribute("vo", bbsVO);
 		model.addAttribute("page", bbsVO.getPagingVO());
 		return "front/community/photo/list.default";
 	}
@@ -99,11 +99,11 @@ public class CommunityController {
 	@RequestMapping("/story/story_list.do")
 	public String story_list(Model model, @ModelAttribute BBSVO bbsVO) throws Exception{
 		
-		//이야기 게시판은 S 
+		//�씠�빞湲� 寃뚯떆�뙋�� S 
 		bbsVO.setType("S");
 		
 		model.addAttribute("list", bbsService.getBBSList(bbsVO));
-//		model.addAttribute("vo", noticeVO);
+		model.addAttribute("vo", bbsVO);
 		model.addAttribute("page", bbsVO.getPagingVO());
 		return "front/community/story/list.default";
 	}
@@ -190,7 +190,7 @@ public class CommunityController {
 	}
 	
 	
-	// 댓글 달기 
+	// �뙎湲� �떖湲� 
 	@RequestMapping("/commentinsert.do")
 	public @ResponseBody Map<String, Object> commentinsert(@ModelAttribute CommentVO commentVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -202,7 +202,7 @@ public class CommunityController {
 		return resultMap;
 	}
 
-	// 댓글 달기 
+	// �뙎湲� �떖湲� 
 	@RequestMapping("/commentdelete.do")
 	public @ResponseBody Map<String, Object> commentdelete(@ModelAttribute CommentVO commentVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();

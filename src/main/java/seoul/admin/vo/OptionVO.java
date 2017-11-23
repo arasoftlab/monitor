@@ -31,9 +31,7 @@ public class OptionVO extends CommonVO{
 	public OptionVO(String question_id) {
 		this.question_id = question_id;
 	}
-	
-	
-	// 척도형 옵션 추가버튼으로 form 형태를 저장 
+ 
 	public OptionVO(String question_id , int form) {
 		this.question_id = question_id;
 		this.form = form;

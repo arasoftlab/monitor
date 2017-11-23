@@ -43,15 +43,13 @@ public class QuestionServiceImpl implements QuestionService{
 		questionVO.setCont_uuid(BaseUtil.uuid());
 
 //		questionVO.setCont_type("");
-		
-		// description 체크 ( 복사 인서트시 값을 들고 오므로 없을시 "" 값 처리 )
+ 
 		if ( questionVO.getDescription()==null || questionVO.getDescription()=="" )
 			questionVO.setDescription("");
-		// title 체크 
+ 
 		if ( questionVO.getTitle()==null || questionVO.getTitle()=="" )
 			questionVO.setTitle("");
-
-		// 옵션  선택 체크 
+ 
 		if ( questionVO.getCont_type()==null || questionVO.getCont_type()=="" )
 			questionVO.setCont_type("");		
 		

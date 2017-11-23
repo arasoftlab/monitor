@@ -1,7 +1,6 @@
 package seoul.admin.controller;
 
 import java.util.HashMap;
-//import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//import seoul.admin.service.OptionService;
-//import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
 import seoul.admin.service.SubjectService;
-//import seoul.admin.vo.OptionVO;
-//import seoul.admin.vo.QuestionSettingsVO;
-//import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
 import util.BaseUtil;
 

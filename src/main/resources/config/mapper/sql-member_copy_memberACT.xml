@@ -284,77 +284,6 @@
    		
 	</select>
 
-
-
-
-
-
-	<select id="getMemberManagerlist_secession" parameterType="seoul.admin.vo.MemberManagerVO" resultType="seoul.admin.vo.MemberManagerVO">
-
-			select e.* 
-			from (
-			select d.*,
-			row_number() over (order by d.secession_date desc) rn,
-			row_number() over (order by d.secession_date asc) rnd
-			from (select a.id, 
-			c.M001_NM name,
-			a.poll_num,
-			a.grade,
-			a.sido,
-			a.gugun,
-			a.dong,
-			a.job,
-			a.sex,
-			a.login_date,
-			a.secession_disc,
-			a.secession_date,
-			c.M001_SSN birthday,
-			c.M001_PHONE phone,
-			c.M001_PHONE_GB phone_type,
-			c.M001_EMAIL email,
-			a.regdate,
-			b.apply_cnt, 
-			b.selection_cnt--,
-			from member a,(select c.member_id, COUNT(*) as apply_cnt
-			, count(case C.is_selection when 'Y' then 1 end) as selection_cnt
-			FROM n_monitors C, member a
-			where C.member_id = a.id 
-			group by c.member_id)b, hisip.vw_mem001_m_monitor@sip2 c
-			where b.MEMBER_ID(+) = a.id
-			AND c.M001_id(+) = a.id
-			AND a.regdate IS NOT NULL 
-			
-		  	<if test="grade != null and grade != ''">
-	      	   and a.grade = #{grade}
-			</if>	
-	
-			<if test="poll_num != null and poll_num != ''">
-	      	   and a.poll_num = #{poll_num}
-			</if>
-
-			  <choose>
-			    <when test='searchCategory != null and searchCategory == "M001_NM" and  searchCategory != ""'>
-					and c.M001_NM like '%' || #{searchText} || '%'
-			    </when>
-			    <when test='searchCategory != null and searchCategory == "M001_PHONE" and  searchCategory != ""'>
-			       and c.M001_PHONE like '%' || #{searchText} || '%'
-			    </when>
-			    <when test='searchCategory != null and searchCategory == "id" and  searchCategory != ""'>
-			       and a.id like '%' || #{searchText} || '%'
-     			</when>
-			   </choose>
-			      
-			order by a.poll_num DESC , a.grade ASC , a.secession_date DESC)d 
-		)e
-    	where rn  between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
-		  		
-   		
-	</select>
-
-
-
-
-
 	<select id="getMemberManagerCnt" parameterType="seoul.admin.vo.MemberManagerVO" resultType="java.lang.Integer">	
         select count(*)
           from member
@@ -401,13 +330,4 @@
 	    where id=#{id}
 	</select>
 	
-	<select id="getM001_secession" parameterType="seoul.member.MemberVO" resultType="seoul.member.MemberVO">
-		select 
-		id
-		from member ,hisip.vw_mem001_m_monitor@sip2
-		where
-		grade != 'secession'
-		AND M001_ID = id 
-		AND M001_DEL_YN ='Y'
-	</select>
 </mapper>

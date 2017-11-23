@@ -3,7 +3,8 @@
 <mapper namespace="bbs">
 
     <select id="getBBSList" parameterType="seoul.admin.vo.BBSVO" resultType="seoul.admin.vo.BBSVO">
-        select * from (
+	select a.*, to_char(rn1) rn        
+		from (
         	select bbs_id
         		  ,title
         		  ,type
@@ -11,8 +12,10 @@
         		  ,description
         		  ,is_password
         		  ,member_id
+        		  ,(select m001_nm from hisip.vw_mem001_m_monitor@sip2 where n_bbs.member_id = m001_id) as member_name
         		  ,regdate
-        		  ,row_number() over (order by ${ord}) rn
+        		  ,row_number() over (order by regdate asc) rn1
+                  ,row_number() over (order by regdate desc) rnd
         		  ,cont_uuid
         		  ,hits
         	  from n_bbs
@@ -29,8 +32,9 @@
 			</if>
         	
           order by ${ord}
-        )
-        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        )a
+        where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+        order by rn1 desc
     </select>
     
     

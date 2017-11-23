@@ -2,11 +2,8 @@ package seoul.admin.dao;
 
 import java.util.List;
 
-//import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorsMemberVO;
 import seoul.admin.vo.MonitorsVO;
-//import seoul.admin.vo.NoticeVO;
-//import seoul.admin.vo.SubjectVO;
 
 public interface MonitorsDAO {
 	MonitorsVO getMonitors(MonitorsVO monitorsVO) ;
@@ -25,8 +22,9 @@ public interface MonitorsDAO {
 	
 	int updateMonitorsApply(MonitorsVO monitorsVO);
 	
-	
 	int getMonitorsMemberCnt(MonitorsMemberVO monitorsVO);
 	
 	List<MonitorsMemberVO> getMonitorsMember(MonitorsMemberVO monitorsVO);
+	
+	List<MonitorsMemberVO> getMonitorsAnE_list(MonitorsMemberVO monitorsVO);
 }

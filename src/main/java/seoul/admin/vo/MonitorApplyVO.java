@@ -19,13 +19,81 @@ public class MonitorApplyVO extends CommonVO{
 	
 	private String pay;
 	
+	
 	private String member_name;
+	
 	private String gugun;
 	private String sido;
 	private String dong;
+	
 	private String send_cnt;
+	
 	private String phone;
+	
 	private String birth;
+
+	
+	public String getBirth(){
+		return birth;
+	}
+	
+	public void setBirth(String birth){
+		this.birth = birth;
+	}
+	
+	
+	public String getPhone(){
+		return phone;
+	}
+	
+	public void setPhone(String phone){
+		this.phone = phone;
+	}
+	
+	
+	public String getSend_cnt(){
+		return send_cnt;
+	}
+	
+	public void setSend_cnt(String send_cnt){
+		this.send_cnt = send_cnt;
+	}
+	
+	public String getGugun(){
+		return gugun;
+	}
+	
+	public void setGugun(String gugun){
+		this.gugun = gugun;
+	}
+	
+	
+	public String getSido(){
+		return sido;
+	}
+	
+	public void setSido(String sido){
+		this.sido = sido;
+	}
+	
+
+	public String getDong(){
+		return dong;
+	}
+	
+	public void setDong(String dong){
+		this.dong = dong;
+	}
+	
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	
+	public String getMember_name() {
+		return member_name;
+	}
+	
+	
 	
 	
 	public void setPay(String pay)
@@ -114,62 +182,6 @@ public class MonitorApplyVO extends CommonVO{
 	
 	public void setQuery(String query){
 		this.query = query;
-	}
-
-	public String getMember_name() {
-		return member_name;
-	}
-
-	public void setMember_name(String member_name) {
-		this.member_name = member_name;
-	}
-
-	public String getGugun() {
-		return gugun;
-	}
-
-	public void setGugun(String gugun) {
-		this.gugun = gugun;
-	}
-
-	public String getSido() {
-		return sido;
-	}
-
-	public void setSido(String sido) {
-		this.sido = sido;
-	}
-
-	public String getDong() {
-		return dong;
-	}
-
-	public void setDong(String dong) {
-		this.dong = dong;
-	}
-
-	public String getSend_cnt() {
-		return send_cnt;
-	}
-
-	public void setSend_cnt(String send_cnt) {
-		this.send_cnt = send_cnt;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
 	}
 	
 	

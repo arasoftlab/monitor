@@ -49,5 +49,4 @@ public class AnswersDAOImpl extends SqlSessionDaoSupport implements AnswersDAO{
 	public List<AnswersVO> getNoAnswerList(AnswersVO answersVO){
 		return getSqlSession().selectList("answers.getNoAnswerList", answersVO);
 	}
-	
 }

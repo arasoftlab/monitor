@@ -46,6 +46,7 @@
 			      
 	    </mvc:message-converters>
 	</mvc:annotation-driven>
+	<mvc:annotation-driven />
 	
 	<mvc:view-controller path="/" view-name="login" />
 	
@@ -64,6 +65,10 @@
 	
 	<bean name="excelView" class="excel.ExcelView"/>
 	
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 	<mvc:interceptors>
 	    <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -101,7 +106,10 @@
         <beans:property name="order" value="0"/>
     </beans:bean>
 		
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<beans:property name="messageConverters">
 			<beans:list>
