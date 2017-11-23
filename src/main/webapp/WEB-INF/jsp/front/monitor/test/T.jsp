@@ -42,48 +42,22 @@
 #imagePreview {
 	padding: 10px;
 }
+
+.modal {
+	display: none;
+    position: fixed; 
+    top: 3%; 
+    right: 3%; 
+    left: 3%; 
+    width: 320px; 
+    margin: 0; 
+}
+.modal-body { 
+    height: 60%; 
+}
 </style>
 
 <script>
-
-var InputImage = 
- (function loadImageFile() {
-    if (window.FileReader) {
-        var ImagePre; 
-        var ImgReader = new window.FileReader();
-        var fileType = /^(?:image\/bmp|image\/gif|image\/jpeg|image\/png|image\/x\-xwindowdump|image\/x\-portable\-bitmap)$/i; 
- 
-        ImgReader.onload = function (Event) {
-            if (!ImagePre) {
-                var newPreview = document.getElementById("imagePreview");
-                ImagePre = new Image();
-                ImagePre.style.width = "200px";
-                ImagePre.style.height = "140px";
-                newPreview.appendChild(ImagePre);
-            }
-            ImagePre.src = Event.target.result;
-            
-        };
- 
-        return function () {
-         
-            var img = document.getElementById("image").files;
-           
-            if (!fileType.test(img[0].type)) { 
-             alert("이미지 파일을 업로드 하세요"); 
-             return; 
-            }
-            
-            ImgReader.readAsDataURL(img[0]);
-            fnFileCheck();
-        }
- 
-    }
-   
-            document.getElementById("imagePreview").src = document.getElementById("image").value;     
-})();
-
-
 
 	var fileUpMaxCnt = "${fileUpMaxCnt}";
 	var fileMaxSize = Number("${fileMaxSize}") * 2048 *1024;
@@ -111,28 +85,24 @@ var InputImage =
 	function fnFileCheck(){
 
 		var fileSize =0;
+		var $progress = $('#myModal');
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType: 'json',
-			    async: false,
-			    cache: false,
-			    success: function(datas){
-					var data = null;
+			    beforeSend: function(){
+			    	$progress.css('display', 'block');
+					$progress.modal({backdrop: 'static', show: true});
+					$progress.modal('show');
+			    },
+			    success: function(data){
 
-			    	if($.browser.msie && $.browser.version < 8){
-			    		data = datas
-			    	}else{
-			    		data = datas
-			    	}
-			    	
 					if( data.result == "success" ){
 						fileSize = Number(data.fileSize);
 
 						if(fileSize <= fileMaxSize){
 
 							fnFileUpload();							
-						}
-						
+						}						
 						
 					}else{
 						
@@ -149,6 +119,9 @@ var InputImage =
 			    error: function(xhr, textStatus, errorThrown){
 			    	alert("사용하신 브라우저의 버전은 인터넷 익스플로러 " + $.browser.version + "입니다. \n상위버전을 사용해 주세요.!!");
 			    	return;
+			    },
+			    complete: function(xhr){
+			    	
 			    }
 			};
 		
@@ -158,31 +131,28 @@ var InputImage =
 	}
 	
 	
+	
 	function fnFileUpload(){
 		
 
 		data_id = guid();
-
-		var bar = $('.bar');
-		var percent = $('.percent');
-		var status = $('#status');
-		var progress = $('.progress');
+		var $progress = $('#myModal');
+		var $bar = $progress.find('.progress-bar');
+		var $percent = $('.percent');
 		
 		var options = {
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id },
 			    dataType: 'json',
 			    beforeSend: function(){
-			    	status.empty();
 			    	var percentVal = '0%';
-			    	bar.width(percentVal);
-			    	percent.html(percentVal);
-			    	progress.css('display','block');
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
 			    },
 			    uploadProgress: function(event, position, total, percentComplete){
 			    	var percentVal = percentComplete + '%';
-			    	bar.width(percentVal);
-			    	percent.html(percentVal);
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
 			    },
 			    success: function(data){
 			    	var file = null;
@@ -199,13 +169,6 @@ var InputImage =
 						
 						$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
 						
-						
-			    		var html = 	"<tr>";
-						html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
-						html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
-						html += 	"</tr>";
-						$("#fileList").append(html);
-
 						$("input[type='file']").val("");
 						
 						if($("#files").val().length < 1){			
@@ -224,6 +187,16 @@ var InputImage =
 							return;
 						}
 						
+						
+			    		var html = 	"<tr>";
+						html += 		"<input type='hidden' id='fileListId' value='"+file.file_id+"' checked>";
+						html += 		"<td class='text-left'>"+file.orgFileName+"</td>";
+						html += 	"</tr>";
+						$("#fileList").append(html);
+
+						$("input[type='file']").val("");
+						
+												
 			    	}else{
 			    		if(data.status == "508"){
 			    			alert(data.result);
@@ -233,16 +206,17 @@ var InputImage =
 			    		return;
 			    	}
 					var percentVal='100%';
-					bar.width(percentVal);
-					percent.html(percentVal);
-					progress.css('display','none');
+					$bar.width(percentVal);
+					$percent.html(percentVal);
+					
 			    },
 			    error: function(xhr, status, err){
 			    	alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
 			    	return;
 			    },
 			    complete: function(xhr){
-			    	status.html(xhr.responseText);
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
 			    }
 		};
 				
@@ -376,6 +350,7 @@ function chkMob() {
 chkMob();
 
 </script>
+
 
 
 
@@ -516,22 +491,24 @@ chkMob();
 		</c:otherwise>
 	</c:choose>
 </div>
-
 	
 </form>
+
+
+
 
 <script>
 
 function onChkESQ(obj){
-	 /*
+	 
 	 re = /[@#:|]/gi; 
 	 var temp=$(obj).val();
 	 if(re.test(temp))
 	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
 	 	$(obj).val(temp.replace(re,""));
-	 	alert("[ # / \' / @ / , / : / | ] 문자는 사용할수 없습니다.");
+	 	alert("[ # / @ / : / | ] 문자는 사용할수 없습니다.");
 	 }
-	 */
+	 
 }
 
 </script>
@@ -544,7 +521,27 @@ function onChkESQ(obj){
 
 	<script>
 	//TODO 이전 답변이 있을 경우 
-	//$("#answers_1").val($("#answers_1").val().replace(/<br>/g, "\r\n"));
+	$("#answers_1").val($("#answers_1").val().replace(/<br>/g, "\r\n"));
 	</script>
 
 </c:if>
+
+<!-- Modal -->
+<div class="modal animated fade center-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-clock-o"></i>잠시만 기다려 주세요.</h4>
+      </div>
+      <div class="modal-body">
+        <p>파일업로드를 처리중입니다.</p>
+        <div class="progress">
+          <div class="progress-bar bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
