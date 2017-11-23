@@ -99,6 +99,7 @@ var InputImage =
 	{
 		fileObjects ="${fileObjects_t}";
 	}
+
 	
 	function guid() {
 	    function s4() {
@@ -108,44 +109,30 @@ var InputImage =
 	}
 		
 	function fnFileCheck(){
-		
-		var fileSize;
-		var fchk = false;
+
+		var fileSize =0;
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType: 'json',
 			    async: false,
 			    cache: false,
 			    success: function(datas){
-			    	console.log("3:"+datas);
-			    	var data = null;
-					if($.browser.msie && $.browser.version <= 9){
-						//datas = datas.replace('<pre>', '');
-						//datas = datas.replace('</pre>', '');
-						//data = JSON.parse(datas);
-						//data = JSON.stringify(datas);
-						data = datas;
-						
-					}else{
-						data = datas;
-					}
-					//data = JSON.parse(data);
-					console.log("4:"+datas.result);
-					console.log("5:"+datas.status);
-					console.log("6:"+data);
-					//data = JSON.parse(datas);
-					console.log("7:"+data);
-					//data = JSON.stringify(datas);
-					console.log("8:"+data);
-					
-					if( data.status != "508" && data.status != "undefined" ){
+					var data = null;
+
+			    	if($.browser.msie && $.browser.version < 8){
+			    		data = datas
+			    	}else{
+			    		data = datas
+			    	}
+			    	
+					if( data.result == "success" ){
 						fileSize = Number(data.fileSize);
-						//console.log(" 파일용량 :" + fileSize);
-						//console.log(" 최대크기 :" + fileMaxSize);
+
 						if(fileSize <= fileMaxSize){
-							fchk=true;
-														
+
+							fnFileUpload();							
 						}
+						
 						
 					}else{
 						
@@ -153,29 +140,20 @@ var InputImage =
 			    			alert(data.result);
 			    			return;
 			    		}else{
-			    			//console.log("-3:" + data);
 			    			alert("파일체크 오류 입니다.");
 			    			return;
 			    		}
 					}
-					
+
 			    },
 			    error: function(xhr, textStatus, errorThrown){
-			    	console.log(xhr);
-			    	console.log(textStatus);
-			    	console.log(errorThrown);
-			    	alert("잘못된 파일입니다.\n다시 시도하세요.");
+			    	alert("사용하신 브라우저의 버전은 인터넷 익스플로러 " + $.browser.version + "입니다. \n상위버전을 사용해 주세요.!!");
 			    	return;
 			    }
 			};
 		
 	
 		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
-		
-		console.log("9:"+fchk);
-		if(fchk){
-			fnFileUpload();
-		}
 
 	}
 	
@@ -185,28 +163,31 @@ var InputImage =
 
 		data_id = guid();
 
+		var bar = $('.bar');
+		var percent = $('.percent');
+		var status = $('#status');
+		var progress = $('.progress');
 		
 		var options = {
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id },
 			    dataType: 'json',
-			    async: false,
-			    cache: false,
-			    success: function(datas){
-			    	var data = null;
-			    	console.log("1:"+datas)
-					if($.browser.msie && $.browser.version <= 9){
-						//datas = datas.replace('<pre>', '');
-						//datas = datas.replace('</pre>', '');
-						//data = JSON.parse(datas);
-						//data = JSON.stringify(datas);
-						data = datas;
-					}else{
-						data = datas;
-					}
-					console.log("2:"+data);
+			    beforeSend: function(){
+			    	status.empty();
+			    	var percentVal = '0%';
+			    	bar.width(percentVal);
+			    	percent.html(percentVal);
+			    	progress.css('display','block');
+			    },
+			    uploadProgress: function(event, position, total, percentComplete){
+			    	var percentVal = percentComplete + '%';
+			    	bar.width(percentVal);
+			    	percent.html(percentVal);
+			    },
+			    success: function(data){
+			    	var file = null;
 
-					if(data.status != "508" && data.status != "undefined"){
+					if(data.status != "508" && data.result == "success"){
 			    		var file = data.fileVO;
 			    		var fimg = $("#file_img");
 			    		fimg.attr("src" ,"/monitor/"+file.savePath + "/"+ file.unqFileName);
@@ -243,8 +224,6 @@ var InputImage =
 							return;
 						}
 						
-						return;
-						
 			    	}else{
 			    		if(data.status == "508"){
 			    			alert(data.result);
@@ -253,11 +232,17 @@ var InputImage =
 			    		}
 			    		return;
 			    	}
-					
+					var percentVal='100%';
+					bar.width(percentVal);
+					percent.html(percentVal);
+					progress.css('display','none');
 			    },
 			    error: function(xhr, status, err){
 			    	alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
 			    	return;
+			    },
+			    complete: function(xhr){
+			    	status.html(xhr.responseText);
 			    }
 		};
 				
@@ -407,7 +392,7 @@ chkMob();
 		</div>
 	</div>
 
-<form name="testData" style="padding-top:10px; padding-bottom:10px;display: table;width:100%">
+<form name="testData" style="padding-top:10px; padding-bottom:10px; width:100%">
 
 	<input type="hidden" id="type" name="type" value="${vo.type}">
 	<input type="hidden" id="q_num" name="q_num" value="${vo.question_num}">

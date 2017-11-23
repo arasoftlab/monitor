@@ -12,6 +12,9 @@
 	<meta name="description" content="">
 	<meta name="author" content="http://bootstraptaste.com" />
 	<title><tiles:insertAttribute name="title" /></title>
+	<!-- 	
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	  -->
 	<link href="<c:url value='/css/front/css/reset.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/style.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/font-awesome.min.css'/>" rel="stylesheet" />
@@ -36,9 +39,9 @@
 	
 	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-	<!-- 
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	 -->
+	
 	<script src="<c:url value='/js/browser_check.js' />"></script>
 	
 	<!--[if lt IE 9]>	
