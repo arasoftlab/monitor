@@ -1,8 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
 <footer style="background:none; text-align:-webkit-center;">
 
@@ -20,11 +16,4 @@
 	
 	
 </footer>
-
-
-
-
-
-</body>
-</html>
 

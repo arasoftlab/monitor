@@ -9,9 +9,6 @@
 
 <c:set var="fileObjects_t" value="txt,xls,xlsx,doc,docx,hwp,ppt,pptx,pdf"/>
     
-<!DOCTYPE html>
-
-
 <style>
 .filebox label {
   display: inline-block;
@@ -306,17 +303,20 @@ function chkValidation()
 			if ($("#files").val() != "" && file_type_chk == "img" )
 			{
 				$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
+				$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
 			}else{
 				alert("첨부파일을 등록해야 진행 할 수 있습니다.");
 			}
 		}else{			
-			$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));			
+			$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));		
+			$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
 		}
 		
 	}else{
 		$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
+		$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 		historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
 	}
 
@@ -495,53 +495,10 @@ chkMob();
 </form>
 
 
-
-
-<script>
-
-function onChkESQ(obj){
-	 
-	 re = /[@#:|]/gi; 
-	 var temp=$(obj).val();
-	 if(re.test(temp))
-	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
-	 	$(obj).val(temp.replace(re,""));
-	 	alert("[ # / @ / : / | ] 문자는 사용할수 없습니다.");
-	 }
-	 
-}
-
-</script>
-
+<%@ include file="inc/footer_common.jsp" %>
 
 <jsp:include page="inc/footer_T.jsp"></jsp:include>
 
 
-<c:if test="${!empty history_answer }">
 
-	<script>
-	//TODO 이전 답변이 있을 경우 
-	$("#answers_1").val($("#answers_1").val().replace(/<br>/g, "\r\n"));
-	</script>
-
-</c:if>
-
-<!-- Modal -->
-<div class="modal animated fade center-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-clock-o"></i>잠시만 기다려 주세요.</h4>
-      </div>
-      <div class="modal-body">
-        <p>파일업로드를 처리중입니다.</p>
-        <div class="progress">
-          <div class="progress-bar bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            
-          </div>
-        </div>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 

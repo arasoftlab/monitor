@@ -14,14 +14,29 @@ pageEncoding="UTF-8"%>
 </style>
 <script>
 function fnShowImg(img){
-	$('.showImg').modal('show');
-	$('#modal-img').attr('src',"/monitor"+img);
+	//$('.showImg').modal('show');
+	//$('#modal-img').attr('src',"/monitor"+img);
 	
-	$('#image-gallery').on('show.bs.modal', centerModal);
-	$(window).on("resize", function () {
+	var fimg = $(".modal-content").find('img');
+	fimg.attr('src',"/monitor"+img);
+	fimg.addClass("img-responsive");
+	fimg.addClass("img-thumbnail");
+	fimg.addClass("center-block");
+	fimg.css("padding", "5px");
+	fimg.css("max-width","800px");
+	fimg.css("max-height","600px");
+	//var $modal = $('#image-gallery');
+	var $modal = $('.showImg');
+	$modal.css("max-width","80%");
+	$modal.css("max-height", "80%");
+	$modal.modal('show');
+	
+	//$('#image-gallery').on('show.bs.modal', centerModal);
+	/*$(window).on("resize", function () {
 		$('#image-gallery img').attr('src',"/monitor"+img);
 	    $('#image-gallery:visible').each(centerModal);
 	});
+	*/
 }
 </script>
 
@@ -237,9 +252,9 @@ function fnShowImg(img){
 		
 		
 				<div class="modal fade showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-				  <div class="modal-dialog modal-lg">
+				  <div class="modal-dialog modal-sm">
 				    <div class="modal-content">
-				      <img id="modal-img" src="<c:url value='/img/bridge.jpg'/>" />
+				      <img id="modal-img" />
 				    </div>
 				    <div class="modal-footer">
 			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

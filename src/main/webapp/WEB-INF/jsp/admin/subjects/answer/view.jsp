@@ -38,6 +38,7 @@ $(window).load( function() {
 			txts.innerHTML = "작&nbsp&nbsp성&nbsp&nbsp자 : " + wids;
 			
 			console.log(qno.indexOf("첨부"));
+			console.log(qno.indexOf("이미지"));
 			
 			//서술형일경우
 			if(qno.indexOf("서술") != -1 && qno.indexOf("첨부") < 1){
@@ -47,6 +48,17 @@ $(window).load( function() {
 				$('#modal-twriter').html(txts);
 				$('#modal-text').html(text);
 			}
+			
+			
+			//서술 첨부형인데 이미지가 아닐경우
+			if(qno.indexOf("이미지") == -1 && qno.indexOf("첨부") > -1){
+				
+				$("#btn_go_text").trigger('click');
+				$('#modal-tqno').html(qnos);
+				$('#modal-twriter').html(txts);
+				$('#modal-text').html(text);
+			}
+			
 			
 			var imgView = $(this).find('img');
 			

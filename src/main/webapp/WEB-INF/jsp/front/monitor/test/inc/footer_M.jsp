@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 
-
-
 <footer style="background:none; text-align:-webkit-center;">
 	<div class="col-lg-2" style="text-align:center">
 
@@ -19,10 +17,4 @@
 	
 </footer>
 
-
-
-
-
-</body>
-</html>
 
