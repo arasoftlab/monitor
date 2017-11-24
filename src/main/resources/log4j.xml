@@ -13,25 +13,27 @@
   </appender>
  
   <logger name="org.springframework" additivity="false">
-    <level value="INFO" />
+    <level value="DEBUG" />
     <appender-ref ref="CONSOLE" />
   </logger>
  
-  <logger name="java.sql.Connection">
-    <level value="INFO" />
+  <logger name="seoul" additivity="false">
+  	<level value="DEBUG" />
+  	<appender-ref ref="CONSOLE"/>
   </logger>
-  <logger name="java.sql.Statement">
-    <level value="INFO" />
+  
+  <logger name="file" additivity="false">
+  	<level value="DEBUG"></level>
+  	<appender-ref ref="CONSOLE"/>
   </logger>
-  <logger name="java.sql.PreparedStatement">
-    <level value="INFO" />
+  
+  <logger name="excel" additivity="false">
+  	<level value="DEBUG"></level>
+  	<appender-ref ref="CONSOLE"/>
   </logger>
-  <logger name="java.sql.ResultSet">
-    <level value="INFO" />
-  </logger>
-
+  
   <root>
-    <level value="INFO"/>
+    <level value="DEBUG"/>
     <appender-ref ref="CONSOLE" />
   </root>
     
