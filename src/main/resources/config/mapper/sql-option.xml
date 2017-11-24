@@ -21,6 +21,7 @@
 	    	  ,form
 	    	  ,regdate
 	    	  ,cont_uuid
+	    	  ,examrequire
 	      from n_options
 	     where question_id=#{question_id}
 	  order by options_num
@@ -46,6 +47,7 @@
 	    	  ,form
 	    	  ,regdate
 	    	  ,cont_uuid
+	    	  ,examrequire
 	      from n_options
 	     where options_id=#{options_id}
 	</select>
@@ -70,6 +72,7 @@
 	    	,form
 	    	,regdate
 	    	,cont_uuid
+	    	,examrequire
 	    )values(
 	    	 #{options_id,jdbcType=INTEGER}
 	    	,#{question_id,jdbcType=INTEGER}
@@ -89,6 +92,7 @@
 	    	,#{form,jdbcType=INTEGER}
 	    	,sysdate
 	    	,#{cont_uuid,jdbcType=VARCHAR}
+	    	,#{examrequire,jdbcType=VARCHAR}
 	    )
 	</insert>
 	
@@ -108,6 +112,7 @@
 	          ,sumpoint=#{sumpoint,jdbcType=VARCHAR}
 	          ,form=#{form,jdbcType=VARCHAR}
 	          ,cont_uuid=#{cont_uuid,jdbcType=VARCHAR}
+	          ,examrequire=#{examrequire,jdbcType=VARCHAR}
 	     where options_id=#{options_id}
 	</update>
 	

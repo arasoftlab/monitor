@@ -294,8 +294,8 @@ function chkValidation()
 	
 	var file_type_chk = '${optionList[0].label_1 }';
 	
-
-	
+	var examrequirechk = '${optionList[0].examrequire}';
+		
 	if (chk == "Y")
 	{
 		if ( !fnFileChecked() ) 
@@ -304,6 +304,16 @@ function chkValidation()
 			{
 				$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
 				$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
+				
+				if(examrequirechk =='Y'){
+					if($("exam_1").val() !=""){
+						alert("설명이 필수여서 기록해 주셔야 합니다.");
+						return;
+					}
+					$("#exam_1").val($("#exam_1").val().replace(/\n/g, "<br>"));
+					$("#exam_1").val($("#exam_1").val().replace(/\r\n/g, "<br>"));
+				}
+				
 				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
 			}else{
 				alert("첨부파일을 등록해야 진행 할 수 있습니다.");
@@ -319,6 +329,8 @@ function chkValidation()
 		$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 		historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
 	}
+	
+	
 
 }
 
@@ -458,6 +470,14 @@ chkMob();
 		</div>
 	</div>
 
+	<c:if test="${optionList[0].examrequire eq 'Y' }">
+		<div style="font-size:10pt;padding-bottom:10px">
+			<b>이미지 설명</b> <br>
+			
+			<textarea style="width:98%;margin-top:10px;margin-right:10px;" onKeyUp="onChkESQ(this)" id="answers_${item.options_num}" name="answers_${item.options_num}" rows="3" >${history_answer[i.index+1]}</textarea>
+			
+		</div>
+	</c:if>
 
 <div style="width:100%;float:left;margin-left:10px;text-align:center">		
 	<c:choose>

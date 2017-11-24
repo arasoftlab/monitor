@@ -62,7 +62,7 @@ public class QuestionController {
 		for (int i=0 ; i < optionList.size() ; i++)
 		{
 			optionList.set(i, optionService.getOption(optionList.get(i)));   
-			System.out.println(optionList.get(i).toString());
+			System.out.println(optionList.get(i).getExamrequire());
 		}
 		
 		model.addAttribute("optionList", optionList);
@@ -169,7 +169,9 @@ public class QuestionController {
 		if(questionService.updateQuestion(questionVO) > 0){
 			if(!BaseUtil.isEmpty(questionVO.getOptionVO())){
 				for(OptionVO optionVO : questionVO.getOptionVO()){
+					System.out.println(optionVO.toString());
 					optionService.updateOption(optionVO);
+					System.out.println(optionVO.toString());
 				}
 			}
 			if(!BaseUtil.isEmpty(questionVO.getQuestionSettingsVO()))

@@ -196,8 +196,7 @@ function fnInsertQuestion(){
 
 
 function fnUpdateQuestion(form){
-	
-	
+
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -218,7 +217,8 @@ function fnUpdateQuestion(form){
 			}
 		},
 		error : function(request,status,error) {
-			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			console.log(request);
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			alert("error!1!");
 		}
 	});

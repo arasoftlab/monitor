@@ -85,6 +85,13 @@ function checkDisable(chk , label)
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].endpoint" <c:if test="${item.endpoint eq 'Y' }">checked</c:if> />
 									<label>첨부 필수</label>
 								</div>
+								
+								<div class="col-sm-2" style="margin-top: 5px;width: 13%;">
+									<input type="checkbox" value="Y" name="optionVO[${i.index}].examrequire" <c:if test="${item.examrequire eq 'Y' }">checked</c:if> />
+									
+									<label>설명 필수</label>
+								</div>
+																
 							</div>
  					</c:forEach>					
 

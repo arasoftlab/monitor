@@ -30,6 +30,7 @@ public class OptionVO extends CommonVO{
 	private int form;
 	private Date regdate;
 	private int to_num;
+	private String examrequire;
 	
 	private String cont_uuid;
 	
