@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import common.vo.CommonVO;
+import lombok.ToString;
 
+@ToString
 public class QuestionVO extends CommonVO{
 	private String question_id;
 	private String subject_id;

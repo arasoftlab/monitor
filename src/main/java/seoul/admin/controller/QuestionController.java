@@ -62,6 +62,7 @@ public class QuestionController {
 		for (int i=0 ; i < optionList.size() ; i++)
 		{
 			optionList.set(i, optionService.getOption(optionList.get(i)));   
+			System.out.println(optionList.get(i).toString());
 		}
 		
 		model.addAttribute("optionList", optionList);
@@ -80,6 +81,8 @@ public class QuestionController {
 				model.addAttribute("settingsList", settingsList);
 			}
 		}
+		
+		System.out.println(questionVO.toString());
 		
 		model.addAttribute("prevSQuestionList", questionService.getPrevSQuestionList(questionVO));
 		return "admin/subjects/mng/question/"+questionVO.getType()+".ajax";

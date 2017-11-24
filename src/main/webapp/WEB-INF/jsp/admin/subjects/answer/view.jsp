@@ -1,8 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<style>
+	.modal{text-align:center;padding:0 !important;}
+	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+</style>
 <script type="text/javascript">
 
 $(window).load( function() {
@@ -37,9 +42,6 @@ $(window).load( function() {
 			var wids = wrt + "(" + ids + ")";
 			txts.innerHTML = "작&nbsp&nbsp성&nbsp&nbsp자 : " + wids;
 			
-			console.log(qno.indexOf("첨부"));
-			console.log(qno.indexOf("이미지"));
-			
 			//서술형일경우
 			if(qno.indexOf("서술") != -1 && qno.indexOf("첨부") < 1){
 				
@@ -69,7 +71,6 @@ $(window).load( function() {
 				$('#modal-iwriter').html(txts);
 				$("#btn_go").trigger('click');
 				$('#modal-img2').attr('src',img);
-				$('#modal-img2').find('img');
 
 			}
 		}
@@ -183,7 +184,7 @@ $('#element').off('scroll touchmove mousewheel');
 	max-height:500px;
 } */
 
-.modal-content img {
+/* .modal-content img {
 	max-width:680px;
 	max-height:480px;
 }
@@ -192,7 +193,7 @@ $('#element').off('scroll touchmove mousewheel');
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-}
+} */
 </style>
 
 
@@ -535,14 +536,17 @@ $('#element').off('scroll touchmove mousewheel');
 
 				<!-- 모달 팝업 1-->
 				<div class="modal fade member_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
+				  <div class="modal-dialog">
 				    <div class="modal-content">
-				    	<div>
+				    	<div class="modal-header">
 				    		<div id="modal-iqno"></div>
 							<div id="modal-iwriter"></div>
 						</div>
-						<div>
-							<img id="modal-img2">
+						<div class="modal-body">
+							<img id="modal-img2" class="img-responsive img-thumbnail center-block" >
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 				    </div>
 				  </div>
@@ -550,7 +554,7 @@ $('#element').off('scroll touchmove mousewheel');
 
 				<!-- 모달 팝업 텍스트-->
 				<div class="modal fade member_modal_text" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
+				  <div class="modal-dialog">
 				    <div class="modal-content" >
 						<div style="padding: 30px;">  
 							<div>
@@ -565,7 +569,7 @@ $('#element').off('scroll touchmove mousewheel');
 
 				<!-- 모달 팝업 회원정보 -->
 				<div class="modal fade memberinfo" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
+				  <div class="modal-dialog">
 				    <div class="modal-content" >
 				      <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>

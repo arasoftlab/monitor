@@ -1,11 +1,15 @@
-﻿
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/tlds/jf-taglib.tld" prefix="j"%> 
 
+<style>
+.modal{text-align:center;padding:0 !important; z-index:100000; }
+.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+.modal-backdrop { z-index:99999;}
+</style>
 <script>
 
 	
@@ -32,8 +36,15 @@ pageEncoding="UTF-8"%>
 	}
 	
 	function fnShowImg(img){
-		$('.showImg').modal('show');
-		$('#modal-img').attr('src',"/monitor"+img);
+		var $modal = $('.showImg');
+
+		var $fimg = $("#modal-img");
+		$fimg.attr('src',"/monitor"+img);
+		$fimg.addClass("img-responsive");
+		$fimg.addClass("img-thumbnail");
+		$fimg.addClass("center-block");
+		$fimg.css("padding", "5px");
+		$modal.modal('show');
 	}
 	
 	function isEmpty(el){
@@ -70,6 +81,8 @@ pageEncoding="UTF-8"%>
 				$("#modal-body_team").html(data);
 				//fnBtnView("Q");			
 				$("#btn_applys").trigger('click');
+				var $modal = $('#myModal');
+				$modal.modal('show');
 			},
 			error : function(request,status,error) {
 				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -243,7 +256,7 @@ pageEncoding="UTF-8"%>
 			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
 		</div>
 			
-		<div class="modal fade showImg" tabindex="-1" role="dialog"
+		<div class="modal showImg" tabindex="-1" role="dialog"
 			aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -260,7 +273,7 @@ pageEncoding="UTF-8"%>
 								
 								
 		<!-- --------현장모니터 신청 현황 -->
-		<div class="modal fade present_apply container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">
@@ -305,16 +318,16 @@ pageEncoding="UTF-8"%>
 					      
 				<h5 style="margin-top:40px;font-weight: bold;">현장 모니터 조별 신청현황</h5>
 				<div id="modal-body_team" style="display: table;"></div>
+				<div class="bottom-data" style="border-top: 2px #4fb3d2 solid; display: table; width:100%;">
+					<div class="col-md-6" style="float:left;width:100%; margin-top:10px;">
+						모집인원 : ${vo.subjectVO.team_cnt}개조 ${vo.subjectVO.men_total}명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						신청인원 : 총 ${apply_total}명
+					</div>
+				</div>					
 		      </div>
 		    </div>
-		      <div class="modal-footer2">
-		      	<div class="col-md-6" style="float:left;width:100%; margin-top:10px;">
-		      		모집인원 : ${vo.subjectVO.team_cnt}개조 ${vo.subjectVO.men_total}명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		      		신청인원 : 총 ${apply_total}명
-		      	</div>
-		      </div>
 		      <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-top:4px;">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false" style="margin-top:4px;">Close</button>
 		      </div>
 		  </div>
 		</div>

@@ -210,7 +210,7 @@ function logout(){
     
 				<div class="container">
 					
-					<div class="navbar yamm navbar-default">
+					<div class="navbar yamm">
     
 						<div class="container" style="z-index:9;">
 							<div class="navbar-header">

@@ -1,6 +1,4 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -10,33 +8,24 @@ pageEncoding="UTF-8"%>
 	.sub_table{width:100%;}
 	.sub_table td{vertical-align:top; border:none;}
 	.bbsno{text-align:center;}
-	
+	.modal{text-align:center;padding:0 !important; z-index:100000;}
+	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+	.modal-backdrop { z-index:99999;}
 </style>
 <script>
-function fnShowImg(img){
-	//$('.showImg').modal('show');
-	//$('#modal-img').attr('src',"/monitor"+img);
-	
-	var fimg = $(".modal-content").find('img');
-	fimg.attr('src',"/monitor"+img);
-	fimg.addClass("img-responsive");
-	fimg.addClass("img-thumbnail");
-	fimg.addClass("center-block");
-	fimg.css("padding", "5px");
-	fimg.css("max-width","800px");
-	fimg.css("max-height","600px");
-	//var $modal = $('#image-gallery');
-	var $modal = $('.showImg');
-	$modal.css("max-width","80%");
-	$modal.css("max-height", "80%");
+function fnShowImg(img, title){
+	var $modal = $('#myModal');
+
+	$('#myModalLabel').text(title);
+	var $fimg = $(".modal-body").find('img');
+	$fimg.attr('src',"/monitor"+img);
+	$fimg.addClass("img-responsive");
+	$fimg.addClass("img-thumbnail");
+	$fimg.addClass("center-block");
+	$fimg.css("padding", "5px");
 	$modal.modal('show');
 	
-	//$('#image-gallery').on('show.bs.modal', centerModal);
-	/*$(window).on("resize", function () {
-		$('#image-gallery img').attr('src',"/monitor"+img);
-	    $('#image-gallery:visible').each(centerModal);
-	});
-	*/
 }
 </script>
 
@@ -61,7 +50,9 @@ function fnShowImg(img){
 								<tr>
 								  <td style="width:20%;">
 										<div class="thumb">
-												<img src="<c:url value='${item.fileList[0].savePath }/${item.fileList[0].unqFileName }'/>" onclick="fnShowImg('${item.fileList[0].savePath }/${item.fileList[0].unqFileName }');" style="width: 150px;">
+												<img src="<c:url value='${item.fileList[0].savePath }/${item.fileList[0].unqFileName }'/>" 
+												onclick="fnShowImg('${item.fileList[0].savePath }/${item.fileList[0].unqFileName }', '${item.title }');" style="width: 150px;"
+												>
 										</div>
 								  </td>
 								  <td style="width:70%; vertical-align:TOP;">
@@ -146,11 +137,7 @@ function fnShowImg(img){
 				</td>
 			</tr>
 		</table>
-		<!-- 게시판 끝 -->
-		
-		
-		
-		
+		<!-- 게시판 끝 -->		
 		
 		<!-- 모바일 화면 -->
 		<table class="mobile_notice_table" style="width:100%;background:#fff;border:none;border-spacing:0;padding:0; margin-top:10px;">
@@ -251,7 +238,7 @@ function fnShowImg(img){
 		</table>
 		
 		
-				<div class="modal fade showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- 				<div class="modal fade showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-sm">
 				    <div class="modal-content">
 				      <img id="modal-img" />
@@ -260,7 +247,24 @@ function fnShowImg(img){
 			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			        </div>
 				  </div>
-				</div>
+				</div> -->
+
+<!-- Modal -->
+<div class="modal animated" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		</div>
+		<div class="modal-body">
+		  <img id="modal-img" />
+		</div>      
+		<div class="modal-footer">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div><!-- /.modal-footer --> 
+	</div><!-- /.modal-content -->	   
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 		<div class="clearfix divider_dashed7"></div>
@@ -268,4 +272,3 @@ function fnShowImg(img){
 	</div>
 
 
-</div>

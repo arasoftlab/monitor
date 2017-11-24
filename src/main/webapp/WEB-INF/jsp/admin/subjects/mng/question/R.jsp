@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -30,6 +29,8 @@ $(function(){
 		fnInsertOptionsR('#q_form_${vo.question_id }');
 	});
 });
+
+console.log("${item}");
 </script>
 
 <form id="q_form_${vo.question_id }" onsubmit="return false;"  class="back_style">
@@ -80,19 +81,19 @@ $(function(){
 									<table class="table_five" style="width:100%">
 									<tr>
 										<td>
-											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 										</td>
 										<td>
-											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 										</td>
 										<td>
-											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 										</td>
 										<td>
-											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_4" value=${item.label_4 }></div>
+											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_4" value="${item.label_4 }"></div>
 										</td>
 										<td>
-											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_5" value=${item.label_5 }></div>
+											<div class="five_text" style="width:90%"><input type="text"  class="quest_form" name="optionVO[${i.index}].label_5" value="${item.label_5 }"></div>
 										</td>
 									</tr>
 									</c:when>
@@ -106,13 +107,13 @@ $(function(){
 											<table style="width:100%;">
 												<tr>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 													</td>
 												</tr>
 											</table>
@@ -121,13 +122,13 @@ $(function(){
 									
 									<%-- <tr colspan="7">
 											<td colspan="3">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 											</td>
 											<td colspan="2">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 											</td>
 											<td colspan="2">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 											</td>
 									</tr> --%>
 									</c:when>
@@ -137,13 +138,13 @@ $(function(){
 									<table class="table_nine" style="width:100%">
 									<tr colspan="9">
 											<td colspan="3">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 											</td>
 											<td colspan="3">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 											</td>
 											<td colspan="3">
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value"=${item.label_3 }"></div>
 											</td>
 									</tr>
 									</c:when>
@@ -156,13 +157,13 @@ $(function(){
 											<table style="width:100%;">
 												<tr>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 													</td>
 												</tr>
 											</table>
@@ -178,13 +179,13 @@ $(function(){
 											<table style="width:100%;">
 												<tr>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 													</td>
 													<td style="width:33%;">
-														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+														<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 													</td>
 												</tr>
 											</table>
@@ -197,13 +198,13 @@ $(function(){
 										
 										<tr>
 											<td>
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value=${item.label_1 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_1" value="${item.label_1 }"></div>
 											</td>
 											<td>
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value=${item.label_2 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_2" value="${item.label_2 }"></div>
 											</td>
 											<td>
-												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value=${item.label_3 }></div>
+												<div class="three_text" style="margin-left:0; width:90%"><input type="text" class="quest_form" name="optionVO[${i.index}].label_3" value="${item.label_3 }"></div>
 											</td>
 										</tr>									
 									</c:otherwise>

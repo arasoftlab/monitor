@@ -40,6 +40,16 @@ public class MemberController {
 		return resultMap;
 	}
 	
+	@RequestMapping("adminLogout.do")
+	public String adminLogout(@ModelAttribute MemberVO memberVO) throws Exception{
+						
+		if ( SessionUtil.isAlive() ) 
+		{	
+			SessionUtil.removeAttribute(SessionContants.ADMIN);
+		}
+		return "redirect:/member/adminlogin.do";
+	}
+	
 	@RequestMapping("checkMember.do")
 	public @ResponseBody Map<String, Object> checkMember(@ModelAttribute MemberVO memberVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();

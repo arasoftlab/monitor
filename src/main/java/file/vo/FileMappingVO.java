@@ -1,5 +1,8 @@
 package file.vo;
 
+import lombok.ToString;
+
+@ToString
 public class FileMappingVO {
 	private String data_id;
 	private String file_id;

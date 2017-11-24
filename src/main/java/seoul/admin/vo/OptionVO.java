@@ -3,7 +3,13 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter 
+@Setter
 public class OptionVO extends CommonVO{
 	private String options_id;
 	private String question_id;

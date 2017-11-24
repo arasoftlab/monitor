@@ -1,16 +1,31 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/tlds/jf-taglib.tld" prefix="j"%> 
 
+<style>
+.modal{text-align:center;padding:0 !important; }
+.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+
+</style>
+
 <script>
 	function fnShowImg2(img){
-		$('.showImg2').modal('show')
-		$('.showImg2').modal('show');
-		$('#modal-img2').attr('src',"/monitor"+img);
+		var $modal = $('.showImg');
+
+		var $fimg = $("#modal-img");
+		$fimg.attr('src',"/monitor"+img);
+		$fimg.addClass("img-responsive");
+		$fimg.addClass("img-thumbnail");
+		$fimg.addClass("center-block");
+		$fimg.css("padding", "5px");
+		$modal.modal();
+	}
+	
+	function fnShowClose(){
+		var $modal = $('.showImg');
 	}
 </script>
 
@@ -151,13 +166,13 @@ pageEncoding="UTF-8"%>
 		
 		<!-- Large modal -->
 			
-		<div class="modal fade showImg2 container" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="top:50%;">
-		  <div class="modal-dialog modal-lg">
+		<div class="modal showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
 		    <div class="modal-content">
-		      <img id="modal-img2" src="#" />
+		      <img id="modal-img"  />
 		    </div>
 		    <div class="modal-footer">
-		      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false">Close</button>
 		    </div>
 		  </div>
 		</div>

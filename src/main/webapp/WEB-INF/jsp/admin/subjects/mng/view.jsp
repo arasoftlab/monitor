@@ -99,7 +99,7 @@ function fnQuestion(question_id){
 		type : "POST",
 		url : "<c:url value='/admin/subject/mng/question/modify.do'/>",
 		data : {"question_id" : question_id},
-		success : function(data){			
+		success : function(data){	
 			$("#modal-body").html(data);
 			//fnBtnView("Q");			
 			$("#btn_go").trigger('click');

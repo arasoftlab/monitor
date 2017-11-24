@@ -3,7 +3,6 @@ package file.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,18 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-//import util.BaseUtil;
 import file.service.FileService;
 import file.vo.FileVO;
 import util.BaseUtil;
-
-//import file.vo.FileVO;
 
 @Controller
 @RequestMapping("/file/")
@@ -114,7 +108,7 @@ public class FileController {
 
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-112 입니다.\n관리자에게 이코드를 알려주십시요.");
+			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-111 입니다.\n관리자에게 이코드를 알려주십시요.");
 			obj.addProperty("status", "508");
 
 	        log.debug("------------- file start -------------");
@@ -134,12 +128,6 @@ public class FileController {
 		//JSONObject obj = new JSONObject(resultMap);
 		return new ResponseEntity<JsonObject>(obj, responseHeaders, HttpStatus.CREATED);
 		
-		//resultMap.put("fileVO", fvo);
-		//resultMap.put("result", "success");
-		
-		//System.out.println(fvo.toString());
-		
-		//return resultMap;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "deleteFile.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -160,7 +148,7 @@ public class FileController {
 			// TODO 파일삭제중 발생하는 오류
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.add("Content-Type", "text/html;charset=UTF-8");
-			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-163 입니다.\n관리자에게 이코드를 알려주십시요.");
+			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-151 입니다.\n관리자에게 이코드를 알려주십시요.");
 			obj.addProperty("status", "508");
 			//JSONObject obj = new JSONObject(resultMap);
 			return new ResponseEntity<JsonObject>(obj, responseHeaders, HttpStatus.CREATED);
