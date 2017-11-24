@@ -249,22 +249,22 @@ function fnShowImg(img, title){
 				  </div>
 				</div> -->
 
-<!-- Modal -->
-<div class="modal animated" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-		<div class="modal-header">
-			<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-		</div>
-		<div class="modal-body">
-		  <img id="modal-img" />
-		</div>      
-		<div class="modal-footer">
-		     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		</div><!-- /.modal-footer --> 
-	</div><!-- /.modal-content -->	   
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+		<!-- Modal -->
+		<div class="modal animated" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+				  <img id="modal-img" />
+				</div>      
+				<div class="modal-footer">
+				     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div><!-- /.modal-footer --> 
+			</div><!-- /.modal-content -->	   
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
 
 		<div class="clearfix divider_dashed7"></div>

@@ -36,7 +36,7 @@
 	}
 	
 	function fnShowImg(img){
-		var $modal = $('.showImg');
+		var $modal = $('#modalImage');
 
 		var $fimg = $("#modal-img");
 		$fimg.attr('src',"/monitor"+img);
@@ -81,7 +81,7 @@
 				$("#modal-body_team").html(data);
 				//fnBtnView("Q");			
 				$("#btn_applys").trigger('click');
-				var $modal = $('#myModal');
+				var $modal = $('#modalMonitor');
 				$modal.modal('show');
 			},
 			error : function(request,status,error) {
@@ -256,7 +256,7 @@
 			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
 		</div>
 			
-		<div class="modal showImg" tabindex="-1" role="dialog"
+		<div class="modal animated" id="modalImage" tabindex="-1" role="dialog"
 			aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -273,7 +273,7 @@
 								
 								
 		<!-- --------현장모니터 신청 현황 -->
-		<div class="modal container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal animated" id="modalMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">
@@ -327,7 +327,7 @@
 		      </div>
 		    </div>
 		      <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false" style="margin-top:4px;">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-top:4px;">Close</button>
 		      </div>
 		  </div>
 		</div>

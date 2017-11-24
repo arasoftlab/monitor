@@ -13,7 +13,7 @@
 
 <script>
 	function fnShowImg2(img){
-		var $modal = $('.showImg');
+		var $modal = $('#modalImage');
 
 		var $fimg = $("#modal-img");
 		$fimg.attr('src',"/monitor"+img);
@@ -21,7 +21,7 @@
 		$fimg.addClass("img-thumbnail");
 		$fimg.addClass("center-block");
 		$fimg.css("padding", "5px");
-		$modal.modal();
+		$modal.modal('show');
 	}
 	
 	function fnShowClose(){
@@ -160,19 +160,16 @@
 			</tr>
 		</table>
 		<!-- 게시판 끝 -->
+
 		
-		
-		
-		
-		<!-- Large modal -->
-			
-		<div class="modal showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<!-- Large modal -->		
+		<div class="modal animated" id="modalImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <img id="modal-img"  />
 		    </div>
 		    <div class="modal-footer">
-		      <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false">Close</button>
+		      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		    </div>
 		  </div>
 		</div>

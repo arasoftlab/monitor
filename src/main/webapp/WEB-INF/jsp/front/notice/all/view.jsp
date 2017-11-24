@@ -37,7 +37,7 @@
 	
 	function fnShowImg(img){
 		
-		var $modal = $('.showImg');
+		var $modal = $('#modalImage');
 
 		var $fimg = $("#modal-img");
 		$fimg.attr('src',"/monitor"+img);
@@ -79,7 +79,7 @@
 			success : function(data){
 				$("#modal-body_team").html(data);			
 				$("#btn_applys").trigger('click');
-				var $modal = $('#myModal');
+				var $modal = $('#modalMonitor');
 				$modal.modal('show');
 			},
 			error : function(request,status,error) {
@@ -253,7 +253,7 @@
 			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
 		</div>
 			
-		<div class="modal hide active showImg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal animated " id="modalImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<img id="modal-img" src="#" />
@@ -264,12 +264,9 @@
 			</div>
 		</div>
 								
-								
-						
-								
-								
+													
 		<!-- --------현장모니터 신청 현황 -->
-		<div class="modal hide active container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal animated" id="modalMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		  <div class="modal-dialog ">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">
