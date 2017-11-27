@@ -12,6 +12,7 @@
 	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
 	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
 	.modal-backdrop { z-index:99999;}
+	.img-responsive{ max-height: calc(100vh - 225px);}	
 </style>
 <script>
 function fnShowImg(img, title){

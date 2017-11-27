@@ -239,7 +239,7 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 	
 
 	params = $("form").serialize();
-	////console.log("param : "+params);
+	console.log("param : "+params);
 	
 	$.ajax({
 				async : true,

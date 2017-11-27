@@ -3,7 +3,9 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.ToString;
 
+@ToString
 public class BBSVO extends CommonVO{
 	private String bbs_id;
 	private String title;
@@ -13,6 +15,7 @@ public class BBSVO extends CommonVO{
 	private String is_password;
 	private String member_id;
 	private String member_name;
+	private String poll_num;
 	private String password;
 	private Date regdate;
 	private int hits;
@@ -114,5 +117,11 @@ public class BBSVO extends CommonVO{
 	}
 	public void setQuery(String query){
 		this.query = query;
+	}
+	public String getPoll_num() {
+		return poll_num;
+	}
+	public void setPoll_num(String poll_num) {
+		this.poll_num = poll_num;
 	}
 }

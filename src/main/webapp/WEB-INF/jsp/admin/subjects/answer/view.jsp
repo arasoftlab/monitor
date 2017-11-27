@@ -6,7 +6,7 @@
 <style>
 	.modal{text-align:center;padding:0 !important;}
 	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
-	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; max-height:100vh;}
 </style>
 <script type="text/javascript">
 
@@ -52,18 +52,20 @@ $(window).load( function() {
 			}
 			
 			
+			var imgView = $(this).find('img');
+
+			
 			//서술 첨부형인데 이미지가 아닐경우
 			if(qno.indexOf("이미지") == -1 && qno.indexOf("첨부") > -1){
-				
-				$("#btn_go_text").trigger('click');
-				$('#modal-tqno').html(qnos);
-				$('#modal-twriter').html(txts);
-				$('#modal-text').html(text);
+				if(imgView.attr('src').length == 0){	
+					$("#btn_go_text").trigger('click');
+					$('#modal-tqno').html(qnos);
+					$('#modal-twriter').html(txts);
+					$('#modal-text').html(text);
+				}
 			}
-			
-			
-			var imgView = $(this).find('img');
-			
+				
+						
 			//이미지일경우
 			if(imgView.length != 0){
 				var img = imgView.attr('src');

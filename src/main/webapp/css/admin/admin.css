@@ -1,3 +1,7 @@
 .text_underline {
 	text-decoration: underline;
 }
+
+table th {
+	text-align: center;
+}

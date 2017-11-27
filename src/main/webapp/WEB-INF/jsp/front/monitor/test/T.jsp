@@ -295,7 +295,8 @@ function chkValidation()
 	var file_type_chk = '${optionList[0].label_1 }';
 	
 	var examrequirechk = '${optionList[0].examrequire}';
-		
+	
+	
 	if (chk == "Y")
 	{
 		if ( !fnFileChecked() ) 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@page import="com.ksign.access.sso.sso10.SSO10Conf"%>
+<%@ page import="com.ksign.access.sso.sso10.SSO10Conf"%>
 <%@ page import="com.ksign.access.api.*" %>
+<%@ page import="java.util.*" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>

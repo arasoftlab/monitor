@@ -13,11 +13,38 @@ pageEncoding="UTF-8"%>
 	}
 </style>
 
+<style>
+	.information{font-size:12px;}
+	.sub_table{width:100%;}
+	.sub_table td{vertical-align:top; border:none;}
+	.bbsno{text-align:center;}
+	.modal{text-align:center;padding:0 !important; z-index:100000;}
+	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; }
+	.modal-backdrop { z-index:99999;}
+	.img-responsive{ max-height: calc(100vh - 225px);}
+</style>
 <script>
-function fnShowImg(img){
+function fnShowImg(img, title){
+	var $modal = $('#myModal');
+
+	$('#myModalLabel').text(title);
+	var $fimg = $(".modal-body").find('img');
+	$fimg.attr('src',"/monitor"+img);
+	$fimg.addClass("img-responsive");
+	$fimg.addClass("img-thumbnail");
+	$fimg.addClass("center-block");
+	$fimg.css("padding", "5px");
+	$modal.modal('show');
+	
+}
+</script>
+
+<script>
+/* function fnShowImg(img){
 	$('.showImg').modal('show');
 	$('#modal-img').attr('src',"/monitor"+img);
-}
+} */
 
 function fnSearch(){
 	$("form").attr("action","plist.do").submit();
@@ -105,3 +132,20 @@ function fnSearch(){
 		</div>
 	</div>
 	</section>
+	
+			<!-- Modal -->
+		<div class="modal animated" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+				  <img id="modal-img" />
+				</div>      
+				<div class="modal-footer">
+				     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div><!-- /.modal-footer --> 
+			</div><!-- /.modal-content -->	   
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->

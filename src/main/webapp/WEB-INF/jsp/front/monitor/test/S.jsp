@@ -183,15 +183,23 @@ function onChk(num){
 <script>
 
 function onChkESQ(obj){
-	 $(obj).val($(obj).val().replace('\'','`'));
-	 
-	 re = /[@#":|]/gi; 
+
+	 re = /[@#\":\|]/gi; 
 	 var temp=$(obj).val();
 	 if(re.test(temp))
 	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
 	 	$(obj).val(temp.replace(re,""));
-	 	alert("[ # / \" / @ / : / | ] 문자는 사용할수 없습니다.");
+	 	alert("[, # , \",  @, :, |, ] 문자는 사용할수 없습니다.");
 	 }	
+	 
+	 var keyC = window.event.keyCode ? window.event.keyCode : window.event.which;
+
+     //PC 222 ' 229 or 0 안드로이 모바일 한글문제가 없음
+     if(keyC == 222 || keyC == 229 ||keyC == 0){
+         var cmp = $(obj);
+         cmp.val(cmp.val().replace('\'', "`"));
+     }
+     
 }
 </script>
 

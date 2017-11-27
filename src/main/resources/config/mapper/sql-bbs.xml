@@ -13,6 +13,7 @@
         		  ,is_password
         		  ,member_id
         		  ,(select m001_nm from hisip.vw_mem001_m_monitor@sip2 where n_bbs.member_id = m001_id) as member_name
+        		  ,(select poll_num from member where n_bbs.member_id=id) poll_num
         		  ,regdate
         		  ,row_number() over (order by regdate asc) rn1
                   ,row_number() over (order by regdate desc) rnd
@@ -64,6 +65,8 @@
         	  ,cont_uuid
           	,is_password
         	  ,member_id
+      		  ,(select m001_nm from hisip.vw_mem001_m_monitor@sip2 where n_bbs.member_id = m001_id) as member_name
+      		  ,(select poll_num from member where n_bbs.member_id=id) poll_num        	  
         	  ,hits
           from n_bbs
          where cont_uuid = #{cont_uuid}

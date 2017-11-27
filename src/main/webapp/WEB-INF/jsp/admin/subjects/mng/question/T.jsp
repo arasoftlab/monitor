@@ -101,7 +101,7 @@ function checkDisable(chk , label)
 					
 					<div id="answerAdd" class="pull-left col-lg-12" >
 	                       <span class="btn btn-default btn-sm fileinput-button" id="optionAdd" onclick="fnInsertOptions('#q_form_${vo.question_id }');">
-	                           <span> <i class="fa fa-1x fa-plus"> 응답보기추가</i></span>
+	                           <span> <i class="fa fa-1x fa-plus">응답보기추가</i></span>
 	                       </span> 
 					</div>	
 					

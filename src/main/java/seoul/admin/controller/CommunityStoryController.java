@@ -33,7 +33,6 @@ public class CommunityStoryController {
 	@Autowired
 	private CommentService commentService;
 
-	
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute BBSVO bbsVO) throws Exception{
 
@@ -73,12 +72,9 @@ public class CommunityStoryController {
 		
 		bbsVO = bbsService.getBBS(bbsVO, false);		
 		model.addAttribute("vo", bbsVO);
-		
-		
-		
+
 		CommentVO commentVO = new CommentVO();		
 
-		
 		commentVO.setQuery("bbs_id="+bbsVO.getBbs_id());
 		List<CommentVO> list = commentService.getCommentList(commentVO);		
 		model.addAttribute("c_list", list);
