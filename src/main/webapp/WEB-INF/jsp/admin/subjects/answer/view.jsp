@@ -7,6 +7,7 @@
 	.modal{text-align:center;padding:0 !important;}
 	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
 	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; max-height:100vh;}
+	.img-responsive{ max-height: calc(100vh - 225px);}	
 </style>
 <script type="text/javascript">
 

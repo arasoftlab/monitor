@@ -61,13 +61,13 @@ function s_type_desc(chk_obj){
 									</div>
 								</div>
 								
-								<div class="col-sm-2" style="padding-left:10px;">
-									<div class="col-sm-5">
+								<div class="col-md-2 col-sm-2" style="padding-left:10px;">
+									<div class="col-md-5 col-sm-5">
 										<a id="btn_del" class="btn btn-default btn-sm icon_btn delete" onclick="fnDeleteOption('${item.options_id}');">
 											<i class="fa fa-1x fa-times"></i>
 										</a>
 									</div>
-									<div id="pollImageAdd" class="col-sm-4">
+									<div id="pollImageAdd" class="col-md-4 col-sm-4">
 				                        <div class="btn btn-default btn-sm fileinput-button icon_btn">
 				                            <i class="fa fa-1x fa-picture-o">
 											
