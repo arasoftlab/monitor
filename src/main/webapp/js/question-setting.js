@@ -29,6 +29,7 @@
 		
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
+			    dataType: 'json',
 			    success: function(data) {
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
@@ -79,11 +80,12 @@
 			var options = {
 				    url: "/monitor/file/fileUpdate.do",
 				    data: { "data_id" : data_id }, 
+				    dataType: 'json',
 				    success: function(data) {
 				    	if(data.result == "success"){
 
 				    		var file = data.fileVO;
-				    		var html = "<img src='https://"+$(location).attr('host')+"/monitor/"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
+				    		var html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
 							$("#QS_fileList"+prefix+"").append(html);
 							$(":input:file[name=QS_file_set"+prefix+"]").val("");
 				    	}else{
@@ -116,6 +118,7 @@
 		
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
+			    dataType: 'json',
 			    success: function(data) {
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
@@ -169,6 +172,7 @@
 		var options = {
 			    url: "/monitor/file/fileUpload.do",
 			    data: { "data_id" : data_id }, 
+			    dataType: 'json',
 			    success: function(data) {
 			    	if(data.result == "success"){
 			    		
@@ -178,7 +182,7 @@
 			    		var html = "";
 			    		if(!prefix.match('V'))
 			    		{
-			    			html = "<img src='https://"+$(location).attr('host')+"/monitor/"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
+			    			html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
 			    		}
 			    		else
 			    		{

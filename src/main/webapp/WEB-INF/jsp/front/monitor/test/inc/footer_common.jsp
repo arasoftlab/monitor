@@ -12,7 +12,7 @@ function onChkESQ(obj){
 	 if(re.test(temp))
 	 { 
 	 	$(obj).val(temp.replace(re,""));
-	 	alert("[, #, \", @, :, \|, ] 문자는 사용할수 없습니다.");
+	 	alert("[#, \", @, :, \|, ] 문자는 사용할수 없습니다.");
 	 }	
 	 
 	 var keyC = window.event.keyCode ? window.event.keyCode : window.event.which;

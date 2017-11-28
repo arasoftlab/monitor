@@ -18,9 +18,19 @@
 
 	</bean>
 	
-     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+     <bean id="dataSourceR" class="org.springframework.jndi.JndiObjectFactoryBean">
              <property name="jndiName" value="java:comp/env/jdbc/oracle" />
              <property name="resourceRef" value="true" />
+     </bean>
+     
+     <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+     	<constructor-arg ref="dataSourceR"></constructor-arg>
+     	<property name="logFormatter">
+     		<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+     			<property name="loggingType" value="MULTI_LINE" />
+     			<property name="sqlPrefix" value="SQL       :"></property>
+     		</bean>
+     	</property>
      </bean>
      	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
