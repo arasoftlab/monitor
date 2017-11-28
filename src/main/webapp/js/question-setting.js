@@ -20,17 +20,14 @@
 	 * */
 	
 	function QS_fnFileCheck_update(prefix,uuid,opener_prefix){
-		
-		console.log(prefix);
-
-		console.log(uuid);
-		
+			
 		var fileSize;
-		
+		var $progress = $('#progressModal');
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
-			    dataType: 'json',
+			    dataType: 'json',		    
 			    success: function(data) {
+			    	alert(data.result);
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
 						if(fileSize <= fileMaxSize){
@@ -71,12 +68,8 @@
 	
 		
 	function QS_fnFileUpdate(prefix,uuid,opener_prefix){
-
-
-		
 		
 			var data_id = uuid;
-					
 			var options = {
 				    url: "/monitor/file/fileUpdate.do",
 				    data: { "data_id" : data_id }, 
@@ -109,13 +102,8 @@
 	function QS_fnFileCheck(prefix,uuid,opener_prefix){
 		
 		$("#set_loading").css('display','block');
-		
-		console.log(prefix);
 
-		console.log(uuid);
-		
 		var fileSize;
-		
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
 			    dataType: 'json',
@@ -168,7 +156,6 @@
 
 		
 		var data_id = uuid;
-				
 		var options = {
 			    url: "/monitor/file/fileUpload.do",
 			    data: { "data_id" : data_id }, 
@@ -197,6 +184,7 @@
 			    	}else{
 			    		alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");
 			    	}
+			    						
 			    },
 			    error: function(request,status,error) {
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -229,6 +217,7 @@
 			type : "POST",
 			url : "<c:url value='/file/deleteFile.do'/>",
 			data : "fileListId="+fileListId,
+			dataType:'json',
 			success : function(data){
 				if(data.result == "success"){
 					$("input[name='QS_fileListId"+prefix+"']:checked").each(function(){

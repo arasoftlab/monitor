@@ -94,10 +94,10 @@ function s_type_desc(chk_obj){
 							    	<label>서술형추가</label>
 							    </div>
 							    
-  									<div class="col-lg-12">
+  									<div class="col-sm-12">
 										<div id="O_fileListI${item.options_id }">
 											<c:forEach var="file" items="${item.fileList }">
-												<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+												<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;" class="img-thumbnail">
 											</c:forEach>
 										</div>
 									</div>

@@ -551,7 +551,7 @@ function fnCopyQuestion(question_id ){
 			
 
 			
-			<div id="search-box1" style="padding:0;margin-top:20px; margin-bottom: 15px; height: 50px; background-color: #BDBDBD; float:left;width:100%">
+			<div id="search-box1" style="padding:0;margin-top:20px; margin-bottom: 15px;  height: 50px; background-color: #BDBDBD; float:left;width:100%">
 					<form id="insert_form" style="padding: 10px;">
 						<input type="hidden" name="subject_id" value="${vo.subject_id }">
 						
@@ -570,7 +570,7 @@ function fnCopyQuestion(question_id ){
 					</form>								
 			</div>
 	
-			<div id="q_end" class="col-lg-9 mngcontent" style="width:100%;margin-left: 0;">
+			<div id="q_end" class="col-lg-9 mngcontent" style="width:100%;margin-left: 0; margin-top:110px;">
 				
 			</div>
 

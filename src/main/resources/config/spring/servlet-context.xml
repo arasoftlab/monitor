@@ -29,6 +29,13 @@
 	
 
     <context:component-scan base-package="crontab" />
+    
+    <mvc:resources location="/upload/**" mapping="/upload/"></mvc:resources>
+    <mvc:resources location="/img/**" mapping="/img/"></mvc:resources>
+    <mvc:resources location="/js/**" mapping="/js/"></mvc:resources>
+    <mvc:resources location="/css/**" mapping="/css/"></mvc:resources>
+    <mvc:resources location="/fonts/**" mapping="/fonts/"></mvc:resources>
+    
  
     <task:scheduler id="jobScheduler" pool-size="1" />
     <task:annotation-driven scheduler="jobScheduler" />
@@ -49,9 +56,6 @@
 	
 	<mvc:view-controller path="/" view-name="login" />
 	
-	<mvc:resources mapping="/images/**" location="/images/"  />
-	<mvc:resources mapping="/css/**" location="/css/"  />
-	<mvc:resources mapping="/js/**" location="/js/"  />
 	    
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 

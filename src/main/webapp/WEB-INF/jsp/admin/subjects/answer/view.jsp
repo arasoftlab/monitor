@@ -6,8 +6,10 @@
 <style>
 	.modal{text-align:center;padding:0 !important;}
 	.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
-	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; max-height:100vh;}
-	.img-responsive{ max-height: calc(100vh - 225px);}	
+	.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; }
+	.modal-body{padding:10px;}
+	.modal-footer{margin-top: 0px;}
+	.img-responsive{ max-height: calc(100vh - 70px);}	
 </style>
 <script type="text/javascript">
 
@@ -45,11 +47,12 @@ $(window).load( function() {
 			
 			//서술형일경우
 			if(qno.indexOf("서술") != -1 && qno.indexOf("첨부") < 1){
-				
-				$("#btn_go_text").trigger('click');
+				var textModal = $("#textModal");
+				//$("#btn_go_text").trigger('click');
 				$('#modal-tqno').html(qnos);
 				$('#modal-twriter').html(txts);
 				$('#modal-text').html(text);
+				textModal.modal('show');
 			}
 			
 			
@@ -58,23 +61,26 @@ $(window).load( function() {
 			
 			//서술 첨부형인데 이미지가 아닐경우
 			if(qno.indexOf("이미지") == -1 && qno.indexOf("첨부") > -1){
-				if(imgView.attr('src').length == 0){	
-					$("#btn_go_text").trigger('click');
+				if(imgView.attr('src').length == 0){
+					var textModal = $("#textModal");
+					//$("#btn_go_text").trigger('click');
 					$('#modal-tqno').html(qnos);
 					$('#modal-twriter').html(txts);
 					$('#modal-text').html(text);
+					textModal.modal('show');
 				}
 			}
 				
 						
 			//이미지일경우
 			if(imgView.length != 0){
+				var imageModal = $("#imageModal");
 				var img = imgView.attr('src');
 				$('#modal-iqno').html(qnos);
 				$('#modal-iwriter').html(txts);
-				$("#btn_go").trigger('click');
+				//$("#btn_go").trigger('click');
 				$('#modal-img2').attr('src',img);
-
+				imageModal.modal('show');				
 			}
 		}
 	    
@@ -454,7 +460,13 @@ $('#element').off('scroll touchmove mousewheel');
 																		<c:when test="${q_type_list.optionVO[0].label_1 eq 'img'}">
 																			<c:choose>
 																				<c:when test="${fn:contains(an_item, 'Ω')}" > 
-																					<img src="${fn:substring(an_item,fn:indexOf(an_item,'Ω')+1,fn:length(an_item))}" style="max-width:150px;"  >
+																					<c:set var="iPath" value ="${ fn:substring(an_item, fn:indexOf(an_item, 'Ω') + 1, fn:length(an_item)) }" />
+																					<c:set var="iPath" value ="${ fn:trim(fn:replace(iPath, '//', '/')) }" />
+																					<c:set var="sPath" value ="${ fn:replace(iPath, '/upload', '/upload/thumb') }" />
+																					<c:set var="sPath" value ="${ fn:split(tPath, '.') }" />
+																					<c:set var="tPath" value = "${ tPath[1] }" />
+																					<c:set var="tExt"  value = "${ tpath[2] }" />
+																					<img src="${tPath}.png" style="max-width:150px;"  >
 																				</c:when>
 																				<c:otherwise>
 																					첨부없음
@@ -538,7 +550,7 @@ $('#element').off('scroll touchmove mousewheel');
 				</div>				
 
 				<!-- 모달 팝업 1-->
-				<div class="modal fade member_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+				<div class="modal fade member_modal" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" >
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				    	<div class="modal-header">
@@ -556,7 +568,7 @@ $('#element').off('scroll touchmove mousewheel');
 				</div>
 
 				<!-- 모달 팝업 텍스트-->
-				<div class="modal fade member_modal_text" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+				<div class="modal fade member_modal_text" id="textModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
 				  <div class="modal-dialog">
 				    <div class="modal-content" >
 						<div style="padding: 30px;">  
@@ -571,7 +583,7 @@ $('#element').off('scroll touchmove mousewheel');
 				</div>
 
 				<!-- 모달 팝업 회원정보 -->
-				<div class="modal fade memberinfo" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+				<div class="modal fade memberinfo" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
 				  <div class="modal-dialog">
 				    <div class="modal-content" >
 				      <div class="modal-header">

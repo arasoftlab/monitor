@@ -108,8 +108,6 @@ pageEncoding="UTF-8"%>
 			    }
 		};
 		
-		//console.log(options);
-		
 		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);
 	}
 	
@@ -161,6 +159,8 @@ pageEncoding="UTF-8"%>
 			i ++;
 		});
 		
+		console.log("fnFileCheck : " + i);
+		
 		return i;
 	}
 	
@@ -179,7 +179,7 @@ pageEncoding="UTF-8"%>
 	
 	function onSave()
 	{
-		if ( !fnFileChecked() ) 
+		if ( fnFileChecked() == 0 ) 
 		{
 			alert("이미지를 반드시 올려야합니다.");
 		}

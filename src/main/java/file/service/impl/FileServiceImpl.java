@@ -16,20 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import util.BaseUtil;
 import file.dao.FileDAO;
 import file.service.FileService;
 import file.vo.FileMappingVO;
 import file.vo.FileVO;
+import util.BaseUtil;
 
 public class FileServiceImpl implements FileService{
-	
-	private Logger log;
-	
+		
 	private FileDAO fileDAO;
 	
 	public void setFileDAO(FileDAO fileDAO) {
@@ -119,12 +116,6 @@ public class FileServiceImpl implements FileService{
 			if(!dir.exists()) dir.mkdirs();
 		
 			multipartFile = multipartRequest.getFile(fileNames.next());
-			
-	        log.debug("------------- file start -------------");
-	        log.debug("name : " + multipartFile.getName());
-	        log.debug("filename : " + multipartFile.getOriginalFilename());
-	        log.debug("size : " + multipartFile.getSize());
-	        log.debug("-------------- file end --------------\n");
 
 	        if(!multipartFile.isEmpty()){
 				

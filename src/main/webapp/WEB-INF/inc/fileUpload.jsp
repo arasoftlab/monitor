@@ -22,12 +22,18 @@
 	function fnFileCheck(){
 		
 		var fileSize;
+		var $progress = $('#progressModal');
 		
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType:'json',
+			    beforeSend: function(){
+			    	$progress.css('display', 'block');
+					//$progress.modal({backdrop: 'static', show: true});
+					$progress.modal('show');
+			    },
 			    success: function(data) {
-			    	console.log(data);
+
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
 												
@@ -76,11 +82,24 @@
 		{
 			data_id = guid();
 		}
+		var $progress = $('#progressModal');
+		var $bar = $progress.find('.progress-bar');
+		var $percent = $('.percent');
 		
 		var options = {
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id },
 			    dataType:'json',
+			    beforeSend: function(){
+			    	var percentVal = '0%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
+			    uploadProgress: function(event, position, total, percentComplete){
+			    	var percentVal = percentComplete + '%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
 			    success: function(data) {
 			    	console.log(data);
 			    	if(data.result == "success"){
@@ -100,7 +119,15 @@
 			    		}
 			    		
 			    	}
+			    	var percentVal='100%';
+					$bar.width(percentVal);
+					$percent.html(percentVal);
+			    },
+			    complete: function(xhr){
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
 			    }
+			    
 		};
 		
 		$("form").attr("method","POST").attr("enctype","multipart/form-data").ajaxSubmit(options);

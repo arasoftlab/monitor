@@ -23,9 +23,15 @@
 	function fnFileCheck(){
 		
 		var fileSize;
-		
+		var $progress = $('#progressModal');
 		var options = {  
 			    url: "<c:url value='/file/fileSize.do'/>",
+			    dataType: 'json',
+			    beforeSend: function(){
+			    	$progress.css('display', 'block');
+					//$progress.modal({backdrop: 'static', show: true});
+					$progress.modal('show');
+			    },
 			    success: function(data) {
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
@@ -75,9 +81,24 @@
 			data_id = guid();
 		}
 		
+		var $progress = $('#progressModal');
+		var $bar = $progress.find('.progress-bar');
+		var $percent = $('.percent');
+		
 		var options = {
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id }, 
+			    dataType: 'json',
+			    beforeSend: function(){
+			    	var percentVal = '0%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
+			    uploadProgress: function(event, position, total, percentComplete){
+			    	var percentVal = percentComplete + '%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
 			    success: function(data) {
 			    	if(data.result == "success"){
 			    		var file = data.fileVO;
@@ -91,11 +112,20 @@
 			    	}else{
 			    		alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");
 			    	}
+			    	
+			    	var percentVal='100%';
+					$bar.width(percentVal);
+					$percent.html(percentVal);
+					
 			    },
 			    error: function(request,status,error) {
 					//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					alert(request.status);
 			    	alert("fileUpload Error!!!");
+			    },
+			    complete: function(xhr){
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
 			    }
 		};
 		
@@ -125,6 +155,7 @@
 			type : "POST",
 			url : "<c:url value='/file/deleteFile.do'/>",
 			data : "fileListId="+fileListId,
+			dataType:'json',
 			success : function(data){
 				if(data.result == "success"){
 					$("input[name='fileListId']:checked").each(function(){

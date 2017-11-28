@@ -1,6 +1,10 @@
 package seoul.admin.controller;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,25 +12,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.coobird.thumbnailator.Thumbnails;
 import seoul.admin.service.AnswersService;
 import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/answer")
 public class SubjectAnswerController {
 	
-	@Autowired
-	private SubjectService subjectService;
+	//@Autowired
+	//private SubjectService subjectService;
 	
 	@Autowired
 	private SubjectInfoService subjectInfoService;
@@ -44,7 +47,7 @@ public class SubjectAnswerController {
 	private AnswersService answersService;
 	
 	@RequestMapping("view.do")
-	public String view(Model model, @ModelAttribute AnswersVO answersVO) throws Exception{
+	public String view(Model model, @ModelAttribute AnswersVO answersVO, HttpServletRequest request) throws Exception{
 		
 		
 		SubjectVO subjectVO = new SubjectVO();
@@ -59,6 +62,56 @@ public class SubjectAnswerController {
 		questionVO.setSubject_id(subjectVO.getSubject_id());
 		
 		List<QuestionVO> q_list = questionService.getQuestionList(questionVO);
+		
+		for(int imageSeq = 0; imageSeq < answers_list.size(); imageSeq++) {
+			AnswersVO an = new AnswersVO();
+			an = answers_list.get(imageSeq);
+			String imagePath = an.getAnswers();
+			System.out.println("전체응답:" + imagePath);
+			
+			//String[] alist = imagePath.split("\\|");
+
+			List<String> alist = Arrays.asList(imagePath.split("\\|"));
+			
+			System.out.println(alist.size());
+			/*
+			for( int iSeq = 0; iSeq < alist.size(); iSeq++) {
+				String iPath = alist.get(iSeq);
+				System.out.println(" 기존답변 :" + iPath);
+				if(iPath.indexOf('Ω') > -1) {
+					//TODO 이미지가 포함된 경로일 경우 이미지의 썸네일을 확인하고 없으면 생성 하고 있으면 경로를 그대로 리턴한다.
+					System.out.println(" 답변분석 : " + iPath);
+					String[] ip = iPath.split("Ω");
+					String rPath = ip[1].replaceAll("//", "/");
+					System.out.println(" 답변분석 : " + iPath);
+					String[] rpb = rPath.split("/");
+					StringBuilder rsb = new StringBuilder();
+					//rsb.append("1/" + rpb[0]); // /
+					//rsb.append("/" + rpb[1]);    // /upload
+					rsb.append(       rpb[2]);    // upload
+					rsb.append("/" + "thumb");   // /thumb
+					rsb.append("/" + rpb[3]);    // year month
+					rsb.append("/" + rpb[4]);    // file.jpg
+					String u = request.getSession().getServletContext().getRealPath("/");
+					String rp = u + rsb.toString();
+					String rd = u + rpb[2] + "/thumb" + "/" + rpb[3] + "/";
+					String rs = u + rpb[2] + "/" + rpb[3] + "/" + rpb[4];
+					File td = new File(rd);
+					System.out.println("thumb path: " + rd);
+					System.out.println("thumb file: " + rp);
+					System.out.println("upload    : " + rs);
+					if(!td.exists()) { //경로존재여부 
+						td.mkdirs();
+					}
+					File ti = new File(rp);
+					if(!ti.exists()) { //파일존재여부
+						Thumbnails.of(rs).size(150, 150).outputFormat("png").toFile(ti);
+					}
+					
+				}
+			}
+			*/
+		}
 		
 		
 		for (int i = 0 ; i < q_list.size() ; i++ )
@@ -126,7 +179,7 @@ public class SubjectAnswerController {
 		subjectVO = subjectInfoService.getSubject(subjectVO);		
 
 		model.addAttribute("s_vo",subjectVO);
-		
+		model.addAttribute("temp", temp);
 		model.addAttribute("list", answersService.getNoAnswerList(answersVO));
 		model.addAttribute("vo", answersVO);
 		model.addAttribute("page", answersVO.getPagingVO());

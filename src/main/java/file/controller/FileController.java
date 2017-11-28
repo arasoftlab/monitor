@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,9 +34,7 @@ import util.BaseUtil;
 public class FileController {
 	
 	private static final String SYNC = "SYNC";
-	
-	private Logger log;
-	
+
 	@Autowired
 	private FileService fileService;
 	
@@ -111,10 +108,6 @@ public class FileController {
 			obj.addProperty("result", "시스템 오류가 발생하였습니다. 오류코드는 FC500-111 입니다.\n관리자에게 이코드를 알려주십시요.");
 			obj.addProperty("status", "508");
 
-	        log.debug("------------- file start -------------");
-	        log.debug("req raw data : " + req.toString());
-	        log.debug("-------------- file end --------------\n");
-	        
 			//JsonObject obj = new JsonObject(resultMap);
 			return new ResponseEntity<JsonObject>(obj, responseHeaders, HttpStatus.CREATED);
 		}
