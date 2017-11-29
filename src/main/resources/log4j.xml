@@ -13,7 +13,7 @@
   </appender>
  
   <logger name="org.springframework" additivity="false">
-    <level value="DEBUG" />
+    <level value="OFF" />
     <appender-ref ref="CONSOLE" />
   </logger>
  
@@ -28,7 +28,7 @@
   </logger>
   
   <logger name="excel" additivity="false">
-  	<level value="DEBUG"></level>
+  	<level value="OFF"></level>
   	<appender-ref ref="CONSOLE"/>
   </logger>
   
@@ -41,7 +41,7 @@
   
 
   <logger name="jdbc.resultsettable" additivity="false">
-  	<level value="INFO" />
+  	<level value="OFF" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   

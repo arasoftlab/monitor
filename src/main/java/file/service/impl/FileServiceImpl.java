@@ -23,7 +23,9 @@ import file.dao.FileDAO;
 import file.service.FileService;
 import file.vo.FileMappingVO;
 import file.vo.FileVO;
+import net.coobird.thumbnailator.Thumbnails;
 import util.BaseUtil;
+
 
 public class FileServiceImpl implements FileService{
 		
@@ -70,6 +72,12 @@ public class FileServiceImpl implements FileService{
 			fileMappingVO.setFile_id(fileVO.getFile_id());
 			fileDAO.insertFileMapping(fileMappingVO);
 			
+			//썸네일 강제생성
+			String u = req.getSession().getServletContext().getRealPath("/");
+			String imagePullPath = u + fileVO.getSavePath() + "/" + fileVO.getUnqFileName();
+
+			makeThumbnail(imagePullPath);
+			
 		}
 		
 		return fileVO;
@@ -85,6 +93,12 @@ public class FileServiceImpl implements FileService{
 			fileMappingVO.setFile_id(fileVO.getFile_id());
 			fileDAO.updateFileMapping(fileMappingVO);
 			
+			//썸네일 강제생성
+			String u = req.getSession().getServletContext().getRealPath("/");
+			String imagePullPath = u + fileVO.getSavePath() + "/" + fileVO.getUnqFileName();
+
+			makeThumbnail(imagePullPath);
+
 		}
 		
 		return fileVO;
@@ -104,12 +118,10 @@ public class FileServiceImpl implements FileService{
 		String orgFileName = "";
 		String unqFileName = "";
 		int fileSize = 0;
-		
+
 		MultipartHttpServletRequest multipartRequest =  (MultipartHttpServletRequest) req;
 		Iterator<String> fileNames = multipartRequest.getFileNames();
 		MultipartFile multipartFile = null;
-		
-
 		
 		while(fileNames.hasNext()){
 			File dir = new File(uploadPath);
@@ -119,7 +131,6 @@ public class FileServiceImpl implements FileService{
 
 	        if(!multipartFile.isEmpty()){
 				
-			System.out.println(multipartFile.isEmpty());
 				orgFileName = multipartFile.getOriginalFilename();
 				unqFileName = System.currentTimeMillis()+"."+orgFileName.split("\\.")[orgFileName.split("\\.").length-1];
 				fileSize = (int) multipartFile.getSize();
@@ -127,6 +138,7 @@ public class FileServiceImpl implements FileService{
 				
 				try {
 					multipartFile.transferTo(new File(uploadPath+"/"+unqFileName));
+					makeThumbnail(uploadPath + "/" + unqFileName);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -146,6 +158,68 @@ public class FileServiceImpl implements FileService{
 		}
 		return fileVO;
 	}
+
+	
+	private void makeThumbnail(String fullPathImage) {
+		//TODO 이미지가 전체경로로 들어올 경우 전체경로를 검색한 후에 파일뒤에 .png를 붙여 썸네일을 작성한다.
+		fullPathImage = fullPathImage.replaceAll("//", "/");
+		int eChk = find(fullPathImage);
+		//System.out.println(" file ext Check result : " + eChk);
+		if(eChk > -1) {
+			//원본
+			String sI = fullPathImage;
+			//경로수정
+			String rI = fullPathImage.replace("/upload", "/upload/thumb");
+			//썸네일 추가
+			String tI = rI + ".png";
+			//parent path
+			String pI = fullPathImage.substring(0, fullPathImage.lastIndexOf("/"));
+			
+			File td = new File(pI);
+			
+			//sI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/201711/1511939314008.jpg
+			//rI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg
+			//tI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg.png
+			//pI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/201711
+			
+			try {
+				// sI 원본경로 , td 썸네일 파일의 경로, tI 최종 썸네일 파일 
+				if(!td.exists()) { //경로존재여부 
+					td.mkdirs();
+					System.out.println("make dir" + pI);
+				}
+				
+				File fI = new File(tI);
+				if(!fI.exists()) { //파일존재여부
+					File ci = new File(sI);
+					Thumbnails.of(ci).size(150, 150).outputFormat("png").toFile(fI);
+					//System.out.println("make file" + tI);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		
+		}
+	}
+	
+	
+	private int find(String rPath) {
+		String fExt = rPath.substring(rPath.lastIndexOf(".") + 1,  rPath.length());
+		String[] iExt = {"bmp","gif","jpg","jpeg","png", "BMP", "GIF", "JPG", "JPEG", "PNG" };
+		
+		//System.out.println(" ext check : " + fExt);
+		
+		for(int i=0; i< iExt.length; i++) {
+			if(iExt[i].indexOf(fExt) > 0)
+				//System.out.println("file ext check value :" + iExt[i] + " cmp:"+ fExt );
+				return i;
+		}
+		
+		return -1;
+	}
+	
 
 	public FileVO jindoFileUpload(HttpServletRequest req, FileVO uploadFile) throws IOException {
 		String webSavePath = "/upload/" + BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth());
@@ -188,6 +262,11 @@ public class FileServiceImpl implements FileService{
 		fileVO.setFile_id(BaseUtil.uuid());  
 		fileDAO.insertFile(fileVO);
 		
+		String u = req.getSession().getServletContext().getRealPath("/");
+		String imagePullPath = u + fileVO.getSavePath() + "/" + fileVO.getUnqFileName();
+
+		makeThumbnail(imagePullPath);
+	
 		return fileVO;
 	}
 

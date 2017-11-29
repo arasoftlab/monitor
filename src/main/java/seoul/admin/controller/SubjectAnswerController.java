@@ -67,50 +67,55 @@ public class SubjectAnswerController {
 			AnswersVO an = new AnswersVO();
 			an = answers_list.get(imageSeq);
 			String imagePath = an.getAnswers();
-			System.out.println("전체응답:" + imagePath);
 			
-			//String[] alist = imagePath.split("\\|");
-
-			List<String> alist = Arrays.asList(imagePath.split("\\|"));
+			if(imagePath.indexOf('Ω') > -1) {
 			
-			System.out.println(alist.size());
-			/*
-			for( int iSeq = 0; iSeq < alist.size(); iSeq++) {
-				String iPath = alist.get(iSeq);
-				System.out.println(" 기존답변 :" + iPath);
-				if(iPath.indexOf('Ω') > -1) {
-					//TODO 이미지가 포함된 경로일 경우 이미지의 썸네일을 확인하고 없으면 생성 하고 있으면 경로를 그대로 리턴한다.
-					System.out.println(" 답변분석 : " + iPath);
-					String[] ip = iPath.split("Ω");
-					String rPath = ip[1].replaceAll("//", "/");
-					System.out.println(" 답변분석 : " + iPath);
-					String[] rpb = rPath.split("/");
-					StringBuilder rsb = new StringBuilder();
-					//rsb.append("1/" + rpb[0]); // /
-					//rsb.append("/" + rpb[1]);    // /upload
-					rsb.append(       rpb[2]);    // upload
-					rsb.append("/" + "thumb");   // /thumb
-					rsb.append("/" + rpb[3]);    // year month
-					rsb.append("/" + rpb[4]);    // file.jpg
-					String u = request.getSession().getServletContext().getRealPath("/");
-					String rp = u + rsb.toString();
-					String rd = u + rpb[2] + "/thumb" + "/" + rpb[3] + "/";
-					String rs = u + rpb[2] + "/" + rpb[3] + "/" + rpb[4];
-					File td = new File(rd);
-					System.out.println("thumb path: " + rd);
-					System.out.println("thumb file: " + rp);
-					System.out.println("upload    : " + rs);
-					if(!td.exists()) { //경로존재여부 
-						td.mkdirs();
+				List<String> alist = Arrays.asList(imagePath.split("\\|"));
+				
+				//System.out.println(alist.size());
+				
+				for( int iSeq = 0; iSeq < alist.size(); iSeq++) {
+					String iPath = alist.get(iSeq);
+	
+					if(iPath.indexOf('Ω') > -1) {
+						//TODO 이미지가 포함된 경로일 경우 이미지의 썸네일을 확인하고 없으면 생성 하고 있으면 경로를 그대로 리턴한다.
+						String[] ip = iPath.split("Ω");
+						String rPath = ip[1].replaceAll("//", "/");
+						String fExt = rPath.substring(rPath.lastIndexOf(".") + 1,  rPath.length());
+						String[] iExt = {"bmp","gif","jpg","jpeg","png", "BMP", "GIF", "JPG", "JPEG", "PNG" };
+						
+						if(find(iExt, fExt) > -1) {
+							String[] rpb = rPath.split("/");
+							StringBuilder rsb = new StringBuilder();
+							//rsb.append("1/" + rpb[0]); // // 공백
+							//rsb.append("/" + rpb[1]);    // /monitor
+							rsb.append(       rpb[2]);    //  /upload
+							rsb.append("/" + "thumb");   //   /thumb
+							rsb.append("/" + rpb[3]);    //   /year month
+							rsb.append("/" + rpb[4]);    //   /file.jpg
+							
+							String u = request.getSession().getServletContext().getRealPath("/");
+							//String u = "D://sts//workspace//"; / for dev
+							String rp = u + rsb.toString();
+							String rd = u + rpb[2] + "/thumb" + "/" + rpb[3] + "/";
+							String rs = u + rpb[2] + "/" + rpb[3] + "/" + rpb[4];
+							File td = new File(rd);
+							// rp 파일 rd 경로 rs 원본위치
+							if(!td.exists()) { //경로존재여부 
+								td.mkdirs();
+							}
+							File ti = new File(rp + ".png");
+							if(!ti.exists()) { //파일존재여부
+								File ci = new File(rp);
+								Thumbnails.of(rs).size(150, 150).outputFormat("png").toFile(ci);
+								System.out.println("make file" + ti);
+							}
+						}
 					}
-					File ti = new File(rp);
-					if(!ti.exists()) { //파일존재여부
-						Thumbnails.of(rs).size(150, 150).outputFormat("png").toFile(ti);
-					}
-					
 				}
+			
 			}
-			*/
+			
 		}
 		
 		
@@ -167,6 +172,15 @@ public class SubjectAnswerController {
 		return "admin/subjects/answer/view.admin";
 	}
 	
+	private int find(String[] iExt, String fExt) {
+		for(int i=0; i< iExt.length; i++) {
+			if(iExt[i].indexOf(fExt) > 0)
+				return i;
+		}
+		
+		return -1;
+	}
+
 	@RequestMapping("noanswer.do")
 	public String noanswer(Model model, @ModelAttribute AnswersVO answersVO) throws Exception{
 		

@@ -19,14 +19,16 @@ function onChkESQ(obj){
 
      //PC 222 ' 229 or 0 안드로이 모바일 한글문제가 없음
 	if (navigator.userAgent.match("iPhone") != null || navigator.userAgent.match("Android") != null ){
-	    if(keyC == 222){
-	    	keyC = 0; 
-	    }   
+	    
+		re2 = /[\']/gi;
+	    if(re2.test(temp)){ $(obj).val(temp.replace(re2, "`"));}
 	} 
      
     if(keyC == 222 ||keyC == 0){
-        var cmp = $(obj);
-        cmp.val(cmp.val().replace('\'', "`"));
+        //var cmp = $(obj);
+        re3 = /[\']/gi;
+        if(re3.test(temp)){ $(obj).val(temp.replace(re3, "`"));}
+        //cmp.val(cmp.val().replace('\'', "`"));
     }
 
 }
@@ -39,11 +41,16 @@ function onChkESQ(obj){
 	$(document).ready(function() {
 	
 		var w_temp_cnt = "${fn:length(optionList)}";
+		var $txArea = $("textarea");
+		$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
 		
-		for (var a = 0 ; a < w_temp_cnt ; a++)
+/* 		for (var a=0; a <= w_temp_cnt; a++)
 		{
-			$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\n"));	
+			if(typeof($("#answers_"+a)) != "undefined"){
+				$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	
+			}
 		}
+ */
 		
 	});
 	
@@ -52,7 +59,7 @@ function onChkESQ(obj){
 </c:if>
 
 <!-- Modal -->
-<div class="modal animated fade center-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal animated fade center-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">

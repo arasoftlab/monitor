@@ -10,20 +10,18 @@ import file.vo.FileVO;
 
 public interface FileService {
 	
-	FileVO updateFile(HttpServletRequest req, HttpSession session, String data_id);
+	FileVO updateFile(HttpServletRequest req, HttpSession session, String data_id) ;
 	
 	String fileSize(HttpServletRequest req);
 	
-	FileVO saveFile(HttpServletRequest req, HttpSession session, String file_idx );
+	FileVO saveFile(HttpServletRequest req, HttpSession session, String file_idx ) ;
 
 	int deleteFile(String file_idx);
 
-	FileVO jindoFileUpload(HttpServletRequest req, FileVO uploadFile) throws IOException;
+	FileVO jindoFileUpload(HttpServletRequest req, FileVO uploadFile)  throws IOException;
 
-	void downloadFile(String id, HttpServletResponse response,
-			HttpServletRequest request) throws Exception;
+	void downloadFile(String id, HttpServletResponse response, HttpServletRequest request) throws Exception;
 
-	void downloadFileFromUFN(String id, HttpServletResponse response,
-			HttpServletRequest request) throws Exception;
+	void downloadFileFromUFN(String id, HttpServletResponse response, HttpServletRequest request) throws Exception;
 		
 }

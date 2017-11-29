@@ -76,6 +76,8 @@ $(window).load( function() {
 			if(imgView.length != 0){
 				var imageModal = $("#imageModal");
 				var img = imgView.attr('src');
+				img = img.replace("/thumb", "").replace("jpg.png","jpg");
+				
 				$('#modal-iqno').html(qnos);
 				$('#modal-iwriter').html(txts);
 				//$("#btn_go").trigger('click');
@@ -463,10 +465,10 @@ $('#element').off('scroll touchmove mousewheel');
 																					<c:set var="iPath" value ="${ fn:substring(an_item, fn:indexOf(an_item, 'Ω') + 1, fn:length(an_item)) }" />
 																					<c:set var="iPath" value ="${ fn:trim(fn:replace(iPath, '//', '/')) }" />
 																					<c:set var="sPath" value ="${ fn:replace(iPath, '/upload', '/upload/thumb') }" />
-																					<c:set var="sPath" value ="${ fn:split(tPath, '.') }" />
+																					<c:set var="rPath" value ="${ fn:split(tPath, '.') }" />
 																					<c:set var="tPath" value = "${ tPath[1] }" />
 																					<c:set var="tExt"  value = "${ tpath[2] }" />
-																					<img src="${tPath}.png" style="max-width:150px;"  >
+																					<img src="${sPath}.png" style="max-width:150px;"  >
 																				</c:when>
 																				<c:otherwise>
 																					첨부없음

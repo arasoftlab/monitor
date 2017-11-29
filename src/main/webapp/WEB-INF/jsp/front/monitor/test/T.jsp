@@ -40,18 +40,7 @@
 	padding: 10px;
 }
 
-.modal {
-	display: none;
-    position: fixed; 
-    top: 3%; 
-    right: 3%; 
-    left: 3%; 
-    width: 320px; 
-    margin: 0; 
-}
-.modal-body { 
-    height: 60%; 
-}
+.img-responsive{ max-height: calc(100vh - 225px);}	
 </style>
 
 <script>
@@ -306,13 +295,15 @@ function chkValidation()
 				$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
 				$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 				
+				alert(examrequirechk);
+				alert($("textarea").val());
+				
 				if(examrequirechk =='Y'){
-					if($("exam_1").val() !=""){
+					if($("textarea").val() !=""){
 						alert("설명이 필수여서 기록해 주셔야 합니다.");
 						return;
 					}
-					$("#exam_1").val($("#exam_1").val().replace(/\n/g, "<br>"));
-					$("#exam_1").val($("#exam_1").val().replace(/\r\n/g, "<br>"));
+
 				}
 				
 				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
