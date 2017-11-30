@@ -27,7 +27,7 @@
 			    url: "/monitor/file/fileSize.do",
 			    dataType: 'json',		    
 			    success: function(data) {
-			    	alert(data.result);
+			    	//alert(data.result);
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
 						if(fileSize <= fileMaxSize){
