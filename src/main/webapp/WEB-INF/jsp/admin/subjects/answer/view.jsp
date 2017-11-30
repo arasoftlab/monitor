@@ -40,13 +40,13 @@ $(window).load( function() {
 			qnos.innerHTML = "문항정보 : " + qno;
 			var wrt = tdArr[4];
 			var ids = tdArr[3];
-			var text = $(this).text();
+			var text = $(this).html();
 			var txts = document.createElement('h4');
 			var wids = wrt + "(" + ids + ")";
 			txts.innerHTML = "작&nbsp&nbsp성&nbsp&nbsp자 : " + wids;
 			
 			//서술형일경우
-			if(qno.indexOf("서술") != -1 && qno.indexOf("첨부") < 1){
+			if(qno.indexOf("서술") != -1 && qno.indexOf("파일") < 1){
 				var textModal = $("#textModal");
 				//$("#btn_go_text").trigger('click');
 				$('#modal-tqno').html(qnos);
@@ -59,7 +59,7 @@ $(window).load( function() {
 			var imgView = $(this).find('img');
 
 			
-			//서술 첨부형인데 이미지가 아닐경우
+/* 			//서술 첨부형인데 이미지가 아닐경우
 			if(qno.indexOf("이미지") == -1 && qno.indexOf("첨부") > -1){
 				if(imgView.attr('src').length == 0){
 					var textModal = $("#textModal");
@@ -69,11 +69,11 @@ $(window).load( function() {
 					$('#modal-text').html(text);
 					textModal.modal('show');
 				}
-			}
+			} */
 				
 						
 			//이미지일경우
-			if(imgView.length != 0){
+			if(qno.indexOf("이미지") > -1 && imgView.length != 0){
 				var imageModal = $("#imageModal");
 				var img = imgView.attr('src');
 				img = img.replace("/thumb", "").replace("jpg.png","jpg");
