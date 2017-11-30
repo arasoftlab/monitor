@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -164,7 +166,7 @@ public class FileServiceImpl implements FileService{
 		//TODO 이미지가 전체경로로 들어올 경우 전체경로를 검색한 후에 파일뒤에 .png를 붙여 썸네일을 작성한다.
 		fullPathImage = fullPathImage.replaceAll("//", "/");
 		int eChk = find(fullPathImage);
-		//System.out.println(" file ext Check result : " + eChk);
+		System.out.println(" file ext Check result : " + eChk);
 		if(eChk > -1) {
 			//원본
 			String sI = fullPathImage;
@@ -181,6 +183,10 @@ public class FileServiceImpl implements FileService{
 			//rI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg
 			//tI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg.png
 			//pI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/201711
+			System.out.println("sI" + sI);
+			System.out.println("rI" + sI);
+			System.out.println("tI" + sI);
+			System.out.println("pI" + sI);
 			
 			try {
 				// sI 원본경로 , td 썸네일 파일의 경로, tI 최종 썸네일 파일 
@@ -193,7 +199,7 @@ public class FileServiceImpl implements FileService{
 				if(!fI.exists()) { //파일존재여부
 					File ci = new File(sI);
 					Thumbnails.of(ci).size(150, 150).outputFormat("png").toFile(fI);
-					//System.out.println("make file" + tI);
+					System.out.println("make file" + tI);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -209,15 +215,19 @@ public class FileServiceImpl implements FileService{
 		String fExt = rPath.substring(rPath.lastIndexOf(".") + 1,  rPath.length());
 		String[] iExt = {"bmp","gif","jpg","jpeg","png", "BMP", "GIF", "JPG", "JPEG", "PNG" };
 		
-		//System.out.println(" ext check : " + fExt);
+		System.out.println(" ext check : " + fExt);
+		ArrayList<String> fList = new ArrayList<String>(Arrays.asList(iExt));
 		
+		return fList.indexOf(fExt);
+		/*
 		for(int i=0; i< iExt.length; i++) {
-			if(iExt[i].indexOf(fExt) > 0)
+			if(iExt[i].indexOf(fExt) > -1)
 				//System.out.println("file ext check value :" + iExt[i] + " cmp:"+ fExt );
 				return i;
 		}
 		
 		return -1;
+		*/	
 	}
 	
 
