@@ -9,14 +9,15 @@
 
 <c:forEach var="q_item" items="${q_list }" varStatus="j">
 		
-	<div id="q_modify_${j.index}" class="back_style"style="width: 100%; margin-left: 0;">
+	<div id="q_modify_${j.index}" class="question back_style">
 		
-			<div style="background:lightblue;border-radius: 6px 6px 0 0;">
+			<div class="qheader">
 				<table>
-					<tbody><tr>
-						<td style="padding-left: 20px;"><i class="fa fa-edit" style="font-size: xx-large;"></i></td>
-						<td style="padding-left: 10px;"><h1> 질문 ${q_item.question_num }</h1></td>
-						<td style="padding-left: 20px;">
+					<tbody>
+					<tr>
+						<td ><i class="fa fa-edit" ></i></td>
+						<td ><h1> 질문 ${q_item.question_num }</h1></td>
+						<td >
 							<c:choose>
 								<c:when test="${q_item.type eq 'S'}"> <span> 단일 응답형 </span></c:when>
 								<c:when test="${q_item.type eq 'C'}"> <span> 분기응답형  </span></c:when>
@@ -29,7 +30,8 @@
 							</c:choose>	
 						</td>
 					</tr>
-				</tbody></table>
+					</tbody>
+				</table>
 			</div>
 		
 		
@@ -80,7 +82,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>
@@ -144,7 +146,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>
@@ -200,7 +202,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>
@@ -253,7 +255,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>
@@ -503,7 +505,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>
@@ -576,14 +578,26 @@
 								<td colspan=3 class="left">
 									<div class="answer">
 										<c:forEach var="item" items="${q_item.optionVO }" varStatus="i">
-											<div class=" optionList row"
+											<div class="optionList row"
 												data-question_id="${item.question_id }"
 												data-options_id="${item.options_id }">												
 
 											    <div class="col-sm-2">
 													<c:choose>
-														<c:when test="${item.endpoint eq 'Y'}"> <span style="color:red"> 첨부 필수 </span></c:when>
-                            <c:when test="${item.endpoint ne 'Y'}"> <span style="color:blue"> 첨부 선택</span></c:when>														
+														<c:when test="${item.endpoint eq 'Y'}"> 
+															<span style="color:red"> 첨부 필수 </span>
+															<c:choose>
+															<c:when test="${item.examrequire eq 'Y' }">
+																<p style="color:red">설명 필수</p>
+															</c:when>
+															<c:when test="${item.examrequire ne 'Y' }">
+																<p style="color:blue">설명 선택 </p>
+															</c:when>
+															</c:choose>
+														</c:when>
+                            							<c:when test="${item.endpoint ne 'Y'}"> 
+                            								<span style="color:blue"> 첨부 선택</span>
+                            							</c:when>														
 													</c:choose>
 											    </div>
 
@@ -599,7 +613,7 @@
 											    <div class="col-lg-12">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 														</c:forEach>
 													</div>
 												</div>

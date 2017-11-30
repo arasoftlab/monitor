@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+#q_start {width:100%;margin-left: 0; margin-bottom:20px;text-align:center;}
+#search-box2 {padding:0;margin-top:20px; margin-bottom: 15px;  height: 50px; background-color: #BDBDBD; float:left;width:100%;}
+#search-box2 .select {height:24px; font-size:13px;}
+#q_end {width:100%;margin-left: 0; margin-top:110px;}
+
+.question .back_style { width: 100%; margin-left: 0; }
+.question .qheader { background:lightblue;border-radius: 6px 6px 0 0; }
+.question .qheader table tbody td {padding-left: 20px;}
+.question .qheader table tbody td i {font-size: xx-large;}
+
+.question .answer .exam .img { max-width: 100%; }
+.question .answer .option .img { max-width: 100%; }

@@ -164,7 +164,7 @@ $(function(){
 																					<input type="file" accept="image/*" capture="camera"  class="file_input" name="QS_file_setI${item.idx}" onchange="QS_fnFileCheck_update('I${item.idx}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
 																				</c:when>
 																				<c:otherwise>
-																					<input type="file" accept="image/*" capture="camera"  class="file_input" name="QS_file_setI${item.idx}" onchange="QS_fnFileCheck('I${item.idx}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
+																					<input type="file" accept="image/*" class="file_input" name="QS_file_setI${item.idx}" onchange="QS_fnFileCheck('I${item.idx}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
 																				</c:otherwise>																
 																			</c:choose>																	
 																		</i>
@@ -177,7 +177,7 @@ $(function(){
 														<div class="col-lg-12">
 															<div id="QS_fileListI${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
-																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 																</c:forEach>
 															</div>
 																	

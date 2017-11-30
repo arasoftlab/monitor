@@ -76,7 +76,7 @@
 				    	if(data.result == "success"){
 
 				    		var file = data.fileVO;
-				    		var html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
+				    		var html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' class='img-responsive img-thumbnail'>";
 							$("#O_fileList"+prefix+"").html(html);
 							$(":input:file[name=O_file_set"+prefix+"]").val("");
 				    	}else{
@@ -159,7 +159,7 @@
 			    		var html = "";
 			    		if(!prefix.match('V'))
 			    		{
-			    			html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' style='width: 150px;'>";
+			    			html = "<img src='/monitor"+file.savePath+"/"+file.unqFileName+"' class='img-responsive img-thumbnail'>";
 			    		}
 			    		else
 			    		{

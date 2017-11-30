@@ -31,7 +31,8 @@
 	<link href="<c:url value='/css/daterangepicker-bs3.css'/>" rel="stylesheet" />
 	
 	<!--  admin css  -->
-	<link href="<c:url value='/css/admin/admin.css' />" rel="stylesheet" />
+	<link href="<c:url value='/css/admin/admin.css?ver=20171130' />" rel="stylesheet" />
+	<link href="<c:url value='/css/admin/question.css?ver=20171130' />" rel="stylesheet" />
 	
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>

@@ -81,12 +81,12 @@ function checkDisable(chk , label)
 									</div>
 								</div>
 
-								<div class="col-sm-2" style="margin-top: 5px;width: 13%;">
+								<div class="col-sm-2" style="width: 13%;">
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].endpoint" <c:if test="${item.endpoint eq 'Y' }">checked</c:if> />
 									<label>첨부 필수</label>
 								</div>
 								
-								<div class="col-sm-2" style="margin-top: 5px;width: 13%;">
+								<div class="col-sm-2" style="width: 13%;">
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].examrequire" <c:if test="${item.examrequire eq 'Y' }">checked</c:if> />
 									
 									<label>설명 필수</label>
@@ -99,7 +99,7 @@ function checkDisable(chk , label)
 					
 					
 					
-					<div id="answerAdd" class="pull-left col-lg-12" >
+					<div id="answerAdd" class="col-lg-12" >
 	                       <span class="btn btn-default btn-sm fileinput-button" id="optionAdd" onclick="fnInsertOptions('#q_form_${vo.question_id }');">
 	                           <span> <i class="fa fa-1x fa-plus">응답보기추가</i></span>
 	                       </span> 

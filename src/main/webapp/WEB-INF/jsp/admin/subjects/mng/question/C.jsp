@@ -62,7 +62,7 @@ pageEncoding="UTF-8"%>
 								<div class="col-lg-12">
 									<div id="O_fileListI${item.options_id }">
 										<c:forEach var="file" items="${item.fileList }">
-											<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+											<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 										</c:forEach>
 									</div>
 								</div>
@@ -71,7 +71,7 @@ pageEncoding="UTF-8"%>
 						</c:forEach>
 					</div>
 					
-					<div id="answerAdd" class="pull-left col-lg-12" >
+					<div id="answerAdd" class="col-lg-12" >
                        <div class="btn btn-default btn-sm fileinput-button" onclick="fnInsertOptions('#q_form_${vo.question_id }');">
                            <div> <i class="fa fa-1x fa-plus"> 응답보기추가</i></div>
                        </div> 

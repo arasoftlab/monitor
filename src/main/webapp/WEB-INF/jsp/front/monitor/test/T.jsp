@@ -295,12 +295,13 @@ function chkValidation()
 				$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
 				$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 				
-				alert(examrequirechk);
-				alert($("textarea").val());
+				//alert(examrequirechk);
+				//alert($("textarea").val());
 				
 				if(examrequirechk =='Y'){
-					if($("textarea").val() !=""){
+					if($("textarea").val().length < 1){
 						alert("설명이 필수여서 기록해 주셔야 합니다.");
+						$("textarea").focus();
 						return;
 					}
 
@@ -461,15 +462,6 @@ chkMob();
 		  <label style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;" onclick="alert('준비중')">사진 찍어서 <br>보내기</label>
 		</div>
 	</div>
-
-	<c:if test="${optionList[0].examrequire eq 'Y' }">
-		<div style="font-size:10pt;padding-bottom:10px">
-			<b>이미지 설명</b> <br>
-			
-			<textarea style="width:98%;margin-top:10px;margin-right:10px;" onKeyUp="onChkESQ(this)" id="answers_${item.options_num}" name="answers_${item.options_num}" rows="3" >${history_answer[i.index+1]}</textarea>
-			
-		</div>
-	</c:if>
 
 <div style="width:100%;float:left;margin-left:10px;text-align:center">		
 	<c:choose>

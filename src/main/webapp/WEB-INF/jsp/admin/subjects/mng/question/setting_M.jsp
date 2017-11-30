@@ -177,7 +177,7 @@ $(function(){
 														<div class="col-lg-12">
 															<div id="QS_fileListI${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
-																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="width: 150px;">
+																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
 																</c:forEach>
 															</div>
 																	

@@ -229,7 +229,7 @@ console.log("${item}");
 						</c:forEach>
 					</div>
 					
-					<div id="answerAdd" class="pull-left col-lg-12" >
+					<div id="answerAdd" class="col-lg-12" >
 						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="3point" >
 						    <div> <i class="fa fa-1x fa-plus"> 3점 척도</i></div>
 						</div> 
