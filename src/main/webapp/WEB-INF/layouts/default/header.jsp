@@ -139,7 +139,7 @@ function logout(){
 
 <div class="site_wrapper">
 
-<style type="text/css">
+<style>
 	/* .content_right img {max-width: 100% !important; height: auto !important;} */
 	.logout_form{display:none}
 
@@ -158,6 +158,8 @@ function logout(){
     border-left: 1px solid #c6d7f1;
     background: #c6d7f1;
 }
+
+.navbar-nav>li>a>b{color:darkblue;}
 </style>
 
 
@@ -217,7 +219,7 @@ function logout(){
 								<div class="navbar-toggle .navbar-collapse .pull-right "  >
 									<a href="<c:url value='/front/main.do'/>" style="z-index:99999999;">
 										<img src="<c:url value='/img/front/top_logo2.png'/>" class="s_logo" /></a>
-									<button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" style="padding-top:15px;"> <i class="fa fa-bars"></i>
+									<button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" style="padding-top:10px;"> <i class="fa fa-bars fa-2x" style="color:black;"></i>
 									</button>
 								</div>
 						  </div>

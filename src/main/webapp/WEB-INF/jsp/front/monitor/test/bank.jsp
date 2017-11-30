@@ -7,12 +7,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 
 <script>
+//길이구하기
+function getTextLength(str) {
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length == 6) {
+            len++;
+        }
+        len++;
+    }
+    return len;
+}
 
 function onBankApply()
 {
+	$("#writeBankInfo").prop("disabled", true);
+	
 	if($("#bank").val() == "" )
 	{
 		alert("은행명을 선택해주세요.");
+		return false;
+	}
+
+	if(getTextLength($("#bank").val()) > 20){ //50byte
+		alert("은행명이 너무 깁니다. \n은행명을 확인해 주세요.");
 		return false;
 	}
 
@@ -22,6 +40,10 @@ function onBankApply()
 		return false;
 	}
 
+	if(getTextLength($("#bank_num").val()) > 20){ //50byte
+		alert("계좌번호가 너무 깁니다. \n계좌번호를 확인해 주세요.");
+		return false;
+	}
 
 	
 	$.ajax({
@@ -158,7 +180,7 @@ function onBankApply()
 		
 	
 		<div style="width:80%;margin:auto; text-align:right;">
-			<button class="btn btn-theme" onclick="onBankApply()">전송</button>
+			<button id="writeBankInfo" class="btn btn-theme" onclick="onBankApply()">전송</button>
 		</div>
 	
 	</div>
