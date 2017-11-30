@@ -185,7 +185,7 @@ function onDelete(bbs_id)
 							<td class="td1">제목</td>
 							<td class="left">${vo.title }</td>
 							<td class="td1">작성자</td>
-							<td class="left">${vo.member_id } : ${vo.member_name}</td>
+							<td class="left">${vo.member_id } : <a href="javascript:view_member('${vo.member_id }','${vo.poll_num }');" style="font-weight: bold;">	${vo.member_name }</td>
 						</tr>
 						<tr>
 							<td class="td1">등록일</td>
@@ -304,3 +304,6 @@ function onDelete(bbs_id)
 		</div>
 	</div>
 	</section>
+	
+	<%@ include file="/WEB-INF/inc/memberInfo.jsp" %>	
+	

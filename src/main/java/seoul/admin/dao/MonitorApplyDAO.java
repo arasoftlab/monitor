@@ -15,4 +15,6 @@ public interface MonitorApplyDAO {
 	
 	int getMonitorApplyCnt(MonitorApplyVO monitorApplyVO);
 	
+	int deleteMonitorApply(MonitorApplyVO monitorApplyVO);
+	
 }

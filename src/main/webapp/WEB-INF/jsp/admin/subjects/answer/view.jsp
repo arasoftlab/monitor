@@ -76,7 +76,9 @@ $(window).load( function() {
 			if(qno.indexOf("이미지") > -1 && imgView.length != 0){
 				var imageModal = $("#imageModal");
 				var img = imgView.attr('src');
-				img = img.replace("/thumb", "").replace("jpg.png","jpg");
+				img = img.replace("/thumb", "");
+				img = img.replace(img.substring(img.lastIndexOf("."), img.length), "");
+				//img = img.replace("/thumb", "").replace(".png","");
 				
 				$('#modal-iqno').html(qnos);
 				$('#modal-iwriter').html(txts);

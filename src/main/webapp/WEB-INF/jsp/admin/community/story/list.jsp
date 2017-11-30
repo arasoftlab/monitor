@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
 function fnSearch(){
 	$("form").attr("action","list.do").submit();
 }
+
 </script>
 
 <section id="content">
@@ -73,8 +74,8 @@ function fnSearch(){
 												</c:otherwise>
 											</c:choose>																			
 									</td>
-									<td>${item.member_id}</td>
-									<td>${item.member_name }</td>
+									<td><a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;"> ${item.member_id }</a></td>
+									<td><a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;">	${item.member_name }</td>
 									<td><fmt:formatDate value="${item.regdate }" pattern="yyyy/MM/dd" /></td>
 									
 									<td>${item.hits }</td>
@@ -99,3 +100,6 @@ function fnSearch(){
 		</div>
 	</div>
 	</section>
+	
+	<%@ include file="/WEB-INF/inc/memberInfo.jsp" %>	
+	

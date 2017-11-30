@@ -2,6 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
 
+<%
+	pageContext.setAttribute("cr", "\r");
+	pageContext.setAttribute("cn", "\n");
+	pageContext.setAttribute("crcn", "\r\n");
+	pageContext.setAttribute("br", "<br>");
+%>
+
 <c:set var="fileUpMaxCnt" value="1"/>
 <c:set var="fileMaxSize" value="20"/>
 
@@ -286,14 +293,21 @@ function chkValidation()
 	var examrequirechk = '${optionList[0].examrequire}';
 	
 	
+	var $ans = $("#answers_1");
+	$ans.val($ans.val().replace(/\r\n|\n|\r/g, "<br>"));
+	
+	var history_params = "${history_params}";
+	history_params = history_params.replace(/&lt;br&gt;/g, '<br>');
+	history_params = history_params.replace(/&amp;amp;lt;br&amp;amp;gt;/g, '<br>');
+	
 	if (chk == "Y")
 	{
 		if ( !fnFileChecked() ) 
 		{
 			if ($("#files").val() != "" && file_type_chk == "img" )
 			{
-				$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
-				$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
+				//$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
+				//$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
 				
 				//alert(examrequirechk);
 				//alert($("textarea").val());
@@ -307,20 +321,20 @@ function chkValidation()
 
 				}
 				
-				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
+				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,history_params);		
 			}else{
 				alert("첨부파일을 등록해야 진행 할 수 있습니다.");
 			}
 		}else{			
-			$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));		
-			$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
-			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
+			//$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));		
+			//$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
+			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,history_params);		
 		}
 		
 	}else{
-		$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
-		$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
-		historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,'${history_params}');		
+		//$("#answers_1").val($("#answers_1").val().replace(/\n/g, "<br>"));
+		//$("#answers_1").val($("#answers_1").val().replace(/\r\n/g, "<br>"));
+		historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,history_params);		
 	}
 	
 	

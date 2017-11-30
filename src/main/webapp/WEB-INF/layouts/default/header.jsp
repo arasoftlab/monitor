@@ -159,7 +159,7 @@ function logout(){
     background: #c6d7f1;
 }
 
-.navbar-nav>li>a>b{color:darkblue;}
+.navbar-nav>li>a>b{color:black;}
 </style>
 
 

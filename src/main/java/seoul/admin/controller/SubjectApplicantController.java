@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import seoul.admin.service.MonitorsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
 import seoul.admin.vo.MonitorsVO;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/applicant")
@@ -45,11 +43,20 @@ public class SubjectApplicantController {
 			monitorsVO.setIdx(arrayParams.get(i));
 			monitorsVO.setIs_selection(is_select);
 			
-			if (!(monitorsService.updateMonitorsApply(monitorsVO) > 0))
-			{
-				// 한번이라도 업데이트가 실패하면 실패를 리턴함.
-				resultMap.put("result", "fail");
-				return resultMap;
+			System.out.println(" 동작정보 : " + is_select);
+			
+			if(is_select.equals("D")) {
+				System.out.println("삭제:" + monitorsVO.getIdx() );
+				monitorsService.deleteMonitors(monitorsVO);
+			}else {
+				System.out.println("수정:" + monitorsVO.getIdx() );
+				if (!(monitorsService.updateMonitorsApply(monitorsVO) > 0))
+				{
+					// 한번이라도 업데이트가 실패하면 실패를 리턴함.
+					resultMap.put("result", "fail");
+					return resultMap;
+				}
+				
 			}
 		}
 		
@@ -99,6 +106,7 @@ public class SubjectApplicantController {
 		
 		List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO);
 		
+		model.addAttribute("temp", list);
 		model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO));
 		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
 		

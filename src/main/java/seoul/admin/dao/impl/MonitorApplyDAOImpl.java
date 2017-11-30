@@ -32,4 +32,8 @@ public class MonitorApplyDAOImpl extends SqlSessionDaoSupport implements Monitor
 	public int getMonitorApplyCnt(MonitorApplyVO monitorApplyVO){
 		return getSqlSession().selectOne("monitor_apply.getMonitorApplyCnt", monitorApplyVO);		
 	}
+	
+	public int deleteMonitorApply(MonitorApplyVO monitorApplyVO) {
+		return getSqlSession().delete("monitor_apply.deleteMonitorApply", monitorApplyVO);
+	}
 }

@@ -60,6 +60,11 @@
 	    where idx = #{idx}
 	</update>
 	
+	<delete id="deleteMonitorApply" parameterType="seoul.admin.vo.MonitorApplyVO">
+	    delete from n_monitors_apply
+	    where idx = #{idx}
+	</delete>	
+	
     <insert id="insertMonitorApply" parameterType="seoul.admin.vo.MonitorApplyVO">
         insert into n_monitors_apply(
         	idx

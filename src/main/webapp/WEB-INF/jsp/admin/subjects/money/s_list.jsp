@@ -12,6 +12,69 @@ function onExcel(){
 	location.href="/monitor/admin/ex/excel_transform_controller.do?target=money&subject_id=${vo.subject_id}";
 }
 
+$(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#checkall").click(function(){
+        //클릭되었으면
+        if($("#checkall").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=chk]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=chk]").prop("checked",false);
+        }
+    });
+});
+
+</script>
+
+<script>
+function onApply( is_select )
+{
+	var index = 0;
+	
+	var checkboxValues = [];
+	$("input[name='chk']:checked").each(function(i) {
+	    checkboxValues.push($(this).val());
+	    index ++;
+	});
+	
+	if (index <= 0)
+	{
+		alert("하나 이상 신청자를 선택해야합니다.");
+		return false;
+	}
+	
+	var allData = {
+			"select_arr" : checkboxValues ,
+			"is_select" :	is_select	
+	};
+		
+	$.ajax({
+		async : true,
+		type : "POST",
+		url : "<c:url value='/admin/subject/applicant/apply.do'/>",
+		data : allData,
+		success : function(data){
+			if (data.result=="success")
+			{
+				if(is_select == "D"){
+					alert("삭제되었습니다.");
+				}else{
+					alert("변경되었습니다.");	
+				}
+				
+				window.location.reload();
+			}
+			
+		},
+		error : function(request,status,error) {
+			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			alert("error!!");
+		}
+	});
+}
 </script>
 
 <section id="content">
@@ -39,6 +102,7 @@ function onExcel(){
 				
 				<table class="table table-bordered table-striped table2 modal_table">
 					<colgroup>
+						<col width="3%;">
 						<col width="5%;">
 						<col width="10%;">
 						<col width="7%;">
@@ -52,6 +116,7 @@ function onExcel(){
 					</colgroup>
 					<thead>
 						<tr>
+							<th style="vertical-align: middle;"><input type="checkbox" id="checkall"> </th>
 							<th>번호</th>
 							<th>아이디</th>
 							<th>이름</th>
@@ -69,6 +134,7 @@ function onExcel(){
 							<c:when test="${!empty list }">
 								<c:forEach var="item" items="${list }">
 									<tr>
+										<td><input type="checkbox" name="chk" value="${item.idx}"></td>
 										<td>${item.rn }</td>
 										<td class="text-left">${item.member_id }</td>
 										<td>${item.member_name }</td>
@@ -93,6 +159,13 @@ function onExcel(){
 				</table>
 				
 				
+				<div class="col-md-12" style="margin-bottom:50px;">
+<!-- 						<button class="btn btn-theme   " onclick="onApply('Y')">선정</button>
+						<button class="btn btn-theme   " onclick="onApply('N')">X 선정 취소</button> -->
+						<button class="btn btn-warning"  onclick="onApply('D')" style="float:right; ">삭제</button>
+				</div>
+				
+								
 				<div class="col-lg-12">
 					<div class="col-lg-10 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>
 				</div>

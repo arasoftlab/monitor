@@ -14,4 +14,6 @@ public interface MonitorApplyService {
 		
 	int updateMonitorApply(MonitorApplyVO monitorApplyVO);
 	
+	int deleteMonitorApply(MonitorApplyVO monitorApplyVO);
+	
 }

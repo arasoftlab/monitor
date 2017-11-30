@@ -1,5 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -63,7 +62,12 @@ function onApply( is_select )
 		success : function(data){
 			if (data.result=="success")
 			{
-				alert("변경되었습니다.");
+				if(is_select == "D"){
+					alert("삭제되었습니다.");
+				}else{
+					alert("변경되었습니다.");	
+				}
+				
 				window.location.reload();
 			}
 			
@@ -73,77 +77,6 @@ function onApply( is_select )
 			alert("error!!");
 		}
 	});
-}
-
-function view_team(subject_id)
-{
-	$.ajax({
-		async : true,
-		type : "POST",
-		url : "<c:url value='/admin/subject/applicant/team_view.do'/>",
-		data : {"subject_id" : subject_id},
-		success : function(data){
-
-			$("#modal-body_team").html(data);
-			//fnBtnView("Q");			
-			$("#btn_go").trigger('click');
-		},
-		error : function(request,status,error) {
-			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			alert("error!!");
-		}
-	});
-}
-
-
-function view_member(id,poll_num)
-{	
-	$.ajax({
-		async : true,
-		type : "POST",
-		url : "/monitor/admin/monitor/member_view.do",
-		data : {
-			"id" : id,
-			"poll_num" : poll_num
-			},
-		success : function(data){
-
-			$("#modal-body_team_info").html(data);
-			//fnBtnView("Q");			
-			$("#btn_memberinfo").trigger('click');
-		},
-		error : function(request,status,error) {
-			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			alert("error!!");
-		}
-	});
-}
-
-
-function view_team_info_pop(id,poll_num)
-{	
-	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
-	var popOption = "left="+(screen.availWidth-1020)/2+",top="+(screen.availHeight-640)/2+" , width=1020px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
-		window.open(popUrl,"",popOption);		
-	/*
-	$.ajax({
-		async : true,
-		type : "POST",
-		url : "info.do",
-		data : {
-			"id" : id,
-			"poll_num" : poll_num
-			},
-		success : function(data){
-
-			$("#modal-body_monitor").html(data);
-			$("#btn_go_info").trigger('click');
-		},
-		error : function(request,status,error) {
-			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			alert("error!!");
-		}
-	});*/
 }
 
 </script>
@@ -203,7 +136,7 @@ function view_team_info_pop(id,poll_num)
 						<col width="4%">
 						<col width="5%;">
 						<col width="8%;">
-                                                <col width="8%;">
+                        <col width="8%;">
 						<col width="7%;">
 						<col width="7%;">						
 						<col width="4%;">
@@ -222,7 +155,7 @@ function view_team_info_pop(id,poll_num)
 							<th style="vertical-align: middle;">번호</th>
 							<th style="vertical-align: middle;">신청일</th>
 							<th style="vertical-align: middle;">이름</th>
-                                                        <th style="vertical-align: middle;">아이디</th>
+                            <th style="vertical-align: middle;">아이디</th>
 							<th style="vertical-align: middle;">생년월일</th>
 							<th style="vertical-align: middle;">직업</th>
 							<th style="vertical-align: middle;">기수</th>
@@ -288,174 +221,11 @@ function view_team_info_pop(id,poll_num)
 					
 				</table>
 
-
-
-
-				
-				<!-- 모달 팝업 1 회원정보-->
-				<div class="modal fade member_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel">회원정보</h4>
-				      </div>
-				      <div class="modal-body">
-						<h5>서울시 회원정보</h5>
-						<table class="table table-bordered table-margin">
-							<tbody>
-								<tr>
-									<td class="td1">이름</td>
-									<td class="left"> 홍길동(남자)</td>
-									<td class="td1">아이디</td>
-									<td class="left">honggildong</td>
-								</tr>
-								<tr>
-									<td class="td1">생년월일</td>
-									<td class="left">2000/12/31</td>
-									<td class="td1">직업</td>
-									<td class="left">자영업</td>
-								</tr>
-								<tr>
-									<td class="td1">연락처</td>
-									<td class="left">010-1111-1123</td>
-									<td class="td1">이메일</td>
-									<td class="left">aaa@aaa.com</td>
-								</tr>
-								<tr>
-									<td class="td1">거주지</td>
-									<td colspan="3" class="left">서울시 종로구 동숭동</td>
-								</tr>
-								<tr>
-									<td class="td1">가입일자</td>
-									<td class="left">2014/05/17</td>
-									<td class="td1">수정일자</td>
-									<td class="left">2016/08/23</td>
-								</tr>
-							</tbody>
-						</table>
-				      </div>
-				      <div class="modal-footer">
-						<button type="button" class="btn btn-theme modal_btn" data-toggle="modal" data-target=".subject_list">신청 및 참여과제리스트</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				
-				
-				<!-- 모달 팝업 2 신청 및 참여과제 리스트-->
-				<div class="modal fade subject_list" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-					
-				      </div>
-				      <div class="modal-body">
-						<h5>신청 및 침여과제 리스트</h5>
-						<label class="pull-right">총 응모횟수 <b class="modal_b">4회</b> / 총 선정횟수 <b class="modal_b">3회</b>/ 미응답 <b class="modal_b">1회</b></label>
-						<table class="table table-bordered table-striped table2 modal_table">
-							<colgroup>
-								<col width="10%;">
-								<col width="*;">
-								<col width="20%;" >
-								<col width="20%;">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>과제명</th>
-									<th>선정</th>
-									<th>과제</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>1번과제</td>
-									<td>O</td>
-									<td>완료</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>2번과제</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>3번과제</td>
-									<td>O</td>
-									<td>미완료</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>4번과제</td>
-									<td>O</td>
-									<td>완료</td>
-								</tr>
-							</tbody>
-							
-						</table>
-					
-				      </div>
-				      <div class="modal-footer">
-						<jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				
-				
-				<!-- 모달 팝업 3 신청,선정 현황-->
-				<div class="modal fade present" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel">모니터 신청 현황 및 선정 결과보기</h4>
-				      </div>
-				      <div class="modal-body" id="modal-body_team">
-
-				      </div>
-				      
-				      
-				      <div class="modal-footer">
-				      	<div class="col-lg-12" style="text-align:left;">
-				      		<i class="fa fa-users" aria-hidden="true"></i> 모집인원 : (${vo.team_cnt})개 조 (${vo.men_total})명<br/>
-				      		<i class="fa fa-users" aria-hidden="true"></i> 신청인원 : (${vo.team_cnt})개 조 (${apply_total})명
-				      	</div>
-				      	<div class="col-lg-12">
-				      		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      	</div>
-						
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				
-				<!-- 모달 팝업 회원정보 -->
-				<div class="modal fade memberinfo" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel">회원정보</h4>
-				      </div>
-				      <div class="modal-body" id="modal-body_team_info">
-
-				      </div>
-
-				    </div>
-				  </div>
-				</div>				
-				
 				
 				<div class="col-md-6">
-						<button class="btn btn-theme  " onclick="onApply('Y')">선정</button>
-						<button class="btn btn-theme  " onclick="onApply('N')">X 선정 취소</button>
+						<button class="btn btn-theme   " onclick="onApply('Y')">선정</button>
+						<button class="btn btn-theme   " onclick="onApply('N')">X 선정 취소</button>
+						<button class="btn btn-warning"  onclick="onApply('D')">삭제</button>
 				</div>
 				
 				<div class="col-lg-12">
@@ -478,3 +248,32 @@ function view_team_info_pop(id,poll_num)
 		</div>
 	</div>
 </section>
+
+<%@ include file="/WEB-INF/inc/memberInfo.jsp" %>
+
+<!-- 모달 팝업 3 신청,선정 현황-->
+<div class="modal fade present" id="member_join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">모니터 신청 현황 및 선정 결과보기</h4>
+      </div>
+      <div class="modal-body" id="modal-body_team">
+
+      </div>
+      
+      
+      <div class="modal-footer">
+      	<div class="col-lg-12" style="text-align:left;">
+      		<i class="fa fa-users" aria-hidden="true"></i> 모집인원 : (${vo.team_cnt})개 조 (${vo.men_total})명<br/>
+      		<i class="fa fa-users" aria-hidden="true"></i> 신청인원 : (${vo.team_cnt})개 조 (${apply_total})명
+      	</div>
+      	<div class="col-lg-12">
+      		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      	</div>
+		
+      </div>
+    </div>
+  </div>
+</div>
