@@ -25,23 +25,27 @@ function onBankApply()
 	
 	if($("#bank").val() == "" )
 	{
-		alert("은행명을 선택해주세요.");
+		alert("은행명을 입력해주세요.");
+		$("#writeBankInfo").prop("disabled", false);
 		return false;
 	}
 
 	if(getTextLength($("#bank").val()) > 20){ //50byte
 		alert("은행명이 너무 깁니다. \n은행명을 확인해 주세요.");
+		$("#writeBankInfo").prop("disabled", false);
 		return false;
 	}
 
 	if($("#bank_num").val() == "" )
 	{
 		alert("계좌번호를 입력해주세요.");
+		$("#writeBankInfo").prop("disabled", false);
 		return false;
 	}
 
 	if(getTextLength($("#bank_num").val()) > 20){ //50byte
 		alert("계좌번호가 너무 깁니다. \n계좌번호를 확인해 주세요.");
+		$("#writeBankInfo").prop("disabled", false);
 		return false;
 	}
 
@@ -68,11 +72,14 @@ function onBankApply()
 			}		
 		},
 		error : function(request,status,error) {
-			////console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			alert("error!!");
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			$("#writeBankInfo").prop("disabled", false);
+			alert("계좌정보 전송중 오류가 발생했습니다.\n은행명 및 계좌번호를 확인해 주세요.");
 		}
 	});
 }
+
+
 
 </script>
 
