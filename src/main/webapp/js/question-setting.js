@@ -25,7 +25,11 @@
 		var $progress = $('#progressModal');
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
-			    dataType: 'json',		    
+			    dataType: 'json',
+			    beforeSend: function(){
+			    	$progress.css('display', 'block');
+					$progress.modal('show');
+			    },
 			    success: function(data) {
 			    	//alert(data.result);
 			    	if(data.result=="success"){
@@ -70,10 +74,23 @@
 	function QS_fnFileUpdate(prefix,uuid,opener_prefix){
 		
 			var data_id = uuid;
+			var $progress = $('#progressModal');
+			var $bar = $progress.find('.progress-bar');
+			var $percent = $('.percent');
 			var options = {
 				    url: "/monitor/file/fileUpdate.do",
 				    data: { "data_id" : data_id }, 
 				    dataType: 'json',
+				    beforeSend: function(){
+				    	var percentVal = '0%';
+				    	$bar.width(percentVal);
+				    	$percent.html(percentVal);
+				    },
+				    uploadProgress: function(event, position, total, percentComplete){
+				    	var percentVal = percentComplete + '%';
+				    	$bar.width(percentVal);
+				    	$percent.html(percentVal);
+				    },
 				    success: function(data) {
 				    	if(data.result == "success"){
 
@@ -84,11 +101,18 @@
 				    	}else{
 				    		alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");
 				    	}
+				    	var percentVal='100%';
+						$bar.width(percentVal);
+						$percent.html(percentVal);
 				    },
 				    error: function(request,status,error) {
 						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						alert(request.status);
 				    	alert("fileUpload Error!!!");
+				    },
+				    complete: function(xhr){
+				    	$progress.modal('hide');
+				    	$progress.css('display','none');
 				    }
 			};
 			
@@ -104,9 +128,14 @@
 		$("#set_loading").css('display','block');
 
 		var fileSize;
+		var $progress = $('#progressModal');
 		var options = {  
 			    url: "/monitor/file/fileSize.do",
 			    dataType: 'json',
+			    beforeSend: function(){
+			    	$progress.css('display', 'block');
+					$progress.modal('show');
+			    },
 			    success: function(data) {
 			    	if(data.result=="success"){
 						fileSize = Number(data.fileSize);
@@ -156,10 +185,23 @@
 
 		
 		var data_id = uuid;
+		var $progress = $('#progressModal');
+		var $bar = $progress.find('.progress-bar');
+		var $percent = $('.percent');
 		var options = {
 			    url: "/monitor/file/fileUpload.do",
 			    data: { "data_id" : data_id }, 
 			    dataType: 'json',
+			    beforeSend: function(){
+			    	var percentVal = '0%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
+			    uploadProgress: function(event, position, total, percentComplete){
+			    	var percentVal = percentComplete + '%';
+			    	$bar.width(percentVal);
+			    	$percent.html(percentVal);
+			    },
 			    success: function(data) {
 			    	if(data.result == "success"){
 			    		
@@ -184,12 +226,19 @@
 			    	}else{
 			    		alert("등록에 실패하였습니다.\n관리자에게 문의하세요.");
 			    	}
+			    	var percentVal='100%';
+					$bar.width(percentVal);
+					$percent.html(percentVal);
 			    						
 			    },
 			    error: function(request,status,error) {
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					alert(request.status);
 			    	alert("fileUpload Error!!!");
+			    },
+			    complete: function(xhr){
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
 			    }
 		};
 		
