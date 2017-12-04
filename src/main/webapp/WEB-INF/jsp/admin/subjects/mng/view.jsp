@@ -526,7 +526,7 @@ function fnCopyQuestion(question_id ){
 </script>
 
 <section id="content">
-	<div class="container">
+	<div class="container" style="max-width:85%;">
 		<div class="row" style="margin-bottom:0;">
 			
 			<div style="margin-bottom:20px;">

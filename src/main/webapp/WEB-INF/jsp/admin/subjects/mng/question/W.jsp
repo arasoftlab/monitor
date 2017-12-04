@@ -21,15 +21,15 @@ pageEncoding="UTF-8"%>
 								data-question_id="${item.question_id }"
 								data-options_id="${item.options_id }">
 								<input type="hidden" name="optionVO[${i.index }].options_id" value="${item.options_id }">
-								<div class="col-sm-7  input-group" style="float: left;">
-									<div class="col-sm-6">
+								<div class="col-xs-7  input-group" style="float: left;">
+									<div class="col-xs-6">
 										<input type="text" class="quest_form"
 											name="optionVO[${i.index}].label_front"
 											value="${item.label_front }" placeholder="앞 라벨" />
 									</div>
-									<div class="col-sm-1" style="width: 5%;"></div>
+									<div class="col-xs-1" style="width: 5%;"></div>
 
-									<div class="col-sm-5">
+									<div class="col-xs-5">
 										<input type="text" class="quest_form"
 											name="optionVO[${i.index}].label_rear"
 											value="${item.label_rear }" placeholder="뒷 라벨" />
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
 
 
 
-								<div class="col-sm-4  input-group"
+								<div class="col-xs-4  input-group"
 									style="float: left; padding-left: 10px;">
 									<div class="input-group-addon">형식</div>
 									<div id="search" style="padding: 0;">
@@ -55,8 +55,8 @@ pageEncoding="UTF-8"%>
 									</div>
 								</div>
 
-								<div class="col-sm-1" style="padding-left: 10px;">
-									<div id="pollImageDelete" class="col-sm-5">
+								<div class="col-xs-1" style="padding-left: 10px;">
+									<div id="pollImageDelete" class="col-xs-5">
 										<button type="button"
 											class="btn btn-default btn-sm icon_btn delete" onclick="fnDeleteOption('${item.options_id}');">
 											<i class="fa fa-1x fa-times"></i>
@@ -64,7 +64,7 @@ pageEncoding="UTF-8"%>
 									</div>
 								</div>
 <!--  
-								<div class="col-sm-2" style="margin-top: 5px;">
+								<div class="col-xs-2" style="margin-top: 5px;">
 									<input type="checkbox" /> <label>입력합 지정</label>
 								</div>
 -->
@@ -75,7 +75,7 @@ pageEncoding="UTF-8"%>
 
 
 
-					<div id="answerAdd" class="col-lg-12" >
+					<div id="answerAdd" class="col-xs-12" >
                        <div class="btn btn-default btn-sm fileinput-button" id="optionAdd" onclick="fnInsertOptions('#q_form_${vo.question_id }');" >
                            <div> <i class="fa fa-1x fa-plus"> 응답보기추가</i></div>
                        </div> 
@@ -86,7 +86,7 @@ pageEncoding="UTF-8"%>
 			</tr>
 		</tbody>
 	</table>
-			<div id="btn_group" class="col-lg-2 pull-right right">
+			<div id="btn_group" class="col-xs-12 pull-right right">
 				<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 				<button class="btn btn-theme" onclick="fnUpdateQuestion(this.form);">저장</button>
 			</div>	

@@ -73,7 +73,7 @@
 													<input type="radio" > ${item.label_front }
 												</div>
 												
-											    <div class=" checkbox" style="padding-left:10px;">
+											    <div class="col-sm-2 checkbox" style="padding-left:10px;">
 													<c:choose>
 														<c:when test="${item.descyn eq 'Y'}"> <span> (서술형응답) </span></c:when>
 													</c:choose>

@@ -60,9 +60,9 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="col-xs-12">
 														
-															<div class="col-sm-6  input-group" style="float: left;">
+															<div class="col-xs-6  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
 	
 																<div class="input-group-addon droppable">
@@ -70,13 +70,13 @@ $(function(){
 																</div>
 															</div>
 	
-															<div class="col-sm-2" style="padding-left: 10px; width: 105px;">
-																<div class="col-sm-5">
+															<div class="col-xs-2" style="padding-left: 10px; width: 105px;">
+																<div class="col-xs-6">
 																	<a id="btn_del"	class="btn btn-default btn-sm icon_btn delete"	onclick="fnDeleteSettings('${item.idx}');"> 
 																		<i class="fa fa-1x fa-times"></i>
 																	</a>
 																</div>
-																<div id="pollImageAdd" class="col-sm-4">
+																<div id="pollImageAdd" class="col-xs-6">
 																	<div class="btn btn-default btn-sm fileinput-button icon_btn">
 																		<i class="fa fa-1x fa-picture-o"> 																	
 																			<c:choose>
@@ -94,7 +94,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="col-xs-12">
 															<div id="QS_fileListV${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 
@@ -140,9 +140,9 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="col-xs-12">
 														
-															<div class="col-sm-6  input-group" style="float: left;">
+															<div class="col-xs-6  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
 	
 																<div class="input-group-addon droppable">
@@ -150,13 +150,13 @@ $(function(){
 																</div>
 															</div>
 	
-															<div class="col-sm-2" style="padding-left: 10px; width: 105px;">
-																<div class="col-sm-5">
+															<div class="col-xs-2" style="padding-left: 10px; width: 105px;">
+																<div class="col-xs-6">
 																	<a id="btn_del"	class="btn btn-default btn-sm icon_btn delete"	onclick="fnDeleteSettings('${item.idx}');"> 
 																		<i class="fa fa-1x fa-times"></i>
 																	</a>
 																</div>
-																<div id="pollImageAdd" class="col-sm-4">
+																<div id="pollImageAdd" class="col-xs-6">
 																	<div class="btn btn-default btn-sm fileinput-button icon_btn">
 																		<i class="fa fa-1x fa-picture-o"> 																	
 																			<c:choose>
@@ -174,7 +174,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="col-xs-12">
 															<div id="QS_fileListI${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>

@@ -1,9 +1,14 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<style>
+.modal{text-align:center;padding:0 !important; z-index:100000; }
+.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
+.modal-backdrop { z-index:99999;} 
+</style>
 
 <script>
 	function fnShowImg(){
@@ -153,7 +158,8 @@ pageEncoding="UTF-8"%>
 				
 				$("#modal-body_team").html(data);
 				//fnBtnView("Q");			
-				$("#btn_applys").trigger('click');
+				var $modal = $('.modalMonitor');
+				$modal.modal('show');
 			},
 			error : function(request,status,error) {
 				////console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -291,9 +297,46 @@ pageEncoding="UTF-8"%>
 		
 		
 		
+
+		<!-- 게시판 끝 MOBILE -->
+		<div style="text-align:right;margin-top:20px;width:100%;" class="mobile_notice_table">
+			<button type="button" class="btn btn-primary button_blue button_white"  onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
+			<button type="button" id="btn_applys" class="btn" data-toggle="modal" data-target=".present_apply" style="display:none;"></button>						
+			<c:if test="${empty m_vo }">
+				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_M('A')">신청</button>
+			</c:if>
+			<c:if test="${!empty m_vo }">			
+				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_M('U')">수정</button>
+				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()" >신청 취소</button>
+			</c:if>
+			
+			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
+		</div>
+
+		<!-- 게시판 끝  WEB -->
+		<div style="text-align:right;margin-top:20px;width:100%;" class="pc_notice_table">
+			<button type="button" class="btn btn-primary button_blue button_white"  onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
+			<button type="button" id="btn_applys" class="btn" data-toggle="modal" data-target=".present_apply" style="display:none;"></button>			
+
+			<c:if test="${empty m_vo }">
+				<button type="button" class="btn btn-primary button_blue button_white"  onclick="onTempChk_W('A')">신청</button>
+			</c:if>
+			<c:if test="${!empty m_vo }">			
+				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_W('U')">수정</button>
+				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()">신청 취소</button>
+			</c:if>
+			
+			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
+		</div>
+			
+		<div class="clearfix divider_dashed7"></div>
+ 
+
+</form>
+
 		
-		<div class="modal fade present_apply container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-		  <div class="modal-dialog modal-lg">
+		<div class="modal modalMonitor " id="modalMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		  <div class="modal-dialog ">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">
    				<h5 style="font-weight: bold;">현장 모니터 신청 현황</h5>
@@ -330,56 +373,18 @@ pageEncoding="UTF-8"%>
 
 					      
 				<h5 style="margin-top:40px;font-weight: bold;">현장 모니터 조별 신청현황</h5>
-				<div id="modal-body_team" style="display: table;"></div>
-		      </div>
-		    </div>
-		      <div class="modal-footer2">
-		      	<div class="col-md-6" style="float:left;width:100%; margin-top:10px;"">
-		      		모집인원 : ${vo.subjectVO.team_cnt}개조 ${vo.subjectVO.men_total}명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		      		신청인원 : 총 ${apply_total}명
+				<div id="modal-body_team" style="display: table;width:100%"></div>
+				<div style="border-top: 2px #4fb3d2 solid;">
+			      	<div class="col-md-6" style="float:left;width:100%; margin-top:10px;">
+			      		모집인원 : ${vo.subjectVO.team_cnt}개조 ${vo.subjectVO.men_total}명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      		신청인원 : 총 ${apply_total}명
+			    	</div>
 		      	</div>
-		      </div>
-		      
+		    </div>
+	      
 		      <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-top:4px;">Close</button>
 		      </div>
 		  </div>
 		</div>
 
-
-		<!-- 게시판 끝 MOBILE -->
-		<div style="text-align:right;margin-top:20px;width:100%;" class="mobile_notice_table">
-			<button type="button" class="btn btn-primary button_blue button_white"  onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
-			<button type="button" id="btn_applys" class="btn" data-toggle="modal" data-target=".present_apply" style="display:none;"></button>						
-			<c:if test="${empty m_vo }">
-				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_M('A')">신청</button>
-			</c:if>
-			<c:if test="${!empty m_vo }">			
-				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_M('U')">수정</button>
-				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()" >신청 취소</button>
-			</c:if>
-			
-			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
-		</div>
-
-		<!-- 게시판 끝  WEB -->
-		<div style="text-align:right;margin-top:20px;width:100%;" class="pc_notice_table">
-			<button type="button" class="btn btn-primary button_blue button_white"  onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
-			<button type="button" id="btn_applys" class="btn" data-toggle="modal" data-target=".present_apply" style="display:none;"></button>			
-
-			<c:if test="${empty m_vo }">
-				<button type="button" class="btn btn-primary button_blue button_white"  onclick="onTempChk_W('A')">신청</button>
-			</c:if>
-			<c:if test="${!empty m_vo }">			
-				<button type="button" class="btn btn-info button_blue button_white"  onclick="onTempChk_W('U')">수정</button>
-				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()">신청 취소</button>
-			</c:if>
-			
-			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
-		</div>
-			
-		<div class="clearfix divider_dashed7"></div>
- 
-	</div>
-
-</form>

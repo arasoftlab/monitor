@@ -88,6 +88,7 @@ a:active {
 }
 .ic_btn{height:20px; background:none;border: 0;}
 .icon_btn{height:34px; width:34px;}
+label.btn.btn-default{width:34px; height:34px;}
 .file_btn{   
 	margin-left: -5px;
     margin-right: 5px;}

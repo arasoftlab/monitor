@@ -44,7 +44,7 @@ function checkDisable(chk , label)
 								<input type="hidden" name="optionVO[${i.index }].options_id"
 									value="${item.options_id }">
 
-								<div class="  input-group" style="float: left;width: 315px;">
+								<div class="col-xs-6 input-group" style="float: left;width: 315px;">
 									<div class="2">
 										<input type="text" class="quest_form" name="optionVO[${i.index}].label_front" value="${item.label_front }" placeholder="의견이 필요할 경우 기재" />
 									</div>
@@ -56,7 +56,7 @@ function checkDisable(chk , label)
 								</div>
 
 
-								<div class=" input-group"
+								<div class="col-xs-2 input-group"
 									style="float: left; padding-left: 5px;width: 170px;">
 									<div class="input-group-addon">형식</div>
 									<div id="search" style="padding: 0;">
@@ -72,7 +72,7 @@ function checkDisable(chk , label)
 									</div>
 								</div>
 
-								<div class="" style="padding-left: 10px;">
+								<div class="col-xs-2" style="padding-left: 10px;">
 									<div id="pollImageDelete" class="">
 										<button type="button"
 											class="btn btn-default btn-sm icon_btn delete" onclick="fnDeleteOption('${item.options_id}');">
@@ -81,12 +81,12 @@ function checkDisable(chk , label)
 									</div>
 								</div>
 
-								<div class="" style="width: 13%;">
+								<div class="col-xs-1" >
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].endpoint" <c:if test="${item.endpoint eq 'Y' }">checked</c:if> />
 									<label>첨부 필수</label>
 								</div>
 								
-								<div class="" style="width: 13%;">
+								<div class="col-xs-1" >
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].examrequire" <c:if test="${item.examrequire eq 'Y' }">checked</c:if> />
 									
 									<label>설명 필수</label>
@@ -99,7 +99,7 @@ function checkDisable(chk , label)
 					
 					
 					
-					<div id="answerAdd" class="" >
+					<div id="answerAdd" class="col-xs-12" >
 	                       <span class="btn btn-default btn-sm fileinput-button" id="optionAdd" onclick="fnInsertOptions('#q_form_${vo.question_id }');">
 	                           <span> <i class="fa fa-1x fa-plus">응답보기추가</i></span>
 	                       </span> 

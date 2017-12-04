@@ -59,15 +59,15 @@ console.log("${item}");
 								<!-- 각 문항에 대한 form 값을 가지고있어야함 -->
 								<input type="hidden" name="optionVO[${i.index }].form" value="${item.form }">
 																
-								<div class="col-sm-11  input-group" style="float:left;">
+								<div class="col-xs-11  input-group" style="float:left;">
 									<input type="text" class="quest_form" name="optionVO[${i.index}].label_front" value="${item.label_front }"/>
 									<div class="input-group-addon droppable">
 										<i class="fa fa-1x fa-arrows-v"></i>
 									</div>
 								</div>
 								
-								<div class="col-sm-1" style="padding-left:10px;">
-									<div class="col-sm-5">
+								<div class="col-xs-1" style="padding-left:10px;">
+									<div class="col-xs-5">
 										<a id="btn_del" class="btn btn-default btn-sm icon_btn delete" onclick="fnDeleteOption('${item.options_id}');">
 											<i class="fa fa-1x fa-times"></i>
 										</a>
@@ -229,23 +229,23 @@ console.log("${item}");
 						</c:forEach>
 					</div>
 					
-					<div id="answerAdd" class="col-lg-12" >
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="3point" >
+					<div id="answerAdd" class="col-xs-12" >
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="3point" >
 						    <div> <i class="fa fa-1x fa-plus"> 3점 척도</i></div>
 						</div> 
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="5point">
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="5point">
 						    <div> <i class="fa fa-1x fa-plus"> 5점 척도</i></div>
 						</div> 
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="7point">
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="7point">
 						    <div> <i class="fa fa-1x fa-plus"> 7점 척도</i></div>
 						</div> 
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="9point">
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="9point">
 						    <div> <i class="fa fa-1x fa-plus"> 9점 척도</i></div>
 						</div> 
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="10point">
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="10point">
 						    <div> <i class="fa fa-1x fa-plus"> 10점 척도</i></div>
 						</div> 
-						<div class="btn btn-default btn-sm fileinput-button col-lg-2" id="11point">
+						<div class="btn btn-default btn-sm fileinput-button col-xs-2" id="11point">
 						    <div> <i class="fa fa-1x fa-plus"> 11점 척도</i></div>
 						</div> 
 					</div>	
@@ -255,7 +255,7 @@ console.log("${item}");
 			</tr>
 		</tbody>
 	</table>
-			<div id="btn_group" class="col-lg-2 pull-right right">
+			<div id="btn_group" class="col-xs-12 pull-right right">
 				<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 				<button class="btn btn-theme" onclick="fnUpdateQuestion(this.form);">저장</button>
 			</div>
