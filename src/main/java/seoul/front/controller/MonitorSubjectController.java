@@ -1,5 +1,6 @@
 package seoul.front.controller;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,10 @@ public class MonitorSubjectController {
 	@RequestMapping("bank.do")
 	public String bank(Model model, @ModelAttribute MonitorApplyVO subjectVO) throws Exception{
 		
+		System.out.println(" sid : " + subjectVO.getSubject_id());
+		System.out.println(" tid : " + subjectVO.getTeam());
+		System.out.println(" mid : " + subjectVO.getMember_id());
+		
 		MonitorApplyVO monitorApplyVO = new MonitorApplyVO();
 		
 		monitorApplyVO.setSubject_id(subjectVO.getSubject_id());			
@@ -116,7 +121,7 @@ public class MonitorSubjectController {
 			{
 				//TODO 여기서 1차 변환 작업이 필요
 				//history_params = (history_params.indexOf("@")> -1) ? history_params: BaseUtil.deParams(history_params);
-				
+								
 				String temp[] = history_params.split("[|]");
 				back_temp = temp[temp.length-1];
 				String now_num = back_temp.substring(back_temp.indexOf("@")+2 , back_temp.indexOf(":") );
@@ -495,7 +500,7 @@ public class MonitorSubjectController {
 			
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		//params =  URLDecoder.decode(params, "UTF-8");
+		params =  URLDecoder.decode(params, "UTF-8");
 		
 		if (!params.isEmpty()) 
 		{
@@ -536,11 +541,13 @@ public class MonitorSubjectController {
 		
 		// Form serialize 형태로 들어오는 형태는 !#%$%#$# 이런식으로 깨지는 url 코드 형태이며 ,
 		// 한글형식이 주로 깨짐. 이걸 해결하기위해 다시 디코딩 해주는 작업
+		params = URLDecoder.decode(params, "UTF-8");
+				
 	
 		if (!params.isEmpty()) 
 		{
 			//TODO 여기서 반복 데이터 변환
-			//params = answerMaker(params);
+			params = answerMaker(params);
 			//history_params = BaseUtil.deParams(history_params);		
 			history_params += params;
 			//history_params = BaseUtil.enParams(history_params);
@@ -585,7 +592,7 @@ public class MonitorSubjectController {
 		}
 		//String saveParams = params.isEmpty() ? params: BaseUtil.deParams(history_params);
 		
-		answersVO.setAnswers(params);
+		answersVO.setAnswers(history_params);
 		
 		answersVO.setTemporary("Y");	// 중간 저장 형태는 과제가 종료시켜지기 전까지는 무조건 Y 			
 		answersService.updateAnswers(answersVO);
