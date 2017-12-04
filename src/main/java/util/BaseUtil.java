@@ -3,8 +3,11 @@ package util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.UUID;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
@@ -331,5 +334,27 @@ public class BaseUtil {
 		}
 	}
 
+
+	///문자열 해독
+	public static String deParams(String org) throws Exception {
+		Decoder decoder = Base64.getDecoder();
+		// 디코드
+		byte[] decodedBytes2 = decoder.decode(org);
+		String decodedString = new String(decodedBytes2, "UTF-8");
+		System.out.println(" 디코드 : " + decodedString);
+		return decodedString;
+	}
+	
+	///문자열 암호화
+	public static String enParams(String org) throws Exception{
+				
+		Encoder encoder = Base64.getEncoder();
+				
+		byte[] targetBytes = org.getBytes("UTF-8");
+		String encodedString = encoder.encodeToString(targetBytes);
+		System.out.println(" 인코드 : " + encodedString);			
+		return encodedString;
+	}
+	
 	
 }

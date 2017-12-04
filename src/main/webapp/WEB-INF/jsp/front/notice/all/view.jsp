@@ -8,7 +8,7 @@
 .modal{text-align:center;padding:0 !important; z-index:100000; }
 .modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
 .modal-dialog{display:inline-block;text-align:left;vertical-align:middle;}
-.modal-backdrop { z-index:99999;}
+.modal-backdrop { z-index:99999;} 
 </style>
 <script>
 
@@ -78,8 +78,9 @@
 			data : {"subject_id" : subject_id},
 			success : function(data){
 				$("#modal-body_team").html(data);			
-				$("#btn_applys").trigger('click');
-				var $modal = $('#modalMonitor');
+				//$("#btn_applys").trigger('click');
+				var $modal = $('.modalMonitor');
+				//$modal.css("display:block;");
 				$modal.modal('show');
 			},
 			error : function(request,status,error) {
@@ -236,8 +237,8 @@
 					<c:if test="${!empty member_id && member_poll eq now_poll}">		
 					
 						<c:if test="${vo.subjectVO.status eq '02'}">		
-							<button type="button" class="btn btn-primary onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
-							<button type="button" id="btn_applys" class="btn " data-toggle="modal" data-target=".present_apply" style="display:none;"></button>
+							<button type="button" class="btn btn-primary" onclick="view_team('${vo.subject_id}')">현장모니터 신청 현황</button>
+							
 							<c:if test="${empty m_vo }">				
 								<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='modify.do?notice_id=${vo.notice_id }'/>'">참여신청</button>
 							</c:if>			
@@ -266,7 +267,7 @@
 								
 													
 		<!-- --------현장모니터 신청 현황 -->
-		<div class="modal animated" id="modalMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal animated modalMonitor" id="modalMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		  <div class="modal-dialog ">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">

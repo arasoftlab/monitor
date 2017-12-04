@@ -81,7 +81,7 @@ function onApply( is_select )
 
 </script>
 
-<button id="btn_memberinfo" type="button" class="modal_btn" data-toggle="modal" data-target=".memberinfo"></button>									
+<button id="btn_memberinfo" type="button" class="modal_btn" data-toggle="modal" data-target=".memberinfo" style="display:none;"></button>									
 
 <section id="content">
 	<div class="container">
@@ -116,14 +116,15 @@ function onApply( is_select )
 							<option value="phone" >연락처</option>
 						</select>
 						<input type="text" class="list_form" name="searchText" value="${vo.searchText }" style="display: inline; width:100px;">
-						<input type="button" id="search-button1" value="검색" onclick="fnSearch();">
+						
+						<button class="btn btn-theme" onclick="fnSearch();" style="margin-bottom:4px;">검색</button>
 					</form>
 					
 				</div>
 				
 				<div class="col-lg-5 pull-right" style="padding:0; text-align:right">
 
-					<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".present"></button>									
+					<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".present" style="display:none;" ></button>									
 
 					<button class="btn btn-theme  " onclick="view_team('${vo.subject_id}')">신청,선정 현황</button>
 					<button class="btn btn-theme  " onclick="onExcel()">신청자 목록 다운</button>
@@ -213,7 +214,7 @@ function onApply( is_select )
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="14">등록된 글이 없습니다.</td>
+									<td colspan="15">등록된 글이 없습니다.</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
@@ -221,27 +222,28 @@ function onApply( is_select )
 					
 				</table>
 
-				
-				<div class="col-md-6">
+				<style>
+					.btn_left{float:left;}
+					.btn_right{float:right;}
+				</style>
+				<div class="btnGroupArea">
+					<div class="btn_left">
 						<button class="btn btn-theme   " onclick="onApply('Y')">선정</button>
 						<button class="btn btn-theme   " onclick="onApply('N')">X 선정 취소</button>
-						<button class="btn btn-warning"  onclick="onApply('D')">삭제</button>
-				</div>
-				
-				<div class="col-lg-12">
-					<div class="col-lg-4">
-						<div  class="col-md-5 pull-left"  style="margin-right:10px;margin-top:10px;">
-							<select class="list_form" name="team_num" style="display: inline;">
-								<option value="" >조 선택</option>
-								<option value="D" ></option>
-								<option value="Z" ></option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<button class="btn btn-theme  " onclick="onApply('Y')">변경</button>
+						<button class="btn btn-theme"     onclick="onApply('D')">삭제</button>
+					</div>
+					<div class="btn_right" style="width:172px;">
+						<div class="pull-left">
+						<select class="list_form" name="team_num" style="width:120px;">
+							<option value="" >조 선택</option>
+							<option value="D" ></option>
+							<option value="Z" ></option>
+						</select>
+						</div class="pull-right">
+						<div>
+						<button class="btn btn-theme" onclick="onApply('Y')" >변경</button>
 						</div>
 					</div>
-					<div class="col-lg-8"></div>
 				</div>
 				
 			</div>

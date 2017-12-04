@@ -23,7 +23,7 @@ $(function(){
 
 
 
-<div class="col-lg-12 panel-group pull-left" style="margin-top: 15px;">
+<div class=" panel-group pull-left" style="margin-top: 15px;">
 	<div class="panel panel-default">
 	    <div class="panel-heading">
 	      <h4 class="panel-title">
@@ -60,9 +60,9 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="">
 														
-															<div class="col-sm-6  input-group" style="float: left;">
+															<div class="  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
 	
 																<div class="input-group-addon droppable">
@@ -70,13 +70,13 @@ $(function(){
 																</div>
 															</div>
 	
-															<div class="col-sm-2" style="padding-left: 10px; width: 105px;">
-																<div class="col-sm-5">
+															<div class="" style="padding-left: 10px; width: 105px;">
+																<div class="">
 																	<a id="btn_del"	class="btn btn-default btn-sm icon_btn delete"	onclick="fnDeleteSettings('${item.idx}');"> 
 																		<i class="fa fa-1x fa-times"></i>
 																	</a>
 																</div>
-																<div id="pollImageAdd" class="col-sm-4">
+																<div id="pollImageAdd" class="">
 																	<div class="btn btn-default btn-sm fileinput-button icon_btn">
 																		<i class="fa fa-1x fa-picture-o"> 																	
 																			<c:choose>
@@ -94,7 +94,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="">
 															<div id="QS_fileListV${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 
@@ -114,7 +114,7 @@ $(function(){
 												
 											</div>
 
-											<div id="answerAdd" class="pull-left col-lg-12">
+											<div id="answerAdd" class="pull-left ">
 												<div class="btn btn-default btn-sm fileinput-button"
 													onclick="fnInsertQuestionSettings('#q_form_${vo.question_id }');">
 													<div>
@@ -140,9 +140,9 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="">
 														
-															<div class="col-sm-6  input-group" style="float: left;">
+															<div class="  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
 	
 																<div class="input-group-addon droppable">
@@ -150,13 +150,13 @@ $(function(){
 																</div>
 															</div>
 	
-															<div class="col-sm-2" style="padding-left: 10px; width: 105px;">
-																<div class="col-sm-5">
+															<div class="" style="padding-left: 10px; width: 105px;">
+																<div class="">
 																	<a id="btn_del"	class="btn btn-default btn-sm icon_btn delete"	onclick="fnDeleteSettings('${item.idx}');"> 
 																		<i class="fa fa-1x fa-times"></i>
 																	</a>
 																</div>
-																<div id="pollImageAdd" class="col-sm-4">
+																<div id="pollImageAdd" class="">
 																	<div class="btn btn-default btn-sm fileinput-button icon_btn">
 																		<i class="fa fa-1x fa-picture-o"> 																	
 																			<c:choose>
@@ -174,7 +174,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="">
 															<div id="QS_fileListI${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -189,7 +189,7 @@ $(function(){
 												</c:forEach>
 											</div>
 
-											<div id="answerAdd" class="pull-left col-lg-12">
+											<div id="answerAdd" class="pull-left ">
 												<div class="btn btn-default btn-sm fileinput-button"
 													onclick="fnInsertQuestionSettings('#q_form_${vo.question_id }');">
 													<div>
@@ -213,7 +213,7 @@ $(function(){
 							<td class="td1">필수응답 수</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="required_cnt" value="${vo.required_cnt }" class="quest_form">
 									</div>
 									<label class="control-label" for="formGroupInputLarge" style="margin-top:7px;">개</label>
@@ -224,7 +224,7 @@ $(function(){
 							<td class="td1">입력합</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="required_sum" value="${vo.required_sum }"  class="quest_form">
 									</div>
 								</div>
@@ -235,7 +235,7 @@ $(function(){
 							<td class="td1">다음문항</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="next_num" value="${vo.next_num }" class="quest_form">
 									</div>
 									<label class="control-label" for="formGroupInputLarge"style="margin-top:7px;">번</label>

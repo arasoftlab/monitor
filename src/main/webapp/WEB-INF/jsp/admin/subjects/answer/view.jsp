@@ -57,20 +57,6 @@ $(window).load( function() {
 			
 			
 			var imgView = $(this).find('img');
-
-			
-/* 			//서술 첨부형인데 이미지가 아닐경우
-			if(qno.indexOf("이미지") == -1 && qno.indexOf("첨부") > -1){
-				if(imgView.attr('src').length == 0){
-					var textModal = $("#textModal");
-					//$("#btn_go_text").trigger('click');
-					$('#modal-tqno').html(qnos);
-					$('#modal-twriter').html(txts);
-					$('#modal-text').html(text);
-					textModal.modal('show');
-				}
-			} */
-				
 						
 			//이미지일경우
 			if(qno.indexOf("이미지") > -1 && imgView.length != 0){
@@ -108,7 +94,9 @@ function onExcel(){
 function view_team_info_pop(id,poll_num)
 {	
 	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
-	var popOption = "left="+(screen.availWidth-1020)/2+",top="+(screen.availHeight-640)/2+" , width=1020px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
+	var sW = (screen.availWidth-1020)/2;
+	var sH = (screen.availHeight-640)/2;
+	var popOption = "left="+ sW +",top="+ sH +" , width=1020px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);		
 	/*
 	$.ajax({
@@ -166,7 +154,69 @@ function view_member(id,poll_num)
 	});
 }
 
+function onApply( is_select )
+{
+	var index = 0;
+	
+	var checkboxValues = [];
+	$("input[name='chk']:checked").each(function(i) {
+	    checkboxValues.push($(this).val());
+	    index ++;
+	});
+	
+	if (index <= 0)
+	{
+		alert("하명 이상 선택해야합니다.");
+		return false;
+	}
+	
+	var allData = {
+			"select_arr" : checkboxValues ,
+			"is_select" :	is_select	
+	};
+		
+	$.ajax({
+		async : true,
+		type : "POST",
+		url : "<c:url value='/admin/subject/answer/apply.do'/>",
+		data : allData,
+		success : function(data){
+			if (data.result=="success")
+			{
+				if(is_select == "D"){
+					alert("삭제되었습니다.");
+				}else{
+					alert("변경되었습니다.");	
+				}
+				
+				window.location.reload();
+			}
+			
+		},
+		error : function(request,status,error) {
+			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			alert("error!!");
+		}
+	});
+}
 </script>
+<script>
+$(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#checkall").click(function(){
+        //클릭되었으면
+        if($("#checkall").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=chk]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=chk]").prop("checked",false);
+        }
+    });
+});
+</script>
+
 
 <button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".member_modal"></button>
 <button id="btn_go_text" type="button" class="modal_btn" data-toggle="modal" data-target=".member_modal_text"></button>
@@ -180,33 +230,15 @@ $('#element').off('scroll touchmove mousewheel');
 <style>
 /*본문 테이블 스타일 설정*/
 .modal_table tr td{
-	min-width:150px;
+  min-width:150px;
   max-width:200px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  
 }
-
-/* .modal {
-	position:absolute;
-	left:50%;
-	top:50%;
-	transform: translate(-50%, -50%);
-	width:auto;
-	max-width:700px;
-	max-height:500px;
-} */
-
-/* .modal-content img {
-	max-width:680px;
-	max-height:480px;
-}
-
-.modal-content > .img-responsive {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-} */
+.modal_table thead tr th {vertical-align: middle;}
+.modal_table tbody tr td { vertical-align: middle;}
 </style>
 
 
@@ -217,11 +249,11 @@ $('#element').off('scroll touchmove mousewheel');
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
+			<div >
 				<h4 style="float:left; margin-right:10px;">${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp; <font color="blue">결과제출 총 ${total_cnt}건</font></h4>
 			</div>
-			<div class="col-lg-12">
-				<div id="search-box1" class="col-lg-12" style="padding:0;">
+			<div >
+				<div id="search-box1"  style="padding:0;">
 					<form class="pull-left;">
 					
 					<input type="hidden" name="subject_id" value="${vo.subject_id}">
@@ -238,12 +270,10 @@ $('#element').off('scroll touchmove mousewheel');
 							<option value="member_id" >아이디</option>
 						</select>
 						<input type="text" class="list_form" name="searchText" value="${vo.searchText }" style="display: inline; width:200px;">
-						<input type="button" id="search-button1" value="검색" onclick="fnSearch();">
-						<input type="button" id="search-button1" value="조사결과 내려받기" style="width:110px;" onclick="onExcel()">
-<!--  
-						<input type="button" id="search-button1" value="결과이미지 내려받기" style="width:120px;">
--->
-						<input type="button" id="search-button1" value="과제 미체출자 보기" style="width:115px;" onclick="fnNoAnswer();">
+						<button class="btn btn-theme" onclick="fnSearch();">검색</button>
+						<button class="btn btn-theme" onclick="onExcel();">조사결과 내려받기</button>
+						<button class="btn btn-theme" onclick="fnNoAnswer();">과제 미제출자 보기</button>
+						<button class="btn btn-theme" onclick="fnSearch('M')">미완료 응답자 검색</button>
 					</form>
 					
 				</div>
@@ -264,7 +294,7 @@ $('#element').off('scroll touchmove mousewheel');
 						</colgroup>
 						<thead>
 							<tr>
-								<th></th>
+								<th><input type="checkbox" id="checkall"></th>
 								<th>번호</th>
 								<th>제출일</th>
 								<th>아이디</th>
@@ -348,7 +378,7 @@ $('#element').off('scroll touchmove mousewheel');
 									<c:when test="${!empty a_list }">
 										<c:forEach var="a_item" items="${a_list }" varStatus="j">
 										<tr>
-											<td><input type="checkbox"/></td>
+											<td><input type="checkbox" name="chk" value="${a_item.answers_id}"></td>
 											<td>${a_item.rn }</td>
 											<td>
 												<fmt:formatDate value="${a_item.regdate }" pattern="MM-dd HH:mm"/>
@@ -602,8 +632,8 @@ $('#element').off('scroll touchmove mousewheel');
 				  </div>
 				</div>				
 				
-				<div class="col-lg-12">
-					<div class="col-lg-10 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>				
+				<div >
+					<div class=" center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>				
 				</div>
 				
 			</div>

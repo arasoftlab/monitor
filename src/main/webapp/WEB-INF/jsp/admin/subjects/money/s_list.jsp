@@ -54,7 +54,7 @@ function onApply( is_select )
 	$.ajax({
 		async : true,
 		type : "POST",
-		url : "<c:url value='/admin/subject/applicant/apply.do'/>",
+		url : "<c:url value='/admin/subject/money/apply.do'/>",
 		data : allData,
 		success : function(data){
 			if (data.result=="success")
@@ -149,7 +149,7 @@ function onApply( is_select )
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="9">등록된 글이 없습니다.</td>
+									<td colspan="10">등록된 글이 없습니다.</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

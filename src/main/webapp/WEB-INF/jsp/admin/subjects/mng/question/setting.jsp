@@ -21,7 +21,7 @@ $(function(){
 });
 </script>
 
-<div class="col-lg-12 panel-group pull-left" style="margin-top: 15px;">
+<div class=" panel-group pull-left" style="margin-top: 15px;">
 	<div class="panel panel-default">
 	    <div class="panel-heading">
 	      <h4 class="panel-title">
@@ -49,7 +49,7 @@ $(function(){
 							<td class="td1">필수응답 수</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="required_cnt" value="${vo.required_cnt }" class="quest_form">
 									</div>
 									<label class="control-label" for="formGroupInputLarge" style="margin-top:7px;">개</label>
@@ -60,7 +60,7 @@ $(function(){
 							<td class="td1">입력합</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="required_sum" value="${vo.required_sum }"  class="quest_form">
 									</div>
 								</div>
@@ -70,7 +70,7 @@ $(function(){
 							<td class="td1">다음문항</td>
 							<td colspan=3 class="left"> 
 								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="">
 										<input type="text" name="next_num" value="${vo.next_num }" class="quest_form">
 									</div>
 									<label class="control-label" for="formGroupInputLarge"style="margin-top:7px;">번</label>

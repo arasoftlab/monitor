@@ -20,8 +20,12 @@
 
 	<mvc:view-controller path="/" view-name="index" />
 	
-	<mvc:resources location="css/**" mapping="/css/**" />
-	<mvc:resources location="/image/**" mapping="/image/**" />
-	<mvc:resources location="/js/**" mapping="/js/**" />
+    <mvc:resources location="/upload/**" mapping="/upload/"></mvc:resources>
+    <mvc:resources location="/img/**" mapping="/img/"></mvc:resources>
+    <mvc:resources location="/js/**" mapping="/js/"></mvc:resources>
+    <mvc:resources location="/css/**" mapping="/css/"></mvc:resources>
+    <mvc:resources location="/fonts/**" mapping="/fonts/"></mvc:resources>
+    
+    <mvc:resources mapping="/webjars/**" location="/webjars/" />
 
 </beans>	

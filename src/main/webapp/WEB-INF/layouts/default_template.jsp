@@ -14,8 +14,7 @@
 	<meta name="author" content="http://bootstraptaste.com" />
 	<title><tiles:insertAttribute name="title" /></title>
 		
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	
+	<link href="<c:url value='/webjars/bootstrap/3.3.7/css/bootstrap.min.css' />" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/reset.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/style.css'/>" rel="stylesheet" />
 	
@@ -24,7 +23,7 @@
 	<link href="<c:url value='/css/front/css/responsive-leyouts.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/animations.min.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/slate.css'/>" rel="stylesheet" />
-	<link rel="StyleSheet" href="<c:url value='/css/front/css/board_1.css'/>" type="text/css">
+	<link href="<c:url value='/css/front/css/board_1.css'/>" rel="StyleSheet" >
 	
 	<link href="<c:url value='/css/front/css/stickytwo.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/bootstrap.min.css'/>" rel="stylesheet" />
@@ -40,16 +39,16 @@
 	<link href="<c:url value='/css/front/css/nanumgothic.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/nanummyeongjo.css'/>" rel="stylesheet" />
 	
-	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="<c:url value='/webjars/jquery/1.12.4/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-form/4.2.1/jquery.form.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
 	
-	 <script src="<c:url value='/js/browser_check.js' />"></script>
+	<script src="<c:url value='/js/browser_check.js' />"></script>
 	<!--[if !ie]> <link rel="stylesheet" type="text/css" href="<c:url value='/css/front/css/ie.css'/>" /> <![endif]-->
 	<!--[if lt IE 9]>	
-	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js" integrity="sha256-sqQlcOZwgKkBRRn5WvShSsuopOdq9c3U+StqgPiFhHQ=" crossorigin="anonymous"></script>
+	<script src="<c:url value='/webjars/respond/1.4.2/dest/respond.min.js'/>"></script>
+	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
+    <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
     <![endif]-->
 	<script>
 		$body = $("body");

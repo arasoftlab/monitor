@@ -1,16 +1,22 @@
 package seoul.admin.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.coobird.thumbnailator.Thumbnails;
 import seoul.admin.service.AnswersService;
@@ -23,6 +29,7 @@ import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
+import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/answer")
@@ -48,7 +55,7 @@ public class SubjectAnswerController {
 	
 	@RequestMapping("view.do")
 	public String view(Model model, @ModelAttribute AnswersVO answersVO, HttpServletRequest request) throws Exception{
-		
+		System.out.println(" team_num :" + answersVO.getTeam_num());
 		
 		SubjectVO subjectVO = new SubjectVO();
 		
@@ -66,7 +73,18 @@ public class SubjectAnswerController {
 		for(int imageSeq = 0; imageSeq < answers_list.size(); imageSeq++) {
 			AnswersVO an = new AnswersVO();
 			an = answers_list.get(imageSeq);
+			
 			String imagePath = an.getAnswers();
+			//답변에 구분자 확인이 가능할 경우 평문 그렇지 않을 경우 base64 인코딩된 텍스트
+			//TODO 이 부분을 BASE64 code로 대체해야 할것 으로 보임
+			//String imagePath = (an.getAnswers().indexOf("@")> -1) ? an.getAnswers(): BaseUtil.deParams(an.getAnswers());
+			//an.setAnswers(URLDecoder.decode(imagePath, "UTF-8"));
+			//String imagePath = BaseUtil.deParams(an.getAnswers());
+			
+			System.out.println(imagePath);
+									
+			//답변내역이 없을때 에러를 방지하기 위한 코드
+			imagePath = ObjectUtils.isEmpty(imagePath)? "" : imagePath;
 			
 			if(imagePath.indexOf('Ω') > -1) {
 			
@@ -104,8 +122,9 @@ public class SubjectAnswerController {
 							if(!td.exists()) { //경로존재여부 
 								td.mkdirs();
 							}
-							File ti = new File(rp + ".png");
+							File ti = new File(rp);
 							if(!ti.exists()) { //파일존재여부
+								rp = rp.substring(0, rp.lastIndexOf(".")) + "png";
 								File ci = new File(rp);
 								Thumbnails.of(rs).size(150, 150).outputFormat("png").toFile(ci);
 								System.out.println("make file" + ti);
@@ -202,4 +221,33 @@ public class SubjectAnswerController {
 		
 		return "admin/subjects/answer/noanswer.admin";
 	}
+	
+	@RequestMapping("apply.do")
+	public @ResponseBody Map<String, Object> apply(Model model, 
+			@RequestParam(value="select_arr[]") List<String> arrayParams,
+			@RequestParam(value="is_select") String is_select ) throws Exception{
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		for (int i = 0 ; i < arrayParams.size() ; i++)
+		{
+			AnswersVO answersVO = new AnswersVO();
+			
+			answersVO.setAnswers_id(arrayParams.get(i));
+			//answersVO.setIs_selection(is_select);
+			
+			System.out.println(" 동작정보 : " + is_select);
+			
+			if(is_select.equals("D")) {
+				System.out.println("삭제:" + answersVO.getAnswers_id() );
+				answersService.deleteAnswers(answersVO);
+			}
+		}
+		
+	
+		resultMap.put("result", "success");
+		return resultMap;
+		
+	}
+	
 }

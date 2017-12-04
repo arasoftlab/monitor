@@ -1,6 +1,5 @@
 package seoul.front.controller;
 
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /*import com.mysql.jdbc.log.Log4JLogger;*/
 
@@ -28,7 +23,6 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
-import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.OptionVO;
@@ -36,6 +30,7 @@ import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberVO;
+import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
@@ -96,51 +91,48 @@ public class MonitorSubjectController {
 	
 	
 	@RequestMapping("modify.do")
-	public String modify(Model model, @ModelAttribute QuestionVO questionVO , SubjectVO subjectVO , AnswersVO answersVO) throws Exception{
+	public String modify(Model model, 
+			@ModelAttribute QuestionVO questionVO , 
+			SubjectVO subjectVO , 
+			AnswersVO answersVO) throws Exception{
+		
 		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
 		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
-		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );
-		
 		MemberVO mem = (MemberVO)ret;
 
 		if (mem != null)
 		{
 			// 해당 과제응답항목에 대한 회원아이디 / 과제명 / 과제 완료여부 ( 중복 과제 응답시 ???) 
-
 			model.addAttribute("m_vo", mem);
-			
 			answersVO.setMember_id(mem.getId());
-			
 			answersVO = answersService.getAnswers(answersVO);
-			
 			String history_params = answersVO.getAnswers();
-
 			String back_temp;
 			String back_temp_arr[];
 			
 			if (history_params != null && history_params != "") 
 			{
+				//TODO 여기서 1차 변환 작업이 필요
+				//history_params = (history_params.indexOf("@")> -1) ? history_params: BaseUtil.deParams(history_params);
+				
 				String temp[] = history_params.split("[|]");
-				
 				back_temp = temp[temp.length-1];
-				
 				String now_num = back_temp.substring(back_temp.indexOf("@")+2 , back_temp.indexOf(":") );
 							
+				System.out.println("RS:" + history_params);
+				//model.addAttribute("history_params", BaseUtil.enParams(history_params));
 				model.addAttribute("history_params", history_params);
-				
 				model.addAttribute("now_num", now_num);
-				
 				model.addAttribute("now_arr", Integer.parseInt(now_num)-1);
 			}
 			model.addAttribute("answers_id" , answersVO.getAnswers_id());
 		}
 
 		model.addAttribute("is_payment", subjectVO.getPay_yn());
-
 		model.addAttribute("subject_id", subjectVO.getSubject_id());
-		model.addAttribute("list", questionService.getQuestionList(questionVO));
+		model.addAttribute("list", list);
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
 		
 		return "front/monitor/test/list.testform";
@@ -162,29 +154,22 @@ public class MonitorSubjectController {
 		{
 			// 해당 과제응답항목에 대한 회원아이디 / 과제명 / 과제 완료여부 ( 중복 과제 응답시 ???)
 			
-			model.addAttribute("m_vo", mem);
-			
+			model.addAttribute("m_vo", mem);			
 			answersVO.setSubject_id(subjectVO.getSubject_id());
-			answersVO.setMember_id(mem.getId());
-						
-			answersVO.setQuery("temporary ='Y'");
-			
+			answersVO.setMember_id(mem.getId());					
+			answersVO.setQuery("temporary ='Y'");			
 			answersVO = answersService.getAnswers(answersVO);
-
 			
 			if (answersVO==null)
 			{
 				answersVO = new  AnswersVO();
 				answersVO.setSubject_id(subjectVO.getSubject_id());
-				answersVO.setMember_id(mem.getId());
-				
+				answersVO.setMember_id(mem.getId());		
 				answersVO.setPoll_num(mem.getPoll_num());
 				
 				// 최초 인서트 
-				answersService.insertAnswers(answersVO);
-								
-				answersVO.setQuery("temporary ='Y'");
-				
+				answersService.insertAnswers(answersVO);								
+				answersVO.setQuery("temporary ='Y'");				
 				answersVO = answersService.getAnswers(answersVO);
 				
 			}
@@ -510,14 +495,17 @@ public class MonitorSubjectController {
 			
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		params =  URLDecoder.decode(params, "UTF-8");
+		//params =  URLDecoder.decode(params, "UTF-8");
 		
 		if (!params.isEmpty()) 
 		{
-			params = answerMaker(params);		
+			params = answerMaker(params);	
 			
+			
+			//TODO  여기서 완료 메시지 변환
+			//history_params = BaseUtil.deParams(history_params);			
 			history_params += params;
-			
+			//history_params = BaseUtil.enParams(history_params);
 		}
 		
 		AnswersVO answersVO = new AnswersVO();		
@@ -548,14 +536,15 @@ public class MonitorSubjectController {
 		
 		// Form serialize 형태로 들어오는 형태는 !#%$%#$# 이런식으로 깨지는 url 코드 형태이며 ,
 		// 한글형식이 주로 깨짐. 이걸 해결하기위해 다시 디코딩 해주는 작업
-
-		params =  URLDecoder.decode(params, "UTF-8");
-		
+	
 		if (!params.isEmpty()) 
 		{
-			params = answerMaker(params);		
-			
+			//TODO 여기서 반복 데이터 변환
+			//params = answerMaker(params);
+			//history_params = BaseUtil.deParams(history_params);		
 			history_params += params;
+			//history_params = BaseUtil.enParams(history_params);
+			
 		}
 		
 		// 마지막 문항에서 question_id 값을 반환하지 않기에 체크 
@@ -564,7 +553,7 @@ public class MonitorSubjectController {
 		
 		QuestionVO nextQuestionVO = new QuestionVO();
 		
-		String str ="";
+		//String str ="";
 		
 		if (bifurcation != 0)
 		{
@@ -591,7 +580,12 @@ public class MonitorSubjectController {
 		
 		// 요구분석 결과 next 시 매번 저장하는구조로 변경.
 		answersVO.setAnswers_id(answers_id);
-		answersVO.setAnswers(history_params);
+		if(!params.isEmpty()) {
+			
+		}
+		//String saveParams = params.isEmpty() ? params: BaseUtil.deParams(history_params);
+		
+		answersVO.setAnswers(params);
 		
 		answersVO.setTemporary("Y");	// 중간 저장 형태는 과제가 종료시켜지기 전까지는 무조건 Y 			
 		answersService.updateAnswers(answersVO);
@@ -634,4 +628,5 @@ public class MonitorSubjectController {
 			return "front/monitor/test/END.ajax";
 	}
 	
+
 }

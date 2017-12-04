@@ -703,7 +703,7 @@ border-bottom-color: #fff;
 @media only screen and (min-width: 480px) and (max-width: 767px){
 	.main_title{top:-150px;}
 	.mobile_notice_table .modify{width:480px;}
-	.table_02{min-width:480px;}
+ 	.table_02{min-width:480px;} 
 }
 @media only screen and (min-width: 768px) and (max-width: 991px){
 	.main_title{top:-240px;}

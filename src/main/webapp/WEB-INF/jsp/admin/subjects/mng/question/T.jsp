@@ -44,19 +44,19 @@ function checkDisable(chk , label)
 								<input type="hidden" name="optionVO[${i.index }].options_id"
 									value="${item.options_id }">
 
-								<div class="col-sm-5  input-group" style="float: left;width: 315px;">
-									<div class="col-sm-12">
+								<div class="  input-group" style="float: left;width: 315px;">
+									<div class="2">
 										<input type="text" class="quest_form" name="optionVO[${i.index}].label_front" value="${item.label_front }" placeholder="의견이 필요할 경우 기재" />
 									</div>
-									<div class="col-sm-1" style="width:2%;"></div>
-									<div class="col-sm-5">
+									<div class="" style="width:2%;"></div>
+									<div class="">
 
 									</div>
 
 								</div>
 
 
-								<div class="col-sm-4  input-group"
+								<div class=" input-group"
 									style="float: left; padding-left: 5px;width: 170px;">
 									<div class="input-group-addon">형식</div>
 									<div id="search" style="padding: 0;">
@@ -72,8 +72,8 @@ function checkDisable(chk , label)
 									</div>
 								</div>
 
-								<div class="col-sm-1" style="padding-left: 10px;">
-									<div id="pollImageDelete" class="col-sm-5">
+								<div class="" style="padding-left: 10px;">
+									<div id="pollImageDelete" class="">
 										<button type="button"
 											class="btn btn-default btn-sm icon_btn delete" onclick="fnDeleteOption('${item.options_id}');">
 											<i class="fa fa-1x fa-times"></i>
@@ -81,12 +81,12 @@ function checkDisable(chk , label)
 									</div>
 								</div>
 
-								<div class="col-sm-2" style="width: 13%;">
+								<div class="" style="width: 13%;">
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].endpoint" <c:if test="${item.endpoint eq 'Y' }">checked</c:if> />
 									<label>첨부 필수</label>
 								</div>
 								
-								<div class="col-sm-2" style="width: 13%;">
+								<div class="" style="width: 13%;">
 									<input type="checkbox" value="Y" name="optionVO[${i.index}].examrequire" <c:if test="${item.examrequire eq 'Y' }">checked</c:if> />
 									
 									<label>설명 필수</label>
@@ -99,7 +99,7 @@ function checkDisable(chk , label)
 					
 					
 					
-					<div id="answerAdd" class="col-lg-12" >
+					<div id="answerAdd" class="" >
 	                       <span class="btn btn-default btn-sm fileinput-button" id="optionAdd" onclick="fnInsertOptions('#q_form_${vo.question_id }');">
 	                           <span> <i class="fa fa-1x fa-plus">응답보기추가</i></span>
 	                       </span> 
@@ -110,7 +110,7 @@ function checkDisable(chk , label)
 			</tr>
 		</tbody>
 	</table>
-			<div id="btn_group" class="col-lg-2 pull-right right">
+			<div id="btn_group" class="pull-right right">
 				<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 				<button class="btn btn-theme" onclick="fnUpdateQuestion(this.form);">저장</button>
 			</div>	

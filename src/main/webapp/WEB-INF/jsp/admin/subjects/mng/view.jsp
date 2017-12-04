@@ -543,7 +543,7 @@ function fnCopyQuestion(question_id ){
 				<img src="/monitor/img/progressBar.gif" style="width: 35%;">
 			</div>
 			
-			<div id="q_start" class="col-lg-9 mngcontent" >
+			<div id="q_start" class="mngcontent" >
 
 			</div>
 
@@ -570,7 +570,7 @@ function fnCopyQuestion(question_id ){
 					</form>								
 			</div>
 	
-			<div id="q_end" class="col-lg-9 mngcontent" >
+			<div id="q_end" class=" mngcontent" >
 				
 			</div>
 

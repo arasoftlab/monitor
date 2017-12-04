@@ -12,7 +12,7 @@ function onChkESQ(obj){
 	 if(re.test(temp))
 	 { 
 	 	$(obj).val(temp.replace(re,""));
-	 	alert("[#, \", @, :, \|, ] 문자는 사용할수 없습니다.");
+	 	alert("[ #, \", @, :, \| ] 문자는 사용할수 없습니다.");
 	 }	
 	 
 	 var keyC = window.event.keyCode ? window.event.keyCode : window.event.which;
@@ -20,8 +20,9 @@ function onChkESQ(obj){
      //PC 222 ' 229 or 0 안드로이 모바일 한글문제가 없음
 	if (navigator.userAgent.match("iPhone") != null || navigator.userAgent.match("Android") != null ){
 	    
-		re2 = /[\']/gi;
-	    if(re2.test(temp)){ $(obj).val(temp.replace(re2, "`"));}
+		//re2 = /[\']/gi;
+	    //if(re2.test(temp)){ $(obj).val(temp.replace(re2, "`"));}
+	    keyC = 0;
 	} 
      
     if(keyC == 222 ||keyC == 0){
@@ -36,24 +37,21 @@ function onChkESQ(obj){
 
 <c:if test="${!empty history_answer }">
 
-	<script>
-	
+	<script>	
 	$(document).ready(function() {
 	
 		var w_temp_cnt = "${fn:length(optionList)}";
 		var $txArea = $("textarea");
 		$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
 		
-/* 		for (var a=0; a <= w_temp_cnt; a++)
+	for (var a=0; a <= w_temp_cnt; a++)
 		{
 			if(typeof($("#answers_"+a)) != "undefined"){
 				$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	
 			}
 		}
- */
-		
+ 
 	});
-	
 	</script>
 
 </c:if>

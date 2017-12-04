@@ -1,6 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -20,11 +18,9 @@ $(document).ready(function() {
 function chkValidation()
 {
 	var answers = $(":input:radio[name=answers]:checked").val();
-	
 	var test = $("#answers_text_"+answers).val();
-	
-	
-	
+	var history_params = "${history_params}";
+		
 	if (!answers) 
 	{
 		alert("아무것도 선택하지 않으셨습니다.");
@@ -37,12 +33,11 @@ function chkValidation()
 				alert("서술형 답변을 작성해 주시기바랍니다.");
 			}
 			else{
-				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}' ,0 ,  '${history_params}');
-			}
-			
+				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}' , 0,  history_params);
+			}		
 		}
 		else{
-			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}' , 0 ,  '${history_params}');
+			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}' , 0,  history_params);
 		}
 		
 		//alert(answers);
@@ -180,44 +175,9 @@ function onChk(num){
 </div>
 </form>
 
-<script>
-
-function onChkESQ(obj){
-
-	 re = /[@#\":\|]/gi; 
-	 var temp=$(obj).val();
-	 if(re.test(temp))
-	 { //특수문자가 포함되면 삭제하여 값으로 다시셋팅
-	 	$(obj).val(temp.replace(re,""));
-	 	alert("[, # , \",  @, :, |, ] 문자는 사용할수 없습니다.");
-	 }	
-	 
-	 var keyC = window.event.keyCode ? window.event.keyCode : window.event.which;
-
-     //PC 222 ' 229 or 0 안드로이 모바일 한글문제가 없음
-     if(keyC == 222 || keyC == 229 ||keyC == 0){
-         var cmp = $(obj);
-         cmp.val(cmp.val().replace('\'', "`"));
-     }
-     
-}
-</script>
+<%@ include file="inc/footer_common.jsp" %>
 
 <jsp:include page="inc/footer_S.jsp"></jsp:include>
 
 
-<c:if test="${!empty history_answer }">
-	<script>
-	$(document).ready(function() {
-		//document.getElementById('bbs_cont').onkeyup();
-		//document.getElementById('bbs_dsc').onkeyup();
-		
-		var history_ans = ${history_answer};
-		onChk(history_ans);
-		
-		
-	});
-	
-	</script>
 
-</c:if>

@@ -44,7 +44,7 @@ function fnCheckSession(){
                    </button>
                    <a class="navbar-brand"><span>S</span>eoul</a>
                </div>
-               <div class="navbar-collapse collapse ">
+               <div class="">
                    <ul class="nav navbar-nav">
   	                   <li><a href="<c:url value='/front/main.do'/>">프론트홈</a></li>
                        <li class="<c:if test="${menu.depth2 eq 'notice' }">active</c:if>"><a href="<c:url value='/admin/notice/list.do'/>">공지사항</a></li>

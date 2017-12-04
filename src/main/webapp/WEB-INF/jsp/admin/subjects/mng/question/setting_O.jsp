@@ -23,7 +23,7 @@ $(function(){
 
 
 
-<div class="col-lg-12 panel-group pull-left" style="margin-top: 15px;">
+<div class="panel-group pull-left" style="margin-top: 15px;">
 	<div class="panel panel-default">
 	    <div class="panel-heading">
 	      <h4 class="panel-title">
@@ -37,7 +37,7 @@ $(function(){
 						<tr>
 							<td class="td1">미디어</td>
 							<td colspan=3 class="left"> 
-								<div id="search-box1" class="col-md-12 ">
+								<div id="search-box1" class="">
 								
   
 									<select class="quest_form" style="margin-bottom:10px; width:70%;" name="cont_type" onchange="onSetting_TypeChange('${vo.question_id}','#q_form_${vo.question_id }')">
@@ -60,7 +60,7 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="">
 														
 															<div class="col-sm-6  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
@@ -94,7 +94,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="">
 															<div id="QS_fileListV${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 
@@ -114,7 +114,7 @@ $(function(){
 												
 											</div>
 
-											<div id="answerAdd" class="pull-left col-lg-12">
+											<div id="answerAdd" class="pull-left ">
 												<div class="btn btn-default btn-sm fileinput-button"
 													onclick="fnInsertQuestionSettings('#q_form_${vo.question_id }');">
 													<div>
@@ -140,7 +140,7 @@ $(function(){
 														<input type="hidden" name="questionSettingsVO[${i.index }].idx"	value="${item.idx }"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].type" value="${vo.cont_type}"> 
 														<input type="hidden" name="questionSettingsVO[${i.index }].cont_uuid" value="${item.cont_uuid}">
-														<div class="col-lg-12">
+														<div class="">
 														
 															<div class="col-sm-6  input-group" style="float: left;">
 																<input type="text" class="quest_form" name="questionSettingsVO[${i.index}].title" value="${item.title }" />
@@ -174,7 +174,7 @@ $(function(){
 																</div>
 															</div>
 														</div>
-														<div class="col-lg-12">
+														<div class="">
 															<div id="QS_fileListI${item.idx }">  										
 																<c:forEach var="file" items="${item.fileList }">
 																	<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -189,7 +189,7 @@ $(function(){
 												</c:forEach>
 											</div>
 
-											<div id="answerAdd" class="pull-left col-lg-12">
+											<div id="answerAdd" class="pull-left ">
 												<div class="btn btn-default btn-sm fileinput-button"
 													onclick="fnInsertQuestionSettings('#q_form_${vo.question_id }');">
 													<div>

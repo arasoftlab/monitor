@@ -18,12 +18,12 @@
   </logger>
  
   <logger name="seoul" additivity="false">
-  	<level value="DEBUG" />
+  	<level value="OFF" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   
   <logger name="file" additivity="false">
-  	<level value="DEBUG"></level>
+  	<level value="OFF"></level>
   	<appender-ref ref="CONSOLE"/>
   </logger>
   
@@ -35,13 +35,13 @@
   
   <!-- for query -->
   <logger name="jdbc.sqlonly" additivity="false">
-  	<level value="DEBUG" />
+  	<level value="OFF" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   
 
   <logger name="jdbc.resultsettable" additivity="false">
-  	<level value="DEBUG" />
+  	<level value="OFF" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   

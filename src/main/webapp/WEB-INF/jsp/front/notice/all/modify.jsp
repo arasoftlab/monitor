@@ -164,7 +164,10 @@ pageEncoding="UTF-8"%>
 				
 				$("#modal-body_team").html(data);
 				//fnBtnView("Q");			
-				$("#btn_applys").trigger('click');
+				//$("#btn_applys").trigger('click');
+				var $modal = $(".present_apply");
+				$modal.modal('show');
+				
 			},
 			error : function(request,status,error) {
 				////console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -303,7 +306,7 @@ pageEncoding="UTF-8"%>
 		
 		
 <!-- --------현장모니터 신청 현황 -->
-		<div class="modal fade present_apply container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal present_apply container" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-body" style="padding:10px;">
@@ -348,18 +351,19 @@ pageEncoding="UTF-8"%>
 					      
 				<h5 style="margin-top:40px;font-weight: bold;">현장 모니터 조별 신청현황</h5>
 				<div id="modal-body_team" style="display: table;width:100%"></div>
-		      </div>
-		    </div>
-		      <div class="modal-footer2">
+				 <div style="border-top: 2px #4fb3d2 solid;">
 		      	<div class="col-md-6" style="float:left;width:100%; margin-top:10px;">
 		      		모집인원 : ${vo.subjectVO.team_cnt}개조 ${vo.subjectVO.men_total}명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		      		신청인원 : 총 ${apply_total}명
 		      	</div>
 		      </div>
-		     
+		      </div>
 		      <div class="modal-footer">
 				<button type="button" class="btn btn-default btn-primary button_blue button_white" data-dismiss="modal" style="margin-top:4px;">Close</button>
 		      </div>
+		    </div>
+		      
+
 		  </div>
 		</div>
 		

@@ -287,11 +287,9 @@
 function chkValidation()
 {
 	var chk= '${optionList[0].endpoint }';
-	
 	var file_type_chk = '${optionList[0].label_1 }';
-	
 	var examrequirechk = '${optionList[0].examrequire}';
-	
+	var history_params = "${history_params}";
 	
 	var $ans = $("#answers_1");
 	$ans.val($ans.val().replace(/\r\n|\n|\r/g, "<br>"));
@@ -299,7 +297,7 @@ function chkValidation()
 	var history_params = "${history_params}";
 	history_params = history_params.replace(/&lt;br&gt;/g, '<br>');
 	history_params = history_params.replace(/&amp;amp;lt;br&amp;amp;gt;/g, '<br>');
-	
+
 	if (chk == "Y")
 	{
 		if ( !fnFileChecked() ) 

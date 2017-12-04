@@ -48,6 +48,7 @@ public class MonitorApplyServiceImpl implements MonitorApplyService{
 		return monitorApplyDAO.updateMonitorApply(monitorApplyVO);		
 	}
 		
+	@Override
 	public int deleteMonitorApply(MonitorApplyVO monitorApplyVO) {
 		return monitorApplyDAO.deleteMonitorApply(monitorApplyVO);
 	}

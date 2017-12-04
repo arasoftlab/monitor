@@ -73,13 +73,13 @@
 													<input type="radio" > ${item.label_front }
 												</div>
 												
-											    <div class="col-sm-2 checkbox" style="padding-left:10px;">
+											    <div class=" checkbox" style="padding-left:10px;">
 													<c:choose>
 														<c:when test="${item.descyn eq 'Y'}"> <span> (서술형응답) </span></c:when>
 													</c:choose>
 											    </div>
 											    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -104,7 +104,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -137,13 +137,13 @@
 												<div class="input-group" style="padding-left:10px; float:left;">
 													다음문항 : ${item.next_num }
 											    </div>
-											    <div class="col-sm-2 checkbox" style="padding-left:10px;">
+											    <div class=" checkbox" style="padding-left:10px;">
 													<c:choose>
 														<c:when test="${item.endpoint eq 'Y'}"> <span style="color:red"> (종료조건) </span></c:when>
 													</c:choose>
 											    </div>
 											    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -169,7 +169,7 @@
 							</tr>							
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -199,7 +199,7 @@
 													<input type="checkbox"/> ${item.label_front }													
 												</div>
 																							    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -223,7 +223,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -252,7 +252,7 @@
 													<input type="checkbox"/> ${item.label_front }													
 												</div>
 																							    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -277,7 +277,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -463,7 +463,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -502,7 +502,7 @@
 													${item.label_rear }													
 												</div>														
 																							    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -527,7 +527,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -556,7 +556,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
@@ -582,7 +582,7 @@
 												data-question_id="${item.question_id }"
 												data-options_id="${item.options_id }">												
 
-											    <div class="col-sm-2">
+											    <div class="">
 													<c:choose>
 														<c:when test="${item.endpoint eq 'Y'}"> 
 															<span style="color:red"> 첨부 필수 </span>
@@ -610,7 +610,7 @@
 												
 
 											    
-											    <div class="col-lg-12">
+											    <div class="">
 													<div id="O_fileList${item.options_id }">
 														<c:forEach var="file" items="${item.fileList }">
 															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class='img-responsive img-thumbnail'>
@@ -635,7 +635,7 @@
 							</tr>	
 						</tbody>
 					</table>
-							<div class="col-lg-2 pull-right right" style="width:100%; margin-right:10px;"">
+							<div class=" pull-right right" style="width:100%; margin-right:10px;"">
 								<button class="btn btn-warning" onclick="fnDeleteQuestion(this.form);">삭제</button>
 								<button class="btn btn-theme" onclick="getSubjectMovePage('${vo.subject_id}')">위치이동</button>
 								<button class="btn btn-theme" onclick="fnQuestion('${q_item.question_id}');">편집</button>
