@@ -4,9 +4,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
-<link href="<c:url value='/css/bootstrap.min.css'/>"  rel="stylesheet" />
-	
+	<!-- css -->
+	<link href="<c:url value='/webjars/bootstrap/3.3.7/css/bootstrap.min.css' />" rel="stylesheet" />	
+	<link href="<c:url value='/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css'/>" rel="stylesheet"/>
+	<link href="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/css/bootstrap-daterangepicker.css'/>" rel="stylesheet" />
+		
 	<link href="<c:url value='/css/fancybox/jquery.fancybox.css'/>" rel="stylesheet">
 	<link href="<c:url value='/css/flexslider.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/style.css'/>" rel="stylesheet" />
@@ -14,15 +16,19 @@
 	<!-- Theme skin -->
 	<link href="<c:url value='/skins/default.css'/>" rel="stylesheet" />
 	
-	<link href="<c:url value='/css/datepicker.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/css/datepicker3.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/css/daterangepicker-bs3.css'/>" rel="stylesheet" />
+	<!-- js -->
+	<script src="<c:url value='/webjars/jquery/1.12.4/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-form/4.2.1/jquery.form.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-ui/1.12.1/jquery-ui.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-filestyle/1.1.2/bootstrap-filestyle.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.kr.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/js/bootstrap-daterangepicker.js'/>"></script>
+	<script src="<c:url value='/webajrs/jqery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
 
-	<script src="<c:url value='/js/jquery.js'/>"></script>
-	<script src="<c:url value='/js/jquery-ui.js'/>"></script>
-	<script src="<c:url value='/js/jquery.form.js'/>"></script>
 	<script src="<c:url value='/js/jquery.slimscroll.js'/>"></script>
-	<script src="<c:url value='/js/jquery.cookie.js'/>"></script>
+
 
 
 <style>

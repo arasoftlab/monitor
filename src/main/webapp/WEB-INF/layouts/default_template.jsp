@@ -93,9 +93,5 @@
 	<script src="<c:url value='/css/front/js/jcarousel.responsive.js'/>"></script>
 	<script src="<c:url value='/css/front/js/animations.min.js'/>"></script>
 	
-	
-	
-	
-	<script src="<c:url value='/js/bootstrap.min.js'/>"></script>
 </body>
 </html>

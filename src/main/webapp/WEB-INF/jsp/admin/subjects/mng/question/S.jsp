@@ -68,15 +68,19 @@ function s_type_desc(chk_obj){
 										</a>
 									</div>
 									<div id="pollImageAdd" class="col-md-4 col-sm-4">
-				                        <div class="btn btn-default btn-sm fileinput-button icon_btn">
-				                            <i class="fa fa-1x fa-picture-o">
-											
+									
+											<div>
+				                    <!--     <div class="btn btn-default btn-sm fileinput-button icon_btn"> -->
+				                    
+				                            <!-- <i class="fa fa-1x fa-picture-o">
+											 -->
 												<c:choose>
 													<c:when test="${!empty item.fileList }">
-														<input type="file" class="file_input" name="O_file_setI${item.options_id}" onchange="O_fnFileCheck_update('I${item.options_id}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
+														<%-- <input type="file" class="file_input" name="O_file_setI${item.options_id}" onchange="O_fnFileCheck_update('I${item.options_id}' , '${item.cont_uuid}' , '_${vo.question_id}')"/> --%>
+														<input type="file" class="filestyle" data-input="false" data-buttonText="" data-iconName="glyphicon glyphicon-picture" name="O_file_setI${item.options_id}" onchange="O_fnFileCheck_update('I${item.options_id}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
 													</c:when>
 													<c:otherwise>
-														<input type="file" class="file_input" name="O_file_setI${item.options_id}" onchange="O_fnFileCheck('I${item.options_id}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
+														<input type="file" class="filestyle" data-input="false" data-buttonText=""  name="O_file_setI${item.options_id}" onchange="O_fnFileCheck('I${item.options_id}' , '${item.cont_uuid}' , '_${vo.question_id}')"/>
 													</c:otherwise>
 												</c:choose>
 											                            	

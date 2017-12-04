@@ -10,40 +10,40 @@
 	<!-- Theme skin -->
 	<link href="<c:url value='/skins/default.css'/>" rel="stylesheet" />
 	
-	<link href="<c:url value='/css/datepicker.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/css/datepicker3.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/css/daterangepicker-bs3.css'/>" rel="stylesheet" />
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <![endif]-->
-	    
-	    
-	<!-- javascript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+	<link href="<c:url value='/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css'/>" rel="stylesheet"/>
+	<link href="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/css/bootstrap-daterangepicker.css'/>" rel="stylesheet" />
 	
-	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-	
-	<script src="<c:url value='/js/jquery-ui.js'/>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+	<!--[if lt IE 9]>	
+	<script src="<c:url value='/webjars/respond/1.4.2/dest/respond.min.js'/>"></script>
+	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
+    <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
+    <![endif]-->
+	        
+ 
 	<script src="<c:url value='/js/browser_check.js' />"></script>
 	<script src="<c:url value='/js/jquery.slimscroll.js'/>"></script>
-	<script src="<c:url value='/js/jquery.cookie.js'/>"></script>
-		
-	<script src="<c:url value='/js/bootstrap-datepicker.js'/>"></script>
-	<script src="<c:url value='/js/bootstrap-datepicker.kr.js'/>"></script>
+			
 	<script src="<c:url value='/js/moment.js'/>"></script>
-	<script src="<c:url value='/js/daterangepicker.js'/>"></script>
 	<script src="<c:url value='/js/validate.js'/>"></script>
 	
-	<script src="<c:url value='/js/bootstrap.min.js'/>"></script>
-
+	<script src="<c:url value='/webjars/jquery/1.12.4/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-ui/1.12.1/jquery-ui.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-form/4.2.1/jquery.form.min.js'/>"></script>
+	<script src="<c:url value='/webajrs/jqery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.kr.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/js/bootstrap-daterangepicker.js'/>"></script>
+	
 	
 	<script src="<c:url value='/js/common.js'/>"></script>
-	<!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
-	<!--[if lt IE 9]> <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.js"></script> <![endif]-->
 	
+	<!--[if lt IE 9]>	
+	<script src="<c:url value='/webjars/respond/1.4.2/dest/respond.min.js'/>"></script>
+	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
+    <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
+    <![endif]-->
+    
 </head>
 <body>
 	<div id="body" >
