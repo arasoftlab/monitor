@@ -65,14 +65,20 @@ public class MonitorSubjectController {
 		System.out.println(" sid : " + subjectVO.getSubject_id());
 		System.out.println(" tid : " + subjectVO.getTeam());
 		System.out.println(" mid : " + subjectVO.getMember_id());
+		String sid = subjectVO.getSubject_id();
+		String mid = subjectVO.getMember_id();
 		
 		MonitorApplyVO monitorApplyVO = new MonitorApplyVO();
 		
-		monitorApplyVO.setSubject_id(subjectVO.getSubject_id());			
+		monitorApplyVO.setSubject_id(sid);
+		monitorApplyVO.setMember_id(mid);
 				
-		model.addAttribute("subjectID",subjectVO.getSubject_id() ); 
-		model.addAttribute("team",subjectVO.getTeam() ); 
-		model.addAttribute("member_id",subjectVO.getMember_id() ); 
+		model.addAttribute("subjectID",sid ); 
+		//model.addAttribute("team",subjectVO.getTeam() ); 
+		model.addAttribute("member_id",mid);
+		
+		System.out.println("mvo:" + monitorApplyVO.toString());
+		
 		model.addAttribute("vo", monitorApplyService.getMonitorApply(monitorApplyVO));
 		
 		return "front/monitor/test/bank.testform";
@@ -518,6 +524,8 @@ public class MonitorSubjectController {
 		answersVO.setAnswers(history_params);
 		
 		answersVO.setTemporary("N");
+		
+		System.out.println(answersVO.toString());
 		
 		if(answersService.updateAnswers(answersVO) > 0){
 			resultMap.put("result", "success");

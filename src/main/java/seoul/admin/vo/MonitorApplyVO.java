@@ -3,7 +3,9 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.ToString;
 
+@ToString
 public class MonitorApplyVO extends CommonVO{
 	
 	private String idx;

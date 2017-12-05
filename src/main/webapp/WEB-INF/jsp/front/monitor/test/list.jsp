@@ -286,8 +286,7 @@ $(window).load(function(){
 	<section id="content" style="    padding-bottom: 170px">
 	<div class="container">
 		
-		<div id="test_target" style="    border: 2px solid #ccc;
-    border-radius: 10px 10px 10px 10px;">
+		<div id="test_target" style=" border: 2px solid #ccc;  border-radius: 10px 10px 10px 10px;">
 		
 		
 		</div>

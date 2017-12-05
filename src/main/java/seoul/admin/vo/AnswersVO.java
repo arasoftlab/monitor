@@ -3,7 +3,9 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.ToString;
 
+@ToString
 public class AnswersVO extends CommonVO{
 	
 	private String answers_id;
