@@ -86,14 +86,14 @@ function onApply( is_select )
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="col-lg-12">
+			<div class="col-xs-12">
+				<div class="col-xs-12">
 					<h4 style="float:left; margin-right:10px;">${vo.title} &nbsp;&nbsp;&nbsp; <font color="blue">▷ 총 ${total_cnt}명</font></h4>
 				</div>
 				
 				
 				
-				<div id="search-box1" class="col-lg-7" style="padding:0;">
+				<div id="search-box1" class="col-xs-7" style="padding:0;">
 					<form class="pull-left;">
 
 						<input type="hidden" name="subject_id" value="${vo.subject_id}">
@@ -122,7 +122,7 @@ function onApply( is_select )
 					
 				</div>
 				
-				<div class="col-lg-5 pull-right" style="padding:0; text-align:right">
+				<div class="col-xs-5 pull-right" style="padding:0; text-align:right">
 
 					<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".present" style="display:none;" ></button>									
 
@@ -267,11 +267,11 @@ function onApply( is_select )
       
       
       <div class="modal-footer">
-      	<div class="col-lg-12" style="text-align:left;">
+      	<div class="col-xs-12" style="text-align:left;">
       		<i class="fa fa-users" aria-hidden="true"></i> 모집인원 : (${vo.team_cnt})개 조 (${vo.men_total})명<br/>
       		<i class="fa fa-users" aria-hidden="true"></i> 신청인원 : (${vo.team_cnt})개 조 (${apply_total})명
       	</div>
-      	<div class="col-lg-12">
+      	<div class="col-xs-12">
       		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       	</div>
 		

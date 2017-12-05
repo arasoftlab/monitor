@@ -253,10 +253,10 @@ $('#element').off('scroll touchmove mousewheel');
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<div >
-				<h4 style="float:left; margin-right:10px;">${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp; <font color="blue">결과제출 총 ${total_cnt}건</font></h4>
+			<div class="col-xs-12">
+				<h4 >${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp; <font color="blue">결과제출 총 ${total_cnt}건</font></h4>
 			</div>
-			<div >
+			<div class="col-xs-12">
 				<div id="search-box1"  style="padding:0;">
 					<form class="pull-left;">
 					

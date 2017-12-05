@@ -77,7 +77,7 @@ function fnDelete(){
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-xs-12">
 			
 				<table class="table table-bordered table-margin">
 					<tbody>
@@ -93,8 +93,8 @@ function fnDelete(){
 							<td class="td1">과제종류</td>
 							<td colspan=3 class="left">
 								<div class="radio">
-									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>
-									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
+									<label class="col-xs-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>
+									<label class="col-xs-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
 								</div>
 							</td>
 						</tr>
@@ -114,8 +114,8 @@ function fnDelete(){
 							<td class="td1">활동비 지급</td>
 							<td colspan=3 class="left">
 								<div class="radio">
-									<label class="col-sm-4"><input type="radio" value="have" name="have" disabled <c:if test="${vo.pay_yn eq 'Y'}">checked</c:if> >있음 (${vo.pay_sum } 원)</label>
-									<label class="col-sm-4"><input type="radio" value="none" name="none" disabled  <c:if test="${vo.pay_yn eq 'N'}">checked</c:if> >없음</label>									
+									<label class="col-xs-4"><input type="radio" value="have" name="have" disabled <c:if test="${vo.pay_yn eq 'Y'}">checked</c:if> >있음 (${vo.pay_sum } 원)</label>
+									<label class="col-xs-4"><input type="radio" value="none" name="none" disabled  <c:if test="${vo.pay_yn eq 'N'}">checked</c:if> >없음</label>									
 								</div>
 							</td>
 						</tr>
@@ -124,8 +124,8 @@ function fnDelete(){
 						<tr>
 							<td class="td1">활동비 입금일</td>
 							<td colspan=3 class="left">
-								<div class="col-sm-12" style="padding:0;">
-									<label class="col-sm-2">
+								<div class="col-xs-12" style="padding:0;">
+									<label class="col-xs-2">
 										<fmt:formatDate value="${vo.pay_date }" pattern="yyyy/MM/dd" />
 									</label>
 									<span style="font-size: 11px; color: #ababab;">*과제기간 종료 후 재무과에 입금 신청한 날을 선택</span>
@@ -177,7 +177,7 @@ function fnDelete(){
 				</table>
 				
 			</div>
-			<div class="col-lg-2 pull-right right">
+			<div class="col-xs-12 pull-right">
 
 				<button class="btn btn-warning " onclick="fnDelete();">삭제</button>
 				<button class="btn btn-theme " onclick="location.href='modify.do?subject_id=${vo.subject_id}'">수정</button>

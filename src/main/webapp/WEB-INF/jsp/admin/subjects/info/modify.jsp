@@ -170,7 +170,7 @@ function fnSubjectChecked(val){
 	<section id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-xs-12">
 			<label class="information">√ 과제종료 후 활동비 입금일에 날짜를 입력하면 회원들이 [마이페이지] > [참여내역] > 입금신청일 부분에서 확인할 수 있습니다.
 				</label>
 				<form>
@@ -197,8 +197,8 @@ function fnSubjectChecked(val){
 								<td class="td1">*과제종류</td>
 								<td colspan=3 class="left">
 									<div class="radio">
-										<label class="col-sm-4"><input type="radio" name="type" value="F" onclick="fnSubjectChecked('N')" <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>
-										<label class="col-sm-4"><input type="radio" name="type" value="V" onclick="fnSubjectChecked('Y')" <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
+										<label class="col-xs-4"><input type="radio" name="type" value="F" onclick="fnSubjectChecked('N')" <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>
+										<label class="col-xs-4"><input type="radio" name="type" value="V" onclick="fnSubjectChecked('Y')" <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
 									</div>
 									<span style="font-size: 12px; color: #ababab;">* 참여자 모집 없이 아무나 참여할 수 있는 과제일 경우, 설문과제(지정과제) 선택</span>
 								</td>
@@ -206,20 +206,20 @@ function fnSubjectChecked(val){
 							<tr>
 								<td class="td1">모니터 신청기간</td>
 								<td colspan=3 class="left">
-									<div class="col-sm-12" style="padding:0;">
-										<label class="col-sm-3"><input type="text" class="form-control date" id="monitorDate1" value="<fmt:formatDate value="${vo.apply_s_date }" pattern="yyyy/MM/dd" />" name="apply_s_date"/></label>
-										<label class="col-sm-1">&nbsp;&nbsp;&nbsp;~</label>
-										<label class="col-sm-3"><input type="text" class="form-control date" id="monitorDate2" value="<fmt:formatDate value="${vo.apply_e_date }" pattern="yyyy/MM/dd" />" name="apply_e_date"/></label>
+									<div class="col-xs-12" style="padding:0;">
+										<label class="col-xs-3"><input type="text" class="form-control date" id="monitorDate1" value="<fmt:formatDate value="${vo.apply_s_date }" pattern="yyyy/MM/dd" />" name="apply_s_date"/></label>
+										<label class="col-xs-1">&nbsp;&nbsp;&nbsp;~</label>
+										<label class="col-xs-3"><input type="text" class="form-control date" id="monitorDate2" value="<fmt:formatDate value="${vo.apply_e_date }" pattern="yyyy/MM/dd" />" name="apply_e_date"/></label>
 									</div> 
 								</td>
 							</tr>
 							<tr>
 								<td class="td1">*과제 제출기간</td>
 								<td colspan=3 class="left">
-									<div class="col-sm-12" style="padding:0;">
-										<label class="col-sm-3"><input type="text" class="form-control date" id="asmDate1" value="<fmt:formatDate value="${vo.submit_s_date }" pattern="yyyy/MM/dd" />" name="submit_s_date"/></label>
-										<label class="col-sm-1">&nbsp;&nbsp;&nbsp;~</label>
-										<label class="col-sm-3"><input type="text" class="form-control date" id="asmDate2" value="<fmt:formatDate value="${vo.submit_e_date }" pattern="yyyy/MM/dd" />" name="submit_e_date"/></label>
+									<div class="col-xs-12" style="padding:0;">
+										<label class="col-xs-3"><input type="text" class="form-control date" id="asmDate1" value="<fmt:formatDate value="${vo.submit_s_date }" pattern="yyyy/MM/dd" />" name="submit_s_date"/></label>
+										<label class="col-xs-1">&nbsp;&nbsp;&nbsp;~</label>
+										<label class="col-xs-3"><input type="text" class="form-control date" id="asmDate2" value="<fmt:formatDate value="${vo.submit_e_date }" pattern="yyyy/MM/dd" />" name="submit_e_date"/></label>
 									</div> 
 								</td>
 							</tr>
@@ -239,10 +239,10 @@ function fnSubjectChecked(val){
 								<td class="td1">*활동비지급</td>
 								<td colspan=3 class="left">
 									<div class="radio" style="height:20px;">
-										<label class="col-sm-4">
+										<label class="col-xs-4">
 											<input type="radio" value="N" name="pay_yn" <c:if test="${vo.pay_yn eq 'N'}">checked</c:if> onchange="fnPayChecked('N');" >없음
 										</label>
-										<label class="col-sm-1">
+										<label class="col-xs-1">
 											<input type="radio" value="Y" name="pay_yn" <c:if test="${vo.pay_yn eq 'Y'}">checked</c:if> onchange="fnPayChecked('Y');" >있음
 										</label>
 										<label><input type="text" value="${vo.pay_sum }" style="width: 15%; margin-top: -10px;" name="pay_sum" class="text-right" numberonly="true" <c:if test="${vo.pay_yn eq 'N'}">disabled</c:if>>원</label>
@@ -252,7 +252,7 @@ function fnSubjectChecked(val){
 							<tr>
 								<td class="td1">활동비 입금 신청일</td>
 								<td colspan=3 class="left">
-									<label class="col-sm-3"><input type="text" class="form-control date" value="<fmt:formatDate value="${vo.pay_date }" pattern="yyyy/MM/dd" />" name="pay_date"/></label>
+									<label class="col-xs-3"><input type="text" class="form-control date" value="<fmt:formatDate value="${vo.pay_date }" pattern="yyyy/MM/dd" />" name="pay_date"/></label>
 									<label>&nbsp;&nbsp; * 과제기간 종료 후 재무과나 주무과에 입금 신청한 날을 선택</label>
 								</td>
 							</tr>
@@ -275,7 +275,7 @@ function fnSubjectChecked(val){
 					</table>
 				</form>
 			</div>
-			<div class="col-lg-3 pull-right right">
+			<div class="col-xs-12 pull-right right">
 				<c:if test="${!empty vo.subject_id }">
 					<button class="btn btn-default" onclick="location.href='view.do?subject_id=${vo.subject_id}';">취소</button>
 					<button class="btn btn-warning" onclick="fnDelete();">삭제</button>

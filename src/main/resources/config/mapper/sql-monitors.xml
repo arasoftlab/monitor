@@ -44,21 +44,41 @@
     
     <select id="getMonitorsApplyList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
         
-        
-   	select * from (
-        select b.idx, b.member_id, b.subject_id, to_char(rn1) rn
-            , b.description, b.team_num 
-            , b.poll_num, b.is_selection
-            , b.apply_cnt, b.selected_cnt, b.regdate
-            ,(select M001_NM from hisip.vw_mem001_m_monitor@sip2 where M001_ID = b.member_id) member_name
-            ,(select job from member where id= b.member_id) job
-            ,(select M001_SSN from hisip.vw_mem001_m_monitor@sip2 where M001_ID = b.member_id) birth
-            ,(select M001_PHONE from hisip.vw_mem001_m_monitor@sip2 where M001_ID = b.member_id) phone
-            ,(select sido from member where id= b.member_id ) sido 
-            ,(select gugun from member where id= b.member_id ) gugun
-            ,(select dong from member where id= b.member_id ) dong
-            ,(select tmp_sum
-             from (select a.MEMBER_ID member_id, a.subject_id subject_id
+    WITH SCNTDATA AS (
+					    select SUBJECT_ID, member_id
+                    	FROM n_monitors C
+                    	where C.member_id = A.member_id	and is_selection = 'Y' 	and subject_id in ( 
+                		
+                		select subject_id 
+                		from
+                		(
+                			select distinct subject_id
+                			from N_MONITORS
+                			where subject_id <![CDATA[< ]]> #{subject_id}    
+                			order by subject_id DESC
+                		) 
+                		where  ROWNUM <![CDATA[< ]]> 4
+    ),
+    ACNTDATA AS (
+					    select SUBJECT_ID, member_id
+                    	FROM n_monitors C
+                    	where C.member_id = A.member_id	and is_selection = 'N' 	and subject_id in ( 
+                		
+                		select subject_id 
+                		from
+                		(
+                			select distinct subject_id
+                			from N_MONITORS
+                			where subject_id <![CDATA[< ]]> #{subject_id}    
+                			order by subject_id DESC
+                		) 
+                		where  ROWNUM <![CDATA[< ]]> 4
+    ), MEMINFO AS (
+    	SELECT M.MEMBER_ID, H.M001_NM, H.M001_SSN, H.M001_PHONE, H.SIDO, H.GUGUN, H.DONG, M.JOB
+    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M
+    	WHERE M.MEMBER_ID = H.M001_ID
+    ), TMPSUM AS(
+    	select a.MEMBER_ID member_id, a.subject_id subject_id
                         , sum(case when a.temporary = 'N' then 0 else 1 end) tmp_sum
                         from N_ANSWERS a,
                             (
@@ -79,27 +99,21 @@
                         order by a.subject_id desc, a.member_id asc)
                     where b.member_id = member_id
                     and b.subject_ID = subject_id
-            ) tmp_sum1
-        from (select 
-                A.idx, A.member_id, A.subject_id
-                ,row_number() over (order by regdate asc) rn1
-                ,row_number() over (order by regdate desc ) rnd
-                ,A.description, A.team_num, A.poll_num, A.is_selection
-                ,(select COUNT(member_id) 
-                    FROM n_monitors C
-                    where C.member_id = A.member_id ) apply_cnt
-                ,(select COUNT(member_id)       
-                    FROM n_monitors C
-                    where is_selection = 'Y' 
-                    AND C.member_id = A.member_id )selected_cnt
-                    , A.regdate
-                    from n_monitors A
-                    where subject_id = #{subject_id}
-                    
-                    
-                    )b
-     )
-     where 1=1   
+    )
+    SELECT *, ROW_NUMBER() OVER(ORDER BY REGDATE ASC) RN1, ROW_NUMBER() OVER(ORDER BY REGDATE DESC) RND
+    FROM(
+    SELECT DISTINCT 
+    	N.IDX, N.MEMBER_ID, N.SUBJECT_ID, TO_CHAR(RN1) RN, N.DESCRIPTION, N.TEAM_NUM, N.POLL_NUM, N.IS_SELECTION,
+    	N.APPLY_CNT, N.SELECTED_CNT, N.REGDATE,
+    	M.M001_NM MEMBER_NAME, M.JOB, M.M001_SSN BIRTH, M.M001_PHONE PHONE, M.SIDO, M.GUGUN, M.DONG,
+    	T.TMP_SUM,
+    	S.COUNT(S.MEMBER_ID) SELECTED_CNT, A.COUNT(A.MEMBER_ID) APPLY_CNT	
+    FROM SCNTDATA S,ACNTDATA A, N_MONITORS N, MEMINFO M, TMPSUM T.
+    WHERE N.MEMBER_ID = S.MEMBER_ID(+) AND N.MEMBER_ID = A.MEMBER_ID(+) 
+    AND N.MEMBER_ID = M.MEMBER_ID
+    AND N.MEMBER_ID = T.MEMBER_ID AND N.SUBJECT_ID = T.SUBJECT_ID
+    AND N.SUBJECT_ID = #{SUBJECT_ID}
+        
                     <if test="searchCategory != null and searchCategory != ''">
 			      	   and ${searchCategory} like '%' || #{searchText} || '%'
 					</if>			
