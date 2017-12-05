@@ -81,10 +81,10 @@ function onApply( is_select )
 	<div class="container">
 		<div class="row">
 			<h4 style="float:left; margin-right:10px;">${s_vo.title}</h4>
-			<div class="col-lg-12">
+			<div class="col-xs-12">
 			<label class="information">√ 과제 등록 시 [활동비] 있음에 체크한 과제 목록 및 활동비 현황</label><br>
 			<label class="information">√ [입금신청일]은 과제관리에서 [활동비 입급신청일] 입력 시 노출됩니다.</label><br>
-				<div id="search-box1" class="col-lg-12" style="padding:0; padding-top:10px;">
+				<div id="search-box1" class="col-xs-12" style="padding:0; padding-top:10px;">
 					<form class="pull-left;">					
 						<select class="list_form" name="searchCategory" style="display: inline;">
 							<option value="id" <c:if test="${vo.searchCategory  eq 'id'}">selected</c:if> >아이디</option>
@@ -159,15 +159,15 @@ function onApply( is_select )
 				</table>
 				
 				
-				<div class="col-md-12" style="margin-bottom:50px;">
+				<div class="col-xs-12" style="margin-bottom:50px;">
 <!-- 						<button class="btn btn-theme   " onclick="onApply('Y')">선정</button>
 						<button class="btn btn-theme   " onclick="onApply('N')">X 선정 취소</button> -->
 						<button class="btn btn-warning"  onclick="onApply('D')" style="float:right; ">삭제</button>
 				</div>
 				
 								
-				<div class="col-lg-12">
-					<div class="col-lg-10 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>
+				<div class="col-xs-12">
+					<div class="col-xs-12 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>
 				</div>
 				
 			</div>

@@ -81,12 +81,12 @@ public class SubjectAnswerController {
 			//an.setAnswers(URLDecoder.decode(imagePath, "UTF-8"));
 			//String imagePath = BaseUtil.deParams(an.getAnswers());
 			
-			System.out.println(imagePath);
+			//System.out.println(" source data :" + imagePath);
 									
 			//답변내역이 없을때 에러를 방지하기 위한 코드
 			imagePath = ObjectUtils.isEmpty(imagePath)? "" : imagePath;
 			
-			if(imagePath.indexOf('Ω') > -1) {
+			if(imagePath.indexOf('Ω') > -1) { //파일포함여부확인
 			
 				List<String> alist = Arrays.asList(imagePath.split("\\|"));
 				
@@ -95,7 +95,9 @@ public class SubjectAnswerController {
 				for( int iSeq = 0; iSeq < alist.size(); iSeq++) {
 					String iPath = alist.get(iSeq);
 	
-					if(iPath.indexOf('Ω') > -1) {
+					//System.out.println("part of answer : " + iPath);
+					
+					if(iPath.indexOf('Ω') > -1) { //파일포함여부 확인
 						//TODO 이미지가 포함된 경로일 경우 이미지의 썸네일을 확인하고 없으면 생성 하고 있으면 경로를 그대로 리턴한다.
 						String[] ip = iPath.split("Ω");
 						String rPath = ip[1].replaceAll("//", "/");
@@ -114,29 +116,45 @@ public class SubjectAnswerController {
 							
 							String u = request.getSession().getServletContext().getRealPath("/");
 							//String u = "D://sts//workspace//"; / for dev
-							String rp = u + rsb.toString();
+							//String sI = u + rpb[2] + "/" + rpb[3] + "/" + rpb[4];
+							String rp = u + rsb.toString() ;
 							String rd = u + rpb[2] + "/thumb" + "/" + rpb[3] + "/";
 							String rs = u + rpb[2] + "/" + rpb[3] + "/" + rpb[4];
+							
+							// u = /home/monitor/deploy/monitor02/monitor/
+							//rp = u + /upload/thumb/201712/file.jpg
+							//rd = u + /upload/thumb/201712/
+							//rs = u + /upload/201712/file.jpg
+							
 							File td = new File(rd);
 							// rp 파일 rd 경로 rs 원본위치
 							if(!td.exists()) { //경로존재여부 
 								td.mkdirs();
+							}else {
+								//System.out.println(" exists : " + rd);
 							}
-							File ti = new File(rp);
+							File ti = new File(rp + ".png"); //대상파일
 							if(!ti.exists()) { //파일존재여부
-								rp = rp.substring(0, rp.lastIndexOf(".")) + "png";
-								File ci = new File(rp);
-								Thumbnails.of(rs).size(150, 150).outputFormat("png").toFile(ci);
+								//rp = rp + ".png";
+								File ci = new File(rs); //원본파일
+								Thumbnails.of(ci).size(150, 150).outputFormat("png").toFile(ti);
 								System.out.println("make file" + ti);
+							}else {
+								//System.out.println(" exists : " + rs);
 							}
+						}else {
+							//System.out.println(" 이미지에 해당하지 않을때 입니다.");
 						}
+					}else {
+						//System.out.println("파일이 첨부돼지 않았을때 입니다.");
 					}
 				}
-			
+				
+			}else {
+				//System.out.println(" 파일 구분자를 찾지 못했을때 입니다.");
 			}
 			
 		}
-		
 		
 		for (int i = 0 ; i < q_list.size() ; i++ )
 		{
@@ -192,8 +210,8 @@ public class SubjectAnswerController {
 	}
 	
 	private int find(String[] iExt, String fExt) {
-		for(int i=0; i< iExt.length; i++) {
-			if(iExt[i].indexOf(fExt) > 0)
+		for(int i=0; i < iExt.length; i++) {
+			if(iExt[i].indexOf(fExt) > -1)
 				return i;
 		}
 		

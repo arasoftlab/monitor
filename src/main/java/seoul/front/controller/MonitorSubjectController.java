@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/*import com.mysql.jdbc.log.Log4JLogger;*/
-
-
 import common.SessionContants;
 import seoul.admin.service.AnswersService;
 import seoul.admin.service.MonitorApplyService;
@@ -31,7 +28,6 @@ import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
 import seoul.member.MemberVO;
-import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
@@ -121,7 +117,7 @@ public class MonitorSubjectController {
 			answersVO = answersService.getAnswers(answersVO);
 			String history_params = answersVO.getAnswers();
 			String back_temp;
-			String back_temp_arr[];
+			//String back_temp_arr[];
 			
 			if (history_params != null && history_params != "") 
 			{
@@ -190,7 +186,7 @@ public class MonitorSubjectController {
 
 		model.addAttribute("subject_id", subjectVO.getSubject_id());
 		model.addAttribute("answers_id" , answersVO.getAnswers_id());
-		model.addAttribute("list", questionService.getQuestionList(questionVO));
+		model.addAttribute("list", list);
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
 		
 		return "front/monitor/test/list.testform";
@@ -228,11 +224,11 @@ public class MonitorSubjectController {
 			{
 //				String temp_str = answer.replace("type=", "").replace("q_num=", "").replace("answers=", "").replace("&","");
 				
-				String temp_str = answer.replace("type=", "").replace("q_num=", "");
+				//String temp_str = answer.replace("type=", "").replace("q_num=", "");
 				
 				//temp_str = temp_str.substring(0 , temp_str.indexOf("answers_"));
 				
-				String answer_str = temp_str.substring(0, temp_str.indexOf("answers_"));
+				//String answer_str = temp_str.substring(0, temp_str.indexOf("answers_"));
 				
 				
 				String temp_o[] = answer.split("&");  

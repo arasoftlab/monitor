@@ -12,10 +12,10 @@ function fnSearch(){
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-xs-12">
 			<label class="information">√ 과제 등록 시 [활동비] 있음에 체크한 과제 목록 및 활동비 현황</label><br/>
 			<label class="information">√ [입금신청일]은 과제관리에서 [활동비 입급신청일] 입력 시 노출됩니다.</label>
-				<div id="search-box1" class="col-lg-12" style="padding:0;padding-top:10px;">
+				<div id="search-box1" class="col-xs-12" style="padding:0;padding-top:10px;">
 					<form class="pull-left;">
 						<select class="list_form" name="searchCategory" style="display: inline;">
 							<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
@@ -91,8 +91,8 @@ function fnSearch(){
 				</table>
 				
 				
-				<div class="col-lg-12">
-					<div class="col-lg-10 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>
+				<div class="col-xs-12">
+					<div class="col-xs-12 center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>
 				</div>
 				
 			</div>

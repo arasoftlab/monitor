@@ -175,34 +175,39 @@ public class FileServiceImpl implements FileService{
 			//썸네일 추가
 			String tI = rI + ".png";
 			//parent path
-			String pI = fullPathImage.substring(0, fullPathImage.lastIndexOf("/") +1);
-			
-			File td = new File(rI);
+			String pI = rI.substring(0, rI.lastIndexOf("/") +1);
 			
 			//sI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/201711/1511939314008.jpg
 			//rI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg
 			//tI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/1511939314008.jpg.png
-			//pI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/201711
+			//pI :/home/monitor/was/instance/monitor02/webapps/monitor/upload/thumb/201711/
 			System.out.println("sI" + sI);
 			System.out.println("rI" + rI);
 			System.out.println("tI" + tI);
 			System.out.println("pI" + pI);
 			
 			try {
+				
+				File td = new File(pI); //thumb 경로 확인
 				// sI 원본경로 , td 썸네일 파일의 경로, tI 최종 썸네일 파일 
 				if(!td.exists()) { //경로존재여부 
-					td.getParentFile().mkdirs();
+					td.mkdirs();
 					System.out.println("make dir" + pI);
+				}else {
+					System.out.println("exists :" + pI);
 				}
+				
 				System.out.println(td.exists());
 				
-				
-				File fI = new File(sI);
-				if(fI.exists()) { //파일존재여부
-					File cI = new File(tI);
-					Thumbnails.of(fI).size(150, 150).outputFormat("png").toFile(cI);
+				File fI = new File(tI); //대상파일
+				if(!fI.exists()) { //대상파일존재여부
+					File cI = new File(sI); //원본파일 
+					Thumbnails.of(cI).size(150, 150).outputFormat("png").toFile(fI);
 					System.out.println("make file" + tI);
+				}else {
+					System.out.println("img exist:" + tI);
 				}
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
