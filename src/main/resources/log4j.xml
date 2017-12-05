@@ -18,7 +18,7 @@
   </logger>
  
   <logger name="seoul" additivity="false">
-  	<level value="DEBUG" />
+  	<level value="OFF" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   

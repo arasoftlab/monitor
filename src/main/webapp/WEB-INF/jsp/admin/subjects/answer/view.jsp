@@ -78,7 +78,11 @@ $(window).load( function() {
 });
 
 
-function fnSearch(){
+function fnSearch(stype){
+	if(stype == "M"){
+		$("input[name='temporary']").val("Y");
+	}
+
 	$("form").attr("action","view.do").submit();
 }
 
@@ -166,7 +170,7 @@ function onApply( is_select )
 	
 	if (index <= 0)
 	{
-		alert("하명 이상 선택해야합니다.");
+		alert("선택된 목록이 없습니다.");
 		return false;
 	}
 	
@@ -257,6 +261,7 @@ $('#element').off('scroll touchmove mousewheel');
 					<form class="pull-left;">
 					
 					<input type="hidden" name="subject_id" value="${vo.subject_id}">
+					<input type="hidden" name="temporary"  value="${vo.temporary }">
 					
 						<select class="list_form" name="team_num" style="display: inline;">
 							<option value="" >조 선택</option>
@@ -581,7 +586,11 @@ $('#element').off('scroll touchmove mousewheel');
 						</tbody>
 						
 					</table>
-				</div>				
+				</div>	
+				
+				<div class="btnGroupArea col-xs-12" style="margin: 10px">
+					<button class="btn btn-warning pull-right" onclick="onApply('D')">삭제</button>
+				</div>			
 
 				<!-- 모달 팝업 1-->
 				<div class="modal fade member_modal" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" >

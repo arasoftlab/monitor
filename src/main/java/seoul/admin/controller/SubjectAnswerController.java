@@ -1,7 +1,6 @@
 package seoul.admin.controller;
 
 import java.io.File;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import seoul.admin.vo.OptionVO;
 import seoul.admin.vo.QuestionSettingsVO;
 import seoul.admin.vo.QuestionVO;
 import seoul.admin.vo.SubjectVO;
-import util.BaseUtil;
 
 @Controller
 @RequestMapping("/admin/subject/answer")
@@ -56,7 +54,8 @@ public class SubjectAnswerController {
 	@RequestMapping("view.do")
 	public String view(Model model, @ModelAttribute AnswersVO answersVO, HttpServletRequest request) throws Exception{
 		System.out.println(" team_num :" + answersVO.getTeam_num());
-		
+		System.out.println(" temporary:" + answersVO.getTemporary());
+		System.out.println(" answers  :" + answersVO.toString());
 		SubjectVO subjectVO = new SubjectVO();
 		
 		subjectVO.setSubject_id(answersVO.getSubject_id());
@@ -137,7 +136,9 @@ public class SubjectAnswerController {
 							if(!ti.exists()) { //파일존재여부
 								//rp = rp + ".png";
 								File ci = new File(rs); //원본파일
-								Thumbnails.of(ci).size(150, 150).outputFormat("png").toFile(ti);
+								if(ci.exists()) {
+									Thumbnails.of(ci).size(150, 150).outputFormat("png").toFile(ti);
+								}
 								System.out.println("make file" + ti);
 							}else {
 								//System.out.println(" exists : " + rs);

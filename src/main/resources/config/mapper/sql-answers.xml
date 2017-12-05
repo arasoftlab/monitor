@@ -110,6 +110,10 @@
 		   		and a.member_id = '${member_id}' 
 			</if>
 			
+			<if test='temporary == "Y"'>
+						and a.temporary = '${temporary}'
+			</if>  
+			
 			<choose>
 				    <when test='searchCategory != null and searchCategory == "member_name" and  searchCategory != ""'>
 						and a.member_name like '%' || #{searchText} || '%'
@@ -119,10 +123,7 @@
 				    </when>
 			</choose>
 			
-	      	<if test="team_num != null and team_num !=''">
-		   		and m.team_num = '${team_num}' 
-			</if>
-			
+	      	
           )b 
           where 1=1        
           
@@ -154,7 +155,13 @@
 
 				<if test="team_num != null and team_num !=''">
 						and m.team_num = '${team_num}'
-				</if>                  		
+				</if>  
+				
+				<if test='temporary == "Y"'>
+						and a.temporary = '${temporary}'
+				</if>  
+				
+				                		
                         order by regdate ASC
                 )c
                 where 1=1
