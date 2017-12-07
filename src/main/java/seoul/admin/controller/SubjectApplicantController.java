@@ -108,9 +108,10 @@ public class SubjectApplicantController {
 		System.out.println(subjectVO.toString());
 		
 		List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO);
+		List<MonitorsVO> list2 = monitorsService.getMonitorsApplyList(monitorsVO);
 		
 		model.addAttribute("temp", list);
-		model.addAttribute("list", monitorsService.getMonitorsApplyList(monitorsVO));
+		model.addAttribute("list", list2);
 		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
 		
 		model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO));

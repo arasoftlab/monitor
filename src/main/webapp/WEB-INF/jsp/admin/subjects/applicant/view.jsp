@@ -197,18 +197,7 @@ function onApply( is_select )
 										<td>${item.team_num }</td>										
 										<td>${item.apply_cnt }</td>
 										<td>${item.selected_cnt }</td>
-										<td>
-											<c:choose>
-												<c:when test="${!empty item.tmp_sum1 }">
-												${item.tmp_sum1 }
-												</c:when>
-												
-												<c:otherwise>
-												0
-												</c:otherwise>
-											</c:choose>
-
-										</td>
+										<td>${item.tmp_sum1 }</td>
 										<td>
 											<c:if test="${item.is_selection eq 'Y'}">
 												<img src="/monitor/img/Check-icon.png" style="width: 15px;">

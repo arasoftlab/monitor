@@ -27,6 +27,7 @@ public class MonitorsVO extends CommonVO{
 	private String selected_cnt;
 	
 	private String tmp_sum1;
+	private String clear_sum;
 		
 	private String subject_id;
 	private Date regdate;

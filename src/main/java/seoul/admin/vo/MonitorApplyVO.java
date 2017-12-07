@@ -16,22 +16,16 @@ public class MonitorApplyVO extends CommonVO{
 	
 	private String subject_id;
 	private Date regdate;
-
 	private String query;
-	
 	private String pay;
 	
-	
 	private String member_name;
-	
 	private String gugun;
 	private String sido;
 	private String dong;
 	
 	private String send_cnt;
-	
 	private String phone;
-	
 	private String birth;
 
 	

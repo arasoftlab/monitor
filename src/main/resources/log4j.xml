@@ -35,13 +35,13 @@
   
   <!-- for query -->
   <logger name="jdbc.sqlonly" additivity="false">
-  	<level value="OFF" />
+  	<level value="DEBUG" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   
 
   <logger name="jdbc.resultsettable" additivity="false">
-  	<level value="OFF" />
+  	<level value="DEBUG" />
   	<appender-ref ref="CONSOLE"/>
   </logger>
   

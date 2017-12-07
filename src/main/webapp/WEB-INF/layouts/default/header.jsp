@@ -221,7 +221,7 @@ function logout(){
 					<div class="navbar yamm">
     
 						<div class="container" style="z-index:9;">
-							<div class="navbar-header">
+							<div class="navbar-header" style="margin:0;">
 								<div class="navbar-toggle .navbar-collapse .pull-right "  >
 									<a href="<c:url value='/front/main.do'/>" style="z-index:99999999;">
 										<img src="<c:url value='/img/front/top_logo2.png'/>" class="s_logo" /></a>

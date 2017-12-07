@@ -44,85 +44,58 @@
     
     <select id="getMonitorsApplyList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
         
-					    WITH SCNTDATA AS (
-						    select SUBJECT_ID, member_id
-	                    	FROM n_monitors C
-	                    	where C.member_id = A.member_id	and is_selection = 'Y' 	and subject_id in ( 
-	                		
-	                		select subject_id 
-	                		from
+						WITH BASEID AS ( -- 직전3회
+			                SELECT SUBJECT_ID 
+	                		FROM
 	                		(
-	                			select distinct subject_id
-	                			from N_MONITORS
-	                			where subject_id <![CDATA[< ]]> #{subject_id}    
-	                			order by subject_id DESC
+	                			SELECT DISTINCT SUBJECT_ID
+	                			FROM N_MONITORS
+	                			WHERE SUBJECT_ID <![CDATA[< ]]> #{subject_id}     
+	                			ORDER BY SUBJECT_ID DESC
 	                		) 
-	                		where  ROWNUM <![CDATA[< ]]> 4
-					    ),
-					    ACNTDATA AS (
-						    select SUBJECT_ID, member_id
-	                    	FROM n_monitors C
-	                    	where C.member_id = A.member_id	and is_selection = 'N' 	and subject_id in ( 
-	                		
-	                		select subject_id 
-	                		from
-	                		(
-	                			select distinct subject_id
-	                			from N_MONITORS
-	                			where subject_id <![CDATA[< ]]> #{subject_id}    
-	                			order by subject_id DESC
-	                		) 
-	                		where  ROWNUM <![CDATA[< ]]> 4
-					    ), MEMINFO AS (
-					    	SELECT M.MEMBER_ID, H.M001_NM, H.M001_SSN, H.M001_PHONE, H.SIDO, H.GUGUN, H.DONG, M.JOB
+	                		WHERE  ROWNUM <![CDATA[< ]]> 4
+			            ), BASEQ AS ( --마지막기수
+			            	SELECT POLL_NUM FROM ADMIN_SETTING WHERE ROWNUM =1
+			            ), TOT AS( --토탈정보 선정횟수 미선정횟수
+			            	SELECT 
+			            	SUM(CASE WHEN IS_SELECTION='Y' THEN 1 ELSE 0 END) SP, --선정 
+			            	SUM(CASE WHEN IS_SELECTION='N' THEN 1 ELSE 0 END) AP, MEMBER_ID --미선정
+			        		FROM N_MONITORS N, BASEQ Q
+			        		WHERE N.POLL_NUM = Q.POLL_NUM
+			        		GROUP BY MEMBER_ID
+			            ), MEMINFO AS ( 
+					    	SELECT M.ID MEMBER_ID,  H.M001_NM MEMBER_NAME, H.M001_SSN BIRTH, H.M001_PHONE PHONE, 
+		                	M.SIDO, M.GUGUN, M.DONG, M.JOB, M.REGDATE
 					    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M
-					    	WHERE M.MEMBER_ID = H.M001_ID
-					    ), TMPSUM AS(
-					    	select a.MEMBER_ID member_id, a.subject_id subject_id
-					                        , sum(case when a.temporary = 'N' then 0 else 1 end) tmp_sum
-					                        from N_ANSWERS a,
-					                            (
-					                            select subject_id , MEMBER_ID
-					                            from N_MONITORS
-					                            where subject_id in
-					                            (select subject_id from                         
-					                                (select subject_id from( 
-					                                    select subject_id, DENSE_RANK() OVER (ORDER BY subject_id desc) as rank
-					                                    from N_MONITORS
-					                                    where subject_id <![CDATA[< ]]> #{subject_id}
-					                                    group by subject_id)
-					                                 where rank <![CDATA[<= ]]> 3))
-					                            )b1
-					                        where a.subject_id = b1.subject_id 
-					                        and a.member_id = b1.member_id
-					                        group by a.subject_id, a.member_id
-					                        order by a.subject_id desc, a.member_id asc)
-					                    where b.member_id = member_id
-					                    and b.subject_ID = subject_id
-					    )
-					    SELECT *, ROW_NUMBER() OVER(ORDER BY REGDATE ASC) RN1, ROW_NUMBER() OVER(ORDER BY REGDATE DESC) RND
-					    FROM(
-					    SELECT DISTINCT 
-					    	N.IDX, N.MEMBER_ID, N.SUBJECT_ID, TO_CHAR(RN1) RN, N.DESCRIPTION, N.TEAM_NUM, N.POLL_NUM, N.IS_SELECTION,
-					    	N.APPLY_CNT, N.SELECTED_CNT, N.REGDATE,
-					    	M.M001_NM MEMBER_NAME, M.JOB, M.M001_SSN BIRTH, M.M001_PHONE PHONE, M.SIDO, M.GUGUN, M.DONG,
-					    	T.TMP_SUM,
-					    	S.COUNT(S.MEMBER_ID) SELECTED_CNT, A.COUNT(A.MEMBER_ID) APPLY_CNT	
-					    FROM SCNTDATA S,ACNTDATA A, N_MONITORS N, MEMINFO M, TMPSUM T.
-					    WHERE N.MEMBER_ID = S.MEMBER_ID(+) AND N.MEMBER_ID = A.MEMBER_ID(+) 
-					    AND N.MEMBER_ID = M.MEMBER_ID
-					    AND N.MEMBER_ID = T.MEMBER_ID AND N.SUBJECT_ID = T.SUBJECT_ID
-					    AND N.SUBJECT_ID = #{SUBJECT_ID}        
-                    <if test="searchCategory != null and searchCategory != ''">
-			      	   and ${searchCategory} like '%' || #{searchText} || '%'
-					</if>			
-						
-					<if test="team_num != null and team_num != ''">
-			      	   and team_num = #{team_num}
-					</if>
-					<if test="is_selection != null and is_selection != ''">
-			      	   and is_selection = #{is_selection}
-					</if>
+					    	WHERE M.ID = H.M001_ID
+					    ), TMPSUM AS( 
+			               SELECT A.MEMBER_ID, A.TEMPORARY
+			               FROM N_ANSWERS A, BASEID B
+			               WHERE A.SUBJECT_ID IN ( B.SUBJECT_ID)
+		              )
+		              SELECT 
+		                A.MEMBER_ID, A.MEMBER_NAME, A.BIRTH, A.PHONE, A.SIDO, A.GUGUN, A.DONG, A.JOB,
+		                B.IDX, B.SUBJECT_ID, B.DESCRIPTION, B.TEAM_NUM, B.POLL_NUM, B.IS_SELECTION, B.REGDATE,                 
+		                ROW_NUMBER() OVER(ORDER BY A.REGDATE ASC) RN1, 
+		                ROW_NUMBER() OVER(ORDER BY A.REGDATE DESC) RND,
+		                NVL((SELECT AP + SP FROM TOT WHERE MEMBER_ID = A.MEMBER_ID), 0) APPLY_CNT,
+		                NVL((SELECT SP FROM TOT WHERE MEMBER_ID = A.MEMBER_ID), 0) SELECTED_CNT,
+		                NVL((SELECT SUM(CASE WHEN TEMPORARY = 'N' THEN 0 ELSE 1 END) TMP_SUM FROM TMPSUM WHERE MEMBER_ID = A.MEMBER_ID ), 0) TMP_SUM1,
+		                NVL((SELECT SUM(CASE WHEN TEMPORARY = 'N' THEN 1 ELSE 0 END) TMP_SUM FROM TMPSUM WHERE MEMBER_ID = A.MEMBER_ID ), 0) CLEAR_SUM
+		              FROM  (SELECT * FROM MEMINFO) A, N_MONITORS B
+		              WHERE A.MEMBER_ID = B.MEMBER_ID
+		              AND B.SUBJECT_ID = #{subject_id}
+              
+              <if test="searchCategory != null and searchCategory != ''">
+	      	   AND B.${searchCategory} LIKE '%' || #{searchText} || '%'
+  					</if>			
+				
+    			<if test="team_num != null and team_num != ''">
+	      	   AND B.TEAM_NUM = #{team_num}
+		    	</if>
+		    	<if test="is_selection != null and is_selection != ''">
+	      	   AND B.IS_SELECTION = #{is_selection}
+			  </if>
                 
     </select>
     
