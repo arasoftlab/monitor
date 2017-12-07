@@ -49,16 +49,6 @@
 	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
     <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
     <![endif]-->
-
-	<script>
-		$body = $("body");
-	
-		$(document).on({
-		    ajaxStart: function() { $body.addClass("loading"); },
-		    ajaxSubmit: function() { $body.addClass("loading"); },
-		    ajaxStop: function() { $body.removeClass("loading"); }  
-		});
-	</script>
 	
 </head>
 <body>

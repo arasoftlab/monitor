@@ -40,6 +40,7 @@ function get_chked_values(){
 }
 
 function get_chked_cnt(){
+	
 	  var chked_cnt = 0;
 	  $(":checkbox[id='answers_chk']:checked").each(function(pi,po){
 		  chked_cnt++;
@@ -52,6 +53,7 @@ function get_chked_cnt(){
 
 function chkValidation()
 {
+	window.event.preventDefault();
 	var answers = get_chked_values();
 		
 	if (!answers) 

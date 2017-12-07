@@ -2,7 +2,7 @@
 
 <footer style="background:none; text-align:-webkit-center;">
 
-	<div class="col-lg-2" style="text-align:center">
+	<div class="row col-xs-12" style="text-align:center; float:none !important;">
 
 <!--
 		<button class="btn btn-theme" onclick="historyDelete('${vo.question_id}','${history_arr}'  ,'${history_params}')"><i class="fa fa-2x fa-caret-square-o-left" ></i><br/><span style="font-size:8pt;">이전</span></button>

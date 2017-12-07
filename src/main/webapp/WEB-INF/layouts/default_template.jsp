@@ -20,7 +20,9 @@
 	
 	<link href="<c:url value='/css/front/css/reply.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/font-awesome.min.css'/>" rel="stylesheet" />
+	
 	<link href="<c:url value='/css/front/css/responsive-leyouts.css'/>" rel="stylesheet" />
+	
 	<link href="<c:url value='/css/front/css/animations.min.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/slate.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/front/css/board_1.css'/>" rel="StyleSheet" >
@@ -50,25 +52,7 @@
 	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
     <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
     <![endif]-->
-	<script>
-		$body = $("body");
-	
-		$(document).on({
-		    ajaxStart: function() { $body.addClass("loading"); },
-		    ajaxSubmit: function() { $body.addClass("loading"); },
-		    ajaxStop: function() { $body.removeClass("loading"); }    
-		});
-		
-		function centerModal() {
-		    $(this).css('display', 'block');
-		    var $dialog = $(this).find(".modal-dialog");
-		    var offset = ($(window).height() - $dialog.height()) / 2;
-		    // Center modal vertically in window
-		    $dialog.css("margin-top", offset);
-		}
-		
-		
-	</script>
+
 		
 </head>
 <body>
@@ -88,7 +72,6 @@
 	<script src="<c:url value='/css/front/js/responsive-tabs.min.js'/>"></script>
 	<script src="<c:url value='/css/front/js/totop.js'/>"></script>
 	<script src="<c:url value='/css/front/js/jquery.jcarousel.min.js'/>"></script>
-	<script src="<c:url value='/js/jquery.form.js'/>"></script>
 	
 	<script src="<c:url value='/css/front/js/jcarousel.responsive.js'/>"></script>
 	<script src="<c:url value='/css/front/js/animations.min.js'/>"></script>

@@ -85,7 +85,7 @@
 												<c:choose>
 													<c:when test="${fn:split(file.fileType, '/')[0] eq 'image'}">	
 														<div class="thumbs" style="float:left;width:32%;margin-right:1%;">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" onclick="fnShowImg2('${file.savePath }/${file.unqFileName }');" />
+															<img class="img-responsive" src="<c:url value='${file.savePath }/${file.unqFileName }'/>" onclick="fnShowImg2('${file.savePath }/${file.unqFileName }');" />
 														</div>
 													</c:when>
 		

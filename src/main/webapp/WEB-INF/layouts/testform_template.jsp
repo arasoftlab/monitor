@@ -10,7 +10,8 @@
 	<meta charset="utf-8" />
 	<title><tiles:insertAttribute name="title" /></title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1"/>	
+	<!-- <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1"/> -->	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<!-- css -->

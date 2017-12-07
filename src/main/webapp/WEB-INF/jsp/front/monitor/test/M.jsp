@@ -33,6 +33,7 @@ function get_chked_cnt(){
 
 function chkValidation()
 {
+	window.event.preventDefault();
 	var answers = get_chked_values();
 		
 	if (!answers) 

@@ -3,7 +3,11 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.*;
 
+@ToString
+@Getter
+@Setter
 public class SubjectVO extends CommonVO{
 	private String subject_id;
 	private String title;

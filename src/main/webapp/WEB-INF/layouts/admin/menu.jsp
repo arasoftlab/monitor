@@ -53,7 +53,7 @@
 		<section id="inner-headline">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-xs-12">
 						<a href="<c:url value='/admin/subject/info/view.do?subject_id=${vo.subject_id }'/>">
 							<button class="btn btn-theme <c:if test="${menu.depth3 eq 'info' }"> active</c:if> btn_top" >기본정보</button>
 						</a>
@@ -82,7 +82,7 @@
 		<section id="inner-headline">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-xs-12">
 						<a href="<c:url value='/admin/monitor/list.do'/>">
 							<button class="btn btn-theme btn_top <c:if test="${menu.depth3 eq 'list' }"> active</c:if>" >가입 중회원</button>
 						</a>
@@ -106,7 +106,7 @@
 		<section id="inner-headline">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-xs-12">
 						<!-- 
 						<a href="<c:url value='/admin/monitor/list.do'/>">
 							<button class="btn btn-theme btn_top <c:if test="${menu.depth3 eq 'list' }"> active</c:if>" >가입 중회원</button>
@@ -135,7 +135,7 @@
 		<section id="inner-headline">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-xs-12">
 						<a href="<c:url value='/admin/community/story/list.do'/>">
 							<button class="btn btn-theme btn_top <c:if test="${menu.depth3 eq 'story' }"> active</c:if>" >이야기방</button>
 						</a>

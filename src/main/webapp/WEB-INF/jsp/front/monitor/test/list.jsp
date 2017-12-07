@@ -87,13 +87,14 @@ var is_pollnum = '${m_vo.poll_num}';
 function onEnter()
 {
 
-	
 	if (is_modify =="") 
 	{
+		//console.log("next >>>");
 		getNextQuestion('${list[0].question_id }','${list[0].question_num}','1' ,0 , '');
 	}
 	else
 	{
+		//console.log("prev <<<");
 		// 나중에 이전 기능 살릴땐 지나온 번지수를 컬럼에 뿌렷다가 같이 던져주자.
 		getPreviewQuestion('${list[now_num-1].question_id }' , '' , '${now_num }' , is_modify);
 	}
@@ -101,11 +102,11 @@ function onEnter()
 
 function onBankPopup()
 {
+	window.event.preventDefault();
 	location.href = "/monitor/front/subject/bank.do?subject_id="+subject_id+"&poll_num="+is_pollnum+"&member_id="+is_member;
 }
 
 function goEndpage(history_params , answers_id){
-
 	var params = {};
 	
 	params = $("form").serialize();
@@ -144,7 +145,6 @@ function goEndCommentpage(com , history_params )
 }
 
 function historyDelete(question_id,history_org , history_params){
-	
 	var history_arr = history_org.split(",");
 	var ret_history = "";
 		
@@ -180,17 +180,21 @@ function historyAppend(question_id , history_org , this_num , bifurcation , hist
 	
 	var history_arr = history_org + "," +this_num;
 	
-	////console.log(question_id+"번");
+	//console.log(question_id+"번");
+	//console.log(history_arr);
+	//console.log(this_num);
+	//console.log(bifurcation);
+	//console.log(history_params);
 	
 	getNextQuestion(question_id, history_arr, this_num , bifurcation , history_params);
 }
 
 function getPreviewQuestion(question_id,history_arr,back_num , history_params){
 		
-	////console.log(history_arr);
-	////console.log(history_params);
+	//console.log("arr:"+history_arr);
+	//console.log("par:"+history_params);
 	
-	////console.log(back_num);
+	//console.log("bak:"+back_num);
 	
 	
 	is_maxpage = back_num;
@@ -207,6 +211,7 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params){
 			"answers_id" : answers_id
 			},
 		success : function(data){
+			//console.log(data);
 			$("#test_target").html(data);			
 			$("#test_index").text(back_num);
 		},
@@ -218,12 +223,9 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params){
 }
 
 function getNextQuestion(question_id , history_arr, this_num , bifurcation , history_params){
-	
 	var params = {};
-	
 	var maxpage = '${list.size()}';
-	
-	
+		
 	if (!this_num)
 	{
 		if ( is_maxpage == maxpage)
@@ -235,9 +237,8 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 	
 	is_maxpage = this_num;	
 	
-
 	params = $("form").serialize();
-	console.log("param : "+params);
+	//console.log("param : "+params);
 	
 	$.ajax({
 				async : true,
@@ -281,10 +282,11 @@ $(window).load(function(){
 </script>
 	
 
+<div class="col-xs-12" >test</div>
 
 
 	<section id="content" style="    padding-bottom: 170px">
-	<div class="container">
+	<div class="container cos-xs-12">
 		
 		<div id="test_target" style=" border: 2px solid #ccc;  border-radius: 10px 10px 10px 10px;">
 		
@@ -305,10 +307,12 @@ $(window).load(function(){
 		
 		( <span id="test_index">1</span>/ ${list.size()} )  
 	</div>
-	<div style="margin-left: 45%;">
-		<button class="btn btn-theme" onclick="on_testPop_close()" style="background: #8C8C8C;">
-			<i class="fa fa-times" aria-hidden="true" style="font-size: 25px;"></i>		
-		<br/><span style="font-size:8pt;">창 닫기</span></button>
+	<div class="row">
+		<div class="col-xs-12">
+			<button class="btn btn-theme center-block" onclick="on_testPop_close()" style="background: #8C8C8C;">
+				<i class="fa fa-times" aria-hidden="true" style="font-size: 25px;"></i>		
+			<br/><span style="font-size:8pt;">창 닫기</span></button>
+		</div>
 	</div>
 
 

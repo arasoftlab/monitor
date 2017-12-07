@@ -194,6 +194,7 @@
         update n_answers
            set answers=#{answers,jdbcType=VARCHAR}
               ,temporary=#{temporary,jdbcType=VARCHAR }
+              ,regdate=sysdate
          where answers_id=#{answers_id}
     </update>
     

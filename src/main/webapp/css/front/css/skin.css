@@ -134,7 +134,7 @@
 
 
 .shortcode-widget {
-  border-right: 1px solid #ddd;  
+  /* border-right: 1px solid #ddd; */  
 }
 
 .sc_widget_nav {
@@ -188,7 +188,7 @@
 
 @media
 (-webkit-min-device-pixel-ratio: 1.0){
-/* 사이트맵 /로그인 히든 */
+
 #m_hidden {/*display:none;*/}
 .menu_main {padding: 6px 0px 0px;}
 .page_title { padding: 7px 0px 0px; }

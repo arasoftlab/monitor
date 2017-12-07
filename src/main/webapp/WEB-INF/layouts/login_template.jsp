@@ -18,24 +18,21 @@
 	<script src="<c:url value='/webjars/json2/20140204/json2.min.js'/>"></script>
     <script src="<c:url value='/webjars/html5shiv/3.7.3/html5shiv.min.js'/>"></script>
     <![endif]-->
-	        
- 
+	
+	<script src="<c:url value='/webjars/jquery/1.12.4/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-ui/1.12.1/jquery-ui.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-form/4.2.1/jquery.form.min.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.ko.min.js'/>"></script>
+	<script src="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/js/bootstrap-daterangepicker.js'/>"></script>
+	
 	<script src="<c:url value='/js/browser_check.js' />"></script>
 	<script src="<c:url value='/js/jquery.slimscroll.js'/>"></script>
 			
 	<script src="<c:url value='/js/moment.js'/>"></script>
 	<script src="<c:url value='/js/validate.js'/>"></script>
-	
-	<script src="<c:url value='/webjars/jquery/1.12.4/jquery.min.js'/>"></script>
-	<script src="<c:url value='/webjars/jquery-ui/1.12.1/jquery-ui.min.js'/>"></script>
-	<script src="<c:url value='/webjars/jquery-form/4.2.1/jquery.form.min.js'/>"></script>
-	<script src="<c:url value='/webajrs/jqery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
-	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
-	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'/>"></script>
-	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.kr.min.js'/>"></script>
-	<script src="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/js/bootstrap-daterangepicker.js'/>"></script>
-	
-	
 	<script src="<c:url value='/js/common.js'/>"></script>
 	
 	<!--[if lt IE 9]>	

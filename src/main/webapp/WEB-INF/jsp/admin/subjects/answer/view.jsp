@@ -79,6 +79,7 @@ $(window).load( function() {
 
 
 function fnSearch(stype){
+	window.event.preventDefault();
 	if(stype == "M"){
 		$("input[name='temporary']").val("Y");
 	}
@@ -87,16 +88,20 @@ function fnSearch(stype){
 }
 
 function fnNoAnswer(){
+	window.event.preventDefault();
 	location.href="noanswer.do?subject_id=${vo.subject_id}";
 }
 
 
 function onExcel(){	
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=answers&subject_id=${vo.subject_id}";
+	window.event.preventDefault();
+	var path = "/monitor/admin/ex/excel_transform_controller.do?target=answers&subject_id=${vo.subject_id}";
+	location.href=path;
 }
 
 function view_team_info_pop(id,poll_num)
 {	
+	window.event.preventDefault();
 	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
 	var sW = (screen.availWidth-1020)/2;
 	var sH = (screen.availHeight-640)/2;
@@ -137,6 +142,7 @@ function fnShowText(text){
 
 function view_member(id,poll_num)
 {	
+	window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -160,6 +166,7 @@ function view_member(id,poll_num)
 
 function onApply( is_select )
 {
+	window.event.preventDefault();
 	var index = 0;
 	
 	var checkboxValues = [];
@@ -254,7 +261,7 @@ $('#element').off('scroll touchmove mousewheel');
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
-				<h4 >${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp; <font color="blue">결과제출 총 ${total_cnt}건</font></h4>
+				<h4 style="float:left; margin-right:10px;">${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp; <font color="blue">결과제출 총 ${total_cnt}건</font></h4>
 			</div>
 			<div class="col-xs-12">
 				<div id="search-box1"  style="padding:0;">

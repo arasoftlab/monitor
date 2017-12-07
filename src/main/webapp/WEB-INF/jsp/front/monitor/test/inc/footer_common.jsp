@@ -42,12 +42,16 @@ function onChkESQ(obj){
 	
 		var w_temp_cnt = "${fn:length(optionList)}";
 		var $txArea = $("textarea");
-		$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
-		
-	for (var a=0; a <= w_temp_cnt; a++)
-		{
-			if(typeof($("#answers_"+a)) != "undefined"){
-				$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	
+		if(typeof $txArea === 'undefined'){
+			return;
+		}else{
+			$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
+			
+			for (var a=0; a <= w_temp_cnt; a++)
+			{
+				if(typeof($("#answers_"+a)) != "undefined"){
+					$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	
+				}
 			}
 		}
  

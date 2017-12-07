@@ -11,7 +11,7 @@ pageEncoding="UTF-8"%>
 
 <script>
 
-fnCheckSession();
+//fnCheckSession();
 
 </script>
 

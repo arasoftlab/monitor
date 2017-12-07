@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:forward page="/sso/index.jsp"></jsp:forward>
+
+<%
+response.sendRedirect("https://research.seoul.go.kr/monitor/sso/index.jsp");
+%>
 

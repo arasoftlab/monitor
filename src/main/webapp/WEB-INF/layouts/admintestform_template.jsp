@@ -35,7 +35,7 @@
 	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'/>"></script>
 	<script src="<c:url value='/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.kr.min.js'/>"></script>
 	<script src="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/js/bootstrap-daterangepicker.js'/>"></script>
-	<script src="<c:url value='/webajrs/jqery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
+	<script src="<c:url value='/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js'/>"></script>
 	
 	<script src="<c:url value='/js/browser_check.js' />"></script>
 	<script src="<c:url value='/js/jquery.slimscroll.js'/>"></script>

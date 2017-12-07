@@ -104,6 +104,9 @@ public class SubjectApplicantController {
 		SubjectVO subjectVO = new SubjectVO();		
 		subjectVO.setSubject_id(monitorsVO.getSubject_id());
 		
+		System.out.println(monitorsVO.toString());
+		System.out.println(subjectVO.toString());
+		
 		List<MonitorsVO> list = monitorsService.getMonitorsList(monitorsVO);
 		
 		model.addAttribute("temp", list);

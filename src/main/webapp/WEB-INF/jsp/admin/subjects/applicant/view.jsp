@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 function fnSearch(){
+	window.event.preventDefault();
 	$("form").attr("action","view.do").submit();
 }
 $(document).ready(function(){
@@ -21,20 +22,24 @@ $(document).ready(function(){
     });
 });
 function fnPresent(){
+	window.event.preventDefault();
 	location.href="present.do";
 }
 
 
 function onExcel(){	
+	window.event.preventDefault();
 	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant&subject_id=${vo.subject_id}";
 }
 
 function onExcel_apply(){	
+	window.event.preventDefault();
 	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&subject_id=${vo.subject_id}";
 }
 
 function onApply( is_select )
 {
+	window.event.preventDefault();
 	var index = 0;
 	
 	var checkboxValues = [];

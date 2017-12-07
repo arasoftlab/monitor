@@ -29,13 +29,13 @@
 	}
 </script>
 
-		<table style="width:100%;background:#fff;padding:0;border:none;border-spacing:0;" class="mobile_notice_table">
+		<table class="mobile_notice_table">
 			<tr>
 				<td>
 				<!-- 카테고리 -->
 	  
 	  
-					<table class="table_02" style="font-size:12px; text-align:center;">
+					<table class="table_02" style="font-size:12px; text-align:center; table-layout:fixed;">
 						<colgroup>
 							<col width="30%;">
 							<col width="70%;">
@@ -114,9 +114,9 @@
 											<c:forEach var="file" items="${vo.fileList }" varStatus="i">
 												<c:choose>
 													<c:when test="${fn:split(file.fileType, '/')[0] eq 'image'}">	
-														<div class="thumbs" style="float:left;width:32%;margin-right:1%;">
-															<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" onclick="fnShowImg2('${file.savePath }/${file.unqFileName }');" />
-														</div>
+														
+														<img class="img-thumbnail img-responsive" src="<c:url value='${file.savePath }/${file.unqFileName }'/>" onclick="fnShowImg2('${file.savePath }/${file.unqFileName }');"/>
+														
 													</c:when>
 													<c:otherwise>
 													</c:otherwise>

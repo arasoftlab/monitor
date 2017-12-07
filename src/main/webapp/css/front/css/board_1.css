@@ -1,39 +1,39 @@
 
-td#board {padding:4 5 5 5;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;}
-.board {padding:4 5 5 5;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;}
-.board a:link{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000000;text-decoration:none;}
-.board a:visited{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000000;text-decoration:none;}
-.board a:hover{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000000;text-decoration:underline;}
-.board a:active{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000000;text-decoration:none;}
-/*占쌉쏙옙占쏙옙 占쏙옙占쏙옙*/
-.bbsnewf5 {padding:10 10 10 10;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;}
+td#board {padding:4 5 5 5;font-size:12px;font-family:����,����;color:#333333;}
+.board {padding:4 5 5 5;font-size:12px;font-family:����,����;color:#333333;}
+.board a:link{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#000000;text-decoration:none;}
+.board a:visited{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#000000;text-decoration:none;}
+.board a:hover{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#000000;text-decoration:underline;}
+.board a:active{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#000000;text-decoration:none;}
+/*�Խ��� ����*/
+.bbsnewf5 {padding:10 10 10 10;font-size:12px;font-family:����,����;color:#333333;}
 .bbsnewf5 a:link{color:#555555;text-decoration:none}
 .bbsnewf5 a:visited{color:#555555;text-decoration:none}
 .bbsnewf5 a:hover{color:#FF5500;text-decoration:none}
-/*占쏙옙占쏙옙*/
+/*����*/
 .bbsbody03{width:340px;overflow:hidden;text-overflow:ellipsis;padding-left:5;padding-right:5}
-/*占쏙옙占쏙옙_占쏙옙占쏙옙占쌘뤄옙 占쏙옙占쏙옙*/
+/*����_�����ڷ� ����*/
 .news_title {color:#0E3D72;font-size:14px;letter-spacing:-1;text-decoration:none;}
 .news_title a:link{color:#0E3D72;font-size:14px;letter-spacing:-1;text-decoration:none}
 .news_title a:visited{color:#0E3D72;font-size:14px;letter-spacing:-1;text-decoration:none}
 .news_title a:hover{color:#0E3D72;font-size:14px;letter-spacing:-1;text-decoration:underline}
-/*占쏙옙占쏙옙_占쏙옙占쏙옙占쌘뤄옙 占쏙옙占쏙옙*/
+/*����_�����ڷ� ����*/
 .news_cont {color:#555555;text-decoration:none}
 .news_cont a:link{color:#555555;text-decoration:none}
 .news_cont a:visited{color:#555555;text-decoration:none}
 .news_cont a:hover{color:#FF5500;text-decoration:none}
-/*占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙*/
-.gallery_title {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#666666;}
-/*占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙*/
-.gallery_cont {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#666666}
-/*占쏙옙占쏙옙징*/
-.paging {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000;/*font-weight:bold;*/}
-.paging a:link{font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#555555;font-weight:normal;text-decoration:none}
-.paging a:visited{font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#555555;font-weight:normal;text-decoration:none}
-.paging a:hover{font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#555555;font-weight:normal;text-decoration:underline}
-/*占싯삼옙占쏙옙트(占쏙옙占쏙옙트占쌘쏙옙)*/
-.search_txt {font-size:12px;font-fa7mily:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#666666}
-/*占썩본占쏙옙트*/
+/*������ ����*/
+.gallery_title {font-size:12px;font-family:����,����;color:#666666;}
+/*������ ����*/
+.gallery_cont {font-size:12px;font-family:����,����;color:#666666}
+/*����¡*/
+.paging {font-size:12px;font-family:����,����;color:#000;/*font-weight:bold;*/}
+.paging a:link{font-size:12px;font-family:����,����;color:#555555;font-weight:normal;text-decoration:none}
+.paging a:visited{font-size:12px;font-family:����,����;color:#555555;font-weight:normal;text-decoration:none}
+.paging a:hover{font-size:12px;font-family:����,����;color:#555555;font-weight:normal;text-decoration:underline}
+/*�˻���Ʈ(����Ʈ�ڽ�)*/
+.search_txt {font-size:12px;font-fa7mily:����,����;color:#666666}
+/*�⺻��Ʈ*/
 .board_txt {font-size:12px;color:#000000;text-decoration:none;padding-top:4;}
 .board_txt a:link{font-size:12px;color:#000000;text-decoration:none;}
 .board_txt a:visited{font-size:12px;color:#000000;text-decoration:none;}
@@ -42,28 +42,28 @@ td#board {padding:4 5 5 5;font-size:12px;font-family:占쏙옙占쏙옙,占쏙�
 .board_txt2 a:link{font-size:12px;color:#333333;text-decoration:none;}
 .board_txt2 a:visited{font-size:12px;color:#333333;text-decoration:none;}
 .board_txt2 a:hover{font-size:12px;color:#333333;text-decoration:none;}
-input#border {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:##666666;border:1 solid #D4D4D4}
-textarea#border {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:##666666;border:1 solid #D4D4D4}
-/* bgcolor : 占쌉쏙옙占쏙옙 占쌓몌옙 */
-.board_bgcolor {width:100px;background-color:#F7F7F7;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#000000;}
-.board_rate {padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;background-color:#E6F0F9;}
-.board_rate_td {padding:4 5 5 5;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;background-color:#FFFFFF}
+input#border {font-size:12px;font-family:����,����;color:##666666;border:1 solid #D4D4D4}
+textarea#border {font-size:12px;font-family:����,����;color:##666666;border:1 solid #D4D4D4}
+/* bgcolor : �Խ��� �׸� */
+.board_bgcolor {width:100px;background-color:#F7F7F7;font-size:12px;font-family:����,����;color:#000000;}
+.board_rate {padding:0 0 0 0;font-size:12px;font-family:����,����;color:#333333;background-color:#E6F0F9;}
+.board_rate_td {padding:4 5 5 5;font-size:12px;font-family:����,����;color:#333333;background-color:#FFFFFF}
 .board_comment_bgcolor {background-color:#F6F6F6;}
-/* 占쏙옙占쏙옙 占쌉쏙옙占쏙옙 占쏙옙타占쏙옙 */
-.board_output {padding:4 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;}
-.board_output a:link{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;text-decoration:none;}
-.board_output a:visited{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;text-decoration:none;}
-.board_output a:hover{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;text-decoration:underline;}
-.board_output a:active{padding:0 0 0 0;font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙옙;color:#333333;text-decoration:none;}
-/*占쏙옙占쏙옙占싣�*/
+/* ���� �Խ��� ��Ÿ�� */
+.board_output {padding:4 0 0 0;font-size:12px;font-family:����,����;color:#333333;}
+.board_output a:link{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#333333;text-decoration:none;}
+.board_output a:visited{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#333333;text-decoration:none;}
+.board_output a:hover{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#333333;text-decoration:underline;}
+.board_output a:active{padding:0 0 0 0;font-size:12px;font-family:����,����;color:#333333;text-decoration:none;}
+/*�����Ʈ*/
 .comment_name {font-size:12px;color:#0055B5;text-decoration:none;padding-top:4px;}
 .comment_txt {font-size:12px;color::#000;text-decoration:none;padding-top:4px;}
 .comment_txt a:link{font-size:12px;color::#000000;text-decoration:none;}
 .comment_txt a:visited{font-size:12px;color::#000000;text-decoration:none;}
 .comment_txt a:hover{font-size:12px;color::#000000;text-decoration:none;}
-/* 占쏙옙占쏙옙占쏙옙 占쌉쏙옙占쏙옙 (占쏙옙占싸배열)*/
+/* ������ �Խ��� (���ι迭)*/
 .webzine_type2 {width:100%;}
-.webzine_type2 td { color:#666666; font-family:占쏙옙占쏙옙; font-size:12px; }
+.webzine_type2 td { color:#666666; font-family:����; font-size:12px; }
 .webzine_type2 dl, #webzine_type2 dt, #webzine_type2 dd {margin:0;padding:0}
 .webzine_type2 dl    {float:left;clear:both;width:100%;padding:0 0 16px 0;margin-bottom:0;}
 .webzine_type2 .webzine_type_img_td { vertical-align:top;}
@@ -72,15 +72,15 @@ textarea#border {font-size:12px;font-family:占쏙옙占쏙옙,占쏙옙占쏙�
 .webzine_type2 dd   {float:left;width:100%;height:25px;padding:3px 0 1px 0;margin:0 0 -1px 0;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;}
 .webzine_type2 .obj_name {display:inline-block;width:90px;height:25px;padding:5px 0 0 12px;color:#666666;background:url(../../../cimg/board/cafe24_webzine/bl_webzine_type2_title.gif) right 6px no-repeat;}
 .webzine_type2 .obj_value {height:25px;padding:5px 0 0 10px;}
-/* 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占싹띰옙 */
+/* �̹����� �����϶� */
 .webzine_type2 .webzine_type_text_td_left { width:100%; padding:0 0 0 8px; }
-/* 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占싹띰옙 */
+/* �̹����� �������϶� */
 .webzine_type2 .webzine_type_text_td_right { width:100%; padding:0 9px 0 0; }
-/* 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙, 占쏙옙占쏙옙 占쏙옙占쏙옙 */
+/* �������� ���� ����, ���� ���� */
 .board_output_gallery_subject { text-align:center;width:100%;  }
 .board_output_gallery_description { text-align:center;width:100%; }
 
-/* 占쌉쏙옙占쏙옙 占썩본占쏙옙占싱븝옙 */
+/* �Խ��� �⺻���̺� */
 .table_02   { width:100%; border-top:2px #4fb3d2 solid; border-bottom:2px #4fb3d2 solid; border-left:1px #e5e5e5 solid; padding:0;border-spacing:0;}
 .table_02 td  { border-bottom:1px #e5e5e5 solid; border-right:1px #e5e5e5 solid; padding:4px; height:23px !important;}
 .table_02 th  { border-bottom:1px #e5e5e5 solid; border-right:1px #e5e5e5 solid; text-align:center; }

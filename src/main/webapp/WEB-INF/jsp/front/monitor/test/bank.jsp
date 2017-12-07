@@ -21,6 +21,7 @@ function getTextLength(str) {
 
 function onBankApply()
 {
+	window.event.preventDefault();
 	$("#writeBankInfo").prop("disabled", true);
 	
 	if($("#bank").val() == "" )
@@ -91,15 +92,15 @@ function onBankApply()
         <input type="hidden" name="member_id" value="${member_id}">
 
 	
-	<div style="width:90%;margin:0 auto;text-align:center;margin-top:10%">
+	<div class="row" style="width:90%;margin:0 auto;text-align:center;margin-top:10%">
 	
 		<!-- 상단 로고 -->
 		<div style="width:100%">
-			<img src=" /monitor/img/front/top_logo2.png">
+			<img class="img-thumbnail center-block" src=" /monitor/img/front/top_logo2.png">
 		</div>
 		
 		<!-- 설명 -->
-		<div style="width:80%;margin:30px auto;">
+		<div class="col-xs-12" style="margin:30px auto;">
 		
 			<span>
 				입력하신 은행의 계좌번호로 활동비가 입금되니<br/ >

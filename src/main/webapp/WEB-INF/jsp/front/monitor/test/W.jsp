@@ -19,6 +19,7 @@
 <script>
 function chkValidation()
 {
+	window.event.preventDefault();
 	var answers ="";
 	var i , j;
 	

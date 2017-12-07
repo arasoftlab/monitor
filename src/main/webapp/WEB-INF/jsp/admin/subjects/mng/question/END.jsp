@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
 			<tr>
 				<td class="td1">종료 메시지</td>
 				<td colspan=3 class="left">
-					<textarea rows="3" name="close_comment" id="close_comment" cols="145" style="width: 100%;">${vo.close_comment }</textarea>
+					<textarea rows="3" name="close_comment" id="close_comment" cols="145" style="width: 100%;" >${ vo.close_comment }</textarea>
 				</td>
 			</tr>
 		</tbody>

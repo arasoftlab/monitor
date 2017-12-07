@@ -1,6 +1,9 @@
 package seoul.front.controller;
 
 import java.net.URLDecoder;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/*import com.mysql.jdbc.log.Log4JLogger;*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import common.SessionContants;
 import seoul.admin.service.AnswersService;
@@ -21,6 +45,7 @@ import seoul.admin.service.OptionService;
 import seoul.admin.service.QuestionService;
 import seoul.admin.service.QuestionSettingsService;
 import seoul.admin.service.SubjectInfoService;
+import seoul.admin.service.SubjectService;
 import seoul.admin.vo.AnswersVO;
 import seoul.admin.vo.MonitorApplyVO;
 import seoul.admin.vo.OptionVO;
@@ -58,23 +83,14 @@ public class MonitorSubjectController {
 	@RequestMapping("bank.do")
 	public String bank(Model model, @ModelAttribute MonitorApplyVO subjectVO) throws Exception{
 		
-		System.out.println(" sid : " + subjectVO.getSubject_id());
-		System.out.println(" tid : " + subjectVO.getTeam());
-		System.out.println(" mid : " + subjectVO.getMember_id());
-		String sid = subjectVO.getSubject_id();
-		String mid = subjectVO.getMember_id();
-		
 		MonitorApplyVO monitorApplyVO = new MonitorApplyVO();
 		
-		monitorApplyVO.setSubject_id(sid);
-		monitorApplyVO.setMember_id(mid);
-				
-		model.addAttribute("subjectID",sid ); 
-		//model.addAttribute("team",subjectVO.getTeam() ); 
-		model.addAttribute("member_id",mid);
+		monitorApplyVO.setSubject_id(subjectVO.getSubject_id());			
+		monitorApplyVO.setMember_id(subjectVO.getMember_id());
 		
-		System.out.println("mvo:" + monitorApplyVO.toString());
-		
+		model.addAttribute("subjectID",subjectVO.getSubject_id() ); 
+		model.addAttribute("team",subjectVO.getTeam() ); 
+		model.addAttribute("member_id",subjectVO.getMember_id() ); 
 		model.addAttribute("vo", monitorApplyService.getMonitorApply(monitorApplyVO));
 		
 		return "front/monitor/test/bank.testform";
@@ -98,48 +114,54 @@ public class MonitorSubjectController {
 	
 	
 	@RequestMapping("modify.do")
-	public String modify(Model model, 
-			@ModelAttribute QuestionVO questionVO , 
-			SubjectVO subjectVO , 
-			AnswersVO answersVO) throws Exception{
-		
-		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
+	public String modify(Model model, @ModelAttribute QuestionVO questionVO , SubjectVO subjectVO , AnswersVO answersVO) throws Exception{
+		//List<QuestionVO> list =  questionService.getQuestionList(questionVO);
 		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
+		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );
+		
 		MemberVO mem = (MemberVO)ret;
 
 		if (mem != null)
 		{
-			// 해당 과제응답항목에 대한 회원아이디 / 과제명 / 과제 완료여부 ( 중복 과제 응답시 ???) 
+ 
 			model.addAttribute("m_vo", mem);
+			
 			answersVO.setMember_id(mem.getId());
+			
 			answersVO = answersService.getAnswers(answersVO);
+			
 			String history_params = answersVO.getAnswers();
+			
+
 			String back_temp;
 			//String back_temp_arr[];
 			
 			if (history_params != null && history_params != "") 
 			{
-				//TODO 여기서 1차 변환 작업이 필요
-				//history_params = (history_params.indexOf("@")> -1) ? history_params: BaseUtil.deParams(history_params);
-								
 				String temp[] = history_params.split("[|]");
+				
 				back_temp = temp[temp.length-1];
+				
 				String now_num = back_temp.substring(back_temp.indexOf("@")+2 , back_temp.indexOf(":") );
 							
-				System.out.println("RS:" + history_params);
-				//model.addAttribute("history_params", BaseUtil.enParams(history_params));
+				System.out.println(history_params);
+				//System.out.println(deParams(history_params));
+				//System.out.println(enParams(history_params));;
 				model.addAttribute("history_params", history_params);
+				
 				model.addAttribute("now_num", now_num);
+				
 				model.addAttribute("now_arr", Integer.parseInt(now_num)-1);
 			}
 			model.addAttribute("answers_id" , answersVO.getAnswers_id());
 		}
 
 		model.addAttribute("is_payment", subjectVO.getPay_yn());
+
 		model.addAttribute("subject_id", subjectVO.getSubject_id());
-		model.addAttribute("list", list);
+		model.addAttribute("list", questionService.getQuestionList(questionVO));
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
 		
 		return "front/monitor/test/list.testform";
@@ -148,7 +170,7 @@ public class MonitorSubjectController {
 	
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute QuestionVO questionVO , SubjectVO subjectVO) throws Exception{
-		List<QuestionVO> list =  questionService.getQuestionList(questionVO);
+		//List<QuestionVO> list =  questionService.getQuestionList(questionVO);
 		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
 		
@@ -159,24 +181,29 @@ public class MonitorSubjectController {
 		
 		if (mem != null)
 		{
-			// 해당 과제응답항목에 대한 회원아이디 / 과제명 / 과제 완료여부 ( 중복 과제 응답시 ???)
+ 
+			model.addAttribute("m_vo", mem);
 			
-			model.addAttribute("m_vo", mem);			
 			answersVO.setSubject_id(subjectVO.getSubject_id());
-			answersVO.setMember_id(mem.getId());					
-			answersVO.setQuery("temporary ='Y'");			
+			answersVO.setMember_id(mem.getId());
+						
+			answersVO.setQuery("temporary ='Y'");
+			
 			answersVO = answersService.getAnswers(answersVO);
+
 			
 			if (answersVO==null)
 			{
 				answersVO = new  AnswersVO();
 				answersVO.setSubject_id(subjectVO.getSubject_id());
-				answersVO.setMember_id(mem.getId());		
-				answersVO.setPoll_num(mem.getPoll_num());
+				answersVO.setMember_id(mem.getId());
 				
-				// 최초 인서트 
-				answersService.insertAnswers(answersVO);								
-				answersVO.setQuery("temporary ='Y'");				
+				answersVO.setPoll_num(mem.getPoll_num());
+ 
+				answersService.insertAnswers(answersVO);
+								
+				answersVO.setQuery("temporary ='Y'");
+				
 				answersVO = answersService.getAnswers(answersVO);
 				
 			}
@@ -186,34 +213,17 @@ public class MonitorSubjectController {
 
 		model.addAttribute("subject_id", subjectVO.getSubject_id());
 		model.addAttribute("answers_id" , answersVO.getAnswers_id());
-		model.addAttribute("list", list);
+		model.addAttribute("list", questionService.getQuestionList(questionVO));
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
 		
 		return "front/monitor/test/list.testform";
 	}
-	
-	/******************************************
-	 * 
-	 * 작성자 :JINX
-	 * 함수용도 : 테스트리스트 페이지의 다음 항목으로 이동하는데 사용됨.
-	 * 특이사항 : 
-	 *        - 해당 함수안에서 [질의응답]테이블에 대한 insert or update 가 일어남.
-	 *        - 이미 저장된 질의응답 자료를 select 문을 사용해 VO 형태를 가져온다.
-	 *        - 비교문을 통해 8가지 유형의 조건을 본다.
-	 *        - 
-	********************************************/
-	
+ 
 	public String answerMaker(String answer)
 	{
-		// 초기에 시작할때 응답 테이블에서 answers 문자열을 집어와야한다. 
-		// 불러온문자열에서 어펜드하는 형식으로 가야한다.
-		
+ 
 		String retText = "@";
-		
-		// answers_X 패턴을 쓰는 문자열인지 확인.
-		// 서술형 포함 
-		
-		// 단일형 말고
+ 
 		if (answer.contains("answers_") && !answer.contains("type=S"))
 		{
 			String temp[] = answer.split("&answers_");
@@ -248,11 +258,7 @@ public class MonitorSubjectController {
 				
 				for (int i = 0; i < 2 ; i ++)
 				{			
-					//1. 질문타입
-					//2. 질문번호   ex : S2
-					//3. 응답 번호 ( 척도형은 이스케이프문자, 를 사용하여 구분 )
-					//4. 서술형 답변 
-					
+ 					
 					retText += temp_o[i]; 
 				}
 				
@@ -289,11 +295,7 @@ public class MonitorSubjectController {
 				
 				for (int i = 0; i < temp.length ; i ++)
 				{			
-					//1. 질문타입
-					//2. 질문번호   ex : S2
-					//3. 응답 번호 ( 척도형은 이스케이프문자, 를 사용하여 구분 )
-					//4. 서술형 답변 
-					
+ 
 					retText += temp[i]; 
 				}
 				
@@ -315,17 +317,13 @@ public class MonitorSubjectController {
 			  
 			temp[0] = temp[0].replace("type=", "");
 			temp[1] = temp[1].replace("q_num=", "");
-			// : 기호로 응답 번호 저장구분
+ 
 			//temp[2] = temp[2].replace("answers=", ":");
 			
 			
 			for (int i = 0; i < 2 ; i ++)
 			{			
-				//1. 질문타입
-				//2. 질문번호   ex : S2
-				//3. 응답 번호 ( 척도형은 이스케이프문자, 를 사용하여 구분 )
-				//4. 서술형 답변 
-				
+ 
 				retText += temp[i]; 
 			}
 			retText += ":"+answer_str;
@@ -334,14 +332,7 @@ public class MonitorSubjectController {
 			{
 				retText += temp_str.substring(temp_str.indexOf("answers_text"));
 			}
-			// ******** 나눌때 ************
-			// @ : 구문
-			// S~T : 삽입타입
-			// X의숫자 : 응답 번호  ( 척도형은 , 로 구분하여 다수 )
-			// # : 서술형 응답 , 연속된 응답의 형태 ( 척도 , 서열 ) 
-			// & : 첨부파일 형태 
-			// | 질의 구분 
-			
+ 
 			if (retText.contains("answers_text"))
 			{
 				temp = retText.split("answers_text");
@@ -395,7 +386,7 @@ public class MonitorSubjectController {
 			{
 				back_temp = back_temp.substring(back_temp.indexOf(":")+1);
 			}
-			else   // 단일형 응답은 서술형 텍스트가 있어서 좀 특이하게 처리해준다.
+			else  
 			{
 				//String type_S_answer = back_temp.substring(back_temp.indexOf(":")+1,back_temp.indexOf(":")+2);
 				//back_temp = back_temp.substring(back_temp.indexOf(":")+2);
@@ -415,10 +406,7 @@ public class MonitorSubjectController {
 				}
 				//model.addAttribute("history_S_answer", type_S_answer);
 			}
-			// 서열 , 중복 형은 ',' 문자로 나눠지는데 @O or @M 로 찾으면 될거같다. 
-			
-			
-			// 이건 첨부파일형의 이미지 첨부다.
+			 
 			if (back_temp.contains("Ω"))
 			{
 				back_temp_arr = back_temp.split("Ω");
@@ -457,8 +445,10 @@ public class MonitorSubjectController {
 		previewQuestionVO = questionService.getNextQuestion(previewQuestionVO);
 				
 		
+		System.out.print("JINX");
+		
 		model.addAttribute("vo" , previewQuestionVO);
-		model.addAttribute("nextpage" , questionService.getQuestion(fromQuestionVO));
+		model.addAttribute("nextpage" , questionService.getNextQuestion(fromQuestionVO));
 		model.addAttribute("history_arr" , history_arr);
 		model.addAttribute("history_params", history_params);
 
@@ -506,13 +496,10 @@ public class MonitorSubjectController {
 		
 		if (!params.isEmpty()) 
 		{
-			params = answerMaker(params);	
+			params = answerMaker(params);		
 			
-			
-			//TODO  여기서 완료 메시지 변환
-			//history_params = BaseUtil.deParams(history_params);			
 			history_params += params;
-			//history_params = BaseUtil.enParams(history_params);
+			
 		}
 		
 		AnswersVO answersVO = new AnswersVO();		
@@ -520,8 +507,6 @@ public class MonitorSubjectController {
 		answersVO.setAnswers(history_params);
 		
 		answersVO.setTemporary("N");
-		
-		System.out.println(answersVO.toString());
 		
 		if(answersService.updateAnswers(answersVO) > 0){
 			resultMap.put("result", "success");
@@ -542,23 +527,24 @@ public class MonitorSubjectController {
 			@RequestParam(value="answers_id", defaultValue="") String answers_id) throws Exception{
 		AnswersVO answersVO = new AnswersVO();		
 		answersVO.setAnswers(answers_id);
+ 
+		params =  URLDecoder.decode(params, "UTF-8");
 		
 		// Form serialize 형태로 들어오는 형태는 !#%$%#$# 이런식으로 깨지는 url 코드 형태이며 ,
 		// 한글형식이 주로 깨짐. 이걸 해결하기위해 다시 디코딩 해주는 작업
-		params = URLDecoder.decode(params, "UTF-8");
-				
-	
+
+		
+		
 		if (!params.isEmpty()) 
 		{
-			//TODO 여기서 반복 데이터 변환
-			params = answerMaker(params);
-			//history_params = BaseUtil.deParams(history_params);		
-			history_params += params;
-			//history_params = BaseUtil.enParams(history_params);
 			
+			//params = deParams(params);			
+			params = answerMaker(params);		
+			//params = enParams(params);
+			
+			history_params += params;
 		}
-		
-		// 마지막 문항에서 question_id 값을 반환하지 않기에 체크 
+ 
 		if (questionVO.getQuestion_id() !="" )		
 			questionVO = questionService.getQuestion(questionVO);
 		
@@ -588,17 +574,11 @@ public class MonitorSubjectController {
 			if (questionVO.getQuestion_id() !="" )
 				nextQuestionVO = questionService.getNextQuestion(nextQuestionVO);
 		}
-		
-		// 요구분석 결과 next 시 매번 저장하는구조로 변경.
+ 
 		answersVO.setAnswers_id(answers_id);
-		if(!params.isEmpty()) {
-			
-		}
-		//String saveParams = params.isEmpty() ? params: BaseUtil.deParams(history_params);
-		
 		answersVO.setAnswers(history_params);
 		
-		answersVO.setTemporary("Y");	// 중간 저장 형태는 과제가 종료시켜지기 전까지는 무조건 Y 			
+		answersVO.setTemporary("Y");	 
 		answersService.updateAnswers(answersVO);
 
 		
@@ -607,8 +587,7 @@ public class MonitorSubjectController {
 		model.addAttribute("nextpage" , nextQuestionVO);
 		model.addAttribute("history_arr" , history_arr);
 		model.addAttribute("history_params", history_params);
-
-		// option 리스트각 하나당 갖고있는 이미지를 객체에 다시 할당하여 넣어준다.
+ 
 		List <OptionVO> optionList = optionService.getOptionList(new OptionVO(questionVO.getQuestion_id()));
 
 		for (int i=0 ; i < optionList.size() ; i++)
@@ -639,5 +618,25 @@ public class MonitorSubjectController {
 			return "front/monitor/test/END.ajax";
 	}
 	
-
+	///문자열 해독
+	private static String deParams(String org) throws Exception {
+		Decoder decoder = Base64.getDecoder();
+		// 디코드
+		byte[] decodedBytes2 = decoder.decode(org);
+		String decodedString = new String(decodedBytes2, "UTF-8");
+		System.out.println(" 디코드 : " + decodedString);
+		return decodedString;
+	}
+	
+	///문자열 암호화
+	private static String enParams(String org) throws Exception{
+				
+		Encoder encoder = Base64.getEncoder();
+				
+		byte[] targetBytes = org.getBytes("UTF-8");
+		String encodedString = encoder.encodeToString(targetBytes);
+		System.out.println(" 인코드 : " + encodedString);			
+		return encodedString;
+	}
+	
 }

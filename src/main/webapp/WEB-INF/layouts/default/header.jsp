@@ -35,7 +35,7 @@ window.onload = function() {
 Yjs.Gnb.init('S020', 'seoul-common-gnb');
 
 };
-</script>
+</script>https://research.seoul.go.kr/monitor/front/subject/modify.do?subject_id=301&answers_id=1310
 
 
 
@@ -43,6 +43,9 @@ Yjs.Gnb.init('S020', 'seoul-common-gnb');
 
 $(document).ready(function() {
 	fnCheckSession_idView();
+	var img = $(".table_02").find("img");
+	img.addClass("img-responsive");
+	img.addClass("img-thumbnail");
 });
 
 function fnCheckSession_idView(){
@@ -114,11 +117,13 @@ function fnCheckSession(){
 }
 
 function joinSeoul(){
+	//window.event.preventDefault();
 	var loginPath = "https://www.seoul.go.kr/seoul/jsp/smem/UserLoginSSL.jsp?refresh_url=https://research.seoul.go.kr/monitor/sso/index.jsp?rtn=" + jQuery(location).attr("pathname") + jQuery(location).attr("search");
 	document.location.href=loginPath;
 }
 
 function loginSeoul(){
+	//window.event.preventDefault();
 	if(confirm('로그인 후 사용가능합니다.\n로그인 페이지로 이동하시겠습니까?')){
 		joinSeoul();
 	}else{
@@ -127,6 +132,7 @@ function loginSeoul(){
 }
 
 function logout(){
+	//window.event.preventDefault();
     sessionStorage.clear();
     //var logoutPath = "https://www.seoul.go.kr/seoul/jsp/smem/logout.jsp?SSid=102_09";
     var logoutPath = "http://www.seoul.go.kr/seoul/jsp/smem/logout.jsp?sNextVal=http://research.seoul.go.kr/monitor/";

@@ -17,16 +17,21 @@ $(document).ready(function() {
 
 function chkValidation()
 {
+	//alert("check");
+	window.event.preventDefault();
 	var answers = $(":input:radio[name=answers]:checked").val();
 	var test = $("#answers_text_"+answers).val();
 	var history_params = "${history_params}";
+	//console.log(test);
+	//console.log(history_params);
+	//console.log(answers);
 		
 	if (!answers) 
 	{
 		alert("아무것도 선택하지 않으셨습니다.");
 	}else{
 		
-		if($("#answers_text_"+answers).val() != 'undefined')
+		if(typeof test !== 'undefined')
 		{
 			if (test == '')
 			{
@@ -68,9 +73,7 @@ function onChk(num){
 
 </script>
 
-
-
-	<div style="background: lightblue; border-radius: 6px 6px 0 0;padding:10px;">
+    <div style="background: lightblue; border-radius: 6px 6px 0 0;padding:10px;">
 		<div style="width: 100%;font-size: 14pt;font-weight: bold;border: 0px;">
 			${vo.question_num}. 
 			${vo.title }
@@ -175,7 +178,6 @@ function onChk(num){
 </div>
 </form>
 
-<%@ include file="inc/footer_common.jsp" %>
 
 <jsp:include page="inc/footer_S.jsp"></jsp:include>
 

@@ -47,7 +47,9 @@
 	padding: 10px;
 }
 
-.img-responsive{ max-height: calc(100vh - 225px);}	
+.modal{text-align:center;padding:0 !important; }
+.modal:before{content:'';display:inline-block;height:100%;vertical-align:middle;margin-right:-4px;}
+.modal-dialog{display:inline-block;text-align:left;vertical-align:middle; }	
 </style>
 
 <script>
@@ -76,16 +78,19 @@
 	}
 		
 	function fnFileCheck(){
-
+		window.event.preventDefault();
 		var fileSize =0;
 		var $progress = $('#myModal');
 		var options = {  
+				//async:false,
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType: 'json',
 			    beforeSend: function(){
 			    	$progress.css('display', 'block');
 					$progress.modal({backdrop: 'static', show: true});
 					$progress.modal('show');
+					
+					
 			    },
 			    success: function(data){
 
@@ -95,6 +100,10 @@
 						if(fileSize <= fileMaxSize){
 
 							fnFileUpload();							
+						}else{
+							$progress.modal('hide');
+					    	$progress.css('display','none');
+					    	alert("파일용량을 확인해 주세요.");
 						}						
 						
 					}else{
@@ -110,7 +119,9 @@
 
 			    },
 			    error: function(xhr, textStatus, errorThrown){
-			    	alert("사용하신 브라우저의 버전은 인터넷 익스플로러 " + $.browser.version + "입니다. \n상위버전을 사용해 주세요.!!");
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
+			    	alert("파일전송중 오류가 발생하였습니다.\n상위버전을 사용해 주세요.!!");
 			    	return;
 			    },
 			    complete: function(xhr){
@@ -134,6 +145,7 @@
 		var $percent = $('.percent');
 		
 		var options = {
+				//async:false,
 			    url: "<c:url value='/file/fileUpload.do' />",
 			    data: { "data_id" : data_id },
 			    dataType: 'json',
@@ -204,6 +216,8 @@
 					
 			    },
 			    error: function(xhr, status, err){
+			    	$progress.modal('hide');
+			    	$progress.css('display','none');
 			    	alert("등록에 실패하였습니다.\n정상파일로 다시시도해 주세요.");
 			    	return;
 			    },
@@ -218,6 +232,8 @@
 	}
 	
 	function fnDeleteFile(){
+		window.event.preventDefault();
+		
 		if($("#fileList").find("tr").length < 1){
 			alert("등록된 파일이 없습니다.");
 			return;
@@ -234,7 +250,7 @@
 		});
 		
 		$.ajax({
-			async : true,
+			//async : false,
 			type : "POST",
 			url : "<c:url value='/file/deleteFile.do'/>",
 			data : "fileListId="+fileListId,
@@ -286,6 +302,7 @@
 
 function chkValidation()
 {
+	window.event.preventDefault();
 	var chk= '${optionList[0].endpoint }';
 	var file_type_chk = '${optionList[0].label_1 }';
 	var examrequirechk = '${optionList[0].examrequire}';
