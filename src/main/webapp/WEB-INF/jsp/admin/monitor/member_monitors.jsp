@@ -39,7 +39,7 @@
 						<h4>▥ 신청 및 참여과제 리스트</h4>
 
 						<label class="pull-right">
-						총 응모횟수 <b class="modal_b">${act.apply_cnt }회</b> /&nbsp; 
+						총 신청횟수 <b class="modal_b">${act.apply_cnt }회</b> /&nbsp; 
 						총 선정횟수 <b class="modal_b">${act.selected_cnt }회</b> /&nbsp;  
 						미응답 <b class="modal_b">${act.tmp_sum1 }회</b></label>
 

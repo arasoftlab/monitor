@@ -45,11 +45,11 @@ public class SubjectMoneyController {
 		
 		model.addAttribute("s_vo" , subjectinfoService.getSubject(subjectVO));
 		
-		model.addAttribute("list" , list);
-				
+		model.addAttribute("list" , list);		
 		model.addAttribute("vo", monitorApplyVO);
 		model.addAttribute("page", monitorApplyVO.getPagingVO());
 
+		System.out.println(monitorApplyVO.getPagingVO().toString());
 		return "admin/subjects/money/s_list.admin";
 	}
 	

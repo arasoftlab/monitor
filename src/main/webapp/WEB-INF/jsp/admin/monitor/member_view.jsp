@@ -56,6 +56,12 @@
 				<fmt:formatDate value="${mem.login_date}" pattern="yyyy/MM/dd" />
 			</td>
 		</tr>
+		<tr>
+			<td class="td1">회원메모</td>
+			<td colspan="3" class="left_t">
+				<input type="text" name="memo" placeholder="${mem.memo }" class="form-control"></input>
+			</td>
+		</tr>
 		
 		<c:if test="${mem.grade eq 'secession'}">
 			<tr>
@@ -94,6 +100,7 @@
 
 
 <div class="modal-footer">
-	<button type="button" class="btn btn-theme modal_btn" onclick="view_team_info_pop('${mem.id}','${mem.poll_num}', '${mem.subject_id}' )">신청 및 참여과제리스트</button>
+	<button type="button" class="btn btn-success" onclick="save_memo('${mem.id}')">메모저장</button>
+	<button type="button" class="btn btn-theme modal_btn" onclick="view_team_info_pop('${mem.id}','${mem.poll_num}', '${act.subject_id}' )">신청 및 참여과제리스트</button>
 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>

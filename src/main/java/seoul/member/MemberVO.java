@@ -51,10 +51,11 @@ public class MemberVO extends CommonVO{
 	private Date regdate;
 	private Date login_date;
 	
+	//간단메모를 위한 필드
+	private String memo;
+	
 	//회원참여정보 검색을 위해 추가함
 	private String subject_id;
-	
-	
 	
 	public void setSido_cnt(String sido_cnt)
 	{

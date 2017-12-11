@@ -2,7 +2,13 @@ package common.vo;
 
 import java.util.List;
 import file.vo.FileVO;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Setter
+@Getter
 public class CommonVO {
 	private int rn;
 	private String searchCategory;
@@ -13,6 +19,7 @@ public class CommonVO {
 	private int pageNum = 1;
 	private int pageSize = 10;
 	private PagingVO pagingVO;
+	private int listTotal;
 	
 	public int getRn() {
 		return rn;

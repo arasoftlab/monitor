@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class MonitorController {
 		
 	@Autowired
 	private MonitorsService monitorsService;
+	
 	
 	@RequestMapping("grade_apply.do")
 	public @ResponseBody Map<String, Object> grade_apply(Model model, 
@@ -86,11 +88,37 @@ public class MonitorController {
 			}		
 		}
 		
-	
 		resultMap.put("result", "success");
 		return resultMap;
 		
 	}
+
+	
+	@RequestMapping("memo.do")
+	public @ResponseBody Map<String, Object> memo(Model model, 
+			@RequestParam(value="memo") String memo,
+			@RequestParam(value="id") String id) throws Exception{
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(!ObjectUtils.isEmpty(id)) {
+			MemberVO memberVO = new MemberVO();			
+			memberVO.setQuery("id='"+ id +"'");
+			memberVO = memberService.getMember(memberVO);
+			memberVO.setMemo(memo);
+			
+			if(!(memberService.updateMemberETC(memberVO) > 0)){
+				 
+				resultMap.put("result", "fail");
+				return resultMap;			
+			}		
+		}
+		
+		resultMap.put("result", "success");
+		return resultMap;
+		
+	}
+	
 	
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute MemberManagerVO memberManagerVO) throws Exception{
@@ -101,13 +129,14 @@ public class MonitorController {
 		
 		memberManagerVO.setPageSize(15);
 		memberManagerVO.setQuery("grade='secession'");
-		
+		System.out.println(" 멤버관리 : " + memberManagerVO.toString());		
 		/*
 		MemberVO memberVO = new MemberVO();
 		model.addAttribute("sido_cnt", memberService.getMemberManagerPlaceCnt(memberVO)); 
 		*/
 
 		//MemberVO memberVO = new MemberVO();
+		
 		model.addAttribute("sido_cnt", memberService.getMemberManagerCnt(memberManagerVO));
 		
 		model.addAttribute("list", memberService.getMemberManagerlist(memberManagerVO));
@@ -160,6 +189,8 @@ public class MonitorController {
 				
 		List<MonitorsMemberVO> list;
 	
+		
+		
 		monitorsVO.setMember_id(monitorsVO.getMember_id());
 		
 		monitorsVO.setPoll_num(monitorsVO.getPoll_num());
@@ -176,6 +207,8 @@ public class MonitorController {
 		model.addAttribute("act" , memberService.getMemberAct(member_get));
 		
 		list = monitorsService.getMonitorsAnE_list(monitorsVO);
+		
+		monitorsVO.setPageSize(15);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", monitorsVO);				

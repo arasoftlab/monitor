@@ -101,7 +101,7 @@ function onExcel(){
 
 function view_team_info_pop(id,poll_num)
 {	
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
 	var sW = (screen.availWidth-1020)/2;
 	var sH = (screen.availHeight-640)/2;
@@ -142,7 +142,7 @@ function fnShowText(text){
 
 function view_member(id,poll_num)
 {	
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -164,9 +164,29 @@ function view_member(id,poll_num)
 	});
 }
 
+function save_memo(id){
+	var memo = $("input[name='memo']").val();
+	alert(memo);
+	$.ajax({
+		type:"POST",
+		url:"memo.do",
+		data:{
+			"id" : id,
+			"memo" : memo
+		},
+		success : function(data){
+			alert("메모가 저장되었습니다.");
+		},
+		error: function(request, status, error){
+			alert("메모가 저장되지 않았습니다.");
+		}
+		
+	});
+}
+
 function onApply( is_select )
 {
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var index = 0;
 	
 	var checkboxValues = [];

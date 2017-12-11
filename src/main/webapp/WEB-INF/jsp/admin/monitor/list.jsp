@@ -175,6 +175,26 @@ function view_team_info_pop(id,poll_num)
 	});*/
 }
 
+function save_memo(id){
+	var memo = $("input[name='memo']").val();
+	alert(memo);
+	$.ajax({
+		type:"POST",
+		url:"memo.do",
+		data:{
+			"id" : id,
+			"memo" : memo
+		},
+		success : function(data){
+			alert("메모가 저장되었습니다.");
+		},
+		error: function(request, status, error){
+			alert("메모가 저장되지 않았습니다.");
+		}
+		
+	});
+}
+
 function onViewEnter()
 {
 	location.href = "view.do";
@@ -198,10 +218,11 @@ function onViewEnter()
 
 				<div id="search-box1" class="col-lg-6" style="padding:0;">
 					<form class="pull-left;">
+						${vo.poll_num }
 						<select class="list_form" name="poll_num" style="display: inline;">
 							<option value="" <c:if test="${empty vo.poll_num  }">selected</c:if> >기수(전체)</option>
 							<c:forEach begin="18" end="${a_vo.poll_num}" var="pollNum">
-								<option value="${pollNum }" <c:if test="${vo.poll_num eq pollNum }">selected</c:if>>${pollNum }기</option>
+								<option value="${pollNum }" <c:if test="${a_vo.poll_num eq pollNum }">selected</c:if>>${pollNum }기</option>
 							</c:forEach>							
 							
 						</select>

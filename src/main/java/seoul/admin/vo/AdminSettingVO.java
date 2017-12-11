@@ -1,7 +1,11 @@
 package seoul.admin.vo;
 
 import java.util.Date;
+import lombok.*;
 
+@ToString
+@Setter
+@Getter
 public class AdminSettingVO{
 	
 	private String poll_num;

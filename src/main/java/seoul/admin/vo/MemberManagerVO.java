@@ -3,14 +3,16 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.*;
 
-
+@ToString
+@Setter
+@Getter
 public class MemberManagerVO extends CommonVO{
 	private String id;
 	private String poll_num;
 	private String grade;
 
-	
 	private String query;
  
 	private String job1;

@@ -60,7 +60,7 @@ function fnSearch(){
 							<c:when test="${!empty list }">
 								<c:forEach var="item" items="${list }">
 									<tr>
-										<td>${item.rn }</td>
+										<td>${fn:length(list) + 1 - item.rn }</td>
 										<td class="text-left" onclick="javascript:location.href='<c:url value='/admin/subject/money/list.do?subject_id=${item.subject_id }'/>'">
 											${item.title }
 										</td>

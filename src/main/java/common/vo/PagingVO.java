@@ -1,5 +1,10 @@
 package common.vo;
 
+import lombok.*;
+
+@ToString
+@Setter
+@Getter
 public class PagingVO {
 	private int pageSize = 10;
 	private int pageNum = 1;

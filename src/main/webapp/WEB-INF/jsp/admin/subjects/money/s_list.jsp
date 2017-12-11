@@ -80,7 +80,8 @@ function onApply( is_select )
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<h4 style="float:left; margin-right:10px;">${s_vo.title}</h4>
+			<h4 style="float:left; margin-right:10px;">${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 총 : ${page.totalRows }건</h4>
+			
 			<div class="col-xs-12">
 			<label class="information">√ 과제 등록 시 [활동비] 있음에 체크한 과제 목록 및 활동비 현황</label><br>
 			<label class="information">√ [입금신청일]은 과제관리에서 [활동비 입급신청일] 입력 시 노출됩니다.</label><br>
@@ -98,7 +99,7 @@ function onApply( is_select )
 						<input type="hidden" name="subject_id" value="${vo.subject_id}">
 					</form>
 					
-				</div>				
+				</div>			
 				
 				<table class="table table-bordered table-striped table2 modal_table">
 					<colgroup>
@@ -135,7 +136,7 @@ function onApply( is_select )
 								<c:forEach var="item" items="${list }">
 									<tr>
 										<td><input type="checkbox" name="chk" value="${item.idx}"></td>
-										<td>${item.rn }</td>
+										<td>${page.totalRows + 1 - item.rn }</td>
 										<td class="text-left">${item.member_id }</td>
 										<td>${item.member_name }</td>
 										<td>${fn:substring(item.birth,0,8) }</td>	
