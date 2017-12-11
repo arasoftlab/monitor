@@ -393,10 +393,24 @@
 	</select>
 	
     <select id="getMemberAct" parameterType="seoul.member.MemberVO" resultType="seoul.member.MemberVO">
+    	WITH BASEID AS (
+    		SELECT DISTINCT SUBJECT_ID
+    		FROM (
+    			SELECT DISTINCT SUBJECT_ID
+    			FROM N_MONITORS
+    			WHERE IS_SELECTION ='Y' AND SUBJECT_ID  <![CDATA[< ]]> #{subject_id} AND MEMBER_ID = #{id}
+    				AND POLL_NUM = #{poll_num}
+    			ORDER BY SUBJECT_ID DESC
+    		)
+    		WHERE ROWNUM  <![CDATA[< ]]> 4
+    	)
 		select 
-			(select count(*) from n_monitors where member_id=#{id} AND poll_num=#{poll_num})apply_cnt
-			,(select count(*) from n_monitors where member_id=#{id} AND poll_num=#{poll_num})selected_cnt
-			,(select count(*) from n_answers where member_id=#{id} AND temporary='Y' AND poll_num=#{poll_num})tmp_sum1		
+			 (select count(*) from n_monitors where member_id=#{id} AND poll_num=#{poll_num})apply_cnt
+			,(select count(*) from n_monitors where member_id=#{id} AND poll_num=#{poll_num} AND IS_SELECTION ='Y')selected_cnt
+			,(SELECT COUNT(*) FROM BASEID) - (select count(*) from n_answers N, BASEID B  where N.member_id=#{id} AND temporary='N' AND poll_num=#{poll_num}
+				AND N.SUBJECT_ID = B.SUBJECT_ID 
+			
+			)tmp_sum1		
 	    from member
 	    where id=#{id}
 	</select>

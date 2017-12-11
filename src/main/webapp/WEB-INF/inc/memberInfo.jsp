@@ -29,7 +29,7 @@ function view_team(subject_id)
 	});
 }
 
-function view_member(id,poll_num)
+function view_member(id,poll_num, subject_id)
 {	
 	$.ajax({
 		async : true,
@@ -37,7 +37,8 @@ function view_member(id,poll_num)
 		url : "/monitor/admin/monitor/member_view.do",
 		data : {
 			"id" : id,
-			"poll_num" : poll_num
+			"poll_num" : poll_num,
+			"subject_id" : subject_id
 			},
 		success : function(data){
 			//console.log(data);
@@ -54,11 +55,11 @@ function view_member(id,poll_num)
 }
 
 
-function view_team_info_pop(id,poll_num)
+function view_team_info_pop(id,poll_num, subject_id)
 {	
 	var lsize = (screen.availWidth-1020)/2;
 	var topsize = (screen.availHeight-640)/2;
-	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
+	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num + "&subject_id=" + subject_id;	//팝업창에 출력될 페이지 URL
 	var popOption = "left="+lsize+",top="+topsize+" , width=1020px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);	
 	console.log(popUrl);

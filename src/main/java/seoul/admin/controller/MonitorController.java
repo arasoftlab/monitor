@@ -168,6 +168,7 @@ public class MonitorController {
 		
 		member_get.setId(monitorsVO.getMember_id());
 		member_get.setPoll_num(monitorsVO.getPoll_num());
+		member_get.setSubject_id(monitorsVO.getSubject_id());
 		
 		member_get.setQuery("id='"+monitorsVO.getMember_id()+"'");
 		

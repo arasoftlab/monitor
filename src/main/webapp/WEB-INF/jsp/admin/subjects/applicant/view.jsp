@@ -184,10 +184,10 @@ function onApply( is_select )
 										<td>${item.rn }</td>
 										<td><fmt:formatDate value="${item.regdate}" pattern="MM/dd" /> </td>
 										<td>
-											<a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;">	${item.member_name }</a>
+											<a href="javascript:view_member('${item.member_id }','${item.poll_num }', '${item.subject_id}');" style="font-weight: bold;">	${item.member_name }</a>
 										</td>
 										<td>
-											<a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;"> ${item.member_id }</a>
+											<a href="javascript:view_member('${item.member_id }','${item.poll_num }', '${item.subject_id}');" style="font-weight: bold;"> ${item.member_id }</a>
 										</td>
 										<td>${fn:substring(item.birth,0,8) }</td>																				
 										<td>${item.job }</td>																				

@@ -1,9 +1,13 @@
 package seoul.member;
 
 import java.util.Date;
+import lombok.*;
 
 import common.vo.CommonVO;
 
+@ToString
+@Getter
+@Setter
 public class MemberVO extends CommonVO{
 	private String id;
 	private String password;
@@ -46,6 +50,9 @@ public class MemberVO extends CommonVO{
 	
 	private Date regdate;
 	private Date login_date;
+	
+	//회원참여정보 검색을 위해 추가함
+	private String subject_id;
 	
 	
 	

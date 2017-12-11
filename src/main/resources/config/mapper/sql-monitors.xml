@@ -44,18 +44,19 @@
     
     <select id="getMonitorsApplyList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
         
-						WITH BASEID AS ( -- 직전3회
-			                SELECT SUBJECT_ID 
+						WITH BASEQ AS ( -- 기수
+							SELECT POLL_NUM FROM ADMIN_SETTING WHERE ROWNUM =1
+						), BASEID AS ( -- 직전3회
+			                SELECT SUBJECT_ID , MEMBER_ID
 	                		FROM
 	                		(
-	                			SELECT DISTINCT SUBJECT_ID
-	                			FROM N_MONITORS
-	                			WHERE SUBJECT_ID <![CDATA[< ]]> #{subject_id}     
+	                			SELECT DISTINCT SUBJECT_ID, MEMBER_ID
+	                			FROM N_MONITORS, BASEQ Q
+	                			WHERE  IS_SELECTION = 'Y' AND SUBJECT_ID <![CDATA[< ]]> #{subject_id}  
+	                			AND N_MONITORS.POLL_NUM = Q.POLL_NUM   
 	                			ORDER BY SUBJECT_ID DESC
 	                		) 
 	                		WHERE  ROWNUM <![CDATA[< ]]> 4
-			            ), BASEQ AS ( --마지막기수
-			            	SELECT POLL_NUM FROM ADMIN_SETTING WHERE ROWNUM =1
 			            ), TOT AS( --토탈정보 선정횟수 미선정횟수
 			            	SELECT 
 			            	SUM(CASE WHEN IS_SELECTION='Y' THEN 1 ELSE 0 END) SP, --선정 
@@ -66,12 +67,13 @@
 			            ), MEMINFO AS ( 
 					    	SELECT M.ID MEMBER_ID,  H.M001_NM MEMBER_NAME, H.M001_SSN BIRTH, H.M001_PHONE PHONE, 
 		                	M.SIDO, M.GUGUN, M.DONG, M.JOB, M.REGDATE
-					    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M
-					    	WHERE M.ID = H.M001_ID
+					    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M, BASEQ Q
+					    	WHERE M.ID = H.M001_ID AND M.POLL_NUM = Q.POLL_NUM
 					    ), TMPSUM AS( 
 			               SELECT A.MEMBER_ID, A.TEMPORARY
 			               FROM N_ANSWERS A, BASEID B
-			               WHERE A.SUBJECT_ID IN ( B.SUBJECT_ID)
+			               WHERE A.SUBJECT_ID IN ( B.SUBJECT_ID) AND A.MEMBER_ID = B.MEMBER_ID
+			               AND A.TEMPORARY ='N'
 		              )
 		              SELECT 
 		                A.MEMBER_ID, A.MEMBER_NAME, A.BIRTH, A.PHONE, A.SIDO, A.GUGUN, A.DONG, A.JOB,
@@ -80,8 +82,8 @@
 		                ROW_NUMBER() OVER(ORDER BY A.REGDATE DESC) RND,
 		                NVL((SELECT AP + SP FROM TOT WHERE MEMBER_ID = A.MEMBER_ID), 0) APPLY_CNT,
 		                NVL((SELECT SP FROM TOT WHERE MEMBER_ID = A.MEMBER_ID), 0) SELECTED_CNT,
-		                NVL((SELECT SUM(CASE WHEN TEMPORARY = 'N' THEN 0 ELSE 1 END) TMP_SUM FROM TMPSUM WHERE MEMBER_ID = A.MEMBER_ID ), 0) TMP_SUM1,
-		                NVL((SELECT SUM(CASE WHEN TEMPORARY = 'N' THEN 1 ELSE 0 END) TMP_SUM FROM TMPSUM WHERE MEMBER_ID = A.MEMBER_ID ), 0) CLEAR_SUM
+		                NVL((SELECT COUNT(*) FROM BASEID B WHERE B.MEMBER_ID = A.MEMBER_ID) - (SELECT COUNT(*) FROM TMPSUM WHERE MEMBER_ID = A.MEMBER_ID ), 0) TMP_SUM1
+		                
 		              FROM  (SELECT * FROM MEMINFO) A, N_MONITORS B
 		              WHERE A.MEMBER_ID = B.MEMBER_ID
 		              AND B.SUBJECT_ID = #{subject_id}

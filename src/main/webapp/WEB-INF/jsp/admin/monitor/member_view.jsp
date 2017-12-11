@@ -94,6 +94,6 @@
 
 
 <div class="modal-footer">
-	<button type="button" class="btn btn-theme modal_btn" onclick="view_team_info_pop('${mem.id}','${mem.poll_num}')">신청 및 참여과제리스트</button>
+	<button type="button" class="btn btn-theme modal_btn" onclick="view_team_info_pop('${mem.id}','${mem.poll_num}', '${mem.subject_id}' )">신청 및 참여과제리스트</button>
 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
