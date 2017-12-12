@@ -32,31 +32,35 @@ public class PagingVO {
 	}
 	
 	public int getStartRow() {
-		if (pageNum <= 0)
-			pageNum = 1;
-		return (pageNum - 1) * pageSize;
+		//TODO 페이징 시작부의 문제를 이곳에서 처리해야 함
+		if (this.pageNum <= 0)
+			this.pageNum = 1;
+		int spage = 0;
+		spage = this.pageNum * this.pageSize;
+		spage = spage == this.pageSize ? 1 : spage + 1;
+		return spage;
 	}
 	
 	public int getNextPageRow() {
-		return getStartRow() + pageSize;
+		return (getStartRow() + this.pageSize);
 	}
 
 	public int getPageSize() {
-		return pageSize;
+		return this.pageSize;
 	}
 
 	public int getPageNum() {
-		return pageNum;
+		return this.pageNum;
 	}
 	
 	public int getTotalRows() {
-		return totalRows;
+		return this.totalRows;
 	}
 	
 	public int getTotalPage(){
-		return totalPage;
+		return this.totalPage;
 	}
 	public int getStartRows(){
-		return totalRows-((pageNum-1)*pageSize);
+		return this.totalRows-((this.pageNum-1) * this.pageSize);
 	}
 }

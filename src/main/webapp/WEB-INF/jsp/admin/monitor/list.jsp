@@ -213,7 +213,7 @@ function onViewEnter()
 				<!--				
 				<p>가정주부 267명/대학생 253명/회사원 209명/전문,자유직 180명/자영업 85명/무직 79명/교육직 53명/공무원 29명/기타 27명</p>
 				-->				
-
+				<p>총 : ${list[0].tot }명  &nbsp;&nbsp; 남자: ${list[0].mcnt } 명 &nbsp;&nbsp; 여자: ${list[0].wcnt } 명  &nbsp;&nbsp; 기타: ${list[0].ecnt } 명 </p>
 				<div id="search-box1" class="col-lg-6" style="padding:0;">
 					<form class="pull-left;">
 						<select class="list_form" name="poll_num" style="display: inline;">
@@ -289,10 +289,11 @@ function onViewEnter()
 
 						<c:choose>
 							<c:when test="${!empty list }">
-								<c:forEach var="item" items="${list }">
+								<c:forEach var="item" items="${list }" varStatus="seqNo">
 									<tr>
 										<td><input type="checkbox" name="chk" value="${item.id}"></td>
-										<td>${item.rn }</td>
+										<c:set var="pageBlock" value="${((page.pageNum -1) * page.pageSize) + seqNo.index}" />
+										<td>${ (page.totalRows) - pageBlock }</td>
 										<td class="text-left">
 											<a href="javascript:view_team('${item.id }','${item.poll_num }');" style="font-weight: bold;">${item.id }</a>
 										</td>

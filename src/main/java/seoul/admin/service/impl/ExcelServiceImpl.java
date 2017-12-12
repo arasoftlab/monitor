@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 
 import common.vo.CommonVO;
 import seoul.admin.dao.MonitorsDAO;
@@ -122,8 +123,14 @@ public class ExcelServiceImpl implements ExcelService{
 			
 			memberManagerVO.setPageSize(10000);
 			//memberManagerVO.setQuery("grade='secession'");
+			
 			memberManagerVO.setPoll_num(commonVO.getSpoll_num());
-			memberManagerVO.setGrade(commonVO.getSgrade());
+			
+			if(ObjectUtils.isEmpty(memberManagerVO.getGrade())) {
+				memberManagerVO.setGrade("secession");
+			}else {
+				memberManagerVO.setGrade(commonVO.getSgrade());
+			}
 			memberManagerVO.setSearchCategory(commonVO.getSearchCategory());
 			memberManagerVO.setSearchText(commonVO.getSearchText());
 			

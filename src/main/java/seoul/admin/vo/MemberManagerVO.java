@@ -53,6 +53,12 @@ public class MemberManagerVO extends CommonVO{
 
 	private String job;
 	
+	//for cal
+	private String tot;
+	private String wcnt;
+	private String mcnt;
+	private String ecnt;
+	
 	public String getPhone_type(){
 		return phone_type;
 	}

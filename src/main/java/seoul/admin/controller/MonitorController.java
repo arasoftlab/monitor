@@ -140,9 +140,9 @@ public class MonitorController {
 		MemberVO memberVO = new MemberVO();
 		model.addAttribute("sido_cnt", memberService.getMemberManagerPlaceCnt(memberVO)); 
 		*/
-
+		//기수정보가 들어오지 않을때 최초 접근시 기존 값을 기수 어드민 기수 설정값으로 적용
 		if(ObjectUtils.isEmpty(memberManagerVO.getPoll_num())) {
-			//memberManagerVO.setPoll_num("0");
+			memberManagerVO.setPoll_num(adminSettingVO.getPoll_num());
 		}
 		
 		if(ObjectUtils.isEmpty(memberManagerVO.getGrade())) {
@@ -155,6 +155,8 @@ public class MonitorController {
 		model.addAttribute("vo", memberManagerVO);
 				
 		model.addAttribute("page", memberManagerVO.getPagingVO());
+		
+		System.out.println(memberManagerVO.getPagingVO().toString());
 		
 		return "admin/monitor/list.admin";
 	}

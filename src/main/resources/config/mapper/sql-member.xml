@@ -252,31 +252,31 @@
 				</when>
 			</choose>
 
-			  <choose>
-			    <when test='searchCategory != null and searchCategory == "M001_NM" and  searchCategory != ""'>
-			    	<if test="searchText != null and searchText !=''">
-			    		AND C.M001_NM LIKE '%' || #{searchText} || '%'
-			    	</if> 
-					
-			    </when>
-			    <when test='searchCategory != null and searchCategory == "M001_PHONE" and  searchCategory != ""'>
-			    	<if test="searchText != null and searchText !=''">
-			        	AND C.M001_PHONE LIKE '%' || #{searchText} || '%'
-			        </if>
-			    </when>
-			    <when test='searchCategory != null and searchCategory == "id" and  searchCategory != ""'>
-			    	<if test="searchText != null and searchText !=''">
-			        	AND A.ID LIKE '%' || #{searchText} || '%'
-			        </if>
-     			</when>
-			   </choose>
+			<choose>
+			  <when test='searchCategory != null and searchCategory == "M001_NM" and  searchCategory != ""'>
+			  	<if test="searchText != null and searchText !=''">
+			  		AND C.M001_NM LIKE '%' || #{searchText} || '%'
+			  	</if> 
+			
+			  </when>
+			  <when test='searchCategory != null and searchCategory == "M001_PHONE" and  searchCategory != ""'>
+			  	<if test="searchText != null and searchText !=''">
+			      	AND C.M001_PHONE LIKE '%' || #{searchText} || '%'
+			      </if>
+			  </when>
+			  <when test='searchCategory != null and searchCategory == "id" and  searchCategory != ""'>
+			  	<if test="searchText != null and searchText !=''">
+			      	AND A.ID LIKE '%' || #{searchText} || '%'
+			      </if>
+						</when>
+			</choose>
 			  
 			 
 			), ACNT AS (
 			  SELECT 
 			    N_MONITORS.MEMBER_ID MEMBER_ID, 
 			    COUNT(*) AS APPLY_CNT,
-			    SUM(CASE IS_SELECTION WHEN 'Y' THEN 1 ELSE 0 END ) AS SELECTION_CNT--
+			    SUM(CASE IS_SELECTION WHEN 'Y' THEN 1 ELSE 0 END ) AS SELECTION_CNT	    			    
 			  FROM N_MONITORS, MI
 			  WHERE
 			    N_MONITORS.MEMBER_ID = MI.ID
@@ -289,11 +289,19 @@
 			  MI, ACNT A
 			WHERE
 			  MI.ID = A.MEMBER_ID(+) 
+		    ), CALC AS (
+	          SELECT 
+	            COUNT(*) TOT,
+	            SUM(CASE SEX WHEN 'W' THEN 1 ELSE 0 END) WCNT,
+	            SUM(CASE SEX WHEN 'M' THEN 1 ELSE 0 END) MCNT,
+	            SUM(CASE WHEN SEX IS NULL THEN 1 ELSE 0 END) ECNT
+	          FROM
+	            MI
 		    )
-		    SELECT *
-		    FROM TCNT
+		    SELECT TCNT.*, C.TOT, C.WCNT, C.MCNT, C.ECNT
+		    FROM TCNT, CALC C
 		    WHERE RN BETWEEN #{pagingVO.startRow} and #{pagingVO.nextPageRow}
-		    ORDER BY POLL_NUM DESC, ID ASC, GRADE ASC, REGDATE DESC
+		    
 		    		
 	</select>
 
@@ -369,16 +377,34 @@
           from member
          where 1=1
 		
-			<if test='searchCategory != null and searchCategory == "id" and  searchCategory != ""'>
-		       and id like '%' || #{searchText} || '%'
-     		</if>			
-			<if test="grade != null and grade != ''">
-	      	   and grade = #{grade}
-			</if>	
-	
-			<if test="poll_num != null and poll_num != ''">
-	      	   and poll_num = #{poll_num}
-			</if>
+			<choose>
+				<when test="grade != null and grade != '' and grade !='secession'">
+					AND GRADE = #{grade}
+				</when>
+				<otherwise>
+					AND NOT GRADE = #{grade}
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test='poll_num != null and poll_num != "0"'>
+					AND POLL_NUM = #{poll_num}
+				</when>
+				<when test ='poll_num == null and poll_num == ""'>
+					AND POLL_NUM = (SELECT POLL_NUM FROM ADMIN_SETTING LIMIT 1)
+				</when>
+				<when test='poll_num == "0"'>
+					AND POLL_NUM IS NOT NULL
+				</when>
+			</choose>
+
+			<choose>
+			  <when test='searchCategory != null and searchCategory == "id" and  searchCategory != ""'>
+			  	<if test="searchText != null and searchText !=''">
+			      	AND ID LIKE '%' || #{searchText} || '%'
+			      </if>
+			  </when>
+			</choose>
 	
 			  			   
 	</select>
