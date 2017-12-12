@@ -80,7 +80,7 @@ function onApply( is_select )
 <section id="content">
 	<div class="container">
 		<div class="row">
-			<h4 style="float:left; margin-right:10px;">${s_vo.title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 총 : ${page.totalRows }건</h4>
+			<h4 style="float:left; margin-right:10px;">${s_vo.title}&nbsp;&nbsp;&nbsp; <font color="blue">▷ 총 : ${page.totalRows}건</font></h4>
 			
 			<div class="col-xs-12">
 			<label class="information">√ 과제 등록 시 [활동비] 있음에 체크한 과제 목록 및 활동비 현황</label><br>

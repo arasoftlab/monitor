@@ -77,10 +77,9 @@
 												<td>
 													<c:if test="${item.is_selection eq 'Y'}">O</c:if>
 												</td>
-												<td>${item.question_cnt }</td>
+												<td>${item.is_selection eq 'Y' ? item.question_cnt : ''}</td>
 												<td>
 													<c:if test="${item.question_cnt <= item.apply_cnt}">완료</c:if>
-													<c:if test="${item.question_cnt > item.apply_cnt}">${item.apply_cnt }</c:if>
 												</td>
 											</tr>
 										</c:forEach>

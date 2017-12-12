@@ -45,7 +45,7 @@ $(document).ready(function() {
 	fnCheckSession_idView();
 	var img = $(".table_02").find("img");
 	img.addClass("img-responsive");
-	img.addClass("img-thumbnail");
+	//img.addClass("img-thumbnail");
 });
 
 function fnCheckSession_idView(){

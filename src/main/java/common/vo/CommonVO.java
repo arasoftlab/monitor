@@ -19,7 +19,12 @@ public class CommonVO {
 	private int pageNum = 1;
 	private int pageSize = 10;
 	private PagingVO pagingVO;
-	private int listTotal;
+	
+	//FOR SEARCH MEMBER
+	private String spoll_num;
+	private String sgrade;
+	private String ssubject_id;	
+	
 	
 	public int getRn() {
 		return rn;

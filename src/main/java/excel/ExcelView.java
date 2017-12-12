@@ -30,29 +30,7 @@ public class ExcelView extends AbstractXlsView{
 
 	String img_temp_path = "/var/tmp/seoul";
 	
-	//never used
-//	private static int loadPicture(String path, HSSFWorkbook wb) throws IOException {
-//		int pictureIndex;
-//		FileInputStream fis = null;
-//		ByteArrayOutputStream bos = null;
-//
-//		try {
-//			fis = new FileInputStream(path);
-//			bos = new ByteArrayOutputStream();
-//			int c;
-//			while ((c = fis.read()) != -1) {
-//				bos.write(c);
-//			}
-//			pictureIndex = wb.addPicture(bos.toByteArray(),
-//					HSSFWorkbook.PICTURE_TYPE_JPEG);
-//		} finally {
-//			if (fis != null)
-//				fis.close();
-//			if (bos != null)
-//				bos.close();
-//		}
-//		return pictureIndex;
-//	}
+
 	public boolean deleteFolder(File targetFolder){
 		 
 		try{
@@ -287,7 +265,7 @@ public class ExcelView extends AbstractXlsView{
 	 
 	
 	 @SuppressWarnings("unchecked")
-	List<MonitorsVO> list = (List<MonitorsVO>)((List<Object>)model.get("excelList")).get(0);
+	 List<MonitorsVO> list = (List<MonitorsVO>)((List<Object>)model.get("excelList")).get(0);
 	 
 	// 셀별 위드 정하기 헤더 그리기   
 	 worksheet.setColumnWidth(0,3000);   
@@ -1049,7 +1027,9 @@ public class ExcelView extends AbstractXlsView{
 	 
 	//생년월일
 	 Cell cell4 = row.createCell(4);
-	 cell4.setCellValue(list.get(i-1).getBirthday().substring(0,8));                     
+	 String bday = list.get(i-1).getBirthday();
+	 bday = bday.length() >= 8 ? bday.substring(0, 8) : bday;
+	 cell4.setCellValue(bday);                     
 	 cell4.setCellStyle(center);
 	 
 	 //직업

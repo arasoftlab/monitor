@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import common.vo.CommonVO;
 import seoul.admin.dao.MonitorsDAO;
 import seoul.admin.service.AnswersService;
 import seoul.admin.service.ExcelService;
@@ -55,15 +56,19 @@ public class ExcelServiceImpl implements ExcelService{
 	}
 	
 	
+	/***
+	 * 인자를 vo로 변경하여 검색후 엑셀로 익스포트 하도록 변경함
+	 * 2017 12 12 jd 
+	 */
 	@Override
-	public List<Object> getAllObjects(String target , String subject_id)
+	public List<Object> getAllObjects(String target , CommonVO commonVO)
 	{	
 		List<Object> list = new ArrayList<Object>();
 		
 		if (target.equals("applicant")) 
 		{
 			MonitorsVO monitorsVO = new MonitorsVO();			
-			monitorsVO.setSubject_id(subject_id);
+			monitorsVO.setSubject_id(commonVO.getSsubject_id());
 			
 			monitorsVO.setPageSize(10000);
 			
@@ -72,7 +77,7 @@ public class ExcelServiceImpl implements ExcelService{
 		else if (target.equals("applicant_apply"))
 		{
 			MonitorsVO monitorsVO = new MonitorsVO();			
-			monitorsVO.setSubject_id(subject_id);
+			monitorsVO.setSubject_id(commonVO.getSsubject_id());
 			
 			monitorsVO.setPageSize(10000);
 			monitorsVO.setIs_selection("Y");
@@ -82,7 +87,7 @@ public class ExcelServiceImpl implements ExcelService{
 		else if (target.equals("answers"))
 		{
 			AnswersVO answersVO = new AnswersVO();			
-			answersVO.setSubject_id(subject_id);
+			answersVO.setSubject_id(commonVO.getSsubject_id());
 			
 			answersVO.setPageSize(10000);
  
@@ -90,7 +95,7 @@ public class ExcelServiceImpl implements ExcelService{
 			
 			
      		QuestionVO questionVO = new QuestionVO();
-    		questionVO.setSubject_id(subject_id);
+    		questionVO.setSubject_id(commonVO.getSsubject_id());
     		
     		List<QuestionVO> q_list = questionService.getQuestionList(questionVO);
     		
@@ -116,7 +121,11 @@ public class ExcelServiceImpl implements ExcelService{
 			MemberManagerVO memberManagerVO = new MemberManagerVO();
 			
 			memberManagerVO.setPageSize(10000);
-			memberManagerVO.setQuery("grade='secession'");
+			//memberManagerVO.setQuery("grade='secession'");
+			memberManagerVO.setPoll_num(commonVO.getSpoll_num());
+			memberManagerVO.setGrade(commonVO.getSgrade());
+			memberManagerVO.setSearchCategory(commonVO.getSearchCategory());
+			memberManagerVO.setSearchText(commonVO.getSearchText());
 			
 			List<MemberManagerVO> m_list = memberService.getMemberManagerlist(memberManagerVO);
 			
@@ -125,7 +134,7 @@ public class ExcelServiceImpl implements ExcelService{
 			
 			MonitorApplyVO monitorApplyVO = new MonitorApplyVO();
 						
-			monitorApplyVO.setQuery("subject_id = '"+subject_id+"'");
+			monitorApplyVO.setQuery("subject_id = '"+commonVO.getSsubject_id()+"'");
 
 			monitorApplyVO.setPageSize(10000);
 			

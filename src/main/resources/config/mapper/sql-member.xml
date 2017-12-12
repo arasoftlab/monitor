@@ -29,9 +29,7 @@
 	     where id=#{id,jdbcType=VARCHAR}
 	</update>
     
-    
-    
-    
+
 	<select id="checkMember" parameterType="seoul.member.MemberVO" resultType="seoul.member.MemberVO">
 	    select id
 	    	  ,password
@@ -224,7 +222,7 @@
 		</if>	     
 	</select>
 	
-	
+	<!-- 회원부분 -->
 	<select id="getMemberManagerlist" parameterType="seoul.admin.vo.MemberManagerVO" resultType="seoul.admin.vo.MemberManagerVO">
 
 			WITH MI AS (
@@ -233,13 +231,26 @@
 			  FROM MEMBER A, HISIP.VW_MEM001_M_MONITOR@SIP2 C
 			  WHERE A.ID = C.M001_ID AND A.REGDATE IS NOT NULL
 			  
-		  	<if test="grade != null and grade != ''">
-	      	   AND A.GRADE = #{grade}
-			</if>	
-	
-			<if test="poll_num != null and poll_num != ''">
-	      	   AND A.POLL_NUM = #{poll_num}
-			</if>
+			<choose>
+				<when test="grade != null and grade != '' and grade !='secession'">
+					AND A.GRADE = #{grade}
+				</when>
+				<otherwise>
+					AND NOT A.GRADE = #{grade}
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test='poll_num != null and poll_num != "0"'>
+					AND A.POLL_NUM = #{poll_num}
+				</when>
+				<when test ='poll_num == null and poll_num == ""'>
+					AND A.POLL_NUM = (SELECT POLL_NUM FROM ADMIN_SETTING LIMIT 1)
+				</when>
+				<when test='poll_num == "0"'>
+					AND A.POLL_NUM IS NOT NULL
+				</when>
+			</choose>
 
 			  <choose>
 			    <when test='searchCategory != null and searchCategory == "M001_NM" and  searchCategory != ""'>
@@ -259,11 +270,7 @@
 			        </if>
      			</when>
 			   </choose>
-			
-			<if test="query != null and query !=''">
-		   		AND NOT A.${query} 
-			</if>
-						  
+			  
 			 
 			), ACNT AS (
 			  SELECT 

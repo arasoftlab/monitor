@@ -119,7 +119,13 @@ public class MonitorController {
 		
 	}
 	
-	
+	/***
+	 * EXCEL 다운로드를 위해 vo인자에서 특정 프로퍼티 설정
+	 * @param model
+	 * @param memberManagerVO
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("list.do")
 	public String list(Model model, @ModelAttribute MemberManagerVO memberManagerVO) throws Exception{
 		
@@ -128,14 +134,20 @@ public class MonitorController {
 		model.addAttribute("a_vo", adminSettingVO);
 		
 		memberManagerVO.setPageSize(15);
-		memberManagerVO.setQuery("grade='secession'");
+		//memberManagerVO.setQuery("grade='secession'");
 		System.out.println(" 멤버관리 : " + memberManagerVO.toString());		
 		/*
 		MemberVO memberVO = new MemberVO();
 		model.addAttribute("sido_cnt", memberService.getMemberManagerPlaceCnt(memberVO)); 
 		*/
 
-		//MemberVO memberVO = new MemberVO();
+		if(ObjectUtils.isEmpty(memberManagerVO.getPoll_num())) {
+			//memberManagerVO.setPoll_num("0");
+		}
+		
+		if(ObjectUtils.isEmpty(memberManagerVO.getGrade())) {
+			memberManagerVO.setGrade("secession");
+		}
 		
 		model.addAttribute("sido_cnt", memberService.getMemberManagerCnt(memberManagerVO));
 		

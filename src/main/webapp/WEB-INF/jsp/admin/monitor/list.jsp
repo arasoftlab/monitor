@@ -154,25 +154,7 @@ function view_team_info_pop(id,poll_num)
 		+ ",top="+(screen.availHeight-640)/2
 		+ " , width=1020px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);		
-	/*
-	$.ajax({
-		async : true,
-		type : "POST",
-		url : "info.do",
-		data : {
-			"id" : id,
-			"poll_num" : poll_num
-			},
-		success : function(data){
 
-			$("#modal-body_monitor").html(data);
-			$("#btn_go_info").trigger('click');
-		},
-		error : function(request,status,error) {
-			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			alert("error!!");
-		}
-	});*/
 }
 
 function save_memo(id){
@@ -194,6 +176,22 @@ function save_memo(id){
 		
 	});
 }
+
+function exportExcel(){
+	var pnum = $("select[name='poll_num']").val();
+	var sCat = $("select[name='searchCategory']").val();
+	var grad = $("select[name='grade']").val();
+	var sTxt = $("input[name='searchText']").val();
+	var tPath = '/monitor/admin/ex/excel_transform_controller.do';
+	tPath += '?target=memberManager&subject_id=';
+	tPath += '&spoll_num=' + pnum;
+	tPath += '&searchCategory=' + sCat;
+	tPath += '&sgrade=' + grad;
+	tPath += '&searchText=' + sTxt;
+	location.href= tPath;
+	
+}
+
 
 function onViewEnter()
 {
@@ -218,11 +216,10 @@ function onViewEnter()
 
 				<div id="search-box1" class="col-lg-6" style="padding:0;">
 					<form class="pull-left;">
-						${vo.poll_num }
 						<select class="list_form" name="poll_num" style="display: inline;">
-							<option value="" <c:if test="${empty vo.poll_num  }">selected</c:if> >기수(전체)</option>
+							<option value="0" <c:if test="${empty vo.poll_num  }">selected</c:if> >기수(전체)</option>
 							<c:forEach begin="18" end="${a_vo.poll_num}" var="pollNum">
-								<option value="${pollNum }" <c:if test="${a_vo.poll_num eq pollNum }">selected</c:if>>${pollNum }기</option>
+								<option value="${pollNum }" <c:if test="${vo.poll_num eq pollNum }">selected</c:if>>${pollNum }기</option>
 							</c:forEach>							
 							
 						</select>
@@ -253,7 +250,7 @@ function onViewEnter()
 				</div>
 				
 				<div style="padding-left:10px;float:right">
-					<button class="btn btn-theme  pull-right" onclick="javascript:location.href='/monitor/admin/ex/excel_transform_controller.do?target=memberManager&subject_id='">전체 엑셀로 받기</button>
+					<button class="btn btn-theme  pull-right" onclick="exportExcel();">전체 엑셀로 받기</button>
 				</div>
 				
 				<table class="table table-bordered table-striped modal_table" style="margin-top:5%;">
