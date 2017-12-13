@@ -16,6 +16,11 @@ body {overflow-X:hidden}
 </style>
 
 <script>
+//자동완성기능 해제
+$(document).ready(function(){
+	$("input").attr("autocomplete", "off");
+});
+
 
 fnCheckSession();
 

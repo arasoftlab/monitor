@@ -17,6 +17,23 @@
 }
 </style>
 <script>
+
+//숫자만 입력받도록 하는 스크립트 키다운과 키업이 한쌍임 편집키 허용 한글 비허용 
+$(document).on("keyup", "input[type='number']", function(event) {
+	$(this).css("ime-mode","disabled");
+	
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if (( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+	{	
+		event.target.value = event.target.value.replace(/[^0-9]/gi,'');
+		return true;
+	}else{
+		alert("숫자만 입력가능 합니다.");
+	    event.target.value = event.target.value.replace(/[^0-9]/gi,'');
+	}
+}); 
+
 function chkValidation()
 {
 	window.event.preventDefault();
@@ -111,7 +128,7 @@ function resize(obj) {
 				
 				<c:if test="${item.label_1 eq null || item.label_1 eq 'num'}">
     			${item.label_front }				
-					<input type="number" onKeyUp="onChkESQ(this)" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:20%">
+					<input type="number" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:20%" autocomplete=off>
 					${item.label_rear }
 				</c:if>
 				

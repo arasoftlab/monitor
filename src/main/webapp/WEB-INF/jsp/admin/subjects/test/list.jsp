@@ -18,8 +18,12 @@ body {overflow-X:hidden}
 </style>
 
 <script>
-
 //테스트리스트 입장시 가장 처음에 있는 질의문을 불러오기위해 초기화
+
+//공통 속성 설정 자동완성기능 해제
+$(document).ready(function(){
+	$("input").attr("autocomplete", "off");
+});
 
 var is_maxpage = 100;
 

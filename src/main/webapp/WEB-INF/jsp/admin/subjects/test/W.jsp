@@ -10,11 +10,29 @@
 각 8개 페이지를 나누고 그마다 벨리데이션을 따로 지정한다.
  -->
 <script>
-
 $(document).ready(function() {
 	document.getElementById('bbs_cont').onkeyup();
 	document.getElementById('bbs_dsc').onkeyup();
+	
+
 });
+
+//숫자만 입력받도록 하는 스크립트 키다운과 키업이 한쌍임 편집키 허용 한글 비허용 
+$(document).on("keyup", "input[type='number']", function(event) {
+	$(this).css("ime-mode","disabled");
+	
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if (( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+	{	
+		event.target.value = event.target.value.replace(/[^0-9]/gi,'');
+		return true;
+	}else{
+		alert("숫자만 입력가능 합니다.");
+	    event.target.value = event.target.value.replace(/[^0-9]/gi,'');
+	}
+}); 
+
 
 
 function chkValidation()
@@ -93,7 +111,7 @@ function resize(obj) {
 	<hr class="horizontal">
 	
 	<c:forEach var="item" items="${optionList }" varStatus="i">
-	
+<%-- 	
 		<div>
 			${item.label_front }
 			<div style="padding-top:5px;padding-bottom:5px;"> 
@@ -101,7 +119,34 @@ function resize(obj) {
 				${item.label_rear }
 			</div>
 		</div>
-	
+		
+ --%>		
+ 		<div style="padding-top:5px;padding-bottom:5px;">
+			${i.index+1 })
+				<c:if test="${item.label_1 eq null || item.label_1 eq 'text'}">
+    			${item.label_front }
+					<input type="text" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:60%" autocomplete=off>
+					${item.label_rear }
+				</c:if>
+				
+				<c:if test="${item.label_1 eq null || item.label_1 eq 'num'}">
+    			${item.label_front }				
+					<input type="number" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:20%" autocomplete=off>
+					${item.label_rear }
+				</c:if>
+				
+				<c:if test="${item.label_1 eq 'memo'}">
+    			${item.label_front }						
+    			<div style="margin-left:0px;padding-top:5px;padding-bottom:5px;">
+					<textarea rows="3" style="width: 95%" id="answers_${i.index }" name="answers_${i.index }">${history_answer[i.index+1]}</textarea>
+					${item.label_rear }
+	  			</div>
+				</c:if>		
+		</div>
+		<div style="width:100%;float:left">
+			<hr class="horizontal" style="margin-right: 10px;margin-top:10px;margin-bottom:10px; border-bottom: 1px solid #eee;">
+		</div>
+			
 	</c:forEach>
 	
 	

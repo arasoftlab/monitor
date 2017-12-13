@@ -24,13 +24,27 @@ pageEncoding="UTF-8"%>
 </style>
 
 <script>
-
-$(document).ready(function() {
-	
+$(function(){
+	$("input").attr("autocomplete","off");
 	//document.getElementById('bbs_cont').onkeyup();
 	//document.getElementById('bbs_dsc').onkeyup();
 	
 	//alert( $('textarea#bbs_dsc').get(0).scrollHeight );
+
+	$("input[name='pay_sum']").keyup(function(){
+		if(Number($(this).val()) > 0){
+			$("input[name='pay_yn'][value='Y']").attr("checked", true);
+		}
+	});
+	
+	
+	$("#btn_go").trigger('click');
+	$("#btn_close").trigger('click');
+	fnQuestionList("${vo.subject_id}");
+	//$("#loading_img").css('display','block');
+	
+	fnQuestionStart();
+	fnQuestionEnd();
 	
 });
 
@@ -42,23 +56,8 @@ function resize(obj) {
 }
 
 
-
-$(function(){
-	
-	$("#btn_go").trigger('click');
-	$("#btn_close").trigger('click');
-	fnQuestionList("${vo.subject_id}");
-	$("#loading_img").css('display','block');
-	
-	fnQuestionStart();
-	fnQuestionEnd();
-	
-
-
-});
-
 function fnQuestionList(subject_id){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -75,7 +74,7 @@ function fnQuestionList(subject_id){
 }
 
 function fnRefreshQuestion(question_id,formName){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -94,7 +93,7 @@ function fnRefreshQuestion(question_id,formName){
 }
 
 function fnQuestion(question_id){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -113,7 +112,7 @@ function fnQuestion(question_id){
 }
 
 function fnQuestionStart(){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -123,7 +122,7 @@ function fnQuestionStart(){
 			$("#q_start").html(data);
 			fnBtnView("START");
 			
-			$("#loading_img").css('display','none');
+			//$("#loading_img").css('display','none');
 		},
 		error : function(request,status,error) {
 			////////////////////////////////////// 
@@ -151,7 +150,7 @@ function fnQuestionStart(){
 }
 
 function fnQuestionEnd(){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -169,7 +168,7 @@ function fnQuestionEnd(){
 }
 
 function fnInsertQuestion(){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	if($("#insert_form select[name='type']").val().length === 0){
 		return;
 	}
@@ -183,8 +182,8 @@ function fnInsertQuestion(){
 		success : function(data){
 			if(data.result == "success"){
 				var question = data.question;
-				fnQuestionList(question.subject_id);
-				fnQuestion(question.question_id);
+//				fnQuestionList(question.subject_id);
+//				fnQuestion(question.question_id);
 				fnQuestionStart();
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -199,7 +198,7 @@ function fnInsertQuestion(){
 
 
 function fnUpdateQuestion(form){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -211,9 +210,8 @@ function fnUpdateQuestion(form){
 				$("#btn_close").trigger('click');
 				fnQuestionStart();
 				var question = data.question;
-				fnQuestionList(question.subject_id);
-				
-				fnQuestionStart();
+//				fnQuestionList(question.subject_id);				
+//				fnQuestionStart();
 
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -229,7 +227,7 @@ function fnUpdateQuestion(form){
 }
 
 function fnUpdateStartpage(){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var description = $("#description").val();
 	
 	$.ajax({
@@ -242,9 +240,8 @@ function fnUpdateStartpage(){
 			if(data.result == "success"){
 				alert("저장 되었습니다.");
 				var question = data.question;
-				fnQuestionList(question.subject_id);
-				
-				fnQuestionStart();
+//				fnQuestionList(question.subject_id);				
+//				fnQuestionStart();
 				
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -258,7 +255,7 @@ function fnUpdateStartpage(){
 }
 
 function fnUpdateEndpage(){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var close_comment = $("#close_comment").val();
 	
 	$.ajax({
@@ -271,9 +268,8 @@ function fnUpdateEndpage(){
 			if(data.result == "success"){
 				
 				var question = data.question;
-				fnQuestionList(question.subject_id);
-				
-				fnQuestionStart();
+//				fnQuestionList(question.subject_id);				
+//				fnQuestionStart();
 				alert("저장 되었습니다.");
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -288,7 +284,7 @@ function fnUpdateEndpage(){
 
 
 function fnDeleteQuestion(form){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -297,18 +293,16 @@ function fnDeleteQuestion(form){
 			data : $(form).serialize(),
 			success : function(data){
 			
-				fnClearOption();
+//				fnClearOption();
 						
 				if(data.result == "success"){
-
+/*
 					var question = data.question;
 					fnQuestionList(question.subject_id);
 					$("#q_modify").html("");
-
-					fnQuestionList(question.subject_id);
-					
+					fnQuestionList(question.subject_id);					
 					fnQuestionStart();
-					
+*/					
 					location.reload();
 				}else{
 					alert("삭제된 데이터가 없습니다.");
@@ -323,7 +317,7 @@ function fnDeleteQuestion(form){
 }
 
 function fnInsertQuestionSettings(form){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -333,7 +327,7 @@ function fnInsertQuestionSettings(form){
 			
 			if(data.result == "success"){
 				var question = data.question;
-				fnQuestion(question.question_id);
+//				fnQuestion(question.question_id);
 				fnRefreshQuestion(question.question_id,form);
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -347,7 +341,7 @@ function fnInsertQuestionSettings(form){
 }
 
 function fnInsertOptions(form){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -357,7 +351,7 @@ function fnInsertOptions(form){
 			
 			if(data.result == "success"){
 				var question = data.question;
-				fnQuestion(question.question_id);
+//				fnQuestion(question.question_id);
 				fnRefreshQuestion(question.question_id,form);
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -371,7 +365,7 @@ function fnInsertOptions(form){
 }
 
 function fnInsertOptionsR(form){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -380,7 +374,7 @@ function fnInsertOptionsR(form){
 		success : function(data){
 			if(data.result == "success"){
 				var question = data.question;
-				fnQuestion(question.question_id);
+				//fnQuestion(question.question_id);
 				fnRefreshQuestion(question.question_id,form);
 			}else{
 				alert("저장된 데이터가 없습니다.");
@@ -394,7 +388,7 @@ function fnInsertOptionsR(form){
 }
 
 function fnDeleteOption(options_id){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -417,7 +411,7 @@ function fnDeleteOption(options_id){
 }
 
 function fnDeleteSettings(idx){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -442,7 +436,7 @@ function fnDeleteSettings(idx){
 // 과제 삭제시 해당 과제에 있는 옵션을 모두 지움.
 // by JINX 
 function fnClearOption(question_id){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 		$.ajax({
 			async : true,
 			type : "POST",
@@ -473,7 +467,7 @@ function fnBtnView(type){
 
 function onSetting_TypeChange(question_id , form)
 {
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -491,12 +485,10 @@ function onSetting_TypeChange(question_id , form)
 			alert("error!! to change");
 		}
 	});
-	
-
 }
 
 function getSubjectMovePage(id){
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var popUrl = "/monitor//admin/subject/mng/question/list.do?subject_id="+id;	//팝업창에 출력될 페이지 URL
 	var popOption = "width=250, height=560, top=200 ,left=0 , resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);
@@ -505,7 +497,7 @@ function getSubjectMovePage(id){
 
 function fnCopyQuestion(question_id ){
 	
-	window.event.preventDefault();
+	//window.event.preventDefault();
 	var param = 
 	{
 		"question_id" : question_id,
@@ -582,7 +574,7 @@ function fnCopyQuestion(question_id ){
 				
 			</div>
 
-			<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".info_modal"></button>
+			<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".info_modal" style="display:none;"></button>
 
 				<div class="modal fade info_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 

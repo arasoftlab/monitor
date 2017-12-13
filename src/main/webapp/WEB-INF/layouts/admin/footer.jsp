@@ -28,3 +28,18 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!--  ajax Processing  -->
+<div class="modal animated center-block" id="ajaxProcessing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-clock-o"></i>잠시만 기다려 주세요.</h4>
+      </div>
+      <div class="modal-body">
+        <p>명령을 처리중입니다.</p>
+        	<img src="/monitor/img/progressBar.gif" class="img-responsive">    
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -42,7 +42,7 @@ public class PagingVO {
 	}
 	
 	public int getNextPageRow() {
-		return (getStartRow() + this.pageSize);
+		return (getStartRow() + this.pageSize) -1;
 	}
 
 	public int getPageSize() {
