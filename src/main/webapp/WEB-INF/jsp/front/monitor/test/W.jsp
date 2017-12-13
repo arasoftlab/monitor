@@ -121,22 +121,22 @@ function resize(obj) {
 		<div style="font-size:10pt">
 			${i.index+1 })
 				<c:if test="${item.label_1 eq null || item.label_1 eq 'text'}">
-    			${item.label_front }
-					<input type="text" onKeyUp="onChkESQ(this)" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:60%">
-					${item.label_rear }
+    			${item.label_front } &nbsp;
+					<input type="text" onKeyUp="onChkESQ(this)" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:40%">
+					&nbsp;${item.label_rear }
 				</c:if>
 				
 				<c:if test="${item.label_1 eq null || item.label_1 eq 'num'}">
-    			${item.label_front }				
+    			${item.label_front } &nbsp;				
 					<input type="number" id="answers_${i.index }" name="answers_${i.index }" value="${history_answer[i.index+1]}" style="width:20%" autocomplete=off>
-					${item.label_rear }
+					&nbsp;${item.label_rear }
 				</c:if>
 				
 				<c:if test="${item.label_1 eq 'memo'}">
-    			${item.label_front }						
+    			${item.label_front }&nbsp;						
     			<div style="margin-left:0px;padding-top:5px;padding-bottom:5px;">
 					<textarea rows="3" onKeyUp="onChkESQ(this)" style="width: 95%" id="answers_${i.index }" name="answers_${i.index }">${history_answer[i.index+1]}</textarea>
-					${item.label_rear }
+					&nbsp;${item.label_rear }
 	  			</div>
 				</c:if>		
 		</div>

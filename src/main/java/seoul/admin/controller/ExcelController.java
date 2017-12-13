@@ -30,11 +30,11 @@ public class ExcelController {
 	 */
 	@RequestMapping("excel_transform_controller.do")
 	public String excelTransform(@RequestParam String target,
-			@RequestParam String subject_id, 
+			@RequestParam String ssubject_id, 
 			CommonVO commonVO,
 			Map<String,Object> ModelMap ) throws Exception{
 		
-	//System.out.println(commonVO.toString());
+	System.out.println(commonVO.toString());
 	
 	List<Object> excelList= null;
 	    excelList = excelService.getAllObjects(target , commonVO);

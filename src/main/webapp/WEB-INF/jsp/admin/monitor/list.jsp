@@ -183,7 +183,7 @@ function exportExcel(){
 	var grad = $("select[name='grade']").val();
 	var sTxt = $("input[name='searchText']").val();
 	var tPath = '/monitor/admin/ex/excel_transform_controller.do';
-	tPath += '?target=memberManager&subject_id=';
+	tPath += '?target=memberManager&ssubject_id=';
 	tPath += '&spoll_num=' + pnum;
 	tPath += '&searchCategory=' + sCat;
 	tPath += '&sgrade=' + grad;

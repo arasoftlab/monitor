@@ -95,7 +95,7 @@ function fnNoAnswer(){
 
 function onExcel(){	
 	window.event.preventDefault();
-	var path = "/monitor/admin/ex/excel_transform_controller.do?target=answers&subject_id=${vo.subject_id}";
+	var path = "/monitor/admin/ex/excel_transform_controller.do?target=answers&ssubject_id=${vo.subject_id}";
 	location.href=path;
 }
 

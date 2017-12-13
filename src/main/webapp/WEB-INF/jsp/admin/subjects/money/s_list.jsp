@@ -9,7 +9,7 @@ function fnSearch(){
 }
 
 function onExcel(){	
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=money&subject_id=${vo.subject_id}";
+	location.href="/monitor/admin/ex/excel_transform_controller.do?target=money&ssubject_id=${vo.subject_id}";
 }
 
 $(document).ready(function(){

@@ -33,9 +33,9 @@ $(function(){
 	$.datepicker.setDefaults($.datepicker.regional['ko']);
 
 	var $ajaxProcessing = $('#ajaxProcessing');
-	$(document)
-		.ajaxStart(function () { $ajaxProcessing.modal(); })
-		.ajaxStop(function () { window.setTimeout(function(){$ajaxProcessing.modal('hide');},1500); });	
+	//$(document)
+		//.ajaxStart(function () { $ajaxProcessing.modal(); })
+		//.ajaxStop(function () { window.setTimeout(function(){$ajaxProcessing.modal('hide');},1500); });	
 	
 });
 

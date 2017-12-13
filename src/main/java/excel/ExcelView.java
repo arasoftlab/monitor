@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
 import seoul.admin.vo.AnswersVO;
@@ -542,6 +543,10 @@ public class ExcelView extends AbstractXlsView{
 	 cell4.setCellStyle(center);
 	 
 	 temp_num = 4;
+	 
+	 //if(ObjectUtils.isEmpty(a_list.get(i-1).getAnswers())){
+		 //TODO 널일때 처리 필요
+	 //}else {
 	 
 	 String[] temp_arr = a_list.get(i-1).getAnswers().split("\\|");
 	 

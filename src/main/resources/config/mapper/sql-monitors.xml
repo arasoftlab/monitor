@@ -88,16 +88,18 @@
 		              WHERE A.MEMBER_ID = B.MEMBER_ID
 		              AND B.SUBJECT_ID = #{subject_id}
               
-              <if test="searchCategory != null and searchCategory != ''">
-	      	   AND B.${searchCategory} LIKE '%' || #{searchText} || '%'
-  					</if>			
-				
-    			<if test="team_num != null and team_num != ''">
-	      	   AND B.TEAM_NUM = #{team_num}
-		    	</if>
-		    	<if test="is_selection != null and is_selection != ''">
-	      	   AND B.IS_SELECTION = #{is_selection}
-			  </if>
+		              <if test="searchCategory != null and searchCategory != ''">
+			      	   AND A.${searchCategory} LIKE '%' || #{searchText} || '%'
+		  					</if>			
+						
+		    			<if test="team_num != null and team_num != ''">
+			      	   AND B.TEAM_NUM = #{team_num}
+				    	</if>
+				    	<if test="is_selection != null and is_selection != ''">
+			      	   AND B.IS_SELECTION = #{is_selection}
+					  </if>
+					  					  
+					  ORDER BY B.REGDATE ASC
                 
     </select>
     

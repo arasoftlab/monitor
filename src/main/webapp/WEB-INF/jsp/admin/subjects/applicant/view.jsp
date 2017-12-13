@@ -29,12 +29,12 @@ function fnPresent(){
 
 function onExcel(){	
 	window.event.preventDefault();
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant&subject_id=${vo.subject_id}";
+	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant&ssubject_id=${vo.subject_id}";
 }
 
 function onExcel_apply(){	
 	window.event.preventDefault();
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&subject_id=${vo.subject_id}";
+	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&ssubject_id=${vo.subject_id}";
 }
 
 function onApply( is_select )
@@ -178,10 +178,10 @@ function onApply( is_select )
 					
 						<c:choose>
 							<c:when test="${!empty list }">
-								<c:forEach var="item" items="${list }">
+								<c:forEach var="item" items="${list }" varStatus="seqNo">
 									<tr>
 										<td><input type="checkbox" name="chk" value="${item.idx}"></td>
-										<td>${item.rn }</td>
+										<td>${ seqNo.index + 1 }</td>
 										<td><fmt:formatDate value="${item.regdate}" pattern="MM/dd" /> </td>
 										<td>
 											<a href="javascript:view_member('${item.member_id }','${item.poll_num }', '${item.subject_id}');" style="font-weight: bold;">	${item.member_name }</a>
