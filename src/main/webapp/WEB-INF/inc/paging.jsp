@@ -22,6 +22,7 @@
 		
 		nParams+="&pageNum="+pageNum;
 		uri = uri+"?"+nParams;
+		//alert(uri);
 		location.href=uri;
 	}
 </script>

@@ -297,6 +297,7 @@
 	            SUM(CASE WHEN SEX IS NULL THEN 1 ELSE 0 END) ECNT
 	          FROM
 	            MI
+	          WHERE MI.GRADE = 'normal'
 		    )
 		    SELECT TCNT.*, C.TOT, C.WCNT, C.MCNT, C.ECNT
 		    FROM TCNT, CALC C

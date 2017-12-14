@@ -7,60 +7,51 @@ import lombok.*;
 @Getter
 public class PagingVO {
 	private int pageSize = 10;
-	private int pageNum = 1;
-	private int totalRows = 0;
-	private int totalPage = 0;
+	private int pageUnit = 10;
+	private int pageNum;
+	private int totalRows;
+	private int totalPage;
+	private int startRow;
+	private int nextPageRow;
 	
 	public PagingVO(int totalRows) {
-		this.pageSize = 10;
 		this.totalRows = totalRows;
-		this.totalPage = (totalRows/pageSize) + ((totalRows%pageSize) > 0 ? 1:0);
+		this.totalPage = (totalRows/pageSize) + ((totalRows % pageSize) > 0 ? 1:0);
+		//System.out.println(" 계산된 0T : " + totalPage);
 	}
 	
 	public PagingVO(int pageNum, int totalRows) {
-		this.pageSize = 10;
 		this.pageNum = pageNum;
 		this.totalRows = totalRows;
-		this.totalPage = (totalRows/pageSize) + ((totalRows%pageSize) > 0 ? 1:0);
+		this.totalPage = (totalRows / this.pageSize) + ((totalRows % this.pageSize) > 0 ? 1:0);
+		this.startRow = pageNum ==1 ? 1 : ((pageNum-1) * pageSize) + 1;
+		this.nextPageRow = startRow + pageSize -1;
+		//System.out.println(" 계산된 1S : " + startRow);
+		//System.out.println(" 계산된 1E : " + nextPageRow);
 	}
 	
 	public PagingVO(int pageSize, int pageNum, int totalRows) {
 		this.pageSize = (pageSize == 0 ? totalRows : pageSize);
 		this.pageNum = pageNum;
 		this.totalRows = totalRows;
-		this.totalPage = (totalRows/pageSize) + ((totalRows%pageSize) > 0 ? 1:0);
+		this.totalPage = (totalRows / pageSize) + ((totalRows % pageSize) > 0 ? 1:0);
+		this.startRow = pageNum ==1 ? 1 : ((pageNum-1) * pageSize) + 1;
+		//System.out.println(" 계산된 2S : " + startRow);
+		this.nextPageRow = startRow + pageSize -1;
+		//System.out.println(" 계산된 2E : " + nextPageRow);
 	}
 	
 	public int getStartRow() {
-		//TODO 페이징 시작부의 문제를 이곳에서 처리해야 함
-		if (this.pageNum <= 0)
-			this.pageNum = 1;
-		int spage = 0;
-		spage = this.pageNum * this.pageSize;
-		spage = spage == this.pageSize ? 1 : spage + 1;
-		return spage;
+		//pageNum = pageNum > totalPage ? totalPage : pageNum;
+		this.startRow = pageNum ==1 ? 1 : ((pageNum-1) * pageSize) + 1;
+		//System.out.println(" 계산된 3S : " + startRow);
+		this.nextPageRow = startRow + pageSize -1;
+		//System.out.println(" 계산된 3E : " + nextPageRow);
+		return startRow;
 	}
 	
 	public int getNextPageRow() {
-		return (getStartRow() + this.pageSize) -1;
-	}
-
-	public int getPageSize() {
-		return this.pageSize;
-	}
-
-	public int getPageNum() {
-		return this.pageNum;
+		return startRow + pageSize -1;
 	}
 	
-	public int getTotalRows() {
-		return this.totalRows;
-	}
-	
-	public int getTotalPage(){
-		return this.totalPage;
-	}
-	public int getStartRows(){
-		return this.totalRows-((this.pageNum-1) * this.pageSize);
-	}
 }
