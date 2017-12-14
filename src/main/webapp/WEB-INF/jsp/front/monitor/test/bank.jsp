@@ -21,7 +21,7 @@ function getTextLength(str) {
 
 function onBankApply()
 {
-	window.event.preventDefault();
+	
 	$("#writeBankInfo").prop("disabled", true);
 	
 	if($("#bank").val() == "" )
@@ -73,7 +73,7 @@ function onBankApply()
 			}		
 		},
 		error : function(request,status,error) {
-			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			$("#writeBankInfo").prop("disabled", false);
 			alert("계좌정보 전송중 오류가 발생했습니다.\n은행명 및 계좌번호를 확인해 주세요.");
 		}

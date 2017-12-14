@@ -47,7 +47,7 @@ function onChkESQ(obj){
 		}else{
 			$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
 			
-			for (var a=0; a <= w_temp_cnt; a++)
+			for (var a=1; a <= w_temp_cnt; a++)
 			{
 				if(typeof($("#answers_"+a)) != "undefined"){
 					$("#answers_"+a).val($("#answers_"+a).val().replace(/<br>/g, "\r\n"));	

@@ -24,7 +24,7 @@ function resize(obj) {
 
 function chkValidation()
 {
-	window.event.preventDefault();
+	
 	//getNextQuestion('${nextpage.question_id }');
 	
 	historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 , '${history_params}');

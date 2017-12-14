@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 function fnSearch(){
-	window.event.preventDefault();
+	
 	$("form").attr("action","view.do").submit();
 }
 $(document).ready(function(){
@@ -22,24 +22,24 @@ $(document).ready(function(){
     });
 });
 function fnPresent(){
-	window.event.preventDefault();
+	
 	location.href="present.do";
 }
 
 
 function onExcel(){	
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant&ssubject_id=${vo.subject_id}";
 }
 
 function onExcel_apply(){	
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&ssubject_id=${vo.subject_id}";
 }
 
 function onApply( is_select )
 {
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	var index = 0;
 	
 	var checkboxValues = [];
@@ -84,6 +84,24 @@ function onApply( is_select )
 	});
 }
 
+function save_memo(id){
+	var memo = $("input[name='memo']").val();
+	$.ajax({
+		type:"POST",
+		url:"/monitor/admin/monitor/memo.do",
+		data:{
+			"id" : id,
+			"memo" : memo
+		},
+		success : function(data){
+			alert("메모가 저장되었습니다.");
+		},
+		error: function(request, status, error){
+			alert("메모가 저장되지 않았습니다.");
+		}
+		
+	});
+}
 </script>
 
 <button id="btn_memberinfo" type="button" class="modal_btn" data-toggle="modal" data-target=".memberinfo" style="display:none;"></button>									
@@ -93,7 +111,7 @@ function onApply( is_select )
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="col-xs-12">
-					<h4 style="float:left; margin-right:10px;">${vo.title} &nbsp;&nbsp;&nbsp; <font color="blue">▷ 총 ${total_cnt}명</font></h4>
+					<h4 style="float:left; margin-right:10px;">${vo.title} &nbsp;&nbsp;&nbsp; <font color="blue">▷ 총 ${fn:length(list)}명</font></h4>
 				</div>
 				
 				

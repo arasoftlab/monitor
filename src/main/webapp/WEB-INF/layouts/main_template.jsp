@@ -43,6 +43,7 @@
 	<script src="<c:url value='/webjars/bootstrap/3.3.7/js/bootstrap.min.js'/>"></script>
 	
 	<script src="<c:url value='/js/browser_check.js' />"></script>
+	<script src="<c:url value='/js/common.js'/>"></script>
 	
 	<!--[if lt IE 9]>	
 	<script src="<c:url value='/webjars/respond/1.4.2/dest/respond.min.js'/>"></script>

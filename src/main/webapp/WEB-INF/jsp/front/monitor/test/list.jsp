@@ -107,7 +107,7 @@ function onEnter()
 
 function onBankPopup()
 {
-	window.event.preventDefault();
+	
 	location.href = "/monitor/front/subject/bank.do?subject_id="+subject_id+"&poll_num="+is_pollnum+"&member_id="+is_member;
 }
 
@@ -183,25 +183,11 @@ function historyAppend(question_id , history_org , this_num , bifurcation , hist
 	bifurcation = typeof bifurcation !== 'undefined' ? bifurcation : 0;
 	history_params = typeof history_params !== 'undefined' ? history_params : '';
 	
-	var history_arr = history_org + "," +this_num;
-	
-	//console.log(question_id+"번");
-	//console.log(history_arr);
-	//console.log(this_num);
-	//console.log(bifurcation);
-	//console.log(history_params);
-	
+	var history_arr = history_org + "," +this_num;	
 	getNextQuestion(question_id, history_arr, this_num , bifurcation , history_params);
 }
 
 function getPreviewQuestion(question_id,history_arr,back_num , history_params){
-		
-	//console.log("arr:"+history_arr);
-	//console.log("par:"+history_params);
-	
-	//console.log("bak:"+back_num);
-	
-	
 	is_maxpage = back_num;
 	
 	$.ajax({

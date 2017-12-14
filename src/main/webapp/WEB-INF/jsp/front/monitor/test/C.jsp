@@ -14,7 +14,7 @@ $(document).ready(function() {
 
 function chkValidation()
 {
-	window.event.preventDefault();
+	
 	var answers = $(":input:radio[name=answers]:checked").val();
 	
 	var bifurcation = $(":input[id=answers_"+answers+"]").val();

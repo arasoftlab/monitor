@@ -89,7 +89,7 @@ function onApply()
 	
 	if (index <= 0)
 	{
-		alert("하나 이상 회원을 선택해야합니다.");
+		alert("하명 이상 회원을 선택해야합니다.");
 		return false;
 	}
 	
@@ -159,7 +159,7 @@ function view_team_info_pop(id,poll_num)
 
 function save_memo(id){
 	var memo = $("input[name='memo']").val();
-	alert(memo);
+	//alert(memo);
 	$.ajax({
 		type:"POST",
 		url:"memo.do",
@@ -213,7 +213,9 @@ function onViewEnter()
 				<!--				
 				<p>가정주부 267명/대학생 253명/회사원 209명/전문,자유직 180명/자영업 85명/무직 79명/교육직 53명/공무원 29명/기타 27명</p>
 				-->				
-				<p>총 : ${list[0].tot }명  &nbsp;&nbsp; 남자: ${list[0].mcnt } 명 &nbsp;&nbsp; 여자: ${list[0].wcnt } 명  &nbsp;&nbsp; 기타: ${list[0].ecnt } 명 </p>
+				<p>
+					<font color="blue">▷ 총 : ${list[0].tot }명  &nbsp;&nbsp; 남자: ${list[0].mcnt } 명 &nbsp;&nbsp; 여자: ${list[0].wcnt } 명  &nbsp;&nbsp; 기타: ${list[0].ecnt } 명 </font>
+				</p>	
 				<div id="search-box1" class="col-lg-6" style="padding:0;">
 					<form class="pull-left;">
 						<select class="list_form" name="poll_num" style="display: inline;">

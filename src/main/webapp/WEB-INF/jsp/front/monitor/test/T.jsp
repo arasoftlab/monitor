@@ -2,18 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
 
-<%
-	pageContext.setAttribute("cr", "\r");
-	pageContext.setAttribute("cn", "\n");
-	pageContext.setAttribute("crcn", "\r\n");
-	pageContext.setAttribute("br", "<br>");
-%>
-
 <c:set var="fileUpMaxCnt" value="1"/>
 <c:set var="fileMaxSize" value="20"/>
-
 <c:set var="fileObjects" value="bmp,gif,jpg,jpeg,png"/>
-
 <c:set var="fileObjects_t" value="txt,xls,xlsx,doc,docx,hwp,ppt,pptx,pdf"/>
     
 <style>
@@ -77,8 +68,7 @@
 	    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	}
 		
-	function fnFileCheck(){
-		window.event.preventDefault();
+	function fnFileCheck(event){
 		var fileSize =0;
 		var $progress = $('#myModal');
 		var options = {  
@@ -89,8 +79,6 @@
 			    	$progress.css('display', 'block');
 					$progress.modal({backdrop: 'static', show: true});
 					$progress.modal('show');
-					
-					
 			    },
 			    success: function(data){
 
@@ -137,8 +125,6 @@
 	
 	
 	function fnFileUpload(){
-		
-
 		data_id = guid();
 		var $progress = $('#myModal');
 		var $bar = $progress.find('.progress-bar');
@@ -178,17 +164,22 @@
 						
 						if($("#files").val().length < 1){			
 							alert("파일을 선택 하세요.");
+							$("input[type='file']").val("");
+							$("#files").val("");
 							return;
 						}
 						
 						if(!checkFileExtension()){
 							alert("업로드가 가능한 파일이 아닙니다");
+							$("input[type='file']").val("");
+							$("#files").val("");
 							return;	
 						}
 						
 						if($("#fileList").find("tr").length >= fileUpMaxCnt){
 							alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
 							$("input[type='file']").val("");
+							$("#files").val("");
 							return;
 						}
 						
@@ -232,8 +223,6 @@
 	}
 	
 	function fnDeleteFile(){
-		window.event.preventDefault();
-		
 		if($("#fileList").find("tr").length < 1){
 			alert("등록된 파일이 없습니다.");
 			return;
@@ -302,7 +291,6 @@
 
 function chkValidation()
 {
-	window.event.preventDefault();
 	var chk= '${optionList[0].endpoint }';
 	var file_type_chk = '${optionList[0].label_1 }';
 	var examrequirechk = '${optionList[0].examrequire}';
@@ -467,12 +455,12 @@ chkMob();
 			<div id="camera">
 			<div class="filebox" style="width: 49%; float:left">
 			  <label for="cam" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진촬영] <br>보내기</label>
-			  <input type="file" name="cam" id="cam" accept="image/*" capture="camera"  onchange="fnFileCheck();">  
+			  <input type="file" class="uploadFile" name="cam" id="cam" accept="image/*" capture="camera"  onchange="fnFileCheck();">  
 			</div>
 			</div>
 			<div class="filebox" style="width: 49%; float: right">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진등록] <br>보내기</label>
-			  <input type="file" name="image"  id="image" accept="image/*" onchange="fnFileCheck();">  
+			  <input type="file" class="uploadFile" name="image"  id="image" accept="image/*" onchange="fnFileCheck();">  
 			</div>			
 			
 		</c:when>
@@ -485,14 +473,14 @@ chkMob();
 		</c:otherwise>
 	</c:choose>
 		
-	<div style="min-height: 70px;">
+	<div style="min-height: 20px;">
 
 		<div class="mobile_notice_table" style="display:none;width: 100%;margin-top:20px;">
 		  <label style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;" onclick="alert('준비중')">사진 찍어서 <br>보내기</label>
 		</div>
 	</div>
 
-<div style="width:100%;float:left;margin-left:10px;text-align:center">		
+<div style="text-align:center">		
 	<c:choose>
 		<c:when test="${vo.cont_type eq 'V'}">
 
@@ -514,7 +502,7 @@ chkMob();
 		
 			<c:forEach var="item" items="${settingsList }">
 				<c:forEach var="file" items="${item.fileList }">
-					<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="max-width:80%">
+					<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" style="max-width:95%" class="img-thumbnail img-responsive">
 				</c:forEach>
 			</c:forEach>
 

@@ -168,3 +168,19 @@ function fnFileDownFromUFN(fileId, url){
 	document.fileDown.submit();
 }
 
+/**
+ * 이벤트의 연속동작을 방지하기 위해 기본 이벤트를 동작하지 못하도록 하는 기능
+ * @param
+ * 2017 12 14
+ */
+function stopEvent(e){
+	//var eCheck = 
+	//console.log(e);
+	
+	e.preventDefault ? e.preventDefault() : (e.returnValue = false);
+/*	if(typeof eCheck === 'undefined' ){
+		e.returnValue = false;
+	}else{
+		e.preventDefault();
+	}*/
+}

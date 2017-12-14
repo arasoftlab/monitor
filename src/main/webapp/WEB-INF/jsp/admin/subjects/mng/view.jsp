@@ -57,7 +57,7 @@ function resize(obj) {
 
 
 function fnQuestionList(subject_id){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -74,7 +74,7 @@ function fnQuestionList(subject_id){
 }
 
 function fnRefreshQuestion(question_id,formName){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -93,7 +93,7 @@ function fnRefreshQuestion(question_id,formName){
 }
 
 function fnQuestion(question_id){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -112,7 +112,7 @@ function fnQuestion(question_id){
 }
 
 function fnQuestionStart(){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -150,7 +150,7 @@ function fnQuestionStart(){
 }
 
 function fnQuestionEnd(){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -168,7 +168,7 @@ function fnQuestionEnd(){
 }
 
 function fnInsertQuestion(){
-	//window.event.preventDefault();
+	
 	if($("#insert_form select[name='type']").val().length === 0){
 		return;
 	}
@@ -198,7 +198,7 @@ function fnInsertQuestion(){
 
 
 function fnUpdateQuestion(form){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -227,7 +227,7 @@ function fnUpdateQuestion(form){
 }
 
 function fnUpdateStartpage(){
-	//window.event.preventDefault();
+	
 	var description = $("#description").val();
 	
 	$.ajax({
@@ -255,7 +255,7 @@ function fnUpdateStartpage(){
 }
 
 function fnUpdateEndpage(){
-	//window.event.preventDefault();
+	
 	var close_comment = $("#close_comment").val();
 	
 	$.ajax({
@@ -284,7 +284,7 @@ function fnUpdateEndpage(){
 
 
 function fnDeleteQuestion(form){
-	//window.event.preventDefault();
+	
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -317,7 +317,7 @@ function fnDeleteQuestion(form){
 }
 
 function fnInsertQuestionSettings(form){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -341,7 +341,7 @@ function fnInsertQuestionSettings(form){
 }
 
 function fnInsertOptions(form){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -365,7 +365,7 @@ function fnInsertOptions(form){
 }
 
 function fnInsertOptionsR(form){
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -388,7 +388,7 @@ function fnInsertOptionsR(form){
 }
 
 function fnDeleteOption(options_id){
-	//window.event.preventDefault();
+	
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -411,7 +411,7 @@ function fnDeleteOption(options_id){
 }
 
 function fnDeleteSettings(idx){
-	//window.event.preventDefault();
+	
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
@@ -436,7 +436,7 @@ function fnDeleteSettings(idx){
 // 과제 삭제시 해당 과제에 있는 옵션을 모두 지움.
 // by JINX 
 function fnClearOption(question_id){
-	//window.event.preventDefault();
+	
 		$.ajax({
 			async : true,
 			type : "POST",
@@ -467,7 +467,7 @@ function fnBtnView(type){
 
 function onSetting_TypeChange(question_id , form)
 {
-	//window.event.preventDefault();
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -488,7 +488,7 @@ function onSetting_TypeChange(question_id , form)
 }
 
 function getSubjectMovePage(id){
-	//window.event.preventDefault();
+	
 	var popUrl = "/monitor//admin/subject/mng/question/list.do?subject_id="+id;	//팝업창에 출력될 페이지 URL
 	var popOption = "width=250, height=560, top=200 ,left=0 , resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);
@@ -497,7 +497,7 @@ function getSubjectMovePage(id){
 
 function fnCopyQuestion(question_id ){
 	
-	//window.event.preventDefault();
+	
 	var param = 
 	{
 		"question_id" : question_id,

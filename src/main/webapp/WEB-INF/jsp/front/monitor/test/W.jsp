@@ -36,7 +36,6 @@ $(document).on("keyup", "input[type='number']", function(event) {
 
 function chkValidation()
 {
-	window.event.preventDefault();
 	var answers ="";
 	var i , j;
 	

@@ -24,9 +24,6 @@ function get_chked_values(){
 
 function chkValidation()
 {
-	window.event.preventDefault();
-	//var answers = get_chked_values();
-
 	var answers ="";
 	var i , j;
 	

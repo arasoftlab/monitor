@@ -114,12 +114,12 @@ public class SubjectApplicantController {
 		model.addAttribute("list", list2);
 		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
 		
-		model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO));
+		//model.addAttribute("apply_total" , monitorsService.getMonitorsCnt(monitorsVO));
 		
 		model.addAttribute("page", monitorsVO.getPagingVO());
 		model.addAttribute("now_page", monitorsVO);
 
-		model.addAttribute("total_cnt" , monitorsService.getMonitorsCnt(monitorsVO));
+		//model.addAttribute("total_cnt" , monitorsService.getMonitorsCnt(monitorsVO));
 		
 		return "admin/subjects/applicant/view.admin";
 	}

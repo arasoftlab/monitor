@@ -126,6 +126,7 @@ public class ExcelServiceImpl implements ExcelService{
 			//memberManagerVO.setQuery("grade='secession'");
 			
 			memberManagerVO.setPoll_num(commonVO.getSpoll_num());
+			memberManagerVO.setGrade(commonVO.getSgrade()); 
 			
 			if(ObjectUtils.isEmpty(memberManagerVO.getGrade())) {
 				memberManagerVO.setGrade("secession");

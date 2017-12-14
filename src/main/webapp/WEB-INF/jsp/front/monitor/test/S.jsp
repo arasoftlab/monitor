@@ -17,8 +17,6 @@ $(document).ready(function() {
 
 function chkValidation()
 {
-	//alert("check");
-	window.event.preventDefault();
 	var answers = $(":input:radio[name=answers]:checked").val();
 	var test = $("#answers_text_"+answers).val();
 	var history_params = "${history_params}";

@@ -79,7 +79,7 @@ $(window).load( function() {
 
 
 function fnSearch(stype){
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	if(stype == "M"){
 		$("input[name='temporary']").val("Y");
 	}
@@ -88,20 +88,20 @@ function fnSearch(stype){
 }
 
 function fnNoAnswer(){
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	location.href="noanswer.do?subject_id=${vo.subject_id}";
 }
 
 
 function onExcel(){	
-	window.event.preventDefault();
+	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
 	var path = "/monitor/admin/ex/excel_transform_controller.do?target=answers&ssubject_id=${vo.subject_id}";
 	location.href=path;
 }
 
 function view_team_info_pop(id,poll_num)
 {	
-	//window.event.preventDefault();
+	//
 	var popUrl = "/monitor/admin/monitor/info.do?member_id="+id+"&poll_num="+poll_num;	//팝업창에 출력될 페이지 URL
 	var sW = (screen.availWidth-1020)/2;
 	var sH = (screen.availHeight-640)/2;
@@ -142,7 +142,7 @@ function fnShowText(text){
 
 function view_member(id,poll_num)
 {	
-	//window.event.preventDefault();
+	//
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -166,10 +166,9 @@ function view_member(id,poll_num)
 
 function save_memo(id){
 	var memo = $("input[name='memo']").val();
-	alert(memo);
 	$.ajax({
 		type:"POST",
-		url:"memo.do",
+		url:"/monitor/admin/monitor/memo.do",
 		data:{
 			"id" : id,
 			"memo" : memo
@@ -186,7 +185,7 @@ function save_memo(id){
 
 function onApply( is_select )
 {
-	//window.event.preventDefault();
+	//
 	var index = 0;
 	
 	var checkboxValues = [];
@@ -619,54 +618,6 @@ $('#element').off('scroll touchmove mousewheel');
 					<button class="btn btn-warning pull-right" onclick="onApply('D')">삭제</button>
 				</div>			
 
-				<!-- 모달 팝업 1-->
-				<div class="modal fade member_modal" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" >
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				    	<div class="modal-header">
-				    		<div id="modal-iqno"></div>
-							<div id="modal-iwriter"></div>
-						</div>
-						<div class="modal-body">
-							<img id="modal-img2" class="img-responsive img-thumbnail center-block" >
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-				    </div>
-				  </div>
-				</div>
-
-				<!-- 모달 팝업 텍스트-->
-				<div class="modal fade member_modal_text" id="textModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
-				  <div class="modal-dialog">
-				    <div class="modal-content" >
-						<div style="padding: 30px;">  
-							<div>
-								<div id="modal-tqno"></div>
-								<div id="modal-twriter"></div>
-							</div>
-							<div id="modal-text"></div>
-						</div>
-				    </div>
-				  </div>
-				</div>
-
-				<!-- 모달 팝업 회원정보 -->
-				<div class="modal fade memberinfo" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
-				  <div class="modal-dialog">
-				    <div class="modal-content" >
-				      <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="myModalLabel">회원정보</h4>
-				      </div>
-				      <div class="modal-body" id="modal-body_team_info">
-
-				      </div>
-
-				    </div>
-				  </div>
-				</div>				
 				
 				<div >
 					<div class=" center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>				
@@ -676,3 +627,55 @@ $('#element').off('scroll touchmove mousewheel');
 		</div>
 	</div>
 </section>
+
+
+<!--  for modal -->
+<!-- 모달 팝업 1-->
+<div class="modal fade member_modal" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header">
+    		<div id="modal-iqno"></div>
+			<div id="modal-iwriter"></div>
+		</div>
+		<div class="modal-body">
+			<img id="modal-img2" class="img-responsive img-thumbnail center-block" >
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달 팝업 텍스트-->
+<div class="modal fade member_modal_text" id="textModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" >
+		<div style="padding: 30px;">  
+			<div>
+				<div id="modal-tqno"></div>
+				<div id="modal-twriter"></div>
+			</div>
+			<div id="modal-text"></div>
+		</div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달 팝업 회원정보 -->
+<div class="modal fade memberinfo" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style=";">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" >
+      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">회원정보</h4>
+      </div>
+      <div class="modal-body" id="modal-body_team_info">
+
+      </div>
+
+    </div>
+  </div>
+</div>				
+
