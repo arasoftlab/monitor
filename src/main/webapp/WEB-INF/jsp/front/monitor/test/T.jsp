@@ -68,7 +68,7 @@
 	    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	}
 		
-	function fnFileCheck(event){
+	function fnFileCheck(){
 		var fileSize =0;
 		var $progress = $('#myModal');
 		var options = {  
@@ -76,7 +76,7 @@
 			    url: "<c:url value='/file/fileSize.do'/>",
 			    dataType: 'json',
 			    beforeSend: function(){
-			    	$progress.css('display', 'block');
+					$progress.css('display', 'block');
 					$progress.modal({backdrop: 'static', show: true});
 					$progress.modal('show');
 			    },
@@ -160,25 +160,25 @@
 						
 						$("#files").val("/monitor/"+file.savePath + "/"+ file.unqFileName);
 						
-						$("input[type='file']").val("");
+						//$("input[type='file']").val("");
 						
 						if($("#files").val().length < 1){			
 							alert("파일을 선택 하세요.");
-							$("input[type='file']").val("");
+							//$("input[type='file']").val("");
 							$("#files").val("");
 							return;
 						}
 						
 						if(!checkFileExtension()){
 							alert("업로드가 가능한 파일이 아닙니다");
-							$("input[type='file']").val("");
+							//$("input[type='file']").val("");
 							$("#files").val("");
 							return;	
 						}
 						
 						if($("#fileList").find("tr").length >= fileUpMaxCnt){
 							alert("최대 업로드 개수는 "+fileUpMaxCnt+"개 입니다.");
-							$("input[type='file']").val("");
+							//$("input[type='file']").val("");
 							$("#files").val("");
 							return;
 						}
@@ -190,7 +190,7 @@
 						html += 	"</tr>";
 						$("#fileList").append(html);
 
-						$("input[type='file']").val("");
+						//$("input[type='file']").val("");
 						
 												
 			    	}else{
@@ -213,6 +213,10 @@
 			    	return;
 			    },
 			    complete: function(xhr){
+					var percentVal = '0%';
+					$bar.width(percentVal);
+					$percent.html(percentVal);
+
 			    	$progress.modal('hide');
 			    	$progress.css('display','none');
 			    }
@@ -373,6 +377,12 @@ chkMob();
 
 </script>
 
+<script>
+
+	$(document).on('change', "input[type='file']", function() { fnFileCheck();});
+
+</script>
+
 
 
 
@@ -455,12 +465,12 @@ chkMob();
 			<div id="camera">
 			<div class="filebox" style="width: 49%; float:left">
 			  <label for="cam" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진촬영] <br>보내기</label>
-			  <input type="file" class="uploadFile" name="cam" id="cam" accept="image/*" capture="camera"  onchange="fnFileCheck();">  
+			  <input type="file" class="uploadFile" name="cam" id="cam" accept="image/*" capture="camera"  >  
 			</div>
 			</div>
 			<div class="filebox" style="width: 49%; float: right">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">[사진등록] <br>보내기</label>
-			  <input type="file" class="uploadFile" name="image"  id="image" accept="image/*" onchange="fnFileCheck();">  
+			  <input type="file" class="uploadFile" name="image"  id="image" accept="image/*" >  
 			</div>			
 			
 		</c:when>
@@ -468,7 +478,7 @@ chkMob();
 		<c:otherwise>
 			<div class="filebox" style="width: 100%;">
 			  <label for="image" style="text-align:center;width: 100%;background: lightblue;border-radius: 6px 6px 6px 6px;">텍스트 선택해서 <br>보내기</label>
-			  <input type="file" name="image" id="image" onchange="fnFileCheck();">  
+			  <input type="file" name="image" id="image" >  
 			</div>
 		</c:otherwise>
 	</c:choose>

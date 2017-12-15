@@ -45,8 +45,9 @@ $(window).load( function() {
 			var wids = wrt + "(" + ids + ")";
 			txts.innerHTML = "작&nbsp&nbsp성&nbsp&nbsp자 : " + wids;
 			
+			
 			//서술형일경우
-			if(qno.indexOf("서술") != -1 && qno.indexOf("파일") < 1){
+			if(qno.indexOf("서술") != -1 && qno.indexOf("파일") < 1 && $.trim(text).length > 5){
 				var textModal = $("#textModal");
 				//$("#btn_go_text").trigger('click');
 				$('#modal-tqno').html(qnos);

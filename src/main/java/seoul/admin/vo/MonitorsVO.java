@@ -40,6 +40,8 @@ public class MonitorsVO extends CommonVO{
 	
 	private String job;
 	
-	
+	//2017 12 15 추가
+	private String email;
+	private String memo;
 	
 }

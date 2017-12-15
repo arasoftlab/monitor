@@ -1,7 +1,8 @@
 package excel;
 
+
+import java.awt.HeadlessException;
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,8 +28,41 @@ import seoul.admin.vo.QuestionVO;
 
 
 
+
+
 public class ExcelView extends AbstractXlsView{
 
+	/***
+	 * 엑셀 파일을 만들때 자동으로 컬럼의 넓이를 조절하도록 수정
+	 * 2017 12 15 JD
+	 * @param sheetData worksheet
+	 * @param maxColNum start of 0
+	 */
+	private void autoSizeColumns(Sheet sheetData, int maxColNum) {
+		try {
+			// Autosize columns
+			int width = 0;
+			for (int col = 0; col <= maxColNum; col++) {
+				sheetData.autoSizeColumn(col);
+				int cwidth = sheetData.getColumnWidth(col);
+				cwidth += 500;
+				cwidth = cwidth > 10000 ? 10000 : cwidth;
+				sheetData.setColumnWidth(col, cwidth);
+				width += cwidth;
+				//width = width > 250 ? 150 : width;
+				System.out.println("설정중인 컬럼의 번호 : " + col);
+			}
+
+			// calculate zoom factor
+			//int nominator = 45000 * 100 / width;
+			//if (nominator < 100)
+				//sheetData.setZoom(nominator, 100);
+
+		} catch (HeadlessException he) {
+			// No UI, no autosize :(
+		}
+	}
+	
 	String img_temp_path = "/var/tmp/seoul";
 	
 
@@ -82,16 +116,14 @@ public class ExcelView extends AbstractXlsView{
 	 Row row = null;
 	 
 	 worksheet = workbook.createSheet(excelName+ " WorkSheet");
-	 
-	 DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	 
-	 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	 	 
+	 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	 String data = df.format(new Date());
 	 
 	 CellStyle center = workbook.createCellStyle();
 	 center.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
 	 center.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); 
-	 center.setWrapText(true);
+	 //center.setWrapText(true);
 	 
 	
 	             
@@ -103,6 +135,7 @@ public class ExcelView extends AbstractXlsView{
 	List<MonitorsVO> list = (List<MonitorsVO>)((List<Object>)model.get("excelList")).get(0);
 	 
 	// 셀별 위드 정하기 헤더 그리기
+	/*
 	 worksheet.setColumnWidth(0,3000);   
 	 worksheet.setColumnWidth(1, 5000);   
 	 worksheet.setColumnWidth(2, 7000);   
@@ -119,7 +152,10 @@ public class ExcelView extends AbstractXlsView{
 	 worksheet.setColumnWidth(13, 2000);
 	 worksheet.setColumnWidth(14, 2000);   
 	 worksheet.setColumnWidth(15, 2000);
-	 
+	 worksheet.setColumnWidth(16, 2000);
+	 worksheet.setColumnWidth(17, 7000);
+	 */
+	  
 	 row = worksheet.createRow(0);                                  
 	
      Cell t_cell0 = row.createCell(0);
@@ -137,6 +173,7 @@ public class ExcelView extends AbstractXlsView{
      Cell t_cell3 = row.createCell(3);
      t_cell3.setCellValue("이름");
      t_cell3.setCellStyle(center);
+     
 
      Cell t_cell4 = row.createCell(4);
      t_cell4.setCellValue("생년월일");
@@ -186,16 +223,25 @@ public class ExcelView extends AbstractXlsView{
      t_cell15.setCellValue("선정여부");
      t_cell15.setCellStyle(center);                                 
      	 
-	 
+     Cell t_cell16 = row.createCell(16);
+     t_cell16.setCellValue("한줄메모");
+     t_cell16.setCellStyle(center);                                 
+     
+     Cell t_cell17 = row.createCell(17);
+     t_cell17.setCellValue("이메일");
+     t_cell17.setCellStyle(center);                                 
+     
+     
 	 for(int i=1;i<list.size()+1;i++){
 	     row = worksheet.createRow(i);
 	
 	     Cell cell0 = row.createCell(0);
-	     cell0.setCellValue(list.get(i-1).getRn());
+	     cell0.setCellValue(i);
 	     cell0.setCellStyle(center);
 	
 	     Cell cell1 = row.createCell(1);
-	     cell1.setCellValue((String)df.format(list.get(i-1).getRegdate()).substring(0,7));
+	     SimpleDateFormat forR = new SimpleDateFormat("MM-dd kk:mm");
+	     cell1.setCellValue((String)forR.format(list.get(i-1).getRegdate()));
 	     cell1.setCellStyle(center);
 	     
 	     Cell cell2 = row.createCell(2);
@@ -207,7 +253,8 @@ public class ExcelView extends AbstractXlsView{
 	     cell3.setCellStyle(center);
 	     
 	     Cell cell4 = row.createCell(4);
-	     cell4.setCellValue(list.get(i-1).getBirth());
+	     String bData = list.get(i-1).getBirth();
+	     cell4.setCellValue(bData.substring(0, bData.length() -1));
 	     cell4.setCellStyle(center);
 	
 	     Cell cell5 = row.createCell(5);
@@ -255,9 +302,20 @@ public class ExcelView extends AbstractXlsView{
 	     cell15.setCellValue(list.get(i-1).getIs_selection());
 	     cell15.setCellStyle(center);
 	
-	
-	     row.setHeight((short)3000);
+	     Cell cell16 = row.createCell(16);
+	     String gM = ObjectUtils.isEmpty(list.get(i-1).getMemo()) ? "" : list.get(i-1).getMemo(); 
+	     cell16.setCellValue(gM);
+	     cell16.setCellStyle(center);
+	     
+	     Cell cell17 = row.createCell(17);
+	     cell17.setCellValue(list.get(i-1).getEmail());
+	     cell17.setCellStyle(center);
+	     
+	     
+	     row.setHeight((short)1000);
 	 }
+	 
+	 autoSizeColumns(worksheet, 17);
 	 
 	 excelName = "모니터 신청자목록";
 	 
@@ -269,11 +327,13 @@ public class ExcelView extends AbstractXlsView{
 	 List<MonitorsVO> list = (List<MonitorsVO>)((List<Object>)model.get("excelList")).get(0);
 	 
 	// 셀별 위드 정하기 헤더 그리기   
+	 /*
 	 worksheet.setColumnWidth(0,3000);   
 	 worksheet.setColumnWidth(1, 5000);   
 	 worksheet.setColumnWidth(2, 7000);   
-	
+	 */
 	 
+	  
 	 row = worksheet.createRow(0);                                  
 	
 
@@ -296,7 +356,7 @@ public class ExcelView extends AbstractXlsView{
 	     row = worksheet.createRow(i);
 	
 	     Cell cell0 = row.createCell(0);
-	     cell0.setCellValue(list.get(i-1).getRn());
+	     cell0.setCellValue(i);
 	     cell0.setCellStyle(center);
 	
 	     Cell cell1 = row.createCell(1);
@@ -307,9 +367,10 @@ public class ExcelView extends AbstractXlsView{
 	     cell3.setCellValue(list.get(i-1).getPhone());
 	     cell3.setCellStyle(center);
 	     
-	     row.setHeight((short)3000);
+	     row.setHeight((short)1000);
 	 }
 	 
+	 autoSizeColumns(worksheet, 2);
 	 excelName = "모니터 선정결과";
 	 
 	 }
@@ -317,255 +378,235 @@ public class ExcelView extends AbstractXlsView{
 	 
 	 @SuppressWarnings("unchecked")
 	List<AnswersVO> a_list = (List<AnswersVO>)((List<Object>)model.get("excelList")).get(0);
-	 
+	 /*
 	 worksheet.setColumnWidth(0,5000);   
 	 worksheet.setColumnWidth(1, 5000);   
 	 worksheet.setColumnWidth(2, 7000);   
 	 worksheet.setColumnWidth(3, 5000);   
 	 worksheet.setColumnWidth(4, 3000);   
-	  
+	 */ 
+	 
 	//이런식으로 넣었던 번지수에 접근해서 가져와야한다.
 	 @SuppressWarnings("unchecked")
 	List<QuestionVO> q_list = (List<QuestionVO>)((List<Object>)model.get("excelList")).get(1); 
 	 
 	 int temp_num = 4;
+	 int colNums = 0;
 	 
-	 for (int i = 0 ; i < q_list.size() ; i++)
-	 {
-	 	if ( q_list.get(i).getType().equals("R") )
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
-		{
-	         worksheet.setColumnWidth(++temp_num, 4000);                			
-		}
-	     
-	}                	
-	else if(q_list.get(i).getType().equals("W"))
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
-		{
-			worksheet.setColumnWidth(++temp_num, 9000);                		
-		}
-	}
-	else if(q_list.get(i).getType().equals("M"))
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
-		{
-			worksheet.setColumnWidth(++temp_num, 5000);                		
-		}
-	}
-	else if(q_list.get(i).getType().equals("O"))
-	{
-		for(int j = 0 ; j < q_list.get(i).getRequired_cnt() ; j++)
-		{
-			worksheet.setColumnWidth(++temp_num, 4000);                		
-		}
-	}
-	else if(q_list.get(i).getType().equals("T"))
-	{
-	     worksheet.setColumnWidth(++temp_num, 4000);   
-	     
-	     worksheet.setColumnWidth(++temp_num, 4000);
-	}
-	else if(q_list.get(i).getType().equals("S"))
-	{
-	     worksheet.setColumnWidth(++temp_num, 4000);   
-	                              
-	     for (int s_temp = 0 ; s_temp < q_list.get(i).getOptionVO().size() ; s_temp ++)
-	     {
-	     	if (q_list.get(i).getOptionVO().get(s_temp).getDescyn() != null)
-	     	{
-	             if (q_list.get(i).getOptionVO().get(s_temp).getDescyn().equals("Y"))
-	             {
-	                 worksheet.setColumnWidth(++temp_num, 5000);
-	             }
-	     	}                        		                        	
-	     }
-	     
-	}
-	else if(q_list.get(i).getType().equals("B"))
-	     	{
-	             worksheet.setColumnWidth(++temp_num, 4000);   
-	     	}
-	     	else{
-	             worksheet.setColumnWidth(++temp_num, 4000);   
-	     	}
-	     }
 	                     
-	     row = worksheet.createRow(0);                                  
-	   
-         Cell t_cell0 = row.createCell(0);
-         t_cell0.setCellValue("번호");
-         t_cell0.setCellStyle(center);
-         
-         Cell t_cell1 = row.createCell(1);
-         t_cell1.setCellValue("재출일");
-         t_cell1.setCellStyle(center);
+     row = worksheet.createRow(0);                                  
+   
+     Cell t_cell0 = row.createCell(0);
+     t_cell0.setCellValue("번호");
+     t_cell0.setCellStyle(center);
+     
+     Cell t_cell1 = row.createCell(1);
+     colNums = colNums + 1;
+     t_cell1.setCellValue("재출일");
+     t_cell1.setCellStyle(center);
 
-         Cell t_cell2 = row.createCell(2);
-         t_cell2.setCellValue("아이디");
-         t_cell2.setCellStyle(center);
+     Cell t_cell2 = row.createCell(2);
+     colNums = colNums + 1;
+     t_cell2.setCellValue("아이디");
+     t_cell2.setCellStyle(center);
 
-         Cell t_cell3 = row.createCell(3);
-         t_cell3.setCellValue("이름");
-         t_cell3.setCellStyle(center);
+     Cell t_cell3 = row.createCell(3);
+     colNums = colNums + 1;
+     t_cell3.setCellValue("이름");
+     t_cell3.setCellStyle(center);
 
-         Cell t_cell4 = row.createCell(4);
-         t_cell4.setCellValue("신청조");
-         t_cell4.setCellStyle(center);                
-         
-         // 신청조 다음으로 N개의 문항이 시작돼서 이런식으로 해야한다.
+     Cell t_cell4 = row.createCell(4);
+     colNums = colNums + 1;
+     t_cell4.setCellValue("신청조");
+     t_cell4.setCellStyle(center);                
+     
+     // 신청조 다음으로 N개의 문항이 시작돼서 이런식으로 해야한다.
 
 	 temp_num = 4;
 	 
-	// 상단 문항번호 n개 만들기 
+	 //컬럼갯수 기본값 설정
+	 
+	 System.out.println("컬럼의 총 갯수 : " + q_list.size());
+	 System.out.println("컬럼의 총 갯수 : " + colNums);
+	 
+	 // 상단 문항번호 n개 만들기 
 	 for (int i = 0 ; i < q_list.size() ; i++)
 	 {
 	 	if ( q_list.get(i).getType().equals("R") )
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
+	 	{
+			for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
+			{
+	            Cell t_cell5 = row.createCell(++temp_num);
+	            colNums = colNums + 1;
+	            String cVal = "문(척도)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num();
+	       
+	            t_cell5.setCellValue(cVal);
+	            t_cell5.setCellStyle(center);	
+	            
+			}
+		} else if ( q_list.get(i).getType().equals("W") )
 		{
-            Cell t_cell5 = row.createCell(++temp_num);
-            t_cell5.setCellValue("문(척도)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num());
-            t_cell5.setCellStyle(center);                	
+			for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
+			{
+	            Cell t_cell5 = row.createCell(++temp_num);
+	            colNums = colNums + 1;
+	            String cVal = "문(서술)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num();
+	       
+	            t_cell5.setCellValue(cVal);
+	            t_cell5.setCellStyle(center);                	
+			}
+		}else if ( q_list.get(i).getType().equals("M") )
+		{
+			for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
+			{
+	            Cell t_cell5 = row.createCell(++temp_num);
+	            colNums = colNums + 1;
+	            String cVal = "문(중복)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num();
+	       
+	            t_cell5.setCellValue(cVal);
+	            t_cell5.setCellStyle(center);                	
+			}
+		}
+		else if ( q_list.get(i).getType().equals("O") )
+		{
+			for(int j = 0 ; j < q_list.get(i).getRequired_cnt() ; j++)
+			{
+	            Cell t_cell5 = row.createCell(++temp_num);
+	            colNums = colNums + 1;
+	            String cVal = "문(서열)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num();
+	               
+	            t_cell5.setCellValue(cVal);
+	            t_cell5.setCellStyle(center);                	
+			}
+		}                 	
+		else if ( q_list.get(i).getType().equals("S") )
+		{
+	       Cell t_cell5 = row.createCell(++temp_num);
+	       colNums = colNums + 1;
+	       String cVal = "문(단일)"+q_list.get(i).getQuestion_num();
+	       
+	       t_cell5.setCellValue(cVal);
+	       t_cell5.setCellStyle(center);  
+	       
+	       for (int s_temp = 0 ; s_temp < q_list.get(i).getOptionVO().size() ; s_temp ++)
+	       {
+	       	if (q_list.get(i).getOptionVO().get(s_temp).getDescyn() != null)
+	       	{
+	               if (q_list.get(i).getOptionVO().get(s_temp).getDescyn().equals("Y"))
+	               {
+	                   Cell t_cell6 = row.createCell(++temp_num);
+	                   colNums = colNums + 1;
+	                   cVal = "문(단일)"+q_list.get(i).getQuestion_num()+"서술";
+	                   
+	                   t_cell6.setCellValue(cVal);
+	                   t_cell6.setCellStyle(center);
+	               }
+	
+	       	}                        		                        	
+	       }
+	
+		}
+		else if ( q_list.get(i).getType().equals("T") )
+		{
+	
+			Cell t_cell5 = row.createCell(++temp_num);
+			colNums = colNums + 1;
+			String cVal = "문(첨부)"+q_list.get(i).getQuestion_num()+"_서술";
+	        
+	        t_cell5.setCellValue(cVal);
+	        t_cell5.setCellStyle(center);                	
+	        
+	        
+	        if (q_list.get(i).getOptionVO().get(0).getLabel_1().equals("img") )
+	        {
+	    		Cell t_cell6 = row.createCell(++temp_num);
+	    		colNums = colNums + 1;
+	            t_cell6.setCellValue("문(첨부)"+q_list.get(i).getQuestion_num()+"_이미지");
+	            t_cell6.setCellStyle(center);                	                        	
+	        }else{
+	    		Cell t_cell6 = row.createCell(++temp_num);
+	    		colNums = colNums + 1;
+	            t_cell6.setCellValue("문(첨부)"+q_list.get(i).getQuestion_num()+"_파일");
+	            t_cell6.setCellStyle(center);                	
+	        	
+	        }
+	        
+	        
+		}
+		else{
+	        Cell t_cell5 = row.createCell(++temp_num);
+	        colNums = colNums + 1;
+	        t_cell5.setCellValue("문"+q_list.get(i).getQuestion_num());
+	        t_cell5.setCellStyle(center);                
 		}
 	}
-	else if ( q_list.get(i).getType().equals("W") )
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
-		{
-            Cell t_cell5 = row.createCell(++temp_num);
-            t_cell5.setCellValue("문(서술)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num());
-            t_cell5.setCellStyle(center);                	
-		}
-	}
-	else if ( q_list.get(i).getType().equals("M") )
-	{
-		for(int j = 0 ; j < q_list.get(i).getOptionVO().size() ; j++)
-		{
-            Cell t_cell5 = row.createCell(++temp_num);
-            t_cell5.setCellValue("문(중복)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num());
-            t_cell5.setCellStyle(center);                	
-		}
-	}
-	else if ( q_list.get(i).getType().equals("O") )
-	{
-		for(int j = 0 ; j < q_list.get(i).getRequired_cnt() ; j++)
-		{
-            Cell t_cell5 = row.createCell(++temp_num);
-            t_cell5.setCellValue("문(서열)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num());
-            t_cell5.setCellStyle(center);                	
-		}
-	}                 	
-	else if ( q_list.get(i).getType().equals("S") )
-	{
-       Cell t_cell5 = row.createCell(++temp_num);
-       t_cell5.setCellValue("문(단일)"+q_list.get(i).getQuestion_num());
-       t_cell5.setCellStyle(center);  
-       
-       for (int s_temp = 0 ; s_temp < q_list.get(i).getOptionVO().size() ; s_temp ++)
-       {
-       	if (q_list.get(i).getOptionVO().get(s_temp).getDescyn() != null)
-       	{
-               if (q_list.get(i).getOptionVO().get(s_temp).getDescyn().equals("Y"))
-               {
-                   Cell t_cell6 = row.createCell(++temp_num);
-                   t_cell6.setCellValue("문(단일)"+q_list.get(i).getQuestion_num()+"서술");
-                   t_cell6.setCellStyle(center);
-               }
-
-       	}                        		                        	
-       }
-
-	}
-	else if ( q_list.get(i).getType().equals("T") )
-	{
-
-		Cell t_cell5 = row.createCell(++temp_num);
-        t_cell5.setCellValue("문(첨부)"+q_list.get(i).getQuestion_num()+"_서술");
-        t_cell5.setCellStyle(center);                	
-        
-        
-        if (q_list.get(i).getOptionVO().get(0).getLabel_1().equals("img") )
-        {
-    		Cell t_cell6 = row.createCell(++temp_num);
-            t_cell6.setCellValue("문(첨부)"+q_list.get(i).getQuestion_num()+"_이미지");
-            t_cell6.setCellStyle(center);                	                        	
-        }else{
-    		Cell t_cell6 = row.createCell(++temp_num);
-            t_cell6.setCellValue("문(첨부)"+q_list.get(i).getQuestion_num()+"_파일");
-            t_cell6.setCellStyle(center);                	
-        	
-        }
-        
-        
-	}
-	else{
-        Cell t_cell5 = row.createCell(++temp_num);
-        t_cell5.setCellValue("문"+q_list.get(i).getQuestion_num());
-        t_cell5.setCellStyle(center);                
-	}
-}
 
 	 
-	 
+	 //응답처리부
 	 for(int i=1;i<a_list.size()+1;i++){
 		 
-		 
+		 String cVal = ""; 
 	     row = worksheet.createRow(i);
 	
 	     Cell cell0 = row.createCell(0);
-	     cell0.setCellValue(a_list.get(i-1).getRn());
+	     cell0.setCellValue(i);
 	     cell0.setCellStyle(center);
 	
 	     Cell cell1 = row.createCell(1);
 	     
-	     if (a_list.get(i-1).getRegdate() == null) 
-	     {
-	     	cell1.setCellValue("");
+     if (a_list.get(i-1).getRegdate() == null) 
+     {
+     	cell1.setCellValue("");
 	 }
 	 else
 	 {
-	 	cell1.setCellValue(format1.format(a_list.get(i-1).getRegdate()));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	 	cell1.setCellValue(sdf.format(a_list.get(i-1).getRegdate()));
 	 }
 	 cell1.setCellStyle(center);
 	 
 	 Cell cell2 = row.createCell(2);
-	 cell2.setCellValue(a_list.get(i-1).getMember_id());
+	 cVal = a_list.get(i-1).getMember_id();
+	 cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
+	 cell2.setCellValue(cVal);
 	 cell2.setCellStyle(center);
 	 
 	 Cell cell3 = row.createCell(3);
-	 cell3.setCellValue(a_list.get(i-1).getMember_name());
+	 cVal = a_list.get(i-1).getMember_name();
+	 cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
+	 cell3.setCellValue(cVal);
 	 cell3.setCellStyle(center);
 	 
 	 Cell cell4 = row.createCell(4);
-	 cell4.setCellValue(a_list.get(i-1).getTeam_num());
+	 cVal = a_list.get(i-1).getTeam_num();
+	 cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
+	 cell4.setCellValue(cVal);
 	 cell4.setCellStyle(center);
 	 
 	 temp_num = 4;
 	 
-	 //if(ObjectUtils.isEmpty(a_list.get(i-1).getAnswers())){
-		 //TODO 널일때 처리 필요
-	 //}else {
+	 //답변이 비어 있을때를 대비하여 초기화를 시행하고 있을때만 스플릿을 한다.
+	 String[] temp_arr = null;
 	 
-	 String[] temp_arr = a_list.get(i-1).getAnswers().split("\\|");
-	 
+	 if(!ObjectUtils.isEmpty(a_list.get(i-1).getAnswers())){
+	 	temp_arr = a_list.get(i-1).getAnswers().split("\\|");
+	 }
 	 int a_index = 0;
 	 
 	 for (int z = 0 ; z < q_list.size() ;z++ )
 	 {
-	 	if (temp_arr.length <= a_index)
+	 	if (temp_arr == null || temp_arr.length <= a_index)
 	 	{
 	 	// OutOfbounds 에러 때문에 index 가 증가되는것을 사전에 보고 없는 배열번지수를 참조할 수 없게 만듦.
      		break;
-	}
-	
-	if (temp_arr[a_index].length() <= 1)
-	{
-		// 응답을 시작해놓고 답변을 하나도 작성하지않은 유저를 걸러냄.
- 		a_index++;
-		continue;
-	}
+		}
+		
+		if (temp_arr == null || temp_arr[a_index].length() <= 1)
+		{
+			// 응답을 시작해놓고 답변을 하나도 작성하지않은 유저를 걸러냄.
+	 		a_index++;
+			continue;
+		}
 	
 	 String temp_type = temp_arr[a_index].substring(1, 2);                    	
 	 String temp_a_num = temp_arr[a_index].substring(2, temp_arr[a_index].indexOf(":"));
@@ -574,323 +615,253 @@ public class ExcelView extends AbstractXlsView{
 	 {
 	 
 	    if (temp_type.equals("R") || temp_type.equals("W") )
-	{
-		String[] s_temp_arr = temp_arr[a_index].split("#");
-	
-	for (int j = 1 ; j < temp_arr[a_index].split("#").length ; j++)
-	{                        		                      		
-	    Cell cell5 = row.createCell(++temp_num);
-	    cell5.setCellValue(s_temp_arr[j].replaceAll("<br>", "\r\n"));
-	        cell5.setCellStyle(center);
-		}
-	}
-	else if (temp_type.equals("O"))
-	{                            
-		String[] s_temp_arr = temp_arr[a_index].split("#");
-	
-	for (int j = 1 ; j < temp_arr[a_index].split("#").length ; j++)
-		{                        		                      		
-	        Cell cell5 = row.createCell(++temp_num);
-	        cell5.setCellValue(s_temp_arr[j]);
-	        cell5.setCellStyle(center);
-		} 	                    		
-	}
-	else if (temp_type.equals("M"))
-	{                            
-		String[] s_temp_arr = temp_arr[a_index].split("#");
-	
-	
-	int m_index = 1;
-	/*
- 	 * 예전 코드 
- 	 * 20170801 변경요청으로 선택된 문항에 1번을 찍음
-	for (int j = 1 ; j < q_list.get(z).getOptionVO().size()+1 ; j ++)
-	{
-		if (s_temp_arr.length > j)
 		{
-			Cell cell5 = row.createCell(++temp_num);
-			cell5.setCellValue(s_temp_arr[j]);
-			cell5.setCellStyle(center); 	                        		
-		}
-		else{
-			Cell cell5 = row.createCell(++temp_num);
-			cell5.setCellValue("");
-			cell5.setCellStyle(center); 	                        		
-		}
-	}*/
-	
-	for (int j = 1 ; j < q_list.get(z).getOptionVO().size()+1 ; j ++)
-	{
-	// 	                        		System.out.println(Integer.parseInt(s_temp_arr[m_index]));
-	if (s_temp_arr.length > m_index)
-	{
-		if ( Integer.parseInt(s_temp_arr[m_index]) == j)
-		{
-	
-			Cell cell5 = row.createCell(++temp_num);
-			cell5.setCellValue("1");
-		cell5.setCellStyle(center); 	  
-		m_index++;
-	}else{
-		Cell cell5 = row.createCell(++temp_num);
-		cell5.setCellValue("");
-			cell5.setCellStyle(center); 	                        		
-		}
-	}
-	else{
-		Cell cell5 = row.createCell(++temp_num);
-		cell5.setCellValue("");
-				cell5.setCellStyle(center); 	                        		
+			String[] s_temp_arr = temp_arr[a_index].split("#");
+		
+			for (int j = 1 ; j < temp_arr[a_index].split("#").length ; j++)
+			{                        		                      		
+			    Cell cell5 = row.createCell(++temp_num);
+			    cVal = s_temp_arr[j];
+			    cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
+			    cell5.setCellValue(cVal.replaceAll("<br>", "\r\n"));
+			    cell5.setCellStyle(center);
 			}
 		}
+		else if (temp_type.equals("O"))
+		{                            
+			String[] s_temp_arr = temp_arr[a_index].split("#");
 		
-	} 	                         
-	else if (temp_type.equals("B"))
-	{
-	    Cell cell5 = row.createCell(++temp_num);
-	    cell5.setCellValue("게시판 형 질문");
-	    cell5.setCellStyle(center);
-	}
-	else if (temp_type.equals("S"))
-	{
-		String s_type_string = temp_arr[a_index].substring(temp_arr[a_index].indexOf(":")+1, temp_arr[a_index].indexOf(":")+2);
-		 	                        	
-		Cell cell5 = row.createCell(++temp_num);
-		cell5.setCellValue(s_type_string);
-		cell5.setCellStyle(center);
-	    
-	   for (int s_temp = 0 ; s_temp < q_list.get(z).getOptionVO().size() ; s_temp ++)
-	   {
-	      	if (q_list.get(z).getOptionVO().get(s_temp).getDescyn() != null)
-	      	{
-	      		if (q_list.get(z).getOptionVO().get(s_temp).getDescyn().equals("Y")) {
-	if ( temp_arr[a_index].contains("#") ){
-		Cell cell6 = row.createCell(++temp_num);
-		cell6.setCellValue(temp_arr[a_index].substring(temp_arr[a_index].indexOf("#")+1, temp_arr[a_index].length()));
-		cell6.setCellStyle(center);
-	}else{
-		Cell cell6 = row.createCell(++temp_num);
-		cell6.setCellValue("");
-	      				cell6.setCellStyle(center);
-	      			}
-	
-	      		}
-	      	}                        		                        	
-	   }
-	    	                            
-	}	                        
-	else if (temp_type.equals("T"))
-	{	
-	//    int img_position = temp_num+2;
-	    
-	   // HSSFPatriarch patriarch = worksheet.createDrawingPatriarch();
-	     
-	//   HSSFClientAnchor anchor;
-	//    anchor = new HSSFClientAnchor(0,0,0,255,(short)img_position,i,(short)(img_position+1),i); // �씠誘몄� �겕湲곗“�젅�� �뿬湲곗꽌..
-	//String uploadPath = request.getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
-	//String uploadPath = ServletContext.getRealPath("/upload/" + BaseUtil.currentYear() + BaseUtil.addZeroString(BaseUtil.currentMonth()) );
-		//이거를 상대경로로 끌어와야한다. 시청에서 잘보자. 
-            //이클립스로 아무리 돌려봐야 실제 경로에서 못끌어온다.
-			   	                    
-	//int l_pic = 0;
-	
-	String t_temp = temp_arr[a_index].substring(temp_arr[a_index].indexOf("Ω")+1, temp_arr[a_index].length());
-	
-	String []t_temp_arr = t_temp.split("/");
-	
-	//String []t_a_temp_arr = t_temp.split("Ω");
-	
-	
-	Cell cell5_ = row.createCell(++temp_num);
-	if (t_temp_arr.length > 1)
-	{
-	
-		String t_type_temp = temp_arr[a_index].substring(temp_arr[a_index].indexOf("#")+1, temp_arr[a_index].indexOf("Ω")).replaceAll("<br>", "\r\n");
-		
-		cell5_.setCellValue(t_type_temp);
-	}else{
-	
-		String t_type_temp = temp_arr[a_index].substring(temp_arr[a_index].indexOf("#")+1, temp_arr[a_index].length()).replaceAll("<br>", "\r\n");
-		
-		cell5_.setCellValue(t_type_temp);
-	}
-	cell5_.setCellStyle(center);
-		                            
-	
-	//첨부 스타일이 이미지 일때
-	if ( q_list.get(z).getOptionVO().get(0).getLabel_1().equals("img") )
-	{	                            	
-		
-			                            	                            	
-	    if (t_temp_arr.length > 1)
-	    {
-	    	/*
-	URL imageUrl;
-	try{
-	
-		System.out.println("URL connection enter"+t_temp);
-	                        		
-	    imageUrl = new URL("https://research.seoul.go.kr/"+t_temp);
-	    HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection();
-	            connection.setRequestProperty(
-	                    "User-Agent",
-	                    "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
-	    BufferedImage propertImage = ImageIO.read(connection.getInputStream());
-	    // 버퍼에 이미지 받아왔다 . 어쩔수없으면 웹에서 다운로드 해오고 temp 경로에 업로드 했다가 이미지 뜨면 지워버리는식으로 해야한다.
-
-		System.out.println("URL connection out");
-	    
-	    File file = new File(img_temp_path+"/"+t_temp_arr[5]);
-	    				                                				                                
-	    File file_dir = new File(img_temp_path);
-	    
-		if(!file_dir.exists()){
-			 //없다면 생성
-			file_dir.mkdirs(); 
-	    	System.out.println("dir enter");
+			for (int j = 1 ; j < temp_arr[a_index].split("#").length ; j++)
+			{                        		                      		
+		        Cell cell5 = row.createCell(++temp_num);
+		        cVal = s_temp_arr[j];
+			    cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
+		        cell5.setCellValue(cVal);
+		        cell5.setCellStyle(center);
+			} 	                    		
 		}
-		else
-		{
-				/*
-				 * 
-				//있다면 현재 디렉토리 파일을 삭제  
-				File[] destroy = desti.listFiles(); 
-					for(File des : destroy){
-					des.delete(); 
+		else if (temp_type.equals("M"))
+		{                            
+			String[] s_temp_arr = temp_arr[a_index].split("#");
+			int m_index = 1;
+		
+			for (int j = 1 ; j < q_list.get(z).getOptionVO().size()+1 ; j ++)
+			{
+			
+				if (s_temp_arr.length > m_index)
+				{
+					if ( Integer.parseInt(s_temp_arr[m_index]) == j)
+					{
+						Cell cell5 = row.createCell(++temp_num);
+						cell5.setCellValue("1");
+						cell5.setCellStyle(center); 	  
+						m_index++;
+					}else{
+						Cell cell5 = row.createCell(++temp_num);
+						cell5.setCellValue("");
+						cell5.setCellStyle(center); 	                        		
+					}
+				}else{
+					Cell cell5 = row.createCell(++temp_num);
+					cell5.setCellValue("");
+					cell5.setCellStyle(center); 	                        		
 				}
-				
-				*			                            				
+			}
+			
+		} 	                         
+		else if (temp_type.equals("B"))
+		{
+		    Cell cell5 = row.createCell(++temp_num);
+		    cell5.setCellValue("게시판 형 질문");
+		    cell5.setCellStyle(center);
 		}
-	    
-		System.out.println("dir out");
+		else if (temp_type.equals("S")) //단일응답형 처리
+		{
+			String s_type_string = temp_arr[a_index].substring(temp_arr[a_index].indexOf(":")+1, temp_arr[a_index].indexOf(":")+2);
+			 	                        	
+			Cell cell5 = row.createCell(++temp_num);
+			cell5.setCellValue(s_type_string);
+			cell5.setCellStyle(center);
+			//System.out.println(" 단일응답형 자로 : " + s_type_string);
+		   //옵션검색	
+		   for (int s_temp = 0 ; s_temp < q_list.get(z).getOptionVO().size() ; s_temp ++)
+		   {
+		      	if (q_list.get(z).getOptionVO().get(s_temp).getDescyn() != null)
+		      	{
+		      		if (q_list.get(z).getOptionVO().get(s_temp).getDescyn().equals("Y")) {
+						if ( temp_arr[a_index].contains("#") ){
+							Cell cell6 = row.createCell(++temp_num);
+							String eVal = temp_arr[a_index]; //전체답변
+							String eNos = eVal.substring(eVal.indexOf(":")+1, eVal.indexOf("#")); //보기번호
+							cVal = eVal.substring(eVal.indexOf("#") + 1, eVal.length() - eNos.length()); //전체답변에서 보기번호를제외한 것
+							//System.out.println(eVal);
+							//System.out.println(eNos);
+							//System.out.println(cVal);
+							
+							cell6.setCellValue(cVal);
+							cell6.setCellStyle(center);
+						}else{
+							Cell cell6 = row.createCell(++temp_num);
+							cell6.setCellValue("");
+						    cell6.setCellStyle(center);
+		      			}
 		
-	    ImageIO.write(propertImage, "jpg", file);
-	    
-		System.out.println("file write ok");
-	    
-		l_pic = loadPicture(img_temp_path+"/"+t_temp_arr[5], workbook );				   	                
-	    patriarch.createPicture(anchor, l_pic); // 삽입 할 이미지
-	
-		System.out.println("file load ok");
-	    
-	   	++temp_num;
-	    
-	} catch (Exception ex) {
-		
-		ex.printStackTrace(); 				                            	
-	    Cell cell6 = row.createCell(++temp_num);
-	    
-	    cell6.setCellValue("첨부 없음.");
-	    cell6.setCellStyle(center);
-	}			*/
-	
-	Cell cell6 = row.createCell(++temp_num);
-	
-	cell6.setCellValue("");
-	        cell6.setCellStyle(center);
-	        						   	              
-	}else{
-	        Cell cell6 = row.createCell(++temp_num);
-	        cell6.setCellValue("첨부 없음.");
-	            cell6.setCellStyle(center);
-	    }
-	}else{
-	    Cell cell6 = row.createCell(++temp_num);
-	    cell6.setCellValue("텍스트 파일형");
-	        cell6.setCellStyle(center);
-	    }
-	    
-	     		
-	    row.setHeight((short)3000);
-	    
-	}                        
-	else{
+		      		}
+		      	}                        		                        	
+		   }
+		    	                            
+		}	                        
+		else if (temp_type.equals("T"))
+		{	
+			
+			//String t_temp = temp_arr[a_index].substring(temp_arr[a_index].indexOf("Ω")+1, temp_arr[a_index].length());
+			
+			//String []t_a_temp_arr = t_temp.split("Ω");
+			//System.out.println(" 원본응답    : " + temp_arr[a_index]);
+			//System.out.println(" 첨부데이터 : " + t_temp);
+			//System.out.println(" 첨부분할    : " + t_temp_arr[0]);
+			//System.out.println(" 분할 길이   : " + t_temp_arr.length);
+			//System.out.println(" 파일정보    : " + t_a_temp_arr);
+			//System.out.println(" I1  정보    : " + temp_arr[a_index].indexOf("#")+1); //index
+			//System.out.println(" I2  정보    : " + temp_arr[a_index].indexOf("Ω")); //last
+			
+			Cell cell5_ = row.createCell(++temp_num);
+			//첨부된 파일의 내용이 있을때 처리 없으면 ""
+			String t_type_temp = null;
+			
+			int sIndex = temp_arr[a_index].indexOf("#")+1;
+			int eIndex = temp_arr[a_index].indexOf("Ω");
+			if (eIndex > 1 && sIndex != eIndex){ //파일을 포함할 경우
+				t_type_temp = temp_arr[a_index].substring(sIndex, eIndex);
+			}else if(sIndex == eIndex){ //서술 데이터가 없는 경우
+				t_type_temp = "";
+			}else { //기타 파일첨부 안한 경우
+				t_type_temp = temp_arr[a_index].substring(sIndex, temp_arr[a_index].length());	
+			}
+			
+			t_type_temp = !ObjectUtils.isEmpty(t_type_temp) ? t_type_temp.replaceAll("<br>", "\r\n") : "";
+			//System.out.println(" 삽입하는 값은 : " + t_type_temp);
+			
+			cell5_.setCellValue(t_type_temp);
+			cell5_.setCellStyle(center);
+				                            
+			
+			//첨부 스타일이 이미지 일때
+			if ( q_list.get(z).getOptionVO().get(0).getLabel_1().equals("img") )
+			{	                            				                            	                           
+			    if ( eIndex > 1)
+			    {
+			    	Cell cell6 = row.createCell(++temp_num);	
+					cell6.setCellValue("이미지");
+				    cell6.setCellStyle(center);
+				        						   	              
+				}else{
+				    Cell cell6 = row.createCell(++temp_num);
+				    cell6.setCellValue("");
+			        cell6.setCellStyle(center);
+			    }
+			}else{
+			    Cell cell6 = row.createCell(++temp_num);
+			    if( eIndex > 1) {
+			    	cell6.setCellValue("일반파일");
+			    }else {
+			    	cell6.setCellValue("");
+			    }
+			        cell6.setCellStyle(center);
+			}
+			    
+		}else{
 	    Cell cell5 = row.createCell(++temp_num);
 	    cell5.setCellValue(temp_arr[a_index].substring(temp_arr[a_index].indexOf(":")+1, temp_arr[a_index].length()));
 	        cell5.setCellStyle(center);
 	    }
 	    
 	    a_index++;
+	    
 	 }else{
 	 	
 	 	
-	    if ( q_list.get(z).getType().equals("C") || q_list.get(z).getType().equals("B"))
-	{
-	    Cell cell5 = row.createCell(++temp_num);
-	    cell5.setCellValue("");
-	    cell5.setCellStyle(center);
-	}
+			    if ( q_list.get(z).getType().equals("C") || q_list.get(z).getType().equals("B"))
+			    {
+			    Cell cell5 = row.createCell(++temp_num);
+			    cell5.setCellValue("");
+			    cell5.setCellStyle(center);
+				}
+			
+				if (q_list.get(z).getType().equals("R") || q_list.get(z).getType().equals("W") )
+				{
+					for( int p = 0 ; p < q_list.get(z).getOptionVO().size() ; p++ )
+					{
+						Cell cell5 = row.createCell(++temp_num);
+				        cell5.setCellValue("");
+				        cell5.setCellStyle(center);
+					}	                        	
+				}
+				if (q_list.get(z).getType().equals("O"))
+				{
+					for( int p = 0 ; p < q_list.get(z).getRequired_cnt() ; p++ )
+					{
+						Cell cell5 = row.createCell(++temp_num);
+				        cell5.setCellValue("");
+				        cell5.setCellStyle(center); 	                        		
+					}
+				} 	 
 	
-	if (q_list.get(z).getType().equals("R") || q_list.get(z).getType().equals("W") )
-	{
-		for( int p = 0 ; p < q_list.get(z).getOptionVO().size() ; p++ )
-		{
-			Cell cell5 = row.createCell(++temp_num);
-	        cell5.setCellValue("");
-	        cell5.setCellStyle(center);
-		}	                        	
-	}
-	if (q_list.get(z).getType().equals("O"))
-	{
-		for( int p = 0 ; p < q_list.get(z).getRequired_cnt() ; p++ )
-		{
-			Cell cell5 = row.createCell(++temp_num);
-	        cell5.setCellValue("");
-	        cell5.setCellStyle(center); 	                        		
-		}
-	} 	 
-	
-	if (q_list.get(z).getType().equals("S") )
-	{
-		Cell cell5 = row.createCell(++temp_num);
-	    cell5.setCellValue("");
-	cell5.setCellStyle(center);
-	
-	for (int l = 0 ; l < q_list.get(z).getOptionVO().size() ; l ++)
-	{
-		if (q_list.get(z).getOptionVO().get(l).getDescyn() != null)
-		{
-	    	if (q_list.get(z).getOptionVO().get(l).getDescyn().equals("Y"))
-	{
-		Cell cell6 = row.createCell(++temp_num);
-	    cell6.setCellValue("");
-	                cell6.setCellStyle(center);
-	        	}
-	    	}
-	    }
-	    
-	}
-	
-	if (q_list.get(z).getType().equals("M"))
-	{
-		for( int p = 0 ; p < q_list.get(z).getOptionVO().size() ; p++ )
-		{
-			Cell cell5 = row.createCell(++temp_num);
-	        cell5.setCellValue("");
-	        cell5.setCellStyle(center); 	                        		
-		}
-	}
-	if (q_list.get(z).getType().equals("T"))
-	{
-	    Cell cell5 = row.createCell(++temp_num);
-	    cell5.setCellValue("");
-	cell5.setCellStyle(center);
-	
-	Cell cell6 = row.createCell(++temp_num);
-	cell6.setCellValue("");
-	                cell6.setCellStyle(center);
+				if (q_list.get(z).getType().equals("S") )
+				{
+					Cell cell5 = row.createCell(++temp_num);
+				    cell5.setCellValue("");
+				cell5.setCellStyle(center);
+				
+				for (int l = 0 ; l < q_list.get(z).getOptionVO().size() ; l ++)
+				{
+					if (q_list.get(z).getOptionVO().get(l).getDescyn() != null)
+					{
+				    	if (q_list.get(z).getOptionVO().get(l).getDescyn().equals("Y"))
+				{
+					Cell cell6 = row.createCell(++temp_num);
+				    cell6.setCellValue("");
+				                cell6.setCellStyle(center);
+				        	}
+				    	}
+				    }
+				    
+				}
+			
+				if (q_list.get(z).getType().equals("M"))
+				{
+					for( int p = 0 ; p < q_list.get(z).getOptionVO().size() ; p++ )
+					{
+						Cell cell5 = row.createCell(++temp_num);
+				        cell5.setCellValue("");
+				        cell5.setCellStyle(center); 	                        		
+					}
+				}
+				if (q_list.get(z).getType().equals("T"))
+				{
+				    Cell cell5 = row.createCell(++temp_num);
+				    cell5.setCellValue("");
+					cell5.setCellStyle(center);
+					
+					Cell cell6 = row.createCell(++temp_num);
+					cell6.setCellValue("");
+			        cell6.setCellStyle(center);
 	            }
 	         	
 	         }
 	     }
 	                                                           
-	     row.setHeight((short)2000);
+	     row.setHeight((short)1000);
 	 }
 	 
-	
-	 File img_temp_del = new File(img_temp_path);
 	 
+	 System.out.println("컬럼의 총 갯수 : " + q_list.size());
+	 System.out.println("컬럼의 총 갯수 : " + colNums);
+	 
+	 File img_temp_del = new File(img_temp_path);
 	 deleteFolder(img_temp_del);
+	 //TODO 컬럼갯수 표현법 정리할 필요 있음.
+	 autoSizeColumns(worksheet, colNums);
 	
 	 excelName = "응답 목록_";
 	
@@ -901,6 +872,7 @@ public class ExcelView extends AbstractXlsView{
 		List<MemberManagerVO> list = (List<MemberManagerVO>)((List<Object>)model.get("excelList")).get(0);
 	 
 	  // 셀별 위드 정하기 헤더 그리기
+	 /*
 	 worksheet.setColumnWidth(0,2000);   
 	 worksheet.setColumnWidth(1, 4000);   
 	 worksheet.setColumnWidth(2, 4000);   
@@ -918,6 +890,8 @@ public class ExcelView extends AbstractXlsView{
 	 worksheet.setColumnWidth(14, 2000);   
 	 worksheet.setColumnWidth(15, 7000);    
 	 worksheet.setColumnWidth(16, 5000);   
+	 */
+		 
 	
 	// cell 만들기
 	 row = worksheet.createRow(0);                                  
@@ -997,7 +971,7 @@ public class ExcelView extends AbstractXlsView{
 	     	
 	   //번호
 	 Cell cell0 = row.createCell(0);
-	 cell0.setCellValue(list.get(i-1).getRn());
+	 cell0.setCellValue(i);
 	 cell0.setCellStyle(center);
 	
 	//아이디
@@ -1128,13 +1102,17 @@ public class ExcelView extends AbstractXlsView{
 	     }
 	     
 	 }
+	 //Todo
+	 autoSizeColumns(worksheet, 16);
 	 excelName = "회원 관리_";
+	 
 	 }
 	 else if (excelName.equals("money")){
 	 @SuppressWarnings("unchecked")
 	List<MonitorApplyVO> list = (List<MonitorApplyVO>)((List<Object>)model.get("excelList")).get(0);
 	 
 	 // 셀별 위드 정하기 헤더 그리기
+	 /*
 	 worksheet.setColumnWidth(0,5000);   
 	 worksheet.setColumnWidth(1, 7000);   
 	 worksheet.setColumnWidth(2, 7000);   
@@ -1145,6 +1123,9 @@ public class ExcelView extends AbstractXlsView{
 	 worksheet.setColumnWidth(7, 5000);   
 	 worksheet.setColumnWidth(8, 3000);   
 	 worksheet.setColumnWidth(9, 3000);  
+	 */
+	 
+ 
 	
 	 // cell 만들기
 	 
@@ -1194,7 +1175,7 @@ public class ExcelView extends AbstractXlsView{
 	     row = worksheet.createRow(i);
 	
 	     Cell cell0 = row.createCell(0);
-	     cell0.setCellValue(list.get(i-1).getRn());
+	     cell0.setCellValue(i);
 	     cell0.setCellStyle(center);
 	
 	     Cell cell1 = row.createCell(1);
@@ -1241,8 +1222,10 @@ public class ExcelView extends AbstractXlsView{
 	         cell9.setCellStyle(center);
 	   
 	     }
-	
-	     excelName = "활동비_";                               
+	 
+	 	//Todo
+	 	autoSizeColumns(worksheet, 9);
+	 	excelName = "활동비_";                               
 	 }
 	
 	 																					

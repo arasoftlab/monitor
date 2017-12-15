@@ -19,6 +19,10 @@ body {overflow-X:hidden}
 //자동완성기능 해제
 $(document).ready(function(){
 	$("input").attr("autocomplete", "off");
+	
+	$("input[type='file']").on("change", function() {
+		console.log("access change");
+	});
 });
 
 
