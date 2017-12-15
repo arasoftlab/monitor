@@ -50,7 +50,7 @@ public class ExcelView extends AbstractXlsView{
 				sheetData.setColumnWidth(col, cwidth);
 				width += cwidth;
 				//width = width > 250 ? 150 : width;
-				System.out.println("설정중인 컬럼의 번호 : " + col);
+				//System.out.println("설정중인 컬럼의 번호 : " + col);
 			}
 
 			// calculate zoom factor
@@ -124,6 +124,9 @@ public class ExcelView extends AbstractXlsView{
 	 center.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
 	 center.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); 
 	 //center.setWrapText(true);
+	 CellStyle vCenter = workbook.createCellStyle();
+	 vCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+	 
 	 
 	
 	             
@@ -426,8 +429,8 @@ public class ExcelView extends AbstractXlsView{
 	 
 	 //컬럼갯수 기본값 설정
 	 
-	 System.out.println("컬럼의 총 갯수 : " + q_list.size());
-	 System.out.println("컬럼의 총 갯수 : " + colNums);
+	 //System.out.println("컬럼의 총 갯수 : " + q_list.size());
+	 //System.out.println("컬럼의 총 갯수 : " + colNums);
 	 
 	 // 상단 문항번호 n개 만들기 
 	 for (int i = 0 ; i < q_list.size() ; i++)
@@ -624,7 +627,8 @@ public class ExcelView extends AbstractXlsView{
 			    cVal = s_temp_arr[j];
 			    cVal = ObjectUtils.isEmpty(cVal) ? "" : cVal;
 			    cell5.setCellValue(cVal.replaceAll("<br>", "\r\n"));
-			    cell5.setCellStyle(center);
+			    
+			    cell5.setCellStyle(temp_type.equals("W") ? vCenter : center);
 			}
 		}
 		else if (temp_type.equals("O"))
@@ -743,7 +747,7 @@ public class ExcelView extends AbstractXlsView{
 			//System.out.println(" 삽입하는 값은 : " + t_type_temp);
 			
 			cell5_.setCellValue(t_type_temp);
-			cell5_.setCellStyle(center);
+			cell5_.setCellStyle(vCenter);
 				                            
 			
 			//첨부 스타일이 이미지 일때
@@ -855,8 +859,8 @@ public class ExcelView extends AbstractXlsView{
 	 }
 	 
 	 
-	 System.out.println("컬럼의 총 갯수 : " + q_list.size());
-	 System.out.println("컬럼의 총 갯수 : " + colNums);
+	 //System.out.println("컬럼의 총 갯수 : " + q_list.size());
+	 //System.out.println("컬럼의 총 갯수 : " + colNums);
 	 
 	 File img_temp_del = new File(img_temp_path);
 	 deleteFolder(img_temp_del);
