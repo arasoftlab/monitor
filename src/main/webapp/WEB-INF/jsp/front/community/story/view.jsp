@@ -105,7 +105,7 @@ function c_modify(c_idx)
 {
 	var comment_temp = $('#comment_'+c_idx).text();
 	
-	$('#comment_'+c_idx).contents().unwrap().wrap('<input type="text" id="comment_'+c_idx+'" value="'+comment_temp+'" style="width:100%;" />');	
+	$('#comment_'+c_idx).contents().unwrap().wrap('<input type="text" id="comment_'+c_idx+'" value="'+comment_temp+'"class=form-control style="width:100%;" />');	
 	
 	$('#comment_'+c_idx).text("");
 	
@@ -366,9 +366,18 @@ function onDelete(bbs_id)
 						<div class="reply_by_user">
 							<a name="comment_13169"></a>
 							<table style="width: 100%; font-size:12px;">
-								<tr>
+								<colgroup>
+									<col width="30%;">
+									<col width="70%;">														
+								</colgroup>
 								<c:choose>
 									<c:when test="${item.is_secret eq 'Y' }">
+									<tr>
+										<td class="date" colspan="2">
+											<fmt:formatDate value="${item.regdate }" pattern="yy.MM.dd HH:mm:ss" />
+										</td>
+									</tr>
+									<tr>
 										<td class="writer">
 											<p class="writer">
 												<c:out value="${fn:substring(item.member_id, 0, 3)}" />**
@@ -379,19 +388,26 @@ function onDelete(bbs_id)
 												${item.description }
 											</p>
 										</td>
-										<td class="modify_button">
+									</tr>
+									<tr>
+										<td colspan=2 class="modify_button">
 											<c:if test="${item.member_id  eq member_id}">											
 												<button class="btn btn-default button_blue button_white" id="btn_comment_modify_cancle_${item.comm_id}" style="display:none;" onclick="c_cancle('${item.comm_id}')">취소</button>
 												<button class="btn btn-info button_blue button_white" id="btn_comment_apply_${item.comm_id}" onclick="c_modify('${item.comm_id}')">수정</button>
 												<button class="btn btn-warning button_blue button_white" onclick="c_delte('${item.comm_id}')">삭제</button>
 											</c:if>
 										</td>
-										<td class="date">
-											<fmt:formatDate value="${item.regdate }" pattern="yy.MM.dd HH:mm:ss" />
-										</td>
+										
+									</tr>
 									</c:when>
 									
-									<c:otherwise>									
+									<c:otherwise>
+									<tr>
+										<td class="date" colspan="2">
+											<fmt:formatDate value="${item.regdate }" pattern="yy.MM.dd HH:mm:ss" />
+										</td>
+									</tr>
+									<tr>									
 										<td class="writer">
 											<p class="writer">
 												<c:out value="${fn:substring(item.member_id, 0, 3)}" />**
@@ -400,20 +416,21 @@ function onDelete(bbs_id)
 										<td class="comment-description">
 											<p id="comment_${item.comm_id}">${item.description }</p>
 										</td>
-										<td class="modify_button">
+										<c:set var="isMod" value="${item.member_id eq member_id ? true : false }" />
+
+									</tr>
+									<tr>
+										<td colspan=2 class="modify_button">
 											<c:if test="${item.member_id  eq member_id}">
 												<button class="btn btn-default button_blue button_white" id="btn_comment_modify_cancle_${item.comm_id}" style="display:none;" onclick="c_cancle('${item.comm_id}')">취소</button>
 												<button class="btn btn-primary button_blue button_white" id="btn_comment_apply_${item.comm_id}" onclick="c_modify('${item.comm_id}')">수정</button>
 												<button class="btn btn-warning button_blue button_white" onclick="c_delte('${item.comm_id}')">삭제</button>
 											</c:if>
-										</td>
-										<td class="date">
-											<fmt:formatDate value="${item.regdate }" pattern="yy/MM/dd HH:mm:ss" />
-										</td>
+										</td>										
+									</tr>
 									</c:otherwise>
 								</c:choose>				
-									
-								</tr>							
+															
 							</table>
 						</div>
 					</c:forEach>
@@ -459,8 +476,8 @@ function onDelete(bbs_id)
 												name="is_secret" id="is_secret" value="Y"> <span
 												style="color: cornflowerblue;">비밀 덧글</span>
 												-->
-												<button type="button" class="reply_btn btn-primary button_blue button_white"
-													onclick="comment_apply()">덧글입력</button>
+												<button type="button" class="reply_btn btn-primary button_blue button_white pull-right"
+													onclick="comment_apply()" style="margin-top:5px;">덧글입력</button>
 											</td>
 										</tr>
 									</table>

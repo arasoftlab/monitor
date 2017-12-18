@@ -43,7 +43,7 @@ function fnShowImg(img, title){
 			<tr>
 				<td>
 					<table class="table_02">
-						<tbody>
+						<tbody style="vertical-align:baseline;">
 						
 						<c:choose>
 							<c:when test="${!empty list }">
@@ -51,7 +51,8 @@ function fnShowImg(img, title){
 								<tr>
 								  <td style="width:20%;">
 										<div class="thumb">
-												<img src="<c:url value='${item.fileList[0].savePath }/${item.fileList[0].unqFileName }'/>" 
+												<c:set var="imgPath" value="${item.fileList[0].savePath }/${item.fileList[0].unqFileName }" />
+												<img src="<c:url value='${imgPath}'/>" 
 												onclick="fnShowImg('${item.fileList[0].savePath }/${item.fileList[0].unqFileName }', '${item.title }');" style="width: 150px;"
 												>
 										</div>
@@ -60,7 +61,7 @@ function fnShowImg(img, title){
 										<table class="sub_table" style="width:100%; border=none;">
 		  								<tr>
 			  							  <td>
-  			  						  	  <img src="<c:url value='/css/front/img/icon04.png'/>">
+  			  						  	  <img src="<c:url value='/css/front/img/icon04.png'/>" class="navIcon">
 	  		  							  	<font style='font-size:12px;'>${item.title }</font>
 					  					  </td>
 						  				</tr>
@@ -104,11 +105,11 @@ function fnShowImg(img, title){
 							<table style="width:100%;">
 								<tr>
 									<td>
-										<table id="search_table">
-											
+										<table id="search_table" >
+											<tbody style="vertical-align:middle;">
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control">
 														<!-- option value="" <c:if test="${empty vo.searchCategory }">selected</c:if>>선택</option -->
 														<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
 														<option value="description" <c:if test="${vo.searchCategory eq 'description' }">selected</c:if>>내용</option>
@@ -117,14 +118,14 @@ function fnShowImg(img, title){
 												</td>
 												<td class="est_keyword_cell">
 													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="검색어 입력" type="text" name="searchText" class="keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y" style="font-size:16px;height:100%;" />
+														<input title="input" alt="검색어 입력" type="text" name="searchText" class="form-control" value="${vo.searchText }"  name='com_board_search_value' chk="y" />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" alt="검색" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%; border:none;" onclick="fnSearch();" >
+													<input title="input" alt="검색" type='image' class="form-control" src='<c:url value='/img/front/search.gif'/>' onclick="fnSearch();" >
 												</td>
 											</tr>
-											
+											</tbody>
 										</table>
 									</td>
 								</tr>
@@ -156,7 +157,7 @@ function fnShowImg(img, title){
 								<th><font style='font-size:12px;'>내용</font></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody style="vertical-align:baseline;">
 						
 						<c:choose>
 							<c:when test="${!empty list }">
@@ -169,7 +170,7 @@ function fnShowImg(img, title){
 												</td>
 												<td style="width:80%;vertical-align: middle;">	
 												 <p>	
-  			  						  	  <img src="<c:url value='/css/front/img/icon04.png'/>">
+  			  						  	  <img src="<c:url value='/css/front/img/icon04.png'/>" class="navIcon">
 	  		  							  	<font style='font-size:12px;'>${item.title }</font>
 	  		  							 </p> 	
 													<p>
@@ -202,11 +203,11 @@ function fnShowImg(img, title){
 							<table style="width:100%;">
 								<tr>
 									<td>
-										<table id="search_table">
+										<table id="search_table" style="vertical-align:none;">
 											
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control">
 														<!-- option value="" <c:if test="${empty vo.searchCategory }">selected</c:if>>선택</option -->
 														<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
 														<option value="description" <c:if test="${vo.searchCategory eq 'description' }">selected</c:if>>내용</option>
@@ -214,12 +215,12 @@ function fnShowImg(img, title){
 													</select>
 												</td>
 												<td class="est_keyword_cell">
-													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="검색어 입력" type="text" name="searchText" class="keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y" style="font-size:16px;height:100%;" />
+													<div id='search_display1' >
+														<input title="input" alt="검색어 입력" type="text" name="searchText" class="form-control" value="${vo.searchText }"  name='com_board_search_value' chk="y" />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" alt="검색" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%;border:none;" onclick="fnSearch();" >
+													<input title="input" alt="검색" type='image' class="form-control" src='<c:url value='/img/front/search.gif'/>' onclick="fnSearch();" >
 												</td>
 											</tr>
 											

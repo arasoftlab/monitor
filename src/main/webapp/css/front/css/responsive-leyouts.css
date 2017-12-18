@@ -1217,16 +1217,14 @@ ul.clients_home {
 }
 
 
-
-
-
 @media only screen and (max-width: 479px){
-.m_block{display:block !important;}
-.pc_notice_table{display:none;}
-.mobile_notice_table{display:block;}
 
+	.m_block{display:block !important;}
+	.pc_notice_table{display:none;}
+	.mobile_notice_table{display:block;}
+ 
 .container {
-	width: 300px;
+	width: 320px;
 	/*margin: auto;*/
 }
 .index{margin-top:-50px;}

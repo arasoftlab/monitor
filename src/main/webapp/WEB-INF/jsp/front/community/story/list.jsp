@@ -7,9 +7,9 @@ pageEncoding="UTF-8"%>
 <style>
 	.information{font-size:12px;}
 	.none_table{ border:none; width:100%;}
-	.showModal{width:28%; top:40%; left:40%;padding:10px;}
+/* 	.showModal{width:28%; top:40%; left:40%;padding:10px;}
 	.showModal .modal-header{width:100%;}
-	.showModal .modal-header .close{float:right;}
+	.showModal .modal-header .close{float:right;} */
 </style>
 
 
@@ -50,9 +50,10 @@ fnCheckSession();
 
 
 
-function apply_secret(uuid)
+function apply_secret()
 {	
 	var password = $("#sec_password").val();
+	var uuid = $("#uuid").val();
 	
 	$.ajax({
 		async : true,
@@ -78,20 +79,25 @@ function apply_secret(uuid)
 
 function onSecretEnter(uuid)
 {
+	$("#uuid").val(uuid);
+	//$("#btn_go").trigger('click');
+	$("#myModal").modal();
+	/* 
 	$.ajax({
 		async : true,
 		type : "POST",
 		url : "<c:url value='/front/community/story/secret.do'/>",
 		data : {"cont_uuid" : uuid},
 		success : function(data){
-			$("#modal-body").html(data);
+			$(".modal-content").html(data);
 			$("#btn_go").trigger('click');
 		},
 		error : function(request,status,error) {
 			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			alert("error!!");
 		}
-	});
+	}); 
+	*/
 }
 
 </script>
@@ -143,7 +149,7 @@ function onSecretEnter(uuid)
 										<td class='bbsnewf5' align='left'>
 											<c:choose>
 												<c:when test="${item.is_password eq 'Y' }">
-													<span class="notice_subject"><img src="/monitor/img/closed.JPG"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title }</a></span>
+													<span class="notice_subject"><img src="/monitor/img/closed.JPG" class="navIcon"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title }</a></span>
 												</c:when>
 												<c:otherwise>
 													<span class="notice_subject"><a href='<c:url value='view.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span>
@@ -171,7 +177,7 @@ function onSecretEnter(uuid)
 							<td class="bbsno">3366</td>
 							<td class='bbsnewf5' align='left'>
 								<span class="notice_subject"><a href='<c:url value='view.do'/>'>
-									<img src="<c:url value='/img/closed.JPG'/>">안전체험관<span style="color:red;">[RE]</span></a>
+									<img src="<c:url value='/img/closed.JPG'/>" class="navIcon">안전체험관<span style="color:red;">[RE]</span></a>
 								</span>
 							</td>
 							<td class="bbswriter">관리자2</td>
@@ -193,7 +199,7 @@ function onSecretEnter(uuid)
 											
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control" >
 														<!-- option value="" <c:if test="${empty vo.searchCategory }">selected</c:if>>선택</option -->
 														<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
 														<option value="description" <c:if test="${vo.searchCategory eq 'description' }">selected</c:if>>내용</option>
@@ -201,12 +207,12 @@ function onSecretEnter(uuid)
 													</select>
 												</td>
 												<td class="est_keyword_cell">
-													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="" type="text" name="searchText" class="keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y" style="font-size:16px;height:100%;" />
+													<div id='search_display1' >
+														<input title="input" alt="" type="text" name="searchText" class="form-control" value="${vo.searchText }"  name='com_board_search_value' chk="y"  />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" alt="" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%;border:none;" onclick="fnSearch();" >
+													<input title="input" alt="" type='image' class="form-control" src='<c:url value='/img/front/search.gif'/>' onclick="fnSearch();" >
 												</td>
 											</tr>
 											
@@ -252,7 +258,7 @@ function onSecretEnter(uuid)
 
 											<c:choose>
 												<c:when test="${item.is_password eq 'Y' }">
-													<span class="notice_subject"><img src="/monitor/img/closed.JPG"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title }</a></span>
+													<span class="notice_subject"><img src="/monitor/img/closed.JPG" class="navIcon"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title }</a></span>
 												</c:when>
 												<c:otherwise>
 													<span class="notice_subject"><a href='<c:url value='view.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span>
@@ -288,7 +294,7 @@ function onSecretEnter(uuid)
 											
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control" >
 														<!-- option value="" <c:if test="${empty vo.searchCategory }">selected</c:if>>선택</option -->
 														<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
 														<option value="description" <c:if test="${vo.searchCategory eq 'description' }">selected</c:if>>내용</option>
@@ -296,12 +302,12 @@ function onSecretEnter(uuid)
 													</select>
 												</td>
 												<td class="est_keyword_cell">
-													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="검색어 입력" type="text" name="searchText" class="keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y" style="font-size:16px;height:100%;" />
+													<div id='search_display1'>
+														<input title="input" alt="검색어 입력" type="text" name="searchText" class="form-control" value="${vo.searchText }"  name='com_board_search_value' chk="y"  />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" class="search_img" alt="검색" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%;border:none;" >
+													<input title="input"  alt="검색" type='image' class="form-control" src='<c:url value='/img/front/search.gif'/>' >
 												</td>
 											</tr>
 											
@@ -322,26 +328,25 @@ function onSecretEnter(uuid)
 		<div class="clearfix divider_dashed7"></div>
 	</div>
 	
-	<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".showModal"></button>
+<!-- 	<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target="#myModal"></button>
+ -->
 
-
-	<div class="modal fade showModal" id="myModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<div class="modal showModal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close btn-default" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close btn-default" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h6 class="modal-title"><font color="#6799FF">비밀번호 입력</font></h6>
 				</div>
 				<div class="modal-body" id="modal-body">
-
+					<input type="password" id="sec_password" class="form-control">
+					
 				</div>
 				<div class="modal-footer">
-
-				</div>
+					<button onclick="apply_secret()" class="btn btn-default"  id="uuid" value>전송</button>
+				</div>				
 			</div>
 			<!-- /.modal-content -->
 		</div>

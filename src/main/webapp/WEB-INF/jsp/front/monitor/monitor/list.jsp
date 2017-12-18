@@ -144,18 +144,18 @@ function getTestPopupPage(id){
 											
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control cateform" >
 														<option value='title' >과제 제목</option>
 														<!-- option value='description' >내용</option -->
 													</select>
 												</td>
 												<td class="est_keyword_cell">
 													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="" type='text' class="keywordform"  name='searchText' chk="y"  style="font-size:16px;height:100%;" />
+														<input title="input" alt="" type='text' class="form-control keywordform"  name='searchText' chk="y"   />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" alt="" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%;border:none;" >
+													<input title="input" class="form-control" alt="" type='image' src='<c:url value='/img/front/search.gif'/>'  >
 												</td>
 											</tr>
 										</table>

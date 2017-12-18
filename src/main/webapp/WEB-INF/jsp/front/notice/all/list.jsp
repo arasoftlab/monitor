@@ -83,7 +83,7 @@ function fnSearch(){
 									<table id="search_table">
 											<tr>
 												<td class="est_cate_cell">
-													<select title="select" name='type' class="cateform" style="height:100%;" >
+													<select title="select" name='type' class="form-control cateform" style="height:100%;" >
 														<option value=""  <c:if test="${empty vo.type  }">selected</c:if>>전체</option>
 														<option value="F" <c:if test="${vo.type eq 'F' }">selected</c:if>>현장과제</option>
 														<option value="V" <c:if test="${vo.type eq 'V' }">selected</c:if>>설문과제</option>
@@ -91,7 +91,7 @@ function fnSearch(){
 													</select>																																	
 												</td>
 												<td class="est_cate_cell">
-													<select title="select" name='searchCategory' class="cateform" style="height:100%;">
+													<select title="select" name='searchCategory' class="form-control cateform" >
 														<!-- option value="" <c:if test="${empty vo.searchCategory }">selected</c:if>>선택</option -->
 														<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>
 														<!-- option value="description" <c:if test="${vo.searchCategory eq 'description' }">selected</c:if>>내용</option -->
@@ -99,11 +99,11 @@ function fnSearch(){
 												</td>
 												<td class="est_keyword_cell">
 													<div id='search_display1' style='display:block;'>
-														<input title="input" alt="" type="text" name="searchText" class="keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y" style="font-size:16px;height:100%;" />
+														<input title="input" alt="" type="text" name="searchText" class="form-control keywordform" value="${vo.searchText }"  name='com_board_search_value' chk="y"  />
 													</div>
 												</td>
 												<td class="est_btn_cell">
-													<input title="input" alt="" type='image' src='<c:url value='/img/front/search.gif'/>' style="height:100%;border:none;" onclick="fnSearch();" >
+													<input title="input" class="form-control" alt="" type='image' src='<c:url value='/img/front/search.gif'/>'  onclick="fnSearch();" >
 												</td>
 											</tr>
 										</table>
