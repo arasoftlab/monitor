@@ -411,7 +411,7 @@ $('#element').off('scroll touchmove mousewheel');
 										<c:forEach var="a_item" items="${a_list }" varStatus="j">
 										<tr>
 											<td><input type="checkbox" name="chk" value="${a_item.answers_id}"></td>
-											<td>${a_item.rn }</td>
+											<td>${page.totalRows - (((page.pageNum -1) * page.pageSize) + j.index) }</td>
 											<td>
 												<fmt:formatDate value="${a_item.regdate }" pattern="MM-dd HH:mm"/>
 											</td>

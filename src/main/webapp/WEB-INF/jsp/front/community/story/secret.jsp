@@ -10,7 +10,7 @@
 	<h6 class="modal-title"><font color="#6799FF">비밀번호 입력</font></h6>
 </div>
 <div class="modal-body" id="modal-body">
-	<input type="password" id="sec_password" class="form-control" style="margin-right:10px;">
+	<input type="password" id="sec_password" class="form-control" style="margin-right:5px;">
 	
 </div>
 <div class="modal-footer">
