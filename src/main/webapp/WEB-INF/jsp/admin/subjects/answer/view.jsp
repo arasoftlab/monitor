@@ -573,9 +573,11 @@ $('#element').off('scroll touchmove mousewheel');
 																	</td>																		
 																		<c:forEach var="s_w_item" items="${q_type_list.optionVO }" varStatus="sw">
 																			<c:if test="${s_w_item.descyn eq 'Y' }">
-																				<td>																					  
+																				<td>
+																					<c:set var="qNo" value="${fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,':')+2)}" />																					  
 																					<c:if test="${sw.index+1 eq fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,':')+2)}">
-																						${fn:substring(an_item,fn:indexOf(an_item,'#')+1,fn:length(an_item))}									
+																						<c:set var="aN"  value="${fn:substring(an_item,fn:indexOf(an_item,'#')+1,fn:length(an_item))}" />
+																							${fn:replace(aN, qNo, '') }									
 																					</c:if>													
 																				</td>
 																			</c:if>
@@ -621,7 +623,7 @@ $('#element').off('scroll touchmove mousewheel');
 
 				
 				<div >
-					<div class=" center"><jsp:include page="/WEB-INF/inc/paging.jsp"></jsp:include></div>				
+					<div class=" center"><jsp:include page="/WEB-INF/inc/paging3.jsp"></jsp:include></div>				
 				</div>
 				
 			</div>

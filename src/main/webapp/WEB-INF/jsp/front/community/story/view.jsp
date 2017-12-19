@@ -367,8 +367,8 @@ function onDelete(bbs_id)
 							<a name="comment_13169"></a>
 							<table style="width: 100%; font-size:12px;">
 								<colgroup>
-									<col width="30%;">
-									<col width="70%;">														
+									<col width="15%;">
+									<col width="85%;">														
 								</colgroup>
 								<c:choose>
 									<c:when test="${item.is_secret eq 'Y' }">
