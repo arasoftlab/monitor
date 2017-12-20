@@ -240,7 +240,6 @@ public class FileServiceImpl implements FileService{
 
 	public FileVO jindoFileUpload(HttpServletRequest req, FileVO uploadFile) throws IOException {
 		String webSavePath = "/upload/" + BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth());
-//		String savePath = req.getRealPath(webSavePath);
 		String savePath = req.getSession().getServletContext().getRealPath("/upload/"+BaseUtil.currentYear()+BaseUtil.addZeroString(BaseUtil.currentMonth()));
 		
 		
@@ -282,7 +281,12 @@ public class FileServiceImpl implements FileService{
 		String u = req.getSession().getServletContext().getRealPath("/");
 		String imagePullPath = u + fileVO.getSavePath() + "/" + fileVO.getUnqFileName();
 
-		makeThumbnail(imagePullPath);
+		System.out.println("1:"+ u);
+		System.out.println("2:"+ imagePullPath);
+		System.out.println("3:"+ uploadDir);
+		System.out.println("4:"+ uploadFileName);
+		
+		//makeThumbnail(imagePullPath);
 	
 		return fileVO;
 	}

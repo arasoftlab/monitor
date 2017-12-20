@@ -42,6 +42,27 @@
      
     </select>
     
+    <select id="getMonitorsUnFinList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
+    	WITH MEMINFO AS (
+    		SELECT M.ID MEMBER_ID,  H.M001_NM MEMBER_NAME, H.M001_PHONE PHONE, H.M001_EMAIL EMAIL
+	    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M 
+	    	WHERE M.ID = H.M001_ID 
+	    	AND M.POLL_NUM = (SELECT POLL_NUM FROM ADMIN_SETTING WHERE ROWNUM =1)
+    	), ANSWERS AS (
+    		SELECT M.MEMBER_ID, M.IS_SELECTION, A.TEMPORARY
+            FROM N_ANSWERS A, N_MONITORS M
+            WHERE M.SUBJECT_ID = A.SUBJECT_ID(+) 
+            AND M.MEMBER_ID = A.MEMBER_ID(+)
+            AND ( NOT A.TEMPORARY = 'N' OR A.TEMPORARY IS NULL )
+            AND M.IS_SELECTION = 'Y'
+            AND M.SUBJECT_ID = #{subject_id }
+            
+    	)
+    	SELECT M.MEMBER_ID, M.MEMBER_NAME, M.PHONE, M.EMAIL, A.TEMPORARY
+    	FROM MEMINFO M, ANSWERS A
+    	WHERE M.MEMBER_ID = A.MEMBER_ID
+    </select>
+    
     <select id="getMonitorsApplyList" parameterType="seoul.admin.vo.MonitorsVO" resultType="seoul.admin.vo.MonitorsVO">
         
 						WITH BASEQ AS ( -- 기수

@@ -152,4 +152,21 @@ public class SubjectApplicantController {
 
 		return "admin/subjects/applicant/team_view.ajax";
 	}	
+	
+	@RequestMapping("viewUnFin.do")
+	public String viewUnFin(Model model, @ModelAttribute MonitorsVO monitorsVO) throws Exception{
+		
+		List<MonitorsVO> list = monitorsService.getMonitorsUnFinList(monitorsVO);
+		SubjectVO subjectVO = new SubjectVO();		
+		subjectVO.setSubject_id(monitorsVO.getSubject_id());
+	
+		model.addAttribute("list", list);
+		model.addAttribute("vo", subjectinfoService.getSubject(subjectVO));
+		
+		model.addAttribute("page", monitorsVO.getPagingVO());
+		model.addAttribute("now_page", monitorsVO);
+		
+		return "admin/subjects/applicant/view.admin";
+	}
+	
 }

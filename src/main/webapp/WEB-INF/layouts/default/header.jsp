@@ -124,11 +124,11 @@ function joinSeoul(){
 }
 
 function loginSeoul(){
-	//
-	if(confirm('로그인 후 사용가능합니다.\n로그인 페이지로 이동하시겠습니까?')){
+	
+	if(confirm('로그인 후 사용가능합니다.\n로그인 페이지로 이동하시겠습니까?')==true){
 		joinSeoul();
 	}else{
-		return false;
+		return;
 	}
 }
 
@@ -242,15 +242,15 @@ function logout(){
 if (sso_id != null && m_infos == null) 
 {
 %>
-			                        <li><a href="javascript:alert('꼼꼼한 서울씨 회원이 아닙니다.')" class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
+			                        <li><a href="javascript:alert('꼼꼼한 서울씨 회원이 아닙니다.'); " class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
 <%
 }else if (sso_id == null && m_infos == null){
 %>
-			                        <li><a href="javascript:loginSeoul();" class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
+			                        <li><a href="javascript:loginSeoul(); " class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
 <%
 }else if (m_infos.contains("secession")){
 %>
-			                        <li><a href="javascript:alert('꼼꼼한 서울씨 회원이 아닙니다.')" class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
+			                        <li><a href="javascript:alert('꼼꼼한 서울씨 회원이 아닙니다.'); " class="<c:if test="${menu.depth2 eq 'mypage' }">active</c:if>"><b>마이페이지</b></a></li>						            
 <%
 }else{
 %>

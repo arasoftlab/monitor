@@ -9810,7 +9810,7 @@ nhn.husky.SE2M_Hyperlink = jindo.$Class({
 		
 		if(this._validateURL(sURL)){
 			//if(this.oCbNewWin.checked){
-			if(false){
+			if(true){
 				sTarget = "_blank";
 			}else{
 				sTarget = "_self";

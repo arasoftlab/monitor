@@ -25,6 +25,10 @@ public class MonitorsDAOImpl extends SqlSessionDaoSupport implements MonitorsDAO
 		return getSqlSession().selectList("monitors.getMonitorsApplyList", monitorsVO);
 	}
 		
+	public List<MonitorsVO> getMonitorsUnFinList(MonitorsVO monitorsVO){
+		return getSqlSession().selectList("monitors.getMonitorsUnFinList", monitorsVO);
+	}
+	
 	@Override
 	public int insertMonitors(MonitorsVO monitorsVO) {
 		return getSqlSession().insert("monitors.insertMonitors", monitorsVO);

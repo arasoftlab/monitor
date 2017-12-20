@@ -44,4 +44,7 @@ public class MonitorsVO extends CommonVO{
 	private String email;
 	private String memo;
 	
+	//미제출자확인을 위한 필드
+	private String temporary;
+	
 }

@@ -36,7 +36,9 @@ public class MonitorsServiceImpl implements MonitorsService{
 		return monitorsDAO.getMonitorsApplyList(monitorsVO);
 	}
 	
-	
+	public List<MonitorsVO> getMonitorsUnFinList(MonitorsVO monitorsVO) {
+		return monitorsDAO.getMonitorsUnFinList(monitorsVO);
+	}
 	
 	@Override
 	public int insertMonitors(MonitorsVO monitorsVO) {

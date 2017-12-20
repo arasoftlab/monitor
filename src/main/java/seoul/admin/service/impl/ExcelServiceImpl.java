@@ -65,66 +65,52 @@ public class ExcelServiceImpl implements ExcelService{
 	public List<Object> getAllObjects(String target , CommonVO commonVO)
 	{	
 		List<Object> list = new ArrayList<Object>();
+		MonitorsVO monitorsVO = new MonitorsVO();
 		
-		if (target.equals("applicant")) 
-		{
-			MonitorsVO monitorsVO = new MonitorsVO();			
+		switch(target) {
+		
+		case "applicant":
 			monitorsVO.setSubject_id(commonVO.getSsubject_id());
-			
-			
 			monitorsVO.setPageSize(10000);
-			
 			list.add(monitorsService.getMonitorsApplyList(monitorsVO));
-		}
-		else if (target.equals("applicant_apply"))
-		{
-			MonitorsVO monitorsVO = new MonitorsVO();			
+			break;
+		
+		case "applicant_apply":
 			monitorsVO.setSubject_id(commonVO.getSsubject_id());
-			
 			monitorsVO.setPageSize(10000);
 			monitorsVO.setIs_selection("Y");
-			
 			list.add(monitorsService.getMonitorsApplyList(monitorsVO));
-		}
-		else if (target.equals("answers"))
-		{
+			break;
+		
+		case "answers":
 			AnswersVO answersVO = new AnswersVO();			
 			answersVO.setSubject_id(commonVO.getSsubject_id());
-			
 			answersVO.setPageSize(10000);
- 
 			list.add(answersService.getAnswerList(answersVO));
-			
-			
-     		QuestionVO questionVO = new QuestionVO();
+			QuestionVO questionVO = new QuestionVO();
     		questionVO.setSubject_id(commonVO.getSsubject_id());
     		
     		List<QuestionVO> q_list = questionService.getQuestionList(questionVO);
     		
-    		
     		for (int i = 0 ; i < q_list.size() ; i++ )
     		{
- 
     			List <OptionVO> optionList = optionService.getOptionList(new OptionVO(q_list.get(i).getQuestion_id()));
-    	
+ 
     			for (int j =0 ; j < optionList.size() ; j++)
     			{
     				optionList.set(j, optionService.getOption(optionList.get(j)));   
     			}
     			
     			q_list.get(i).setOptionVO(optionList);
-
     		}
     		
     		list.add(q_list);
-			
-		}else if (target.equals("memberManager")){
-			
+    		break;
+		
+		case "memberManager":
 			MemberManagerVO memberManagerVO = new MemberManagerVO();
 			
 			memberManagerVO.setPageSize(10000);
-			//memberManagerVO.setQuery("grade='secession'");
-			
 			memberManagerVO.setPoll_num(commonVO.getSpoll_num());
 			memberManagerVO.setGrade(commonVO.getSgrade()); 
 			
@@ -139,19 +125,21 @@ public class ExcelServiceImpl implements ExcelService{
 			List<MemberManagerVO> m_list = memberService.getMemberManagerlist(memberManagerVO);
 			
 			list.add(m_list);
-		}else if (target.equals("money")){
-			
+			break;
+		
+		case "money":
 			MonitorApplyVO monitorApplyVO = new MonitorApplyVO();
-						
 			monitorApplyVO.setQuery("subject_id = '"+commonVO.getSsubject_id()+"'");
-
 			monitorApplyVO.setPageSize(10000);
-			
 			list.add(monitorApplyService.getMonitorApplyList(monitorApplyVO));
+			break;
+		
+		case "unfin":
+			monitorsVO.setSubject_id(commonVO.getSsubject_id());
+			monitorsVO.setPageSize(10000);
+			list.add(monitorsService.getMonitorsUnFinList(monitorsVO));
+			break;
 		}
-		
-		
-		
 		
 		return list;
 	}

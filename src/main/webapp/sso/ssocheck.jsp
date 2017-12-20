@@ -100,16 +100,17 @@
 	    //if(cookiess[i].getName().equals("_SSO_Global_Logout_url")){
 	    if(cookiess[i].getName().equals("kalogin")){
 	    	TokenChkCookie=cookiess[i].getValue();
+	    	System.out.println(TokenChkCookie);
 	      break;
 	    }
 	  }
 	}
 
-	if(TokenChkCookie.length() > 0){
+	if(TokenChkCookie.length() > 0 && TokenChkCookie.indexOf("kalogin") > -1){
 		TokenChk = "Y";
 	}
 
-	System.out.println("ssocheck.jsp - kalogin : " + TokenChk + "<br/>");
+	System.out.println("ssocheck.jsp - kalogin : " + TokenChk + "   ");
 
 
 	// test

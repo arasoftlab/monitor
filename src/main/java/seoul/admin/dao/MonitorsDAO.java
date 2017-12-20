@@ -12,6 +12,8 @@ public interface MonitorsDAO {
 	
 	List<MonitorsVO> getMonitorsApplyList(MonitorsVO monitorsVO);
 	
+	List<MonitorsVO> getMonitorsUnFinList(MonitorsVO monitorsVO);
+	
 	int insertMonitors(MonitorsVO monitorsVO);
 
 	int updateMonitors(MonitorsVO monitorsVO);

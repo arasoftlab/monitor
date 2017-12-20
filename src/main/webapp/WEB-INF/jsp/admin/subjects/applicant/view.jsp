@@ -27,15 +27,25 @@ function fnPresent(){
 }
 
 
-function onExcel(){	
+function onExcel(section){
+	var mvpath = "";
+	
+	if(section == "applicant"){
+		mvpath = "/monitor/admin/ex/excel_transform_controller.do?target=applicant&ssubject_id=${vo.subject_id}";
+	}
+	
+	if(section == "apply"){
+		mvpath = "/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&ssubject_id=${vo.subject_id}";
+	}
+	
+	if(section == "unfin"){
+		mvpath = "/monitor/admin/ex/excel_transform_controller.do?target=unfin&ssubject_id=${vo.subject_id}";		
+	}
+	
 	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant&ssubject_id=${vo.subject_id}";
+	location.href= mvpath;
 }
 
-function onExcel_apply(){	
-	window.event.preventDefault() ? window.event.preventDefault() : window.event.returnValue = false;
-	location.href="/monitor/admin/ex/excel_transform_controller.do?target=applicant_apply&ssubject_id=${vo.subject_id}";
-}
 
 function onApply( is_select )
 {
@@ -116,7 +126,7 @@ function save_memo(id){
 				
 				
 				
-				<div id="search-box1" class="col-xs-7" style="padding:0;">
+				<div id="search-box1" class="col-xs-12" style="padding:0;">
 					<form class="pull-left;">
 
 						<input type="hidden" name="subject_id" value="${vo.subject_id}">
@@ -145,13 +155,14 @@ function save_memo(id){
 					
 				</div>
 				
-				<div class="col-xs-5 pull-right" style="padding:0; text-align:right">
+				<div class="" style="padding-bottom:5px;" >
 
 					<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".present" style="display:none;" ></button>									
 
 					<button class="btn btn-theme  " onclick="view_team('${vo.subject_id}')">신청,선정 현황</button>
-					<button class="btn btn-theme  " onclick="onExcel()">신청자 목록 다운</button>
-					<button class="btn btn-theme  " onclick="onExcel_apply()">선정 결과 다운</button>
+					<button class="btn btn-theme  " onclick="onExcel('applicant')">신청자 목록 다운</button>
+					<button class="btn btn-theme  " onclick="onExcel('apply')">선정 결과 다운</button>
+					<button class="btn btn-theme  " onclick="onExcel('unfin')">미제출자 다운</button>
 				</div>
 				
 				<table class="table table-bordered table-striped modal_table" style="margin-top:8%;font-size:12px">

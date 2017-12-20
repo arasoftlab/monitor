@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,16 +55,24 @@ public class MemberController {
 	public @ResponseBody Map<String, Object> checkMember(@ModelAttribute MemberVO memberVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		memberVO = memberService.checkMember(memberVO);
-				
-		MemberVO backendData = memberService.getBackEndMember(memberVO);
-		
-		memberVO.setName(backendData.getName());
+		System.out.println("로그인시도 : " + memberVO.getId());
+		if(!ObjectUtils.isEmpty(memberVO.getId())) { //id로 통합회원검색
+			memberVO = memberService.checkMember(memberVO);
+			if(!ObjectUtils.isEmpty(memberVO)) { //검색된 정보로 꼼꼼패널검색
+				MemberVO backendData = memberService.getBackEndMember(memberVO);
+				memberVO.setName(backendData.getName());
+			}
+		}
 		
 		if(BaseUtil.isEmpty(memberVO)){
 			resultMap.put("result", "fail");
-		}else{
- 
+			
+			//내용이 없을때는 세션을 초기화 해준다.
+			SessionUtil.setAttribute(SessionContants.MEMBER, null);
+			SessionUtil.setAttribute("grade",  null);
+			
+		}else{		
+			
 			MemberVO login_mem = new MemberVO();
 			login_mem.setId(memberVO.getId());
 			memberService.updateMemberState(login_mem);
@@ -83,8 +92,12 @@ public class MemberController {
 			
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );
 		MemberVO mem = (MemberVO)ret;		
-
+		
+		String chk = ObjectUtils.isEmpty(mem) ? "비었음 " : mem.toString();
+		
 		//SessionUtil.
+		System.out.println("세션정보 : " + ret );
+		System.out.println("멤버확인 : " + chk );
 		
 		if(!SessionUtil.isAlive()){
 			resultMap.put("result", "fail");

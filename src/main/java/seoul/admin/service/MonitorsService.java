@@ -11,6 +11,8 @@ public interface MonitorsService {
 
 	List<MonitorsVO> getMonitorsApplyList(MonitorsVO monitorsVO);
 	
+	List<MonitorsVO> getMonitorsUnFinList(MonitorsVO monitorsVO);
+	
 	MonitorsVO getMonitors(MonitorsVO monitorsVO);
 		
 	int insertMonitors(MonitorsVO monitorsVO);
