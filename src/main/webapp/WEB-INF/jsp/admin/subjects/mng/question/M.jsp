@@ -47,6 +47,11 @@ pageEncoding="UTF-8"%>
 									</div>	
 								</div>
 								
+							    <div class="col-xs-2" style="padding-left:15px; margin-top:5px;">
+							    	<input type="checkbox" value="Y" onclick="s_type_desc(this)" id="s_type_descyn" name="optionVO[${i.index}].descyn" <c:if test="${item.descyn eq 'Y' }">checked</c:if> />
+							    	<label>서술형추가</label>
+							    </div>								
+								
 								<div class="col-xs-12">
 									<div id="O_fileListI${item.options_id }">
 										<c:forEach var="file" items="${item.fileList }">

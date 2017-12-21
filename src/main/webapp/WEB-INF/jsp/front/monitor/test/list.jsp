@@ -2,18 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-	<style>	
+<style>	
 	.s_q{font-weight:bold !important;}
 	.sub_q{color:#acacac; font-size:8px;}
 	.horizontal{margin:5px 0; border:1px solid #ccc;}
-	</style>
-
-
-<style>
-
-body {overflow-X:hidden}
-
+	body {overflow-X:hidden}
 </style>
+
 
 <script>
 //자동완성기능 해제
@@ -21,7 +16,7 @@ $(document).ready(function(){
 	$("input").attr("autocomplete", "off");
 	
 	$("input[type='file']").on("change", function() {
-		console.log("access change");
+		//console.log("access change");
 	});
 });
 
@@ -71,31 +66,22 @@ function captureReturnKey(e) {
     return false; 
 } 
 
-
 //테스트리스트 입장시 가장 처음에 있는 질의문을 불러오기위해 초기화
-
 var answers_id = '${answers_id}';
-
 var is_payment = '${is_payment}';
-
-
 var subject_id = '${subject_id}';
-
 var is_maxpage = 100;
 
 <c:set var="search" value="'" />
 <c:set var="replace" value="" />
 
 var is_modify = '<c:out value="${fn:replace(history_params, search, replace)}"/>';
-
-
 var is_member = '${m_vo.id}';
-
 var is_pollnum = '${m_vo.poll_num}';
+var report_num = '${report_num}';
 
 function onEnter()
 {
-
 	if (is_modify =="") 
 	{
 		//console.log("next >>>");
@@ -110,14 +96,12 @@ function onEnter()
 }
 
 function onBankPopup()
-{
-	
-	location.href = "/monitor/front/subject/bank.do?subject_id="+subject_id+"&poll_num="+is_pollnum+"&member_id="+is_member;
+{	
+	location.href = "/monitor/front/subject/bank.do?subject_id="+subject_id+"&poll_num="+is_pollnum+"&member_id="+is_member+"&report_num"+ report_num;
 }
 
 function goEndpage(history_params , answers_id){
-	var params = {};
-	
+	var params = {};	
 	params = $("form").serialize();
 	
 	$.ajax({
@@ -127,6 +111,7 @@ function goEndpage(history_params , answers_id){
 		data : {
 			"history_params" : history_params,
 			"params" : params, 
+			"report_num" : report_num,
 			"answers_id" : answers_id
 			},
 		success : function(data){
@@ -150,7 +135,7 @@ function goEndpage(history_params , answers_id){
 
 function goEndCommentpage(com , history_params )
 {	
-	goEndpage(history_params,answers_id );
+	goEndpage(history_params,answers_id, report_num );
 }
 
 function historyDelete(question_id,history_org , history_params){
@@ -170,13 +155,10 @@ function historyDelete(question_id,history_org , history_params){
 				ret_history += ",";
 			}
 			
-			ret_history +=history_arr[i];
-			
+			ret_history +=history_arr[i];			
 			////console.log(history_arr[i]);
-		}
-		
-		var back_num = history_arr[history_arr.length-2];
-		
+		}		
+		var back_num = history_arr[history_arr.length-2];		
 		////console.log(ret_history);
 		getPreviewQuestion(question_id , ret_history,back_num , history_params);
 	}	
@@ -189,9 +171,16 @@ function historyAppend(question_id , history_org , this_num , bifurcation , hist
 	
 	var history_arr = history_org + "," +this_num;	
 	getNextQuestion(question_id, history_arr, this_num , bifurcation , history_params);
+	
+	
+	$("input").each(function(i, e){
+		console.log(i, e);
+	});
+	
+	//console.log(question_id , history_org , this_num , bifurcation , history_params);
 }
 
-function getPreviewQuestion(question_id,history_arr,back_num , history_params){
+function getPreviewQuestion(question_id,history_arr,back_num , history_params ){
 	is_maxpage = back_num;
 	
 	$.ajax({
@@ -203,15 +192,16 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params){
 			"history_arr" : history_arr,
 			"history_params" : history_params,
 			"back_num" : back_num , 
-			"answers_id" : answers_id
+			"answers_id" : answers_id,
+			"report_num" : report_num
 			},
 		success : function(data){
-			//console.log(data);
+			console.log(data);
 			$("#test_target").html(data);			
 			$("#test_index").text(back_num);
 		},
 		error : function(request,status,error) {
-			////console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			alert("잘못된 접근이거나 이미 완료된 과제입니다.");
 		}
 	});
@@ -225,7 +215,6 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 	{
 		if ( is_maxpage == maxpage)
 		{
-			
 			//goEndpage(history_params, answers_id);
 		}
 	}
@@ -245,7 +234,8 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 						"history_params" : history_params,
 						"params" : params ,
 						"bifurcation" : bifurcation,
-						"answers_id" : answers_id
+						"answers_id" : answers_id,
+						"report_num" : report_num
 						},
 				success : function(data){
 					if (data != "")

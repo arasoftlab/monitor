@@ -9,14 +9,18 @@
         				 ,answers
         				 ,member_id
         				 ,poll_num
-        				 ,regdate)
+        				 ,regdate
+        				 ,report_num
+        				 )
         		   values(
         		   		 ANSWERS_SEQ.NEXTVAL
         		   		 ,#{subject_id ,jdbcType=VARCHAR}
         		   		 ,#{answers ,jdbcType=VARCHAR}
         		   		 ,#{member_id ,jdbcType=VARCHAR}
         		   		 ,#{poll_num ,jdbcType=INTEGER}
-        		   		 ,sysdate)
+        		   		 ,sysdate
+        		   		 ,#{report_num, jdbcType=INTEGER}
+        		   		 )
     </insert>
     
     <select id="getAnswer" parameterType="seoul.admin.vo.AnswersVO" resultType="seoul.admin.vo.AnswersVO">
@@ -27,8 +31,9 @@
               ,member_id
               ,temporary
               ,regdate
+              ,report_num
           from n_answers
-         where subject_id = #{subject_id}
+         where subject_id = #{subject_id} and report_num = #{report_num}
          
          	<if test="member_id != null and member_id !=''">
 		   		and member_id = '${member_id}' 
@@ -146,6 +151,7 @@
                       ,a.temporary
                       ,a.regdate
                       ,a.poll_num
+                      ,a.report_num
                       ,(select team_num from n_monitors b where b.member_id = a.member_id AND b.subject_id = #{subject_id} ) team_num
                       ,(select M001_NM from hisip.vw_mem001_m_monitor@sip2 t where M001_ID = a.member_id) member_name
                   from n_answers a, n_monitors m
@@ -187,7 +193,7 @@
     <delete id="deleteAnswers" parameterType="seoul.admin.vo.AnswersVO">
         delete
           from n_answers
-         where answers_id=#{answers_id}
+         where answers_id=#{answers_id} and report_num=#{report_num }
     </delete>
 
     <update id="updateAnswers" parameterType="seoul.admin.vo.AnswersVO">
@@ -195,7 +201,7 @@
            set answers=#{answers,jdbcType=VARCHAR}
               ,temporary=#{temporary,jdbcType=VARCHAR }
               ,regdate=sysdate
-         where answers_id=#{answers_id}
+         where answers_id=#{answers_id} and report_num=#{report_num }
     </update>
     
     
@@ -209,6 +215,7 @@
               ,answers
               ,member_id
               ,temporary
+              ,report_num
           from n_answers
          where 
     </select>

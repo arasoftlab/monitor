@@ -34,14 +34,25 @@ function get_chked_cnt(){
 function chkValidation()
 {
 	var answers = get_chked_values();
+	var test = $("#answers_text_"+answers).val();
+	
 		
 	if (!answers) 
 	{
 		alert("아무것도 선택하지 않으셨습니다.");
+		return;
 	}else{
-		if (get_chked_cnt() >= '${vo.required_cnt}')
+		
+		if(get_chked_cnt() >= '${vo.required_cnt}')
 		{
-			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,  '${history_params}');	
+			if (typeof test !== 'undefined' && test == '')
+			{
+				alert("서술형 답변을 작성해 주시기바랍니다.");
+				return;
+			}
+			
+			historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,  '${history_params}');
+					
 		}
 		else{
 			alert("최소 "+'${vo.required_cnt}'+"개 만큼 선택하셔야 합니다." );
@@ -60,6 +71,19 @@ function resize(obj) {
     obj.style.height = "1px";
     obj.style.height = (20+obj.scrollHeight)+"px";
 }
+
+
+function onChk(num){
+
+	for (var i = 1 ; i < chk_max+1 ; i ++ )  
+	{
+		$("#answers_text_"+i).attr("disabled",true);
+	}	
+	
+	$("#answers_text_"+num).attr("disabled",false);
+
+}
+
 </script>
 	
 	<div style="background: lightblue;
@@ -85,35 +109,71 @@ function resize(obj) {
 <div style="font-size:10pt;padding-left: 10px;width:100%; padding-top:5px;padding-bottom:5px;">
 
 	<c:forEach var="item" items="${optionList }"  varStatus="i">
-	
-		<div style="font-size:10pt;width:100%">
-			<div style="text-align:left;width:80%;float:left;">	
-			${i.index+1 })
-				${item.label_front } 				
-			</div>
-			
-			<div style="text-align:right;width:20%;float:right;">
-				<input style="margin-right: 12px;" type="checkbox" id="answers" name="answers_${item.options_num}" value="${item.options_num}"
-					<c:forEach var="h_item" items="${history_answer}" varStatus="j"> 	
-						<c:if test="${!empty history_answer && item.options_num eq history_answer[j.index+1] }">checked</c:if>	
-					</c:forEach>
-				>
-			</div>			
+		<c:choose>
+			<c:when test="${item.descyn eq 'Y'}">
+				<c:set var="footerCommon" value="Y" />
+				<div style="font-size:10pt;width:100%">
+					<div style="text-align:left;width:80%;float:left;">	
+					${i.index+1 })
+						${item.label_front }&nbsp;&nbsp;&nbsp; 
+					<input type="text" onKeyUp="onChkESQ(this)" 
+						${!empty history_answer && item.options_num eq history_answer ? '' : 'disabled' }
+						id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" <c:if test="${!empty history_answer && item.options_num eq history_answer }">value="${history_answer_text}"</c:if>>
+					${item.keyword }				
+					</div>
+					
+					<div style="text-align:right;width:20%;float:right;">
+						<input style="margin-right: 12px;" type="checkbox" id="answers" onchange="onChk('${item.options_num}')" name="answers_${item.options_num}" value="${item.options_num}"
+ 	
+						<c:if test="${!empty history_answer && item.options_num eq history_answer }">checked</c:if>	
 
-			<div style="width:100%;float:left">
-				<c:forEach var="file" items="${item.fileList }">
-					<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>"
-						style="width: 150px;">
-				</c:forEach>
-			</div>	
-	
-			<div style="width:100%;float:left">
-				<hr class="horizontal" style="margin-right: 10px;margin-top:10px;border-bottom: 1px solid #eee;">
-			</div>
-
-		</div>
+						>
+					</div>			
 		
-
+					<div style="width:100%;float:left">
+						<c:forEach var="file" items="${item.fileList }">
+							<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>"
+								style="width: 150px;">
+						</c:forEach>
+					</div>	
+			
+					<div style="width:100%;float:left">
+						<hr class="horizontal" style="margin-right: 10px;margin-top:10px;border-bottom: 1px solid #eee;">
+					</div>
+		
+				</div>					
+			</c:when>
+			
+			<c:otherwise>
+				<c:set var="footerCommon" value="N" />
+				<div style="font-size:10pt;width:100%">
+					<div style="text-align:left;width:80%;float:left;">	
+					${i.index+1 })
+						${item.label_front } 				
+					</div>
+					
+					<div style="text-align:right;width:20%;float:right;">
+						<input style="margin-right: 12px;" type="checkbox" id="answers" name="answers_${item.options_num}" value="${item.options_num}"
+							<c:forEach var="h_item" items="${history_answer}" varStatus="j"> 	
+								<c:if test="${!empty history_answer && item.options_num eq history_answer[j.index+1] }">checked</c:if>	
+							</c:forEach>
+						>
+					</div>			
+		
+					<div style="width:100%;float:left">
+						<c:forEach var="file" items="${item.fileList }">
+							<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>"
+								style="width: 150px;">
+						</c:forEach>
+					</div>	
+			
+					<div style="width:100%;float:left">
+						<hr class="horizontal" style="margin-right: 10px;margin-top:10px;border-bottom: 1px solid #eee;">
+					</div>
+		
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 	
 	</c:forEach>
@@ -150,5 +210,9 @@ function resize(obj) {
 	</c:choose>
 </div>
 </form>
+
+<c:if test="${footerCommon eq 'Y'}">
+	<jsp:include page="inc/footer_common.jsp"></jsp:include>
+</c:if>
 
 <jsp:include page="inc/footer_M.jsp"></jsp:include>

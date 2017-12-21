@@ -190,6 +190,7 @@ function onApply( is_select )
 	var index = 0;
 	
 	var checkboxValues = [];
+	var report_num =[];
 	$("input[name='chk']:checked").each(function(i) {
 	    checkboxValues.push($(this).val());
 	    index ++;
@@ -410,7 +411,7 @@ $('#element').off('scroll touchmove mousewheel');
 									<c:when test="${!empty a_list }">
 										<c:forEach var="a_item" items="${a_list }" varStatus="j">
 										<tr>
-											<td><input type="checkbox" name="chk" value="${a_item.answers_id}"></td>
+											<td><input type="checkbox" name="chk" value="${a_item.answers_id}_${a_item.report_num }"></td>
 											<td>${page.totalRows - (((page.pageNum -1) * page.pageSize) + j.index) }</td>
 											<td>
 												<fmt:formatDate value="${a_item.regdate }" pattern="MM-dd HH:mm"/>
@@ -419,7 +420,6 @@ $('#element').off('scroll touchmove mousewheel');
 												<a href="javascript:view_member('${a_item.member_id  }','${a_item.poll_num }');" style="font-weight: bold;">	${a_item.member_id }</a>
 											</td>
 											<td>
-
 												<a href="javascript:view_member('${a_item.member_id  }','${a_item.poll_num }');" style="font-weight: bold;">	${a_item.member_name}</a>
 											</td>
 											<td>${a_item.team_num}</td>
@@ -444,13 +444,25 @@ $('#element').off('scroll touchmove mousewheel');
 															<c:set var="index_num" value="${index_num }"/>
 														</c:if>
 														
-														<c:if test="${q_type_list.type eq 'R' || q_type_list.type eq 'W' || q_type_list.type eq 'M'}">
+														<c:if test="${q_type_list.type eq 'R' || q_type_list.type eq 'W' }">
 															<c:forEach var="q_type_list_option" items="${q_type_list.optionVO }">
 																<td></td>
 															</c:forEach>
 															<c:set var="index_num" value="${index_num }"/>															
   														</c:if>
-														
+  														
+  														<c:if test="${q_type_list.type eq 'M'}">
+															<c:forEach var="q_type_list_option" items="${q_type_list.optionVO }">
+																<td></td>
+																<c:forEach var="s_skip_item" items="${q_type_list.optionVO }">
+																	<c:if test="${s_skip_item.descyn eq 'Y' }">
+																		<td></td>
+																	</c:if>
+																</c:forEach>
+															</c:forEach>
+															<c:set var="index_num" value="${index_num }"/>															
+  														</c:if>
+  														
 														<c:if test="${q_type_list.type eq 'T'}">
 															<td></td>
 															<td></td>										
@@ -493,6 +505,17 @@ $('#element').off('scroll touchmove mousewheel');
 																				<c:otherwise>
 																					<td></td>
 																				</c:otherwise>
+																				<c:forEach var="s_w_item" items="${q_type_list.optionVO }" varStatus="sw">
+																					<c:if test="${s_w_item.descyn eq 'Y' }">
+																						<td>
+																							<c:set var="qNo" value="${fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,'^'))}" />																					  
+																							<c:if test="${sw.index+1 eq fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,'^'))}">
+																								<c:set var="aN"  value="${fn:substring(an_item,fn:indexOf(an_item,'#')+1,fn:length(an_item))}" />
+																									${fn:replace(replace(aN, qNo, ''), '^', '') }									
+																							</c:if>													
+																						</td>
+																					</c:if>
+																				</c:forEach>																			
 																			</c:choose>
 																</c:forEach>
 															</c:when>														

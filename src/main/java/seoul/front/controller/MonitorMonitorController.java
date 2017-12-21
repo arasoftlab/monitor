@@ -118,6 +118,9 @@ public class MonitorMonitorController {
 	public @ResponseBody Map<String, Object> delete(@ModelAttribute AnswersVO answersVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 				
+		
+		System.out.println("삭제전 데이터 : " + answersVO.toString());
+		
 		if (answersService.deleteAnswers(answersVO) > 0) {
 			resultMap.put("result", "success");
 		}else{

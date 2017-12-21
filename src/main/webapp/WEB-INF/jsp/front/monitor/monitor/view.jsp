@@ -100,9 +100,11 @@ function fnShowImg(img){
 }
 
 
-function getTestPopupPage(id){
-	var popUrl = "/monitor/front/subject/list.do?subject_id="+id;	//팝업창에 출력될 페이지 URL
-	var popOption = "left="+(screen.availWidth-620)/2+",top="+(screen.availHeight-640)/2+" , width=620px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
+function getTestPopupPage(rcnt, id){
+	var popUrl = "/monitor/front/subject/list.do?subject_id="+id+"&report_num="+rcnt;	//팝업창에 출력될 페이지 URL
+	var sW = (screen.availWidth-620)/2;
+	var sH = (screen.availHeight-640)/2;	
+	var popOption = "left="+ sW +",top="+ sH +" , width=620px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);	
 
 }
@@ -111,21 +113,23 @@ function getTestPopupPage(id){
 // 팝업을 post 폽으로 날리려면 구조에대해 좀 더 생각해봐야한다.
 // 보안용으로 히든 타입으로 넣어놔도 보이는것은 어쩔수없고 
 // 해당 응답에 대한 idx 값을 어떻게 얻어와야할지도 애매하다.
-function getModifyTestPopupPage(s_id , a_id){
-	var popUrl = "/monitor/front/subject/modify.do?subject_id="+s_id+"&answers_id="+a_id;	//팝업창에 출력될 페이지 URL
-	var popOption = "left="+(screen.availWidth-620)/2+",top="+(screen.availHeight-640)/2+" , width=620px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
+function getModifyTestPopupPage(rcnt, s_id , a_id){
+	var popUrl = "/monitor/front/subject/modify.do?subject_id="+s_id+"&answers_id="+a_id+ "&report_num="+rcnt;	//팝업창에 출력될 페이지 URL
+	var sW = (screen.availWidth-620)/2;
+	var sH = (screen.availHeight-640)/2;
+	var popOption = "left="+ sW +",top="+ sH +" , width=620px,height=640px, resizable=no, scrollbars=yes, status=no;";    //팝업창 옵션(optoin)
 		window.open(popUrl,"",popOption);		
 }
 
 
-function onApply(id)
+function onApply(rcnt, id)
 {
 	if(confirm("삭제 하시겠습니까?")){
 		$.ajax({
 			async : true,
 			type : "POST",
 			url : "delete.do",
-			data : {"answers_id" : id},
+			data : {"answers_id" : id, "report_num" : rcnt},
 			success : function(data){
 				if(data.result == "success"){				
 					alert("삭제되었습니다.");
@@ -260,16 +264,21 @@ function onApply(id)
 
 				
 		<div style="float:left;margin-top:25px;text-align:right;width: 60%;color: red;font-weight: bold;">
-			과제 진행 수 ${vo.question_cnt } 개			 
+			과제 진행 수 ${vo.question_cnt } 개	: 진행수  ${fn:length(a_list) } 개		 
 		</div>		
 		
 		<div style="float:right;text-align:right;margin-top:20px;">
-			<c:if test="${vo.status eq '04' && !empty m_vo && m_vo.is_selection eq 'Y'}">			
-
-				<c:if test="${fn:length(a_list) < vo.question_cnt}">
-					<button type="button" class="btn btn-primary button_blue button_white" onclick="getTestPopupPage('${vo.subject_id}')">과제(설문)시작</button>
+		
+				
+			<c:if test="${vo.status eq '04' && m_vo.is_selection eq 'Y'}">
+				
+				<!-- 갯수만큼반복 -->
+				<c:forEach begin="0" end="${vo.question_cnt -1 }" step="1" varStatus="qcnts">
+				<!-- 과제에서 수행기록 제거 --> 
+				<c:if test="${fn:length(a_list) < vo.question_cnt && a_list[qcnts.index].report_num != qcnts.index }">
+					<button type="button" class="btn btn-primary button_blue button_white" onclick="getTestPopupPage('${qcnts.index }', '${vo.subject_id}')">${qcnts.index+1}번 과제(설문)시작</button>
 				</c:if>
-
+				</c:forEach>
 			</c:if>
 
 		</div>
@@ -294,7 +303,7 @@ function onApply(id)
 			
 		<c:set var="tempNum" value="0" />
 			
-		<c:forEach begin="0" end="${vo.question_cnt-1 }" var="item" items="${a_list }">
+		<c:forEach begin="0" end="${vo.question_cnt-1 }" var="item" items="${a_list }" varStatus="qcnt">
 			<c:set var="indexNo" value="${tempNum +indexNo +1}" />
 				<tr>
 					<td> ${indexNo} </td>
@@ -316,11 +325,11 @@ function onApply(id)
 					
 					<td>
 						<c:if test="${item.temporary eq 'Y'}">						
-							<button type="button" class="btn btn-info button_blue button_white" onclick="getModifyTestPopupPage('${vo.subject_id}' , '${item.answers_id}')">이어하기</button>
+							<button type="button" class="btn btn-info button_blue button_white" onclick="getModifyTestPopupPage('${item.report_num }', '${vo.subject_id}' , '${item.answers_id}')">이어하기</button>
 												
  						</c:if>
 	
-						<button type="button" class="btn btn-warning" onclick="onApply('${item.answers_id}')">삭제</button> 
+						<button type="button" class="btn btn-warning" onclick="onApply('${item.report_num }','${item.answers_id}')">삭제</button> 
 					</td>
 					
 				</tr>								

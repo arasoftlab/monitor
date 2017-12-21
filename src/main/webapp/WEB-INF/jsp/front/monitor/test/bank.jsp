@@ -89,8 +89,8 @@ function onBankApply()
 	<input type="hidden" name="subject_id" value="${subjectID}">
 	<input type="hidden" name="idx" id="idx" value="${vo.idx}" >	
 	<input type="hidden" name="team" value="${team}">
-        <input type="hidden" name="member_id" value="${member_id}">
-
+	<input type="hidden" name="member_id" value="${member_id}">
+	<input type="hidden" name="isApply" value="${isApply }">
 	
 	<div class="row" style="width:90%;margin:0 auto;text-align:center;margin-top:10%">
 	

@@ -113,7 +113,7 @@ function fnCheckSession(){
 			ret = false;
 		}
 	});
-	
+	//return true;
 	return ret;
 }
 

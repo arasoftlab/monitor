@@ -251,8 +251,14 @@ public class SubjectAnswerController {
 		for (int i = 0 ; i < arrayParams.size() ; i++)
 		{
 			AnswersVO answersVO = new AnswersVO();
+			String pam[] = arrayParams.get(i).split("_");
+			int pn = 0;
+			answersVO.setAnswers_id(pam[0]);
 			
-			answersVO.setAnswers_id(arrayParams.get(i));
+			pn = Integer.parseInt(pam[1]);
+			answersVO.setReport_num(pn);
+			
+			
 			//answersVO.setIs_selection(is_select);
 			
 			System.out.println(" 동작정보 : " + is_select);

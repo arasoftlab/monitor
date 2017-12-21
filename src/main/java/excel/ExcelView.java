@@ -504,7 +504,23 @@ public class ExcelView extends AbstractXlsView{
 		            String cVal = "문(중복)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num();
 		       
 		            t_cell5.setCellValue(cVal);
-		            t_cell5.setCellStyle(center);                	
+		            t_cell5.setCellStyle(center);
+		            
+		            for (int s_temp = 0 ; s_temp < q_list.get(i).getOptionVO().size() ; s_temp ++)
+				    {
+		            	
+		            	String descYn = q_list.get(i).getOptionVO().get(s_temp).getDescyn(); 
+				       	if ( !ObjectUtils.isEmpty(descYn) && "Y".equals(descYn))
+				       	{
+		                   Cell t_cell6 = row.createCell(++temp_num);
+		                   colNums = colNums + 1;
+		                   cVal = "문(중복)"+q_list.get(i).getQuestion_num()+"서술";
+		                   
+		                   t_cell6.setCellValue(cVal);
+		                   t_cell6.setCellStyle(center);
+		               
+				        }
+				    }
 				}
 			}
 			else if ( q_list.get(i).getType().equals("O") )
@@ -707,6 +723,28 @@ public class ExcelView extends AbstractXlsView{
 						cell5.setCellValue("");
 						cell5.setCellStyle(center); 	                        		
 					}
+					
+					String descYn = q_list.get(z).getOptionVO().get(j).getDescyn();
+					//서술형 답변일 경우 데이터 처리부분
+					if (!ObjectUtils.isEmpty(descYn) && "Y".equals(descYn))
+			      	{
+		      		
+						if ( temp_arr[a_index].contains("^") ){
+							Cell cell6 = row.createCell(++temp_num);
+							String eVal = temp_arr[a_index]; //전체답변
+							cVal = eVal.substring(eVal.indexOf("^") + 1 ); //전체답변에서 보기번호를제외한 것
+							
+							cell6.setCellValue(cVal);
+							cell6.setCellStyle(center);
+						}else{
+							Cell cell6 = row.createCell(++temp_num);
+							cell6.setCellValue("");
+						    cell6.setCellStyle(center);
+		      			}
+		
+		      		
+			      	}
+					
 				}
 				
 			} 	                         
@@ -734,10 +772,10 @@ public class ExcelView extends AbstractXlsView{
 								Cell cell6 = row.createCell(++temp_num);
 								String eVal = temp_arr[a_index]; //전체답변
 								String eNos = eVal.substring(eVal.indexOf(":")+1, eVal.indexOf("#")); //보기번호
-								cVal = eVal.substring(eVal.indexOf("#") + 1, eVal.length() - eNos.length()); //전체답변에서 보기번호를제외한 것
-								//System.out.println(eVal);
-								//System.out.println(eNos);
-								//System.out.println(cVal);
+								cVal = eVal.substring(eVal.indexOf("#") + 1, eVal.length() ); //전체답변에서 보기번호를제외한 것
+								System.out.println(eVal);
+								System.out.println(eNos);
+								System.out.println(cVal);
 								
 								cell6.setCellValue(cVal);
 								cell6.setCellStyle(center);
@@ -841,16 +879,16 @@ public class ExcelView extends AbstractXlsView{
 					{
 						Cell cell5 = row.createCell(++temp_num);
 					    cell5.setCellValue("");
-					cell5.setCellStyle(center);
+					    cell5.setCellStyle(center);
 					
-					for (int l = 0 ; l < q_list.get(z).getOptionVO().size() ; l ++)
-					{
-						if (q_list.get(z).getOptionVO().get(l).getDescyn() != null)
+						for (int l = 0 ; l < q_list.get(z).getOptionVO().size() ; l ++)
 						{
-					    	if (q_list.get(z).getOptionVO().get(l).getDescyn().equals("Y"))
-					{
-						Cell cell6 = row.createCell(++temp_num);
-					    cell6.setCellValue("");
+							if (q_list.get(z).getOptionVO().get(l).getDescyn() != null)
+							{
+						    	if (q_list.get(z).getOptionVO().get(l).getDescyn().equals("Y"))
+								{
+									Cell cell6 = row.createCell(++temp_num);
+								    cell6.setCellValue("");
 					                cell6.setCellStyle(center);
 					        	}
 					    	}
@@ -864,7 +902,18 @@ public class ExcelView extends AbstractXlsView{
 						{
 							Cell cell5 = row.createCell(++temp_num);
 					        cell5.setCellValue("");
-					        cell5.setCellStyle(center); 	                        		
+					        cell5.setCellStyle(center);
+					        
+							if (q_list.get(z).getOptionVO().get(p).getDescyn() != null)
+							{
+						    	if (q_list.get(z).getOptionVO().get(p).getDescyn().equals("Y"))
+								{
+									Cell cell6 = row.createCell(++temp_num);
+								    cell6.setCellValue("");
+					                cell6.setCellStyle(center);
+					        	}
+					    	}
+					        
 						}
 					}
 					if (q_list.get(z).getType().equals("T"))
@@ -881,7 +930,7 @@ public class ExcelView extends AbstractXlsView{
 		         }
 		     }
 		                                                           
-		     row.setHeight((short)1000);
+		     //row.setHeight((short)1000);
 		 }
 		 
 		 File img_temp_del = new File(img_temp_path);

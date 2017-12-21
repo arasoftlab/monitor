@@ -9,20 +9,17 @@
 
 var chk_max = '${fn:length(optionList)}';
 
-$(document).ready(function() {
-	//document.getElementById('bbs_cont').onkeyup();
-	//document.getElementById('bbs_dsc').onkeyup();
-});
-
 
 function chkValidation()
 {
 	var answers = $(":input:radio[name=answers]:checked").val();
 	var test = $("#answers_text_"+answers).val();
 	var history_params = "${history_params}";
-	//console.log(test);
+	console.log(test);
 	//console.log(history_params);
 	//console.log(answers);
+
+	
 		
 	if (!answers) 
 	{
@@ -48,6 +45,7 @@ function chkValidation()
 		//historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}');
 	}
 	
+	
 }
 
 function resize(obj) {
@@ -59,14 +57,13 @@ function resize(obj) {
 
 function onChk(num){
 
-	
 	for (var i = 1 ; i < chk_max+1 ; i ++ )  
 	{
 		$("#answers_text_"+i).attr("disabled",true);
 	}	
 	
 	$("#answers_text_"+num).attr("disabled",false);
-	
+
 }
 
 </script>
@@ -90,6 +87,7 @@ function onChk(num){
 	<c:forEach var="item" items="${optionList }" varStatus="o_num">
 		<c:choose>
 			<c:when test="${item.descyn eq 'Y'}">
+			<c:set var="footerCommon" value="Y" />
 				<div style="font-size:10pt;width:100%">
 					<div style="text-align:left;float:left;">
 					${o_num.index+1})
@@ -118,6 +116,7 @@ function onChk(num){
 			</c:when>
 	
 			<c:otherwise>
+			<c:set var="footerCommon" value="N" />
 				<div style="font-size:10pt;width:100%">
 					<div style="text-align:left;width:80%;float:left;">
 					${o_num.index+1})
@@ -176,6 +175,10 @@ function onChk(num){
 </div>
 </form>
 
+
+<c:if test="${footerCommon eq 'Y'}">
+	<jsp:include page="inc/footer_common.jsp"></jsp:include>
+</c:if>
 
 <jsp:include page="inc/footer_S.jsp"></jsp:include>
 
