@@ -505,22 +505,21 @@ public class ExcelView extends AbstractXlsView{
 		       
 		            t_cell5.setCellValue(cVal);
 		            t_cell5.setCellStyle(center);
+
 		            
-		            for (int s_temp = 0 ; s_temp < q_list.get(i).getOptionVO().size() ; s_temp ++)
-				    {
-		            	
-		            	String descYn = q_list.get(i).getOptionVO().get(s_temp).getDescyn(); 
-				       	if ( !ObjectUtils.isEmpty(descYn) && "Y".equals(descYn))
-				       	{
-		                   Cell t_cell6 = row.createCell(++temp_num);
-		                   colNums = colNums + 1;
-		                   cVal = "문(중복)"+q_list.get(i).getQuestion_num()+"서술";
-		                   
-		                   t_cell6.setCellValue(cVal);
-		                   t_cell6.setCellStyle(center);
-		               
-				        }
-				    }
+	            	String descYn = q_list.get(i).getOptionVO().get(j).getDescyn(); 
+			       	if ( !ObjectUtils.isEmpty(descYn) && "Y".equals(descYn))
+			       	{
+	                   Cell t_cell6 = row.createCell(++temp_num);
+	                   colNums = colNums + 1;
+	                   cVal = "문(중복)"+q_list.get(i).getQuestion_num()+"_"+q_list.get(i).getOptionVO().get(j).getOptions_num()+"서술";
+	                   
+	                   t_cell6.setCellValue(cVal);
+	                   t_cell6.setCellStyle(center);
+	                   j++; //강제로 한 루프를 넘김
+	               
+			        }
+			    
 				}
 			}
 			else if ( q_list.get(i).getType().equals("O") )
@@ -598,6 +597,9 @@ public class ExcelView extends AbstractXlsView{
 		}
 
 		 
+		 
+		 //TODO 신경써야 하는부분
+		 //여기서부터 답변 처리
 		 //응답처리부
 		 for(int i=1;i<a_list.size()+1;i++){
 			 
@@ -699,52 +701,60 @@ public class ExcelView extends AbstractXlsView{
 			}
 			else if (temp_type.equals("M"))
 			{                            
-				String[] s_temp_arr = temp_arr[a_index].split("#");
-				int m_index = 1;
-			
-				for (int j = 1 ; j < q_list.get(z).getOptionVO().size()+1 ; j ++)
-				{
+				String[] s_temp_arr0 = temp_arr[a_index].split(":");
+				String[] s_temp_arr = s_temp_arr0[1].split("#"); //0은 문항유형및 문항번호 @M2 //1은 데이터 #1#2#3
+
 				
-					if (s_temp_arr.length > m_index)
-					{
-						if ( Integer.parseInt(s_temp_arr[m_index]) == j)
-						{
-							Cell cell5 = row.createCell(++temp_num);
-							cell5.setCellValue("1");
-							cell5.setCellStyle(center); 	  
-							m_index++;
-						}else{
-							Cell cell5 = row.createCell(++temp_num);
-							cell5.setCellValue("");
-							cell5.setCellStyle(center); 	                        		
-						}
-					}else{
+				String lastA = s_temp_arr0[1].indexOf('^') > 0 ? s_temp_arr[s_temp_arr.length -1] : " ^ " ;
+				String currQ = s_temp_arr[1];
+				int currIndex = 1;
+				//String curQn = currQ.substring(0,  1);
+				
+				System.out.println("1 보기 답변 확인 : " + temp_arr[a_index]);
+				//답변의 수 만큼 루프를 돔
+				for (int s = 0 ; s < q_list.get(z).getOptionVO().size() ; s++)
+				{ 
+					System.out.println("2 답변확인 : " + currQ);
+					System.out.println("3 순환확인 : " + s);
+					System.out.println("3 마지막번 : " + lastA);
+					
+					String curQn = (currQ !="") ? currQ.substring(0, 1): "0";
+					System.out.println("4 보기확인 : " + curQn);
+				
+					String isDesc = q_list.get(z).getOptionVO().get(s).getDescyn();
+					
+					if("Y".equals(isDesc)) {
+						
+						String[] aS = lastA.split("\\^");
+						String ansL = aS[0] !=" " ? "1" : "";
+						
 						Cell cell5 = row.createCell(++temp_num);
-						cell5.setCellValue("");
-						cell5.setCellStyle(center); 	                        		
+						cell5.setCellValue(ansL);
+						cell5.setCellStyle(center); 	  
+						System.out.println("5 서술첨부여부 답변 : " + aS[0]);
+						
+						Cell cell6 = row.createCell(++temp_num);
+						cell6.setCellValue(aS[1]);
+						cell6.setCellStyle(center); 	  
+						System.out.println("6 서술첨부여부 답변 : " + aS[1]);	
+					}else {
+						
+						System.out.println("7 서술첨부여부 답변 : " + curQn);
+						curQn = (Integer.toString(s+1).equals(curQn)) ? "1" : ""; 
+						System.out.println("7 서술첨부여부 답변 : " + Integer.toString(s));
+						
+						Cell cell5 = row.createCell(++temp_num);
+						cell5.setCellValue(curQn);
+						cell5.setCellStyle(center);
+						
+						System.out.println("7 서술첨부여부 답변 : " + curQn);
+						
+						currQ = ( curQn != "" ) ? s_temp_arr[currIndex +1] : currQ;
+						
 					}
+
 					
-					String descYn = q_list.get(z).getOptionVO().get(j).getDescyn();
-					//서술형 답변일 경우 데이터 처리부분
-					if (!ObjectUtils.isEmpty(descYn) && "Y".equals(descYn))
-			      	{
-		      		
-						if ( temp_arr[a_index].contains("^") ){
-							Cell cell6 = row.createCell(++temp_num);
-							String eVal = temp_arr[a_index]; //전체답변
-							cVal = eVal.substring(eVal.indexOf("^") + 1 ); //전체답변에서 보기번호를제외한 것
-							
-							cell6.setCellValue(cVal);
-							cell6.setCellStyle(center);
-						}else{
-							Cell cell6 = row.createCell(++temp_num);
-							cell6.setCellValue("");
-						    cell6.setCellStyle(center);
-		      			}
-		
-		      		
-			      	}
-					
+					System.out.println("루프재귀 1 : " + s);
 				}
 				
 			} 	                         

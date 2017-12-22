@@ -354,6 +354,9 @@ $('#element').off('scroll touchmove mousewheel');
 													<c:when test="${item.type eq 'M' }">
 														<c:forEach var="o_item" items="${item.optionVO }">
 															<th>문(복수)<br />${item.question_num}_${o_item.options_num} </th>
+															<c:if test="${o_item.descyn eq 'Y'}">
+																	<th>문(복수)<br />${item.question_num}_${o_item.options_num}_서술 </th>
+															</c:if>
 														</c:forEach>
 													</c:when>
 
@@ -497,26 +500,29 @@ $('#element').off('scroll touchmove mousewheel');
 															
 															<c:when test="${answer_type eq 'M'}">
 																<c:set var="an_m_item" value="${fn:split(an_item, '#')}" />
-																<c:forEach var="q_m_list" items="${q_type_list.optionVO}" varStatus="z">	
-																			<c:choose>
-																				<c:when test="${!empty an_m_item[z.index+1] && an_m_item[z.index+1] ne '' }" >
-																					<td>${an_m_item[z.index+1] }</td> 
-																				</c:when>
-																				<c:otherwise>
-																					<td></td>
-																				</c:otherwise>
-																				<c:forEach var="s_w_item" items="${q_type_list.optionVO }" varStatus="sw">
-																					<c:if test="${s_w_item.descyn eq 'Y' }">
-																						<td>
-																							<c:set var="qNo" value="${fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,'^'))}" />																					  
-																							<c:if test="${sw.index+1 eq fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,'^'))}">
-																								<c:set var="aN"  value="${fn:substring(an_item,fn:indexOf(an_item,'#')+1,fn:length(an_item))}" />
-																									${fn:replace(replace(aN, qNo, ''), '^', '') }									
-																							</c:if>													
-																						</td>
-																					</c:if>
-																				</c:forEach>																			
-																			</c:choose>
+																<c:set var="list_num_seq" value="${1 }" />
+																
+																<c:forEach var="mo" items="${q_type_list.optionVO}" varStatus="z">
+																	<c:if test="${fn:contains(an_item, '^') }">
+																		<c:set var="lastQ" value="${fn:substring(an_item, fn:indexOf(an_item, '^')-2, fn:length(an_item)) }" />
+																		<c:set var="currQ" value="${an_m_item[list_num_seq]}" />
+																		<c:set var="curQn" value="${fn:substring(currQ, 0, 1) }" />
+																	</c:if>
+																	
+																		<!-- 서술형 문항일 경우에 문항의 번호를 별도로 구분 후 현재 인덱스와 비교하고 맞으면 값을 넣어줌 -->
+																		<c:if test="${mo.descyn eq 'Y' }">
+																			<c:set var="last_item" value="${lastQ }" />
+																			<c:set var="li" value="${fn:split(last_item, '^') }" />
+																				<td>${li[0] ne null ? '1' : '' }</td>
+																				<td>${li[1] }</td>
+																		</c:if>
+																		<c:if test="${mo.descyn ne 'Y' }">
+																			<td>${curQn eq z.index+1 ? '1' : '' }  </td>
+																			<c:set var="currQ" value="${curQn eq z.index+1 ? an_m_item[list_num_seq] : currQ }" />
+																			<c:set var="list_num_seq" value="${curQn eq z.index+1 ? list_num_seq + 1 : list_num_seq }" />
+																		</c:if>
+																	
+																	
 																</c:forEach>
 															</c:when>														
 															<c:when test="${answer_type eq 'R' }">
@@ -600,7 +606,7 @@ $('#element').off('scroll touchmove mousewheel');
 																					<c:set var="qNo" value="${fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,':')+2)}" />																					  
 																					<c:if test="${sw.index+1 eq fn:substring(an_item,fn:indexOf(an_item,':')+1,fn:indexOf(an_item,':')+2)}">
 																						<c:set var="aN"  value="${fn:substring(an_item,fn:indexOf(an_item,'#')+1,fn:length(an_item))}" />
-																							${fn:replace(aN, qNo, '') }									
+																							${fn:substring(aN,aN.indexOf(aN, qNo), fn:length(aN)) }									
 																					</c:if>													
 																				</td>
 																			</c:if>

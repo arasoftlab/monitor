@@ -87,14 +87,29 @@ function resize(obj) {
 <c:forEach var="item" items="${optionList }" >
 
 	<div>
-		<input type="checkbox" name="answers" value="${item.options_num}">
-		${item.label_front } 
-		
-						<c:forEach var="file" items="${item.fileList }">
-					<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>"
-						style="width: 150px;">
-				</c:forEach>
-		
+	<c:choose>
+		<c:when test="${item.descyn eq 'Y'}">
+			<div>
+				<input type="radio" id="answers" name="answers" value="${item.options_num}">
+				${item.label_front }&nbsp;&nbsp;&nbsp; 
+				<input type="text" id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" >
+				${item.keyword }
+			</div>		
+		</c:when>
+		<c:otherwise>
+			<input type="checkbox" name="answers" value="${item.options_num}">${item.label_front } 
+		</c:otherwise>
+	</c:choose>
+
+		<c:forEach var="file" items="${item.fileList }">
+			<img src="<c:url value='${file.savePath }/${file.unqFileName }'/>" class="thumb-nail img-responsive">
+		</c:forEach>
+
+
+	<div style="width:100%;float:left">
+		<hr class="horizontal" style="margin-right: 10px;margin-top:10px;border-bottom: 1px solid #eee;">
+	</div>
+
 	</div>
 
 </c:forEach>

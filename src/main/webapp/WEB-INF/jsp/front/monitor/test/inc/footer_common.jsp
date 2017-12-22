@@ -41,11 +41,14 @@ function onChkESQ(obj){
 	$(document).ready(function() {
 	
 		var w_temp_cnt = "${fn:length(optionList)}";
-		var $txArea = $("textarea");
-		if(typeof $txArea === 'undefined'){
+		var txArea = $("body").find("textarea");
+		
+		console.log(txArea);
+		
+		if(typeof txArea === 'undefined'){
 			return;
 		}else{
-			$txArea.val($txArea.val().replace(/<br>/g, "\r\n"));
+			txArea.val(txArea.val().replace(/<br>/g, "\r\n"));
 			
 			for (var a=1; a <= w_temp_cnt; a++)
 			{

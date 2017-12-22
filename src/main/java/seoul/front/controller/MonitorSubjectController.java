@@ -427,20 +427,46 @@ public class MonitorSubjectController {
 		String back_temp; 
 		String back_temp_arr[]; 
 		
+		System.out.println(" PREVIEW DATA : " + history_arr);
+		System.out.println(" PREVIEW DATA : " + history_params); //@S1:1|@M2:#3^test|
+		System.out.println(" PREVIEW DATA : " + back_num); 
+		System.out.println(" PREVIEW DATA : " + report_num);
+		System.out.println(" PREVIEW DATA : " + answers_id);
+		
+		//이어하기 일 경우 마지막 답변을 분리하여 적용해야 하므로 처리하는 로직
 		if (!history_params.isEmpty()) 
 		{
+			
 			String temp[] = history_params.split("[|]");
-			
 			back_temp = temp[temp.length-1];
+			history_params = history_params.replace(back_temp+"|", ""); //마지막 답변 정보제거
 			
-			history_params = history_params.replace(back_temp+"|", "");
+			//@M2:#3^test
+			System.out.println("1 : " + history_params);
+			System.out.println("2 : " + back_temp);
 			
-			if (!back_temp.contains("@S")) 
+			if (!back_temp.contains("@S") && !back_temp.contains("@M")) 
 			{
 				back_temp = back_temp.substring(back_temp.indexOf(":")+1);
+				
+				System.out.println("3-0 : " + back_temp);
+			
 			}
-			else  
-			{
+			
+			if(back_temp.contains("@M")) {
+				if(back_temp.contains("\\^")) {
+					String[] mS = back_temp.split("\\^");
+					model.addAttribute("history_answer_text", mS[1]);
+					back_temp=mS[0].substring(0, mS[0].lastIndexOf("\\#") -1);
+					
+					System.out.println("3-1 : " + mS[1]);
+				}
+				
+				
+			
+			}
+			
+			if(back_temp.contains("@S")){
 				//String type_S_answer = back_temp.substring(back_temp.indexOf(":")+1,back_temp.indexOf(":")+2);
 				//back_temp = back_temp.substring(back_temp.indexOf(":")+2);
 				
@@ -448,44 +474,60 @@ public class MonitorSubjectController {
 				{
 					String s_type_str = "";
 					s_type_str = back_temp.substring(back_temp.indexOf("#"));
-					
 					back_temp_arr = s_type_str.split("#");
-					
 					model.addAttribute("history_answer_text", back_temp_arr[1]);
-					
 					back_temp = back_temp.substring(back_temp.indexOf(":")+1,back_temp.indexOf(":")+2);
+					
+					System.out.println("4 : " + back_temp);
 				}else{
 					back_temp = back_temp.substring(back_temp.indexOf(":")+1,back_temp.indexOf(":")+2);
+					
+					System.out.println("5 : " + back_temp);
 				}
-				//model.addAttribute("history_S_answer", type_S_answer);
+				
+				System.out.println("3-3 : " + back_temp);
 			}
+			
 			 
 			if (back_temp.contains("Ω"))
 			{
 				back_temp_arr = back_temp.split("Ω");
-				
 				model.addAttribute("t_type_img", back_temp_arr[1]);				
-
 				back_temp_arr = back_temp.split("#");
-				
 				back_temp_arr[1] = back_temp_arr[1].substring(0,back_temp_arr[1].indexOf("Ω"));
-				
 				model.addAttribute("history_answer", back_temp_arr);
+				
+				System.out.println("6 : " + back_temp_arr);
+				
+			}else if(back_temp.contains("^")){
+				back_temp_arr = back_temp.split("^");
+				System.out.println(back_temp_arr[0]);
+				System.out.println(back_temp_arr[0]);
+				
+				String nA = back_temp_arr[0].substring(0,  back_temp_arr[0].indexOf("^"));
+				System.out.println(nA);
+				
+				model.addAttribute("history_answer", nA);
+				
+				System.out.println(" history_answer : " + nA);
+				
 			}else{
 			
 				if (back_temp.contains("#"))
 				{
 					back_temp_arr = back_temp.split("#");
-					
 					model.addAttribute("history_answer", back_temp_arr);
-					
+					System.out.println("7 : " + back_temp_arr[0]);
 				}
 				else{
 				
 					model.addAttribute("history_answer", back_temp);
+					System.out.println("8 : " + back_temp);
 				}
 			}
 		}
+		
+		
 		
 		QuestionVO previewQuestionVO = new QuestionVO();
 		
@@ -498,7 +540,13 @@ public class MonitorSubjectController {
 		previewQuestionVO = questionService.getNextQuestion(previewQuestionVO);
 				
 		
-		System.out.print("JINX");
+		System.out.println("F PREVIEW DATA : " + history_arr);
+		System.out.println("F PREVIEW DATA : " + history_params); //@S1:1|@M2:#3^test|
+		System.out.println("F PREVIEW DATA : " + back_num); 
+		System.out.println("F PREVIEW DATA : " + report_num);
+		System.out.println("F PREVIEW DATA : " + answers_id);
+		
+		
 		
 		model.addAttribute("vo" , previewQuestionVO);
 		model.addAttribute("nextpage" , questionService.getNextQuestion(fromQuestionVO));

@@ -183,6 +183,7 @@ function historyAppend(question_id , history_org , this_num , bifurcation , hist
 function getPreviewQuestion(question_id,history_arr,back_num , history_params ){
 	is_maxpage = back_num;
 	
+	
 	$.ajax({
 		async : true,
 		type : "POST",
@@ -201,7 +202,7 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params ){
 			$("#test_index").text(back_num);
 		},
 		error : function(request,status,error) {
-			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			console.log("code:"+request.status+"\n"+"error:"+error);
 			alert("잘못된 접근이거나 이미 완료된 과제입니다.");
 		}
 	});

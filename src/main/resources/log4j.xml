@@ -12,43 +12,62 @@
     </layout>
   </appender>
  
-  <logger name="org.springframework" additivity="false">
-    <level value="DEBUG" />
-    <appender-ref ref="CONSOLE" />
-  </logger>
- 
-  <logger name="seoul" additivity="false">
-  	<level value="INFO" />
-  	<appender-ref ref="CONSOLE"/>
-  </logger>
-  
-  <logger name="file" additivity="false">
-  	<level value="INFO"></level>
-  	<appender-ref ref="CONSOLE"/>
-  </logger>
-  
-  <logger name="excel" additivity="false">
-  	<level value="INFO"></level>
-  	<appender-ref ref="CONSOLE"/>
-  </logger>
-  
-  
-  <!-- for query -->
-  <logger name="jdbc.sqlonly" additivity="false">
-  	<level value="DEBUG" />
-  	<appender-ref ref="CONSOLE"/>
-  </logger>
-  
 
-  <logger name="jdbc.resultsettable" additivity="false">
-  	<level value="DEBUG" />
-  	<appender-ref ref="CONSOLE"/>
-  </logger>
+	<logger name="org.springframework.core" additivity="false">
+	    <level value="DEBUG" />
+	    <appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.springframework.beans" additivity="false">
+	    <level value="DEBUG" />
+	    <appender-ref ref="CONSOLE" />
+	</logger>
+	
+	
+	<logger name="org.springframework.context" additivity="false">
+	    <level value="DEBUG" />
+	    <appender-ref ref="CONSOLE" />
+	</logger>
+	
+	
+	<logger name="org.springframework.web">
+	    <level value="DEBUG" />
+	    <appender-ref ref="CONSOLE" />
+	</logger>
+
+ 
+	<logger name="seoul" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<logger name="file" additivity="false">
+		<level value="INFO"></level>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<logger name="excel" additivity="false">
+		<level value="INFO"></level>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
   
   
-  <root>
-    <level value="OFF"/>
-    <appender-ref ref="CONSOLE" />
-  </root>
+	<!-- for query -->
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	
+	<root>
+	  <level value="OFF"/>
+	  <appender-ref ref="CONSOLE" />
+	</root>
     
 </log4j:configuration>

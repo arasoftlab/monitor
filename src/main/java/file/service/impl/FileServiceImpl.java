@@ -1,5 +1,6 @@
 package file.service.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +14,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -197,26 +201,39 @@ public class FileServiceImpl implements FileService{
 					System.out.println("exists :" + pI);
 				}
 				
+				lock.lock();
+				
 				System.out.println(td.exists());
 				
 				File fI = new File(tI); //대상파일
 				if(!fI.exists()) { //대상파일존재여부
 					File cI = new File(sI); //원본파일 
-					Thumbnails.of(cI).size(150, 150).outputFormat("png").toFile(fI);
+					//Thumbnails.of(cI).size(150, 150).outputFormat("png").toFile(fI);
+					
+					File file = new File(tI);             
+		            
+		            BufferedImage thumbnail = Thumbnails.of(cI).size(150, 150).asBufferedImage();
+		            ImageIO.write(thumbnail, "png", file);
+					
 					System.out.println("make file" + tI);
 				}else {
 					System.out.println("img exist:" + tI);
 				}
+					
+				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
 				e.printStackTrace();
+			} finally {
+				lock.unlock();
 			}
 		
 		}
 	}
 	
+	private Lock lock = new ReentrantLock();
 	
 	private int find(String rPath) {
 		String fExt = rPath.substring(rPath.lastIndexOf(".") + 1,  rPath.length());

@@ -7,11 +7,7 @@
 
 <script>
 
-$(document).ready(function() {
-	//document.getElementById('bbs_cont').onkeyup();
-	//document.getElementById('bbs_dsc').onkeyup();
-});
-
+var chk_max = '${fn:length(optionList)}';
 
 function get_chked_values(){
 	  var chked_val = "";
@@ -79,8 +75,15 @@ function onChk(num){
 	{
 		$("#answers_text_"+i).attr("disabled",true);
 	}	
+	var $ans = $("input[name='answers_"+ num + "']");
 	
-	$("#answers_text_"+num).attr("disabled",false);
+	if($ans.is(":checked")){
+		$("#answers_text_"+num).attr("disabled",false);	
+	}else{
+		$("#answers_text_"+num).attr("disabled",true);
+	}
+	
+	
 
 }
 
@@ -114,18 +117,21 @@ function onChk(num){
 				<c:set var="footerCommon" value="Y" />
 				<div style="font-size:10pt;width:100%">
 					<div style="text-align:left;width:80%;float:left;">	
-					${i.index+1 })
-						${item.label_front }&nbsp;&nbsp;&nbsp; 
-					<input type="text" onKeyUp="onChkESQ(this)" 
-						${!empty history_answer && item.options_num eq history_answer ? '' : 'disabled' }
-						id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" <c:if test="${!empty history_answer && item.options_num eq history_answer }">value="${history_answer_text}"</c:if>>
+					
+						${i.index+1 }) ${item.label_front }&nbsp;&nbsp;&nbsp; 
+					
+						<c:set var="isEmpty" value="${(!empty history_answer) }" />
+						<input type="text" onKeyUp="onChkESQ(this)" 
+						${ isEmpty eq 'false' ? '' : 'disabled' }
+						id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" 
+						<c:if test="${isEmpty eq 'false' }">value="${history_answer_text}"</c:if>>
 					${item.keyword }				
 					</div>
 					
 					<div style="text-align:right;width:20%;float:right;">
 						<input style="margin-right: 12px;" type="checkbox" id="answers" onchange="onChk('${item.options_num}')" name="answers_${item.options_num}" value="${item.options_num}"
  	
-						<c:if test="${!empty history_answer && item.options_num eq history_answer }">checked</c:if>	
+						<c:if test="${isEmpty eq 'false' }">checked</c:if>	
 
 						>
 					</div>			
