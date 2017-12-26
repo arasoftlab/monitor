@@ -97,27 +97,34 @@ public class MonitorSubjectController {
 			@RequestParam( value="isApply", defaultValue="0" ) String isApply ) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
+		System.out.println("isApply :" + isApply);
+		
+		
 		//과제수가 2개이상일 경우 기존 등록된 값을 체크하여 등록되어 있으면 수정 없으면 등록
-		if(isApply == "0") { 		
+		if("0".equals(isApply)) { 		
 			if (monitorApplyService.saveMonitorApply(monitorApplyVO) > 0) {
-	
+				System.out.println(" 1 :" + monitorApplyVO.toString());
 				resultMap.put("idx", monitorApplyVO.getIdx());
 				resultMap.put("result", "success");
 			}else{
+				System.out.println(" 2 :" + monitorApplyVO.toString());
 				resultMap.put("result", "fail");
 			}
 		
 		}else {
+			monitorApplyVO = monitorApplyService.getMonitorApply(monitorApplyVO);
+			
 			if (monitorApplyService.updateMonitorApply(monitorApplyVO) > 0) {
-
+				System.out.println(" 3 :" + monitorApplyVO.toString());
 				resultMap.put("idx", monitorApplyVO.getIdx());
 				resultMap.put("result", "success");
 			}else{
+				System.out.println(" 4 :" + monitorApplyVO.toString());
 				resultMap.put("result", "fail");
 			}
 			
 		}
-		
+		System.out.println(" mod data : " + monitorApplyVO.toString());
 		
 		return resultMap;
 	}
@@ -333,8 +340,7 @@ public class MonitorSubjectController {
 				
 				retText += ":" + answers_temp + t_img_temp;
 			}
-		}
-		else{			
+		} else {			
 			
 			//단순응답중 서술형일경우 답변의 형태는 
 			//type=S&q_num=1&answers_text_2=test&answers=2
@@ -427,19 +433,19 @@ public class MonitorSubjectController {
 		String back_temp; 
 		String back_temp_arr[]; 
 		
-		System.out.println(" PREVIEW DATA : " + history_arr);
+		System.out.println(" PREVIEW DATA : " + history_arr);    //null ??
 		System.out.println(" PREVIEW DATA : " + history_params); //@S1:1|@M2:#3^test|
-		System.out.println(" PREVIEW DATA : " + back_num); 
-		System.out.println(" PREVIEW DATA : " + report_num);
-		System.out.println(" PREVIEW DATA : " + answers_id);
+		System.out.println(" PREVIEW DATA : " + back_num);       // 이전번호
+		System.out.println(" PREVIEW DATA : " + report_num);     //조사번호
+		System.out.println(" PREVIEW DATA : " + answers_id);     //응답번호
 		
 		//이어하기 일 경우 마지막 답변을 분리하여 적용해야 하므로 처리하는 로직
 		if (!history_params.isEmpty()) 
 		{
 			
-			String temp[] = history_params.split("[|]");
+			String temp[] = history_params.split("\\|");
 			back_temp = temp[temp.length-1];
-			history_params = history_params.replace(back_temp+"|", ""); //마지막 답변 정보제거
+			history_params = history_params.replace(back_temp+"|", ""); //마지막 답변 정보제거  @M2:#3^test| --> ''
 			
 			//@M2:#3^test
 			System.out.println("1 : " + history_params);
@@ -454,16 +460,20 @@ public class MonitorSubjectController {
 			}
 			
 			if(back_temp.contains("@M")) {
-				if(back_temp.contains("\\^")) {
+				System.out.println("2 : " + back_temp);		
+				//System.out.println("3-1 : " + back_temp.indexOf("^")); //true
+				//System.out.println("3-1 : " + back_temp.indexOf("\\^")); //false
+				//System.out.println("3-1 : " + back_temp.contains("^")); //true
+				//System.out.println("3-1 : " + back_temp.contains("\\^")); //false
+				
+				if(back_temp.contains("^")) {
 					String[] mS = back_temp.split("\\^");
+					//System.out.println("3-1 : " + mS.length);
 					model.addAttribute("history_answer_text", mS[1]);
-					back_temp=mS[0].substring(0, mS[0].lastIndexOf("\\#") -1);
-					
+					back_temp=mS[0];
+					System.out.println("3-1 : " + mS[0]);
 					System.out.println("3-1 : " + mS[1]);
 				}
-				
-				
-			
 			}
 			
 			if(back_temp.contains("@S")){
@@ -499,25 +509,13 @@ public class MonitorSubjectController {
 				
 				System.out.println("6 : " + back_temp_arr);
 				
-			}else if(back_temp.contains("^")){
-				back_temp_arr = back_temp.split("^");
-				System.out.println(back_temp_arr[0]);
-				System.out.println(back_temp_arr[0]);
-				
-				String nA = back_temp_arr[0].substring(0,  back_temp_arr[0].indexOf("^"));
-				System.out.println(nA);
-				
-				model.addAttribute("history_answer", nA);
-				
-				System.out.println(" history_answer : " + nA);
-				
 			}else{
 			
 				if (back_temp.contains("#"))
 				{
 					back_temp_arr = back_temp.split("#");
 					model.addAttribute("history_answer", back_temp_arr);
-					System.out.println("7 : " + back_temp_arr[0]);
+					System.out.println("7 : " + back_temp_arr.length);
 				}
 				else{
 				
@@ -644,6 +642,7 @@ public class MonitorSubjectController {
 		// 한글형식이 주로 깨짐. 이걸 해결하기위해 다시 디코딩 해주는 작업
 		if (!params.isEmpty()) 
 		{			
+			System.out.println(" 입력 파라메터의 값 : " + params);
 			params = answerMaker(params);					
 			history_params += params;
 		}

@@ -3,9 +3,11 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
+@Setter
+@Getter
 public class BBSVO extends CommonVO{
 	private String bbs_id;
 	private String title;
@@ -19,10 +21,9 @@ public class BBSVO extends CommonVO{
 	private String password;
 	private Date regdate;
 	private int hits;
-	
 	private String cont_uuid;
-	
 	private String query;
+	private int ncnt; 
 	
 	public String getBbs_id() {
 		return bbs_id;

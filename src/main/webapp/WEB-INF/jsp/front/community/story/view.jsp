@@ -57,6 +57,28 @@ function secret_chk()
 	
 }
 
+function getTextLength() {
+	
+	var str = $(".description").val();
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length > 4) {
+            len = len+2;
+        }else{
+        	len++;	
+        }
+    }
+    
+    if(len > 240){
+    	alert("허용되는 글자수를 넘었습니다.");
+    	$(".description").val(str.substring(0,240));
+    	return false;
+    }
+    
+    $("#sCnt").text("");
+    $("#sCnt").text(len + " / 240" );
+}
+
 function comment_apply()
 {
 	if ($("#description").val() =="" )
@@ -447,11 +469,8 @@ function onDelete(bbs_id)
 									<table style="width: 100%;">
 										<tr>
 											<td style="width: 100%;">
-<!--
-20170411 text limit
-<textarea rows="2" style="width: 100%; border-radius: 5px;" id="description" name="description"></textarea>
--->
-<textarea style="width:100%; border-radius:5px" rows="2" onKeyUp="checkLength(this);"id="description" name="description"></textarea>
+												<b id="sCnt"></b>
+												<textarea style="width:100%; border-radius:5px" rows="2" onKeyUp="getTextLength();" id="description" class="description" name="description"></textarea>
 
 </td>
 										</tr>

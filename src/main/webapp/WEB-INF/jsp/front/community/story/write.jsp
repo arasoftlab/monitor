@@ -13,6 +13,20 @@ function replaceAll(str, target, replacement) {
 };
 
 
+//길이구하기
+function getTextLength() {
+	var str = $("#description").val();
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length == 6) {
+            len++;
+        }
+        len++;
+    }
+    $("#sCnt").val(len + " / 240" );
+    return len;
+}
+
 function onSave()
 {
 	if ($("#title").val() == "")
@@ -79,6 +93,8 @@ $(window).load( function() {
 
 	    }
 	});
+	
+	
 });
 		
 </script>
@@ -123,7 +139,8 @@ $(window).load( function() {
 					<tr>
 						<th>내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 						<td colspan=3 class="left editor1">
-							<textarea style="width:100%;" rows="5" id="description"name="description">${vo.description}</textarea>
+							<b id="sCnt"></b>
+							<textarea style="width:100%;" rows="5" id="description"name="description" onkeydown="getTextLength()">${vo.description}</textarea>
 						</td>
 					</tr>
 

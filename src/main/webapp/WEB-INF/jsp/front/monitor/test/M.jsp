@@ -120,18 +120,16 @@ function onChk(num){
 					
 						${i.index+1 }) ${item.label_front }&nbsp;&nbsp;&nbsp; 
 					
-						<c:set var="isEmpty" value="${(!empty history_answer) }" />
 						<input type="text" onKeyUp="onChkESQ(this)" 
-						${ isEmpty eq 'false' ? '' : 'disabled' }
-						id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" 
-						<c:if test="${isEmpty eq 'false' }">value="${history_answer_text}"</c:if>>
+						${ (!empty history_answer_text) ? '' : 'disabled' }
+						id="answers_text_${item.options_num}" name="answers_text_${item.options_num}"  value="${history_answer_text}">
 					${item.keyword }				
 					</div>
 					
 					<div style="text-align:right;width:20%;float:right;">
 						<input style="margin-right: 12px;" type="checkbox" id="answers" onchange="onChk('${item.options_num}')" name="answers_${item.options_num}" value="${item.options_num}"
  	
-						<c:if test="${isEmpty eq 'false' }">checked</c:if>	
+						<c:if test="${!empty history_answer_text }">checked</c:if>	
 
 						>
 					</div>			

@@ -69,7 +69,7 @@ function onBankApply()
 				}
 				
 			}else{
-			////console.log(data);
+			console.log(data);
 			}		
 		},
 		error : function(request,status,error) {

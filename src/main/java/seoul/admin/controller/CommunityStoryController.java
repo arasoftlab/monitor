@@ -38,9 +38,13 @@ public class CommunityStoryController {
 
 		bbsVO.setType("S");
 				
-		model.addAttribute("list", bbsService.getBBSList(bbsVO));
+		List<BBSVO> bl = bbsService.getBBSList(bbsVO);
+		model.addAttribute("list", bl);
 		model.addAttribute("vo", bbsVO);
 		model.addAttribute("page", bbsVO.getPagingVO());
+		
+		//System.out.println(bl.toString());
+		//System.out.println(bbsVO.toString());
 		
 		return "admin/community/story/list.admin";
 	}

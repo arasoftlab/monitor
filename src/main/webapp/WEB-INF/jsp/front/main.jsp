@@ -39,7 +39,7 @@ pageEncoding="UTF-8"%>
              
 			  <!-- 게시판 시작 -->
 			<div class="notice_bg">
-				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class='board_output '>
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class='board_output '>
 					<tr>
 						<td>
 							<table border='0' cellspacing='0' cellpadding='0' width='100%' class='board_output'>
@@ -86,7 +86,7 @@ pageEncoding="UTF-8"%>
 				<div id="example-4-tab-1" class="tabs-panel3">
 					
 
-					<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class='board_output'>
+					<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class='board_output'>
 						<tr>
 							<td>
 								<table border='0' cellspacing='0' cellpadding='0' width='100%' class='board_output pc_table'>
@@ -303,7 +303,7 @@ pageEncoding="UTF-8"%>
 			  <!-- 포토갤러리 게시판 시작 -->
 			<link rel="StyleSheet" href="<c:url value='/css/front/css/board_1.css'/>" type="text/css">
 			<div class="notice_bg">
-				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class='board_output'>
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class='board_output'>
 					<tr>
 						<td>
 							<table border='0' cellspacing='0' cellpadding='0' width='100%' class='board_output'>

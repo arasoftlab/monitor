@@ -244,7 +244,7 @@ function fnCheckSession(){
              
 			  <!-- 게시판 시작 -->
 			<div class="notice_bg">
-				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class="board_output ">
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class="board_output ">
 					<tbody><tr>
 						<td>
 							<table border="0" cellspacing="0" cellpadding="0" width="100%" class="board_output">
@@ -330,7 +330,7 @@ function fnCheckSession(){
 				<div id="example-4-tab-1" class="tabs-panel3">
 					
 
-					<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class="board_output">
+					<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class="board_output">
 						<tbody><tr>
 							<td>
 								<table border="0" cellspacing="0" cellpadding="0" width="100%" class="board_output pc_table">
@@ -604,7 +604,7 @@ function fnCheckSession(){
 			  <!-- 게시판 시작 -->
 			<link rel="StyleSheet" href="/monitor/css/front/css/board_1.css" type="text/css">
 			<div class="notice_bg">
-				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" background="#" class="board_output">
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" class="board_output">
 					<tbody><tr>
 						<td>
 							<table border="0" cellspacing="0" cellpadding="0" width="100%" class="board_output">

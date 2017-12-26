@@ -500,20 +500,21 @@ $('#element').off('scroll touchmove mousewheel');
 															
 															<c:when test="${answer_type eq 'M'}">
 																<c:set var="an_m_item" value="${fn:split(an_item, '#')}" />
-																<c:set var="list_num_seq" value="${1 }" />
+																<c:set var="list_num_seq" value="1" />
 																
 																<c:forEach var="mo" items="${q_type_list.optionVO}" varStatus="z">
 																	<c:if test="${fn:contains(an_item, '^') }">
 																		<c:set var="lastQ" value="${fn:substring(an_item, fn:indexOf(an_item, '^')-2, fn:length(an_item)) }" />
-																		<c:set var="currQ" value="${an_m_item[list_num_seq]}" />
-																		<c:set var="curQn" value="${fn:substring(currQ, 0, 1) }" />
+																		
 																	</c:if>
+																	<c:set var="currQ" value="${an_m_item[list_num_seq]}" />
+																	<c:set var="curQn" value="${fn:substring(currQ, 0, 1) }" />
 																	
 																		<!-- 서술형 문항일 경우에 문항의 번호를 별도로 구분 후 현재 인덱스와 비교하고 맞으면 값을 넣어줌 -->
 																		<c:if test="${mo.descyn eq 'Y' }">
 																			<c:set var="last_item" value="${lastQ }" />
 																			<c:set var="li" value="${fn:split(last_item, '^') }" />
-																				<td>${li[0] ne null ? '1' : '' }</td>
+																				<td>${li[0] ne '' ? '1' : '' }</td>
 																				<td>${li[1] }</td>
 																		</c:if>
 																		<c:if test="${mo.descyn ne 'Y' }">

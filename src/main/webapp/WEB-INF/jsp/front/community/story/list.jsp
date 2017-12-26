@@ -149,12 +149,13 @@ function onSecretEnter(uuid)
 										<td class='bbsnewf5' align='left'>
 											<c:choose>
 												<c:when test="${item.is_password eq 'Y' }">
-													<span class="notice_subject"><img src="/monitor/img/closed.JPG" class="navIcon"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title }</a></span>
+													<span class="notice_subject"><img src="/monitor/img/closed.JPG" class="navIcon"><a href="javascript:onSecretEnter('${item.cont_uuid}')" >${item.title } &nbsp; <c:if test="${item.ncnt > 0 }" ><b>[ ${item.ncnt} ]</b></c:if></a></span>
 												</c:when>
 												<c:otherwise>
-													<span class="notice_subject"><a href='<c:url value='view.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span>
+													<span class="notice_subject"><a href='<c:url value='view.do?cont_uuid=${item.cont_uuid}'/>'>${item.title } &nbsp; <c:if test="${item.ncnt > 0 }" ><b>[ ${item.ncnt} ]</b></c:if></a></span>
 												</c:otherwise>
-											</c:choose>									
+											</c:choose>		
+																		
 										</td>
 										<td class="bbswriter">
 										<font style='font-size:12px;'><c:out value="${fn:substring(item.member_id, 0, 3)}" />**</font>

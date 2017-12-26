@@ -72,6 +72,8 @@ var is_payment = '${is_payment}';
 var subject_id = '${subject_id}';
 var is_maxpage = 100;
 
+answers_id = (answers_id == "") ? "1567" : answers_id;
+
 <c:set var="search" value="'" />
 <c:set var="replace" value="" />
 
@@ -84,12 +86,12 @@ function onEnter()
 {
 	if (is_modify =="") 
 	{
-		//console.log("next >>>");
+		console.log("next >>>");
 		getNextQuestion('${list[0].question_id }','${list[0].question_num}','1' ,0 , '');
 	}
 	else
 	{
-		//console.log("prev <<<");
+		console.log("prev <<<");
 		// 나중에 이전 기능 살릴땐 지나온 번지수를 컬럼에 뿌렷다가 같이 던져주자.
 		getPreviewQuestion('${list[now_num-1].question_id }' , '' , '${now_num }' , is_modify);
 	}
@@ -182,7 +184,12 @@ function historyAppend(question_id , history_org , this_num , bifurcation , hist
 
 function getPreviewQuestion(question_id,history_arr,back_num , history_params ){
 	is_maxpage = back_num;
-	
+	console.log("question_id:"+ question_id);
+	console.log("history_arr:" + history_arr);
+	console.log("history_par:" + history_params);
+	console.log("back_num :" + back_num);
+	console.log("answers_id:" + answers_id);
+	console.log("report_num:" + report_num);
 	
 	$.ajax({
 		async : true,
@@ -197,6 +204,7 @@ function getPreviewQuestion(question_id,history_arr,back_num , history_params ){
 			"report_num" : report_num
 			},
 		success : function(data){
+			console.log("prev call rst : " + back_num);
 			console.log(data);
 			$("#test_target").html(data);			
 			$("#test_index").text(back_num);
@@ -224,6 +232,15 @@ function getNextQuestion(question_id , history_arr, this_num , bifurcation , his
 	
 	params = $("form").serialize();
 	//console.log("param : "+params);
+	
+	
+	console.log("question_id:"+ question_id);
+	console.log("history_arr:" + history_arr);
+	console.log("history_par:" + history_params);
+	console.log("answers_id:" + answers_id);
+	console.log("report_num:" + report_num);
+	console.log("form_param:" + params);
+	
 	
 	$.ajax({
 				async : true,

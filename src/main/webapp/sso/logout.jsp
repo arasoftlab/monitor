@@ -19,7 +19,7 @@ log out
 	session.invalidate();
 	if(SSO_SERVER != null && !"1".equals(logoutParam)) {
 %>
-<script language="JavaScript">
+<script>
 top.document.location = "<%=SSO_SERVER%>/sso/pmi-logout-url.jsp?returl=<%=returnUrl%>";
 </script>
 <%

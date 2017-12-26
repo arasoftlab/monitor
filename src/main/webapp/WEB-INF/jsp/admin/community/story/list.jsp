@@ -67,12 +67,12 @@ function fnSearch(){
 										<!--span class="notice_subject"><a href='<c:url value='sview.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span -->
 										<c:choose>
 											<c:when test="${item.is_password eq 'Y' }">
-												<span class="notice_subject"><img src="/monitor/img/closed.JPG"><a href='<c:url value='sview.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span>
+												<span class="notice_subject"><img src="/monitor/img/closed.JPG"><a href='<c:url value='sview.do?cont_uuid=${item.cont_uuid}'/>'>${item.title } &nbsp; <c:if test="${item.ncnt > 0 }" ><b>[ ${item.ncnt} ]</b></c:if></a></span>
 											</c:when>
 											<c:otherwise>
-													<span class="notice_subject"><a href='<c:url value='sview.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }</a></span>
+													<span class="notice_subject"><a href='<c:url value='sview.do?cont_uuid=${item.cont_uuid}'/>'>${item.title }&nbsp; <c:if test="${item.ncnt > 0 }" ><b>[ ${item.ncnt} ]</b></c:if></a></span>
 												</c:otherwise>
-											</c:choose>																			
+											</c:choose>
 									</td>
 									<td><a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;"> ${item.member_id }</a></td>
 									<td><a href="javascript:view_member('${item.member_id }','${item.poll_num }');" style="font-weight: bold;">	${item.member_name }</td>

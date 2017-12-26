@@ -25,6 +25,28 @@ pageEncoding="UTF-8"%>
 </style>
 
 <script>
+function getTextLength(cntTarget) {
+	
+	var str = $(cntTarget).val();
+	var cnt = $str.siblings('b')
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length > 4) {
+            len = len+2;
+        }else{
+        	len++;	
+        }
+    }
+    
+    if(len > 240){
+    	alert("허용되는 글자수를 넘었습니다.");
+    	$(".description").val(str.substring(0,240));
+    	return false;
+    }
+    
+    $b.text("");
+    $b.text(len + " / 240" );
+}
 
 function comment_apply()
 {
@@ -73,8 +95,8 @@ function c_modify(c_idx)
 {
 	var comment_temp = $('#comment_'+c_idx).text();
 	
-
-	$('#comment_'+c_idx).contents().unwrap().wrap('<input type="text" id="comment_'+c_idx+'" value="'+comment_temp+'" style="width:100%;" />');	
+	$('#comment_'+c_idx).
+	$('#comment_'+c_idx).contents().unwrap().wrap('<textarea id="comment_'+c_idx+'" value="'+comment_temp+'" rows="2" style="width:100%; border-radius:5px"  onKeyUp="getTextLength("desc1");" />');	
 	
 	$('#comment_'+c_idx).text("");
 	
@@ -264,7 +286,8 @@ function onDelete(bbs_id)
 						<div class="col-lg-12" style="margin-top:10px;padding:5px;">
 							<table style="width:100%;">
 								<tr>
-									<td style="width:100%;"><textarea rows="2" id="description"	name="description" style="width:100%; height:70px; border-radius:5px;"></textarea></td>
+									<b id="sCnt"></b>
+									<td style="width:100%;"><textarea rows="2" id="description" onkeyup="getTextLength('desc2');" name="description" style="width:100%; height:70px; border-radius:5px;"></textarea></td>
 								</tr>
 								<tr>
 									<td style="width:100%; height:70px; text-align:right;">

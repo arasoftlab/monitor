@@ -704,57 +704,74 @@ public class ExcelView extends AbstractXlsView{
 				String[] s_temp_arr0 = temp_arr[a_index].split(":");
 				String[] s_temp_arr = s_temp_arr0[1].split("#"); //0은 문항유형및 문항번호 @M2 //1은 데이터 #1#2#3
 
-				
-				String lastA = s_temp_arr0[1].indexOf('^') > 0 ? s_temp_arr[s_temp_arr.length -1] : " ^ " ;
+				String slast = s_temp_arr0[1];
+				System.out.println("전체 답변 체크 : " + slast);
+				String lastA = slast.contains("^") ? s_temp_arr[s_temp_arr.length -1] : "" ;
+				System.out.println("마지막 응답체크 : " + lastA);
 				String currQ = s_temp_arr[1];
 				int currIndex = 1;
 				//String curQn = currQ.substring(0,  1);
 				
+				System.out.println("0 보기 답변 갯수 : " + s_temp_arr.length);
 				System.out.println("1 보기 답변 확인 : " + temp_arr[a_index]);
+				
 				//답변의 수 만큼 루프를 돔
 				for (int s = 0 ; s < q_list.get(z).getOptionVO().size() ; s++)
 				{ 
-					System.out.println("2 답변확인 : " + currQ);
-					System.out.println("3 순환확인 : " + s);
-					System.out.println("3 마지막번 : " + lastA);
+					System.out.println("2 현재 답변 확인 : " + currQ);
+					System.out.println("3 순환 번호 확인 : " + s);
+					System.out.println("3 마지막번호      : " + lastA);
+					
+					currQ = s_temp_arr[currIndex];
 					
 					String curQn = (currQ !="") ? currQ.substring(0, 1): "0";
-					System.out.println("4 보기확인 : " + curQn);
+					System.out.println("4 보기 내용 확인 : " + curQn);
 				
 					String isDesc = q_list.get(z).getOptionVO().get(s).getDescyn();
+					System.out.println(" 첨부 여부  확인 : " + isDesc);
 					
 					if("Y".equals(isDesc)) {
+						String[] aS = {"", ""};
+						if(lastA.length() > 1) {
+							aS = lastA.split("\\^");
+						}
 						
-						String[] aS = lastA.split("\\^");
-						String ansL = aS[0] !=" " ? "1" : "";
+						String ansL = aS[0] != "" ? "1" : "";
+						String ansT = aS[1] != "" ? aS[1] : "";
+						
+						System.out.println("5 첨부상태 답변 : " + aS[0]);
+						System.out.println("5 첨부상태 답변 : " + aS[1]);
 						
 						Cell cell5 = row.createCell(++temp_num);
 						cell5.setCellValue(ansL);
 						cell5.setCellStyle(center); 	  
-						System.out.println("5 서술첨부여부 답변 : " + aS[0]);
+						System.out.println("5 첨부상태 번호 : " + aS[0]);
 						
 						Cell cell6 = row.createCell(++temp_num);
-						cell6.setCellValue(aS[1]);
+						cell6.setCellValue(ansT);
 						cell6.setCellStyle(center); 	  
-						System.out.println("6 서술첨부여부 답변 : " + aS[1]);	
+						System.out.println("6 첨부상태 답변 : " + aS[1]);	
+						System.out.println("8 마지막 문항    : " + lastA);
 					}else {
 						
-						System.out.println("7 서술첨부여부 답변 : " + curQn);
+						System.out.println("7  미첨부 답면 확인 : " + curQn);
 						curQn = (Integer.toString(s+1).equals(curQn)) ? "1" : ""; 
-						System.out.println("7 서술첨부여부 답변 : " + Integer.toString(s));
+						System.out.println("7  미첨부 정리 확인 : " + Integer.toString(s));
 						
 						Cell cell5 = row.createCell(++temp_num);
 						cell5.setCellValue(curQn);
 						cell5.setCellStyle(center);
 						
-						System.out.println("7 서술첨부여부 답변 : " + curQn);
-						
-						currQ = ( curQn != "" ) ? s_temp_arr[currIndex +1] : currQ;
+						System.out.println("7 최종 결과 : " + curQn);
 						
 					}
-
 					
-					System.out.println("루프재귀 1 : " + s);
+					//서술형이 아닌 일반 마지막 문항일때 인덱스 증가를 하지 않고 현재 인덱스로 정리하고 처리함
+					currIndex = ( curQn != "" ) ?  currIndex + 1 : currIndex; // 답변이 있을때 답변을 처리한 다음답변으로 이동
+					currIndex = ( s_temp_arr.length <= currIndex) ? currIndex -1 : currIndex; // 답변의 갯수 보다 커질때 마지막 갯수로 조정
+					
+					
+					System.out.println("루프재귀  : " + s);
 				}
 				
 			} 	                         

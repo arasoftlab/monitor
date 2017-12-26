@@ -220,7 +220,7 @@ public class FileController {
 	    while (eHeader.hasMoreElements()) {
 	        String hName = (String)eHeader.nextElement();
 	        String hValue = req.getHeader(hName);
-	        System.out.println(hName + " : " + hValue);
+	        System.out.println(" 헤더접속 정보 : " + hName + " : " + hValue);
 	    }
 	    
 	    String fileName = req.getHeader("file-name");

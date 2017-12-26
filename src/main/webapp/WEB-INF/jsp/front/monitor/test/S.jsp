@@ -15,7 +15,7 @@ function chkValidation()
 	var answers = $(":input:radio[name=answers]:checked").val();
 	var test = $("#answers_text_"+answers).val();
 	var history_params = "${history_params}";
-	console.log(test);
+	//console.log(test);
 	//console.log(history_params);
 	//console.log(answers);
 
@@ -92,7 +92,9 @@ function onChk(num){
 					<div style="text-align:left;float:left;">
 					${o_num.index+1})
 					${item.label_front }&nbsp;&nbsp;&nbsp; 
-					<input type="text" onKeyUp="onChkESQ(this)" disabled id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" <c:if test="${!empty history_answer && item.options_num eq history_answer }">value="${history_answer_text}"</c:if>>
+					<input type="text" onKeyUp="onChkESQ(this)" 
+					<c:if test="${ fn:length(history_answer_text) == 0 }" >disabled</c:if> 
+					id="answers_text_${item.options_num}" name="answers_text_${item.options_num}" <c:if test="${!empty history_answer && item.options_num eq history_answer }">value="${history_answer_text}"</c:if>>
 					${item.keyword }
 					</div>
 
