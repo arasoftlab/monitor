@@ -107,7 +107,7 @@ function resize(obj) {
 			<!-- 굳이  읽기 전용 텍스트에리어를 쓴 이유는 웹단에 뿌리는 데이터베이스 저장값은 \r\n 개행 문자형태이므로
 			    <br>태그로 치환하기엔 모호성이 있다고 판단되었다.
 			 -->
-			<textarea id="bbs_cont" name="bbs_cont" onkeyup="resize(this)" readonly style="width: 100%;overflow: hidden;resize:none;font-weight: bold;border: 0px;">${vo.title }</textarea>
+			<textarea id="bbs_cont" name="bbs_cont" onkeyup="resize(this)" readonly style="width: 100%;overflow: hidden;resize:none;font-weight: bold;border: 0px;">${vo.question_num}) ${vo.title }</textarea>
 		</h2>
 	</div>
 	

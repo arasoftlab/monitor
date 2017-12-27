@@ -3,7 +3,11 @@ package seoul.admin.vo;
 import java.util.Date;
 
 import common.vo.CommonVO;
+import lombok.*;
 
+@ToString
+@Getter
+@Setter
 public class CommentVO extends CommonVO{
 	private String comm_id;
 	private String is_secret;

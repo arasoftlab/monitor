@@ -6,7 +6,14 @@ pageEncoding="UTF-8"%>
 
 <script type="text/javascript" src="<c:url value='/js/smartEditor/js/HuskyEZCreator.js'/>"></script>
 <script type="text/javascript">
-
+<c:choose>
+<c:when test="${vo.type eq 'S' }">
+	<c:set var="loc" value="story" />
+</c:when>	
+<c:when test="${vo.type eq 'F' }">
+	<c:set var="loc" value="faq" />
+</c:when>	
+</c:choose>
 
 function onSave()
 {
@@ -16,6 +23,7 @@ function onSave()
 		return false;		
 	}
 	
+	
 	$.ajax({
 			async : true,
 			type : "POST",
@@ -23,7 +31,7 @@ function onSave()
 			data : $("form").serialize(),
 			success : function(data){
 				if(data.result == "success"){
-					location.href='list.do';
+					location.href='${loc }list.do';
 				}else{
 					alert("저장된 데이터가 없습니다.");
 				}
@@ -43,7 +51,7 @@ function onSave()
 			<div class="col-lg-12">
 				<form>
 					<input type="hidden" name="cont_uuid" value="${vo.cont_uuid}">
-					<input type="hidden" name="type" value="S">
+					<input type="hidden" name="type" value="${vo.type }">
 					
 					
 					
@@ -83,9 +91,12 @@ function onSave()
 			<div class="col-lg-3 pull-right right">
 				<button class="btn btn-default" onclick="location.href='list.do';">취소</button>
 				<button class="btn btn-theme " onclick="onSave();">등록</button>
-				<button class="btn btn-info " onclick="location.href='<c:url value='/admin/community/story/list.do'/>';">목록</button>
+				
+				
+				
+				<button class="btn btn-info " onclick="location.href='<c:url value='/admin/community/${loc }list.do'/>';">목록</button>
 			</div>
 		</div>
-	</div>ㄴ
+	</div>
 	</section>
 	

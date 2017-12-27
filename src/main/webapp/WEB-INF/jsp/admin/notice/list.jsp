@@ -22,6 +22,7 @@ function fnSearch(){
 							<option value="S" <c:if test="${vo.type eq 'S' }">selected</c:if>>단순공지</option>
 							<option value="F" <c:if test="${vo.type eq 'F' }">selected</c:if>>현장과제</option>
 							<option value="V" <c:if test="${vo.type eq 'V' }">selected</c:if>>설문과제</option>
+							<option value="Q" <c:if test="${vo.type eq 'Q' }">selected</c:if>>FAQ</option>
 						</select>
 						<select class="list_form" name="searchCategory" style="display: inline;">
 							<option value="title" <c:if test="${vo.searchCategory eq 'title' }">selected</c:if>>제목</option>

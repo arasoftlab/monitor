@@ -297,7 +297,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<textarea style="width:100%;" rows="3" onKeyUp="checkLength(this);" name="description"></textarea>
+								<textarea style="width:100%;" rows="3" onKeyUp="checkLength(this);" name="description">${m_vo.description}</textarea>
 							</td>
 						</tr>
 					</table>

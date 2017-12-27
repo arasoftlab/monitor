@@ -63,6 +63,7 @@ function fnDelete(){
 									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'S'}">checked</c:if> >단순, 일반공지</label>
 									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>
 									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
+									<label class="col-sm-4"><input type="radio" name="type" disabled <c:if test="${vo.type eq 'Q'}">checked</c:if> >FAQ</label>
 								</div>
 							</td>
 						</tr>
@@ -147,7 +148,7 @@ function fnDelete(){
 			<div class="col-lg-2 pull-right right">
 				<button class="btn btn-warning" onclick="fnDelete();">삭제</button>
 				<button class="btn btn-theme" onclick="location.href='modify.do?notice_id=${vo.notice_id}';">수정</button>
-				<button class="btn btn-info" onclick="location.href='list.do';">목록</button>
+				<button class="btn btn-info" onclick="location.href='list.do?type=${vo.type}';">목록</button>
 			</div>
 		</div>
 	</div>

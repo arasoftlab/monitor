@@ -1,9 +1,12 @@
 package seoul.admin.vo;
 
 import java.util.Date;
-
+import lombok.*;
 import common.vo.CommonVO;
 
+@ToString
+@Getter
+@Setter
 public class NoticeVO extends CommonVO{
 	private int notice_id;
 	private String title;
@@ -19,6 +22,8 @@ public class NoticeVO extends CommonVO{
 	private String cont_uuid;
 	
 	private String query;
+	private String stype;
+	
 	
 	public int getNotice_id() {
 		return notice_id;
@@ -39,10 +44,25 @@ public class NoticeVO extends CommonVO{
 		this.type = type;
 	}
 	public String getTypeText() {
-		String typeText="";
-		if("S".equals(type)) typeText="단순공지";
-		else if("F".equals(type)) typeText="현장과제";
-		else typeText="설문과제";
+		String tt = this.getType();
+		String typeText = "";
+		switch (tt) {
+			case "S":
+				typeText="단순공지";
+				break;
+			case "F":
+				typeText="현장과제";
+				break;
+			case "V":
+				typeText="설문과제";
+				break;
+			case "Q":
+				typeText="FAQ";
+				break;
+			default:
+				break;
+		}
+				
 		return typeText;
 	}
 	public String getOpen() {

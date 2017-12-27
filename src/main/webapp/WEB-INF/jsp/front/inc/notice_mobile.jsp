@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
 									<tr align='center' style="cursor:pointer" >
 										<td class="bbsno">${item.rn }</td>
 										<td class='bbsnewf5' align='left'>
-											<span class="notice_subject"><a href='<c:url value='/front/notice/all/view.do?notice_id=${item.notice_id }'/>'>${item.title }</a></span>
+											<span class="notice_subject"><a href='<c:url value='/front/notice/all/view.do?notice_id=${item.notice_id }&stype=${vo.stype }'/>'>${item.title }</a></span>
 										</td>
 									</tr>
 								</c:forEach>

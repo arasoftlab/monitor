@@ -47,6 +47,8 @@ public class SubjectTestController {
 		//model.addAttribute("vo", questionVO);
 
 		//List<QuestionVO> list =  questionService.getQuestionList(questionVO);
+		System.out.println(questionVO.toString());
+		System.out.println(subjectVO.toString());
 		
 		model.addAttribute("list", questionService.getQuestionList(questionVO));
 		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));

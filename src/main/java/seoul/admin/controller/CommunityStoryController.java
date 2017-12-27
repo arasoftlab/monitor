@@ -21,7 +21,7 @@ import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
-@RequestMapping("/admin/community/story")
+@RequestMapping("/admin/storyCommunity")
 public class CommunityStoryController {
 	
 	//@Autowired

@@ -73,7 +73,7 @@ function resize(obj) {
 	
 	<div>
 		<h2>
-			<textarea id="bbs_cont" name="bbs_cont" onkeyup="resize(this)" readonly style="    font-size: 16pt;width: 100%;overflow: hidden;resize:none;font-weight: bold;border: 0px;">${vo.title }</textarea>
+			<textarea id="bbs_cont" name="bbs_cont" onkeyup="resize(this)" readonly style="    font-size: 16pt;width: 100%;overflow: hidden;resize:none;font-weight: bold;border: 0px;">${vo.question_num}) ${vo.title }</textarea>
 		</h2>
 	</div>
 	

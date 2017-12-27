@@ -68,7 +68,7 @@
     top: 6px;
 }
 .comments table .writer, .add_reply_list table .writer {
-    /*width: 90px;*/
+    width: 90px;
 }
 .comment a, .comment .writer, .reply_by_user a, .reply_by_user .writer {
     color: #4d4d4d;

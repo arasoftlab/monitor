@@ -45,10 +45,25 @@ public class NoticeAllController {
         XssFilter xssFilter = XssFilter.getInstance("/lucy-xss-superset.xml");
         noticeVO.setSearchText(xssFilter.doFilter(noticeVO.getSearchText()));
          
+		System.out.println("공지 내역 확인 : " + noticeVO.toString());
 		
-		noticeVO.setQuery("OPEN = 'Y' ");
+		switch (noticeVO.getStype()) {
+			case "Q":
+				noticeVO.setQuery(" type = 'Q' AND OPEN = 'Y' ");
+				break;
+			case "S":
+				noticeVO.setQuery(" type in ('F', 'V') AND OPEN = 'Y' ");
+				break;
+			default:
+				noticeVO.setQuery(" OPEN = 'Y' ");
+				break;
+		}
+        
+		//noticeVO.setQuery("OPEN = 'Y' ");
 		noticeVO.setPageSize(10);
-		model.addAttribute("list", noticeService.getNoticeList(noticeVO));
+		List<NoticeVO> nl = noticeService.getNoticeList(noticeVO);
+				
+		model.addAttribute("list", nl);
 		model.addAttribute("vo", noticeVO);
 
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
@@ -66,7 +81,15 @@ public class NoticeAllController {
 	
 	@RequestMapping("view.do")
 	public String view(Model model, @ModelAttribute NoticeVO noticeVO) throws Exception{
-		model.addAttribute("vo", noticeService.getNotice(noticeVO, true));
+		String stype = noticeVO.getStype();
+		
+		NoticeVO nvo = noticeService.getNotice(noticeVO, true);
+		nvo.setStype(stype);
+		
+		model.addAttribute("vo", nvo);
+		System.out.println("공지체크2 뷰 :" + nvo.toString());
+		
+		
 		
 		noticeVO = noticeService.getNotice(noticeVO, false);
 		
@@ -184,9 +207,15 @@ public class NoticeAllController {
 	
 	@RequestMapping("modify.do")
 	public String modify(Model model, @ModelAttribute NoticeVO noticeVO) throws Exception{
+		String stype = noticeVO.getStype();
 		
-		model.addAttribute("vo", noticeService.getNotice(noticeVO, false));
-
+		NoticeVO nvo = noticeService.getNotice(noticeVO, true);
+		nvo.setStype(stype);
+		
+		model.addAttribute("vo", nvo);
+		
+		System.out.println("공지체크3 수 :" + nvo.toString());
+		
 		noticeVO = noticeService.getNotice(noticeVO, false);
 		
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		

@@ -157,14 +157,18 @@ public class NoticeSubjectController {
 		Object ret = SessionUtil.getAttribute(SessionContants.MEMBER );		
 		MemberVO mem = (MemberVO)ret;
 		
+		System.out.println(mem.toString());
+		
 		if (mem != null)
 		{
-			//MonitorsVO monitorsVO = new MonitorsVO();	
-			monitorsVO.setMember_id(mem.getId());
-			//monitorsVO.setSubject_id(subject_id);
-			//monitorsVO = monitorsService.getMonitors(monitorsVO);
+			MonitorsVO mVO = new MonitorsVO();	
+			mVO.setMember_id(mem.getId());
+			mVO.setSubject_id(mem.getSubject_id());
+			mVO = monitorsService.getMonitors(monitorsVO);
 			
-			if (monitorsService.updateMonitors(monitorsVO) > 0) {
+			System.out.println(mVO);
+			
+			if (monitorsService.updateMonitors(mVO) > 0) {
 				resultMap.put("result", "success");
 			}else{
 				resultMap.put("result", "fail");

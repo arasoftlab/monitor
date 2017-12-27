@@ -79,6 +79,9 @@
 	    	<c:if test="${menu.depth3 eq 'subject' }">
 			<div class="title"><p style="text-align:right; padding:20px;"> 공지사항 > 현장과제 참여공지 </p></div>
 	    	</c:if>
+	    	<c:if test="${vo.type eq 'Q' }">
+			<div class="title"><p style="text-align:right; padding:20px;"> 공지사항 > FAQ </p></div>
+	    	</c:if>
 		</div>
 	</div>
 <div class="container">	
@@ -90,11 +93,14 @@
 				<aside class="sc_widget_nav">
 					<h4 class="widget-title"><i class="fa fa-building"></i>&nbsp; 공지사항</h4>
 					<ul>
-						<li class=" <c:if test="${menu.depth3 eq 'all' }"> current</c:if>">
-						   <a href="<c:url value='/front/notice/all/list.do'/>">전체공지</a>
+						<li class=" <c:if test="${vo.stype eq 'A' }"> current</c:if>">
+						   <a href="<c:url value='/front/notice/all/list.do?stype=A'/>">전체공지</a>
 						</li>
-						<li class=" <c:if test="${menu.depth3 eq 'subject' }"> current</c:if>">
-						   <a href="<c:url value='/front/notice/subject/list.do'/>">현장과제 참여공지</a>
+						<li class=" <c:if test="${vo.stype eq 'S' }"> current</c:if>">
+						   <a href="<c:url value='/front/notice/all/list.do?stype=S'/>">현장과제 참여공지</a>
+						</li>
+						<li class=" <c:if test="${vo.stype eq 'Q' }"> current</c:if>">
+						   <a href="<c:url value='/front/notice/all/list.do?stype=Q'/>">FAQ</a>
 						</li>
 					</ul>
 				</aside>

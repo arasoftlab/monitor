@@ -1,6 +1,8 @@
 package seoul.front.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +72,9 @@ public class MonitorMonitorController {
 	
 	@RequestMapping("view.do")
 	public String view(Model model, @ModelAttribute SubjectVO subjectVO) throws Exception{
-				
-		model.addAttribute("vo", subjectInfoService.getSubject(subjectVO));
+			
+		SubjectVO sVO = subjectInfoService.getSubject(subjectVO);
+		model.addAttribute("vo", sVO);
 		
 		subjectVO = subjectInfoService.getSubject(subjectVO);
 		
@@ -80,8 +83,8 @@ public class MonitorMonitorController {
 		
 		MonitorsVO monitorsVO = new MonitorsVO();
 		
-		//List<AnswersVO> answers_list;
-		
+		List<AnswersVO> aL = null;
+		int aLength = 0;
 		if (mem != null)
 		{
 			model.addAttribute("m_info" , mem );
@@ -105,10 +108,41 @@ public class MonitorMonitorController {
 				answersVO.setMember_id(mem.getId());
 				answersVO.setSubject_id(subjectVO.getSubject_id());
 				
-				model.addAttribute("a_list" , answersService.getAnswerList(answersVO));
+				aL = answersService.getAnswerList(answersVO);
 				
+				model.addAttribute("a_list" , aL);
+				aLength = aL.size();
 			}
 		}
+		
+		//답변선별을 위한 사전 데이터 생성
+		int sLength = sVO.getQuestion_cnt();
+
+		
+		List<String> unAns = new ArrayList<String>();
+		
+		//문항에 대해 모든 번호를 기록한다.
+		for(int i=0; sLength> i; i++) {			
+			unAns.add("N");
+		}	
+		
+		System.out.println(" answer count : " + aLength);
+		
+		//기록된 번호와 같은 것이 있으면 값을 지운다.
+		if(aLength > 0) { // 답변의 갯수가 0보다 크면 하나씩 확인
+			for(int a=0; aLength > a; a++) {
+				int rN = aL.get(a).getReport_num(); //답변번호를 가져옴
+				
+				System.out.println(" 처리하는 답변 내용 : " + rN);
+				
+				if(unAns.get(rN)=="N") {
+					unAns.set(rN, "Y");	
+				}
+			}
+		}
+	
+		model.addAttribute("unAns", unAns);
+		System.out.println(" 미응답 번호 : " + unAns.toString());
 		
 		return "front/monitor/monitor/view.default";
 	}

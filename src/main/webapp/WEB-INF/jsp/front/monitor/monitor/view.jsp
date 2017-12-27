@@ -271,13 +271,16 @@ function onApply(rcnt, id)
 		
 				
 			<c:if test="${vo.status eq '04' && m_vo.is_selection eq 'Y'}">
-				
+			
 				<!-- 갯수만큼반복 -->
-				<c:forEach begin="0" end="${vo.question_cnt -1 }" step="1" varStatus="qcnts">
-				<!-- 과제에서 수행기록 제거 --> 
-				<c:if test="${fn:length(a_list) < vo.question_cnt && a_list[qcnts.index].report_num != qcnts.index }">
-					<button type="button" class="btn btn-primary button_blue button_white" onclick="getTestPopupPage('${qcnts.index }', '${vo.subject_id}')">${qcnts.index+1}번 과제(설문)시작</button>
-				</c:if>
+				<c:forEach begin="0" end="${fn:length(unAns) -1 }" step="1" varStatus="rCnt">
+						
+						<c:if test="${ unAns[rCnt.index] eq 'N'  }">
+						<!-- 과제에서 수행기록 제거 --> 
+						<button type="button" class="btn btn-primary button_blue button_white" onclick="getTestPopupPage('${rCnt.index }', '${vo.subject_id}')">${rCnt.index+1}번 과제(설문)시작</button>
+						
+						</c:if>
+						
 				</c:forEach>
 			</c:if>
 
@@ -325,11 +328,11 @@ function onApply(rcnt, id)
 					
 					<td>
 						<c:if test="${item.temporary eq 'Y'}">						
-							<button type="button" class="btn btn-info button_blue button_white" onclick="getModifyTestPopupPage('${item.report_num }', '${vo.subject_id}' , '${item.answers_id}')">이어하기</button>
-												
+							<button type="button" class="btn btn-info button_blue button_white" onclick="getModifyTestPopupPage('${item.report_num }', '${vo.subject_id}' , '${item.answers_id}')">${item.report_num + 1 } 이어하기</button>
+							<button type="button" class="btn btn-warning" onclick="onApply('${item.report_num }','${item.answers_id}')">삭제</button> 					
  						</c:if>
 	
-						<button type="button" class="btn btn-warning" onclick="onApply('${item.report_num }','${item.answers_id}')">삭제</button> 
+						
 					</td>
 					
 				</tr>								

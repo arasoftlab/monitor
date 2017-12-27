@@ -40,11 +40,13 @@ function view_team(id,poll_num)
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-			<label class="information">√ 탈퇴경로 : 직접(회원이 직접 탈퇴) / 관리자(관리자가 탈퇴처리) / 서울시(서울시 통합회원 탈퇴)</label><br><br>
+			<label class="information">√ 탈퇴경로 : 직접(회원이 직접 탈퇴) / 관리자(관리자가 탈퇴처리) / 서울시(서울시 통합회원 탈퇴)</label><br>
+			<br>
+			<label class="information"> 총 탈퇴회원 : ${page.totalRows} 명</label>
 				<div id="search-box1" class="col-lg-12" style="padding:0;">
 					<form class="pull-left;">
 						<select class="list_form" name="poll_num" style="display: inline;">
-							<option value="" <c:if test="${empty vo.poll_num  }">selected</c:if> >기수(전체)</option>
+							<option value="0" <c:if test="${empty vo.poll_num  }">selected</c:if> >기수(전체)</option>
 							<c:forEach begin="18" end="${a_vo.poll_num}" var="pollNum">
 								<option value="${pollNum }" <c:if test="${vo.poll_num eq pollNum }">selected</c:if>>${pollNum }기</option>
 							</c:forEach>							
@@ -94,7 +96,8 @@ function view_team(id,poll_num)
 							<c:when test="${!empty list }">
 								<c:forEach var="item" items="${list }">
 									<tr>
-										<td>${item.rn }</td>
+										<c:set var="pageBlock" value="${((page.pageNum -1) * page.pageSize) + seqNo.index}" />
+										<td>${page.totalRows - (item.rn -1) }</td>
 										<td class="text-left">
 											<!-- a href="javascript:view_team('${item.id }','${item.poll_num }');" style="font-weight: bold;" --> 
 												${item.id }

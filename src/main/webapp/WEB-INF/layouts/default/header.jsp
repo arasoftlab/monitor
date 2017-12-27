@@ -235,7 +235,7 @@ function logout(){
 								<a href="<c:url value='/front/main.do'/>" style="padding:0 10px;float:left;" class="logo"><img src=" <c:url value='/img/front/top_logo2.png'/>" style="width:100%"/></a>
 								<ul class="nav navbar-nav">
 									<li class="first"><a href="<c:url value='/front/info/join/info_list.do'/>" class="<c:if test="${menu.depth2 eq 'info' }">active</c:if>"><b>꼼꼼한 서울씨</b></a></li>
-			                        <li><a href="<c:url value='/front/notice/all/list.do'/>" class="<c:if test="${menu.depth2 eq 'notice' }">active</c:if>"><b>공지사항</b></a></li>
+			                        <li><a href="<c:url value='/front/notice/all/list.do?stype=A' />" class="<c:if test="${menu.depth2 eq 'notice' }">active</c:if>"><b>공지사항</b></a></li>
 			                        <li><a href="<c:url value='/front/monitoring/monitoring/list.do'/>" class="<c:if test="${menu.depth2 eq 'monitoring' }">active</c:if>"><b>모니터링 과제</b></a></li>
 			                        <li><a href="<c:url value='/front/community/photo/photo_list.do'/>" class="<c:if test="${menu.depth2 eq 'community' }">active</c:if>"><b>게시판</b></a></li>
 <%

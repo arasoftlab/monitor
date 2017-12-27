@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
  
   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
     <!-- <param name="threshold" value="INFO"/> -->
@@ -14,24 +14,24 @@
  
 
 	<logger name="org.springframework.core" additivity="false">
-	    <level value="DEBUG" />
+	    <level value="OFF" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	<logger name="org.springframework.beans" additivity="false">
-	    <level value="DEBUG" />
+	    <level value="OFF" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	
 	<logger name="org.springframework.context" additivity="false">
-	    <level value="DEBUG" />
+	    <level value="OFF" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	
 	<logger name="org.springframework.web">
-	    <level value="DEBUG" />
+	    <level value="OFF" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 
@@ -42,7 +42,7 @@
 	</logger>
 	
 	<logger name="file" additivity="false">
-		<level value="DEBUG"></level>
+		<level value="INFO"></level>
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 	
@@ -60,13 +60,13 @@
 	
 	
 	<logger name="jdbc.resultsettable" additivity="false">
-		<level value="INFO" />
+		<level value="OFF" />
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 	
 	
 	<root>
-	  <level value="INFO"/>
+	  <level value="OFF"/>
 	  <appender-ref ref="CONSOLE" />
 	</root>
     

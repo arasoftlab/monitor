@@ -22,13 +22,30 @@ pageEncoding="UTF-8"%>
     margin-top: -100%;
     margin-left: -290%;
 }
+
+table p {
+	word-break: break-all; 
+	work-wrap: break-word;
+}
+
+{
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-break:break-all;
+}
+
 </style>
 
 <script>
+var comment_temp = "";
+
 function getTextLength(cntTarget) {
 	
-	var str = $(cntTarget).val();
-	var cnt = $str.siblings('b')
+	var str = $("#comment_"+cntTarget).val();
+	var cnt = $("#sCnt"+ cntTarget);
     var len = 0;
     for (var i = 0; i < str.length; i++) {
         if (escape(str.charAt(i)).length > 4) {
@@ -40,13 +57,25 @@ function getTextLength(cntTarget) {
     
     if(len > 240){
     	alert("허용되는 글자수를 넘었습니다.");
-    	$(".description").val(str.substring(0,240));
+    	$("#comment_"+cntTarget).val(cutByLen(str, 240));
     	return false;
     }
     
-    $b.text("");
-    $b.text(len + " / 240" );
+    cnt.text("");
+    cnt.text(len + " / 240" );
+    console.log(cnt.text());
 }
+
+function cutByLen(str, maxByte) {
+	for(b=i=0;c=str.charCodeAt(i);) {
+	b+=c>>7?2:1;
+	if (b > maxByte)
+	break;
+	i++;
+	}
+	return str.substring(0,i);
+}
+
 
 function comment_apply()
 {
@@ -79,13 +108,15 @@ function comment_apply()
 
 function c_cancle(c_idx)
 {
-	var comment_temp = $('#comment_'+c_idx).val();
+	/* comment_temp = $('#comment_'+c_idx).val(); */
+	//console.log(comment_temp);
 		
-	$('#comment_'+c_idx).contents().unwrap().wrap('<p id="comment_'+c_idx+'">');	
+	$('#comment_'+c_idx).contents().unwrap().wrap('<p id="comment_'+c_idx+'">'); 
 	
 	$('#comment_'+c_idx).text(comment_temp);
 	
 	$('#btn_comment_modify_cancle_'+c_idx).css('display','none');	
+	$("#sCnt"+c+idx).css('display','none');
 	
 	$('#btn_comment_apply_'+c_idx).attr('onclick','c_modify('+c_idx+')');
 }
@@ -93,12 +124,12 @@ function c_cancle(c_idx)
 // 수정버튼 누를시 바로 텍스트 변경
 function c_modify(c_idx)
 {
-	var comment_temp = $('#comment_'+c_idx).text();
+	comment_temp = $('#comment_'+c_idx).text();
+
+	$('#comment_'+c_idx).contents().unwrap().wrap('<textarea id="comment_'+c_idx+'" value="'+comment_temp+'" rows="2" style="width:100%; border-radius:5px"  onKeyUp="getTextLength('+c_idx+');" ></textarea>');	
 	
-	$('#comment_'+c_idx).
-	$('#comment_'+c_idx).contents().unwrap().wrap('<textarea id="comment_'+c_idx+'" value="'+comment_temp+'" rows="2" style="width:100%; border-radius:5px"  onKeyUp="getTextLength("desc1");" />');	
-	
-	$('#comment_'+c_idx).text("");
+	$('#comment_'+c_idx).text(""); 
+	$('#comment_'+c_idx).text(comment_temp);
 	
 	$('#btn_comment_modify_cancle_'+c_idx).css('display','');
 	
@@ -109,6 +140,9 @@ function c_modify(c_idx)
 function c_apply(c_idx)
 {
 	var description  = $('#comment_'+c_idx).val();
+	var member_id = $("input[name='member_id']").val();
+	member_id = member_id == "" ? "관리자" : member_id;
+	
 	
 	if(confirm("수정하시겠습니까?")){
 		$.ajax({
@@ -117,10 +151,13 @@ function c_apply(c_idx)
 			url : "<c:url value='/front/community/commentinsert.do'/>",
 			data : { 
 				"comm_id" : c_idx,
-				"description":description },
+				"description":description,
+				"member_id": member_id},
 			success : function(data){
 				if(data.result == "success"){
+					comment_temp = description;
 					c_cancle(c_idx);
+					
 				}else{
 					alert("수정에 실패하였습니다.");
 				}
@@ -255,6 +292,7 @@ function onDelete(bbs_id)
 										<p>${item.member_id }</p>
 									</td>
 									<td class="comment-description">
+											<b id="sCnt${item.comm_id}"></b>
 											<p id="comment_${item.comm_id}">${item.description }</p>
 									</td>
 									<td class="modify_button">
@@ -281,13 +319,14 @@ function onDelete(bbs_id)
 				
 					<form id="comment_frm">
 						<input type="hidden" name="bbs_id" value="${vo.bbs_id}">
-						<input type="hidden" name="member_id" value="${member_id}">
+						<c:set var="member_id" value="${member_id eq null || member_id eq '' ? '관리자' : member_id }" />
+						<input type="hidden" name="member_id" value="${member_id }">
 						
 						<div class="col-lg-12" style="margin-top:10px;padding:5px;">
 							<table style="width:100%;">
 								<tr>
-									<b id="sCnt"></b>
-									<td style="width:100%;"><textarea rows="2" id="description" onkeyup="getTextLength('desc2');" name="description" style="width:100%; height:70px; border-radius:5px;"></textarea></td>
+									<b id="sCnt0"></b>
+									<td style="width:100%;"><textarea rows="2" id="comment_0" onkeyup="getTextLength('0');" name="description" style="width:100%; height:70px; border-radius:5px;"></textarea></td>
 								</tr>
 								<tr>
 									<td style="width:100%; height:70px; text-align:right;">

@@ -242,7 +242,9 @@ public class MonitorSubjectController {
 						
 		}
 		
+		SubjectVO si = subjectInfoService.getSubject(subjectVO);
 		System.out.println("응답값 확인 : " + answersVO.toString());
+		System.out.println(" 헤더타이틀값 확인 : " + si.toString() );
 		
 		model.addAttribute("is_payment", subjectVO.getPay_yn());
 
@@ -250,7 +252,7 @@ public class MonitorSubjectController {
 		model.addAttribute("answers_id" , answersVO.getAnswers_id());
 		model.addAttribute("report_num", report_num);
 		model.addAttribute("list", questionService.getQuestionList(questionVO));
-		model.addAttribute("headertitle", subjectInfoService.getSubject(subjectVO));
+		model.addAttribute("headertitle", si);
 		
 		return "front/monitor/test/list.testform";
 	}
@@ -714,6 +716,8 @@ public class MonitorSubjectController {
 				model.addAttribute("settingsList", settingsList);
 			}
 		}
+		
+		System.out.println("옵션 확인 : " + questionVO.toString());
 		
 		if (questionVO.getQuestion_id() !="" )
 			return "front/monitor/test/"+questionVO.getType()+".ajax";

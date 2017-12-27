@@ -54,7 +54,7 @@ function fnSearch(){
 									<tr align='center'>
 										<td class="bbsno"><font style='font-size:12px;'>${item.rn }</font></td>
 										<td class='bbsnewf5' align='left'>
-											<span class="notice_subject"><a href='<c:url value='/front/notice/all/view.do?notice_id=${item.notice_id }'/>'>${item.title }</a></span>
+											<span class="notice_subject"><a href='<c:url value='/front/notice/all/view.do?notice_id=${item.notice_id }&stype=${vo.stype }'/>'>${item.title }</a></span>
 										</td>
 										<td class="bbswriter"><font style='font-size:12px;'>${item.typeText }</font></td>
 										<td class="bbsetc_dateof_write"><font style='font-size:12px;'><fmt:formatDate value="${item.regDate }" pattern="yyyy/MM/dd" /></font></td>

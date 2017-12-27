@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,7 +135,32 @@ public class CommunityController {
 	@RequestMapping("/story/save.do")
 	public @ResponseBody Map<String, Object> save(@ModelAttribute BBSVO bbsVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(bbsService.saveBBS(bbsVO) > 0){
+		
+		System.out.println(" 처리전 데이터 : " + bbsVO.toString());
+				
+		BBSVO newSave = new BBSVO();
+		
+		if(bbsVO.getMember_id() == "") {
+		
+			if(!ObjectUtils.isEmpty(bbsVO.getCont_uuid())) {
+				newSave.setCont_uuid(bbsVO.getCont_uuid());
+				newSave = bbsService.getBBS(newSave, false);
+			}
+			
+			if(!ObjectUtils.isEmpty(newSave.getCont_uuid())) {
+				newSave.setTitle(bbsVO.getTitle());
+				newSave.setDescription(bbsVO.getDescription());
+				newSave.setFileList(bbsVO.getFileList());
+				newSave.setFileListId(bbsVO.getFileListId());
+			}else {
+				newSave = bbsVO;
+			}
+		}else {
+			newSave = bbsVO;
+		}
+		System.out.println(" 게시물 저장전 데이터 확인 : " + newSave.toString());
+		
+		if(bbsService.saveBBS(newSave) > 0){
 			resultMap.put("result", "success");
 		}else{
 			resultMap.put("result", "fail");
@@ -193,6 +219,8 @@ public class CommunityController {
 	// �뙎湲� �떖湲� 
 	@RequestMapping("/commentinsert.do")
 	public @ResponseBody Map<String, Object> commentinsert(@ModelAttribute CommentVO commentVO) throws Exception{
+		
+		System.out.println(commentVO);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if(commentService.saveComment(commentVO) > 0){
 			resultMap.put("result", "success");

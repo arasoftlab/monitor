@@ -136,13 +136,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12">
-						<a href="<c:url value='/admin/community/story/list.do'/>">
-							<button class="btn btn-theme btn_top <c:if test="${menu.depth3 eq 'story' }"> active</c:if>" >이야기방</button>
+						<a href="<c:url value='/admin/community/storylist.do'/>">
+							<button class="btn btn-theme btn_top <c:if test="${vo.type eq 'S' }"> active</c:if>" >이야기방</button>
 						</a>
-						<a href="<c:url value='/admin/community/photo/plist.do'/>">
-							<button class="btn btn-theme btn_top <c:if test="${menu.depth3 eq 'photo' }"> active</c:if>">포토갤러리</button>
+						<a href="<c:url value='/admin/community/photolist.do'/>">
+							<button class="btn btn-theme btn_top <c:if test="${vo.type eq 'P' }"> active</c:if>">포토갤러리</button>
 						</a>
-						 
+						<a href="<c:url value='/admin/community/faqlist.do'/>">
+							<button class="btn btn-theme btn_top <c:if test="${vo.type eq 'F' }"> active</c:if>">FAQ</button>
+						</a>						 
 						
 					</div>
 				</div>

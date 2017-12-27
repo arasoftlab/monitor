@@ -197,6 +197,7 @@ function onTypeSet(type)
 										<label class="col-sm-4"><input type="radio" onclick="onTypeSet('S')" name="type" id="type" value="S" <c:if test="${vo.type eq 'S'}">checked</c:if> >단순, 일반공지</label>
 										<label class="col-sm-4"><input type="radio" onclick="onTypeSet('F')" name="type" id="type" value="F" <c:if test="${vo.type eq 'F'}">checked</c:if> >현장과제(참여모집 공고)</label>								
 										<label class="col-sm-4"><input type="radio" onclick="onTypeSet('V')" name="type" id="type" value="V" <c:if test="${vo.type eq 'V'}">checked</c:if> >설문과제(지정과제)</label>
+										<label class="col-sm-4"><input type="radio" onclick="onTypeSet('Q')" name="type" id="type" value="Q" <c:if test="${vo.type eq 'Q'}">checked</c:if> >FAQ </label>
 									</div>
 								</td>
 							</tr>

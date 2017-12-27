@@ -20,7 +20,7 @@ import util.BaseUtil;
 import util.SessionUtil;
 
 @Controller
-@RequestMapping("/admin/community/photo")
+@RequestMapping("/admin/photoCommunity")
 public class CommunityPhotoController {
 	
 	//@Autowired

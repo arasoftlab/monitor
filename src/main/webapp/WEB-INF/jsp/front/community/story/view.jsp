@@ -45,6 +45,7 @@ var is_secret = '${is_secret}';
 
 secret_chk()
 
+var comment_temp = "";
 
 function secret_chk()
 {
@@ -57,9 +58,10 @@ function secret_chk()
 	
 }
 
-function getTextLength() {
+function getTextLength(cntTarget) {
 	
-	var str = $(".description").val();
+	var str = $("#comment_"+cntTarget).val();
+	var cnt = $("#sCnt"+ cntTarget);
     var len = 0;
     for (var i = 0; i < str.length; i++) {
         if (escape(str.charAt(i)).length > 4) {
@@ -71,17 +73,30 @@ function getTextLength() {
     
     if(len > 240){
     	alert("허용되는 글자수를 넘었습니다.");
-    	$(".description").val(str.substring(0,240));
+    	
+    	$("#comment_"+cntTarget).val(cutByLen(str, 240));
     	return false;
     }
     
-    $("#sCnt").text("");
-    $("#sCnt").text(len + " / 240" );
+    cnt.text("");
+    cnt.text(len + " / 240" );
+    console.log(cnt.text());
+}
+
+
+function cutByLen(str, maxByte) {
+	for(b=i=0;c=str.charCodeAt(i);) {
+	b+=c>>7?2:1;
+	if (b > maxByte)
+	break;
+	i++;
+	}
+	return str.substring(0,i);
 }
 
 function comment_apply()
 {
-	if ($("#description").val() =="" )
+	if ($("#comment_0").val() =="" )
 	{
 		alert("댓글을 입력하시기 바랍니다.");
 		return false;
@@ -111,13 +126,14 @@ function comment_apply()
 
 function c_cancle(c_idx)
 {
-	var comment_temp = $('#comment_'+c_idx).val();
+	//var comment_temp = $('#comment_'+c_idx).val();
 		
 	$('#comment_'+c_idx).contents().unwrap().wrap('<p id="comment_'+c_idx+'">');	
 	
 	$('#comment_'+c_idx).text(comment_temp);
 	
-	$('#btn_comment_modify_cancle_'+c_idx).css('display','none');	
+	$('#btn_comment_modify_cancle_'+c_idx).css('display','none');
+	$('#sCnt'+c_idx).css('display','none');	
 	
 	$('#btn_comment_apply_'+c_idx).attr('onclick','c_modify('+c_idx+')');
 }
@@ -125,11 +141,13 @@ function c_cancle(c_idx)
 // 수정버튼 누를시 바로 텍스트 변경
 function c_modify(c_idx)
 {
-	var comment_temp = $('#comment_'+c_idx).text();
+	comment_temp = $('#comment_'+c_idx).text();
 	
-	$('#comment_'+c_idx).contents().unwrap().wrap('<input type="text" id="comment_'+c_idx+'" value="'+comment_temp+'"class=form-control style="width:100%;" />');	
+	//$('#comment_'+c_idx).contents().unwrap().wrap('<input type="text" id="comment_'+c_idx+'" value="'+comment_temp+'"class=form-control style="width:100%;" />');	
+	$('#comment_'+c_idx).contents().unwrap().wrap('<textarea id="comment_'+c_idx+'" value="'+comment_temp+'" rows="2" style="width:100%; border-radius:5px"  onKeyUp="getTextLength('+c_idx+');" ></textarea>');
 	
 	$('#comment_'+c_idx).text("");
+	$('#comment_'+c_idx).text(comment_temp);
 	
 	$('#btn_comment_modify_cancle_'+c_idx).css('display','');
 	
@@ -151,6 +169,7 @@ function c_apply(c_idx)
 				"description":description },
 			success : function(data){
 				if(data.result == "success"){
+					comment_temp = description;
 					c_cancle(c_idx);
 				}else{
 					alert("수정에 실패하였습니다.");
@@ -262,6 +281,21 @@ function onDelete(bbs_id)
     width: 34px;
 }
 .btn{min-width:34px !important;}
+
+table p {
+	word-break: break-all; 
+	work-wrap: break-word;
+}
+
+{
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-break:break-all;
+}
+
 </style>
 
 	<div class="content_right" style="display:block">
@@ -285,7 +319,7 @@ function onDelete(bbs_id)
 							<td><b>${vo.title }</b></td>
 							<th>작성자</th>
 							<td align="center">
-								<c:out value="${fn:substring(vo.member_id, 0, 3)}" />**
+								<c:out value="${fn:substring(vo.member_id, 0, 3)}" /><c:if test="${item.member_id ne '관리자'}" >**</c:if>
 							</td>
 						</tr>
 						<tr>
@@ -337,7 +371,7 @@ function onDelete(bbs_id)
 						<tr>
 							<th>작성자</th>
 							<td align="center">
-								<c:out value="${fn:substring(vo.member_id, 0, 3)}" />**
+								<c:out value="${fn:substring(vo.member_id, 0, 3)}" /><c:if test="${item.member_id ne '관리자'}" >**</c:if>
 							</td>
 							<th>조회수</th>
 							<td align="center">${vo.hits}</td>
@@ -402,10 +436,11 @@ function onDelete(bbs_id)
 									<tr>
 										<td class="writer">
 											<p class="writer">
-												<c:out value="${fn:substring(item.member_id, 0, 3)}" />**
+												<c:out value="${fn:substring(item.member_id, 0, 3)}" /><c:if test="${item.member_id ne '관리자'}" >**</c:if>
 											</p>
 										</td>
 										<td class="comment-description" >
+											<b id="sCnt${item.comm_id}"></b>
 											<p id="comment_${item.comm_id}">
 												${item.description }
 											</p>
@@ -432,10 +467,11 @@ function onDelete(bbs_id)
 									<tr>									
 										<td class="writer">
 											<p class="writer">
-												<c:out value="${fn:substring(item.member_id, 0, 3)}" />**
+												<c:out value="${fn:substring(item.member_id, 0, 3)}" /><c:if test="${item.member_id ne '관리자'}" >**</c:if>
 											</p>
 										</td>
 										<td class="comment-description">
+											<b id="sCnt${item.comm_id}"></b>
 											<p id="comment_${item.comm_id}">${item.description }</p>
 										</td>
 										<c:set var="isMod" value="${item.member_id eq member_id ? true : false }" />
@@ -469,8 +505,8 @@ function onDelete(bbs_id)
 									<table style="width: 100%;">
 										<tr>
 											<td style="width: 100%;">
-												<b id="sCnt"></b>
-												<textarea style="width:100%; border-radius:5px" rows="2" onKeyUp="getTextLength();" id="description" class="description" name="description"></textarea>
+												<b id="sCnt0"></b>
+												<textarea style="width:100%; border-radius:5px" rows="2" onkeyup="getTextLength(0);"  id="comment_0" class="description" name="description"></textarea>
 
 </td>
 										</tr>

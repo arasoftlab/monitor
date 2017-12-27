@@ -154,9 +154,10 @@ public class MonitorController {
 		model.addAttribute("list", memberService.getMemberManagerlist(memberManagerVO));
 		model.addAttribute("vo", memberManagerVO);
 				
+		System.out.println(" 멤버 페이지  : " + memberManagerVO.toString());
 		model.addAttribute("page", memberManagerVO.getPagingVO());
 		
-		System.out.println(memberManagerVO.getPagingVO().toString());
+		System.out.println(" 멤버 페이지 결과 :" + memberManagerVO.getPagingVO());
 		
 		return "admin/monitor/list.admin";
 	}
@@ -172,8 +173,9 @@ public class MonitorController {
 		memberManagerVO.setGrade("secession");
 				
 		//model.addAttribute("list", memberService.getMemberManagerlist(memberManagerVO));
+		List<MemberManagerVO> mVO = memberService.getMemberManagerlist_secession(memberManagerVO);
 		
-		model.addAttribute("list", memberService.getMemberManagerlist_secession(memberManagerVO));
+		model.addAttribute("list", mVO);
 		
 		model.addAttribute("vo", memberManagerVO);				
 		model.addAttribute("page", memberManagerVO.getPagingVO());

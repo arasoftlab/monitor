@@ -250,8 +250,8 @@
 					</c:if>	
 				</c:when>
 			</c:choose>
-				
-			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
+			<b>${vo }</b>	
+			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do?stype=${vo.stype }'/>'">목록</button>
 		</div>
 			
 		<div class="modal animated " id="modalImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
