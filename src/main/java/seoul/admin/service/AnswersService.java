@@ -7,7 +7,9 @@ import seoul.admin.vo.AnswersVO;
 public interface AnswersService {
 	
 	List<AnswersVO> getAnswerList(AnswersVO answersVO);
-
+		
+	List<AnswersVO> getFrontAnswerList(AnswersVO answersVO);
+	
 	AnswersVO getAnswers(AnswersVO answersVO);
 	
 	int insertAnswers(AnswersVO answersVO);

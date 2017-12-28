@@ -15,5 +15,47 @@
 	          ,poll_start_date=#{poll_start_date,jdbcType=DATE}
 	          ,poll_end_date=#{poll_end_date,jdbcType=DATE}
 	</update>
+
+    <select id="getAdminList" parameterType="seoul.admin.vo.AdminSettingVO" resultType="seoul.admin.vo.AdminMemberVO">
+	    select id, name, phone, allowip, createdate, password, dept
+	    from adminmember
+	</select>
+	
+    <select id="getAdminMember" parameterType="seoul.admin.vo.AdminSettingVO" resultType="seoul.admin.vo.AdminMemberVO">
+	    select id, name, phone, allowip, createdate, password, dept
+	    from adminmember
+	    where id=#{id, jdbcType=VARCHAR }
+	</select>	
+
+	<insert id="insertAdminMember" parameterType="seoul.admin.vo.AdminMemberVO">
+		insert into adminmember(
+        				  id, name, phone, createdate, password, dept, allowip
+        				 )
+        		   values(
+        		   		  #{id, jdbcType=VARCHAR }
+        		   		  ,#{name,jdbcType=VARCHAR}
+				       	  ,#{phone, jdbcType=VARCHAR}
+				       	  ,sysdate
+				          ,#{password,jdbcType=VARCHAR}
+				          ,#{dept,jdbcType=VARCHAR}
+				          ,#{allowip, jdbcType=VARCHAR }
+        		   		 )
+	</insert>
+
+	<update id="updateAdminMember" parameterType="seoul.admin.vo.AdminMemberVO">
+	    update adminmember
+	       set name=#{name,jdbcType=VARCHAR}
+	       	  ,phone=#{phone, jdbcType=VARCHAR}
+	          ,password=#{password,jdbcType=VARCHAR}
+	          ,dept=#{dept,jdbcType=VARCHAR}
+	          ,allowip =#{allowip, jdbcType=VARCHAR }
+	       where id=#{id, jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteAdminMember" parameterType="seoul.admin.vo.AdminMemberVO">
+	    delete from adminmember
+	    where id=#{id, jdbcType=VARCHAR}
+	</delete>
+
 		
 </mapper>

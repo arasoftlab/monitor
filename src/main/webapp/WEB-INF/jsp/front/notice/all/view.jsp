@@ -123,9 +123,10 @@
 						<tr align="center">
 							<th>공지종류</th>
 							<td>
-							<c:if test="${vo.type eq 'F'}">현장과제(참여모집 공고)</c:if>
+								<c:if test="${vo.type eq 'F'}">현장과제(참여모집 공고)</c:if>
 								<c:if test="${vo.type eq 'V'}">설문과제(지정과제)</c:if>
 								<c:if test="${vo.type eq 'S'}">단순, 일반공지</c:if>
+								<c:if test="${vo.type eq 'Q'}">FAQ</c:if>
 								<!-- ex :현장과제(참여모집 공고)  -->
 							</td>
 							<th>상태</th>
@@ -143,7 +144,7 @@
 								</c:choose>										
 							</td>
 						</tr>
-						<c:if test="${vo.type ne 'S'}">
+						<c:if test="${vo.type eq 'F' || vo.type eq 'V'}">
 							<tr align="center">
 								<th>참여 신청 기간</th>
 								<td>
@@ -250,7 +251,7 @@
 					</c:if>	
 				</c:when>
 			</c:choose>
-			<b>${vo }</b>	
+			
 			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do?stype=${vo.stype }'/>'">목록</button>
 		</div>
 			

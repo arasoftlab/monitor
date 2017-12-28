@@ -16,7 +16,7 @@
 	<link href="<c:url value='/webjars/bootstrap/3.3.7/css/bootstrap.min.css' />" rel="stylesheet" />	
 	<link href="<c:url value='/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css'/>" rel="stylesheet"/>
 	<link href="<c:url value='/webjars/bootstrap-daterangepicker/2.1.24/css/bootstrap-daterangepicker.css'/>" rel="stylesheet" />
-	
+		
  	<link href="<c:url value='/css/bootstrap.min.css'/>"  rel="stylesheet" />
 	
 	<link href="<c:url value='/css/fancybox/jquery.fancybox.css'/>" rel="stylesheet">
@@ -51,6 +51,7 @@
 	<script src="<c:url value='/js/moment.js'/>"></script>
 	<script src="<c:url value='/js/validate.js'/>"></script>
 	<script src="<c:url value='/js/common.js'/>"></script>
+	
 	
 </head>
 <body>

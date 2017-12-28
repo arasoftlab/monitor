@@ -327,8 +327,10 @@ function onApply(rcnt, id)
 					</td>
 					
 					<td>
-						<c:if test="${item.temporary eq 'Y'}">						
+						<c:if test="${item.temporary eq 'Y' || item.temporary eq 'N' }">
+							<c:if test="${item.temporary eq 'Y'}">						
 							<button type="button" class="btn btn-info button_blue button_white" onclick="getModifyTestPopupPage('${item.report_num }', '${vo.subject_id}' , '${item.answers_id}')">${item.report_num + 1 } 이어하기</button>
+							</c:if>
 							<button type="button" class="btn btn-warning" onclick="onApply('${item.report_num }','${item.answers_id}')">삭제</button> 					
  						</c:if>
 	

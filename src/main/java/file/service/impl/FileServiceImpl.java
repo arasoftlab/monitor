@@ -72,7 +72,9 @@ public class FileServiceImpl implements FileService{
 			FileMappingVO fileMappingVO = new FileMappingVO();
 			fileMappingVO.setData_id(data_id);
 			fileMappingVO.setFile_id(fileVO.getFile_id());
-			fileDAO.insertFileMapping(fileMappingVO);
+			int i = fileDAO.insertFileMapping(fileMappingVO);
+			
+			System.out.println("저장된 파일의 정보 : " + i + " :" + fileMappingVO.toString());
 			
 			//썸네일 강제생성
 			String u = req.getSession().getServletContext().getRealPath("/");

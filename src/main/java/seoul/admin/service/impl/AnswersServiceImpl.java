@@ -29,6 +29,12 @@ public class AnswersServiceImpl implements AnswersService{
 		return answersDAO.getAnswerList(answersVO);
 	}
 	
+
+	public List<AnswersVO> getFrontAnswerList(AnswersVO answersVO) {		
+		answersVO.setPagingVO(new PagingVO(answersVO.getPageSize(), answersVO.getPageNum(), answersDAO.getAnswersCnt(answersVO)));
+		return answersDAO.getFrontAnswerList(answersVO);
+	}
+	
 	@Override
 	public List<AnswersVO> getNoAnswerList(AnswersVO answersVO){
 		answersVO.setPagingVO(new PagingVO(answersVO.getPageSize(), answersVO.getPageNum(), answersDAO.getNoAnswersCnt(answersVO)));

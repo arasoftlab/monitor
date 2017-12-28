@@ -32,7 +32,7 @@ function fnSearch(){
 				</div>
 				<div class="col-lg-4" style="padding:0;">
 
-					<button class="btn btn-theme  pull-right btn-primary button_blue button_white" onclick="location.href='<c:url value='smodify.do?type=${vo.type }'/>'">글쓰기</button>		
+					<button class="btn btn-theme  pull-right btn-primary button_blue button_white" onclick="location.href='<c:url value='smodify.do'/>'">글쓰기</button>		
 
 				</div>
 				

@@ -6,15 +6,6 @@ pageEncoding="UTF-8"%>
 
 <script type="text/javascript" src="<c:url value='/js/smartEditor/js/HuskyEZCreator.js'/>"></script>
 <script type="text/javascript">
-<c:choose>
-<c:when test="${vo.type eq 'S' }">
-	<c:set var="loc" value="story" />
-</c:when>	
-<c:when test="${vo.type eq 'F' }">
-	<c:set var="loc" value="faq" />
-</c:when>	
-</c:choose>
-
 function onSave()
 {
 	if ($("#title").val() == "")
@@ -31,7 +22,7 @@ function onSave()
 			data : $("form").serialize(),
 			success : function(data){
 				if(data.result == "success"){
-					location.href='${loc }list.do';
+					location.href='list.do';
 				}else{
 					alert("저장된 데이터가 없습니다.");
 				}
@@ -51,9 +42,8 @@ function onSave()
 			<div class="col-lg-12">
 				<form>
 					<input type="hidden" name="cont_uuid" value="${vo.cont_uuid}">
-					<input type="hidden" name="type" value="${vo.type }">
-					
-					
+					<input type="hidden" name="type" value="S">
+
 					
 					<table class="table table-bordered table-margin">
 						<tbody>
@@ -67,7 +57,8 @@ function onSave()
 							<tr>
 								<td class="td1">작성자</td>
 								<td colspan=3 class="left">
-									<input type="text" name="member_id" id="member_id" style="width:50%;" value="${member_id }" readonly>
+									<c:set var="mid" value="관리자" />
+									<input type="text" name="member_id" id="member_id" style="width:50%;" value="${ empty member_id ? mid : member_id }" readonly>
 								</td>
 							</tr>
 
@@ -94,7 +85,7 @@ function onSave()
 				
 				
 				
-				<button class="btn btn-info " onclick="location.href='<c:url value='/admin/community/${loc }list.do'/>';">목록</button>
+				<button class="btn btn-info " onclick="location.href='<c:url value='/admin/community/story/list.do'/>';">목록</button>
 			</div>
 		</div>
 	</div>

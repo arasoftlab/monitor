@@ -33,7 +33,7 @@ pageEncoding="UTF-8"%>
 			<div class="info">
 				<div class="message-box-wrap">
 					<strong style="color:indigo;">공지사항</strong>
-					<a href="<c:url value='/front/notice/all/list.do'/>"><span style="float:right;color:navy;"><b>more</b></span></a>
+					<a href="<c:url value='/front/notice/all/list.do?stype=A'/>"><span style="float:right;color:navy;"><b>more</b></span></a>
 				</div>
 			</div>
              

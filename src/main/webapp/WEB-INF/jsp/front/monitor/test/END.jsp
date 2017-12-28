@@ -9,7 +9,7 @@
 <script>
 
 
-	goEndCommentpage('${vo.close_comment}' ,'${history_params }' );
+	goEndCommentpage('${vo.close_comment}' ,'${history_params }', '${isA}' );
 
 
 </script>

@@ -144,13 +144,9 @@ public class MonitorController {
 		if(ObjectUtils.isEmpty(memberManagerVO.getPoll_num())) {
 			memberManagerVO.setPoll_num(adminSettingVO.getPoll_num());
 		}
-		
-		if(ObjectUtils.isEmpty(memberManagerVO.getGrade())) {
-			memberManagerVO.setGrade("secession");
-		}
-		
-		model.addAttribute("sido_cnt", memberService.getMemberManagerCnt(memberManagerVO));
-		
+			
+		/*model.addAttribute("sido_cnt", memberService.getMemberManagerCnt(memberManagerVO));
+		*/
 		model.addAttribute("list", memberService.getMemberManagerlist(memberManagerVO));
 		model.addAttribute("vo", memberManagerVO);
 				

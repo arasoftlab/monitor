@@ -57,8 +57,12 @@ public class NoticeController {
 	
 	@RequestMapping("save.do")
 	public @ResponseBody Map<String, Object> save(@ModelAttribute NoticeVO noticeVO) throws Exception{
+		
+		System.out.println(" 저장되는 공지 내용 확인 : " + noticeVO);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(noticeService.saveNotice(noticeVO) > 0){
+		int nVO = noticeService.saveNotice(noticeVO);
+		
+		if(nVO > 0){
 			resultMap.put("result", "success");
 		}else{
 			resultMap.put("result", "fail");

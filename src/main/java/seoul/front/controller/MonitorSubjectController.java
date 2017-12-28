@@ -655,12 +655,15 @@ public class MonitorSubjectController {
 		QuestionVO nextQuestionVO = new QuestionVO();
 		
 		//String str ="";
+		//중간 종료됨을 알리기 위해 생성
+		String isA = "0";
 		
 		if (bifurcation != 0)
 		{
 			if ( bifurcation == 2016)
 			{
 				questionVO.setType("END");
+				isA = "1";
 			}
 			else{		
 				questionVO.setNext_num(bifurcation);
@@ -686,7 +689,7 @@ public class MonitorSubjectController {
 		answersService.updateAnswers(answersVO);
 
 		
-		
+		model.addAttribute("isA", isA);
 		model.addAttribute("vo" , questionVO);
 		model.addAttribute("nextpage" , nextQuestionVO);
 		model.addAttribute("history_arr" , history_arr);
@@ -718,6 +721,7 @@ public class MonitorSubjectController {
 		}
 		
 		System.out.println("옵션 확인 : " + questionVO.toString());
+		System.out.println("종료 확인 : " + isA);
 		
 		if (questionVO.getQuestion_id() !="" )
 			return "front/monitor/test/"+questionVO.getType()+".ajax";

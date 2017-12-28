@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 
 <script>
 function fnSearch(){
-	$("form").attr("action","list.do").submit();
+	$("form").attr("action","list.do?stype=${vo.stype}").submit();
 }
 </script>
 

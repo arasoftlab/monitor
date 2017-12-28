@@ -9,6 +9,8 @@ public interface AnswersDAO {
 
 	List<AnswersVO> getAnswerList(AnswersVO answersVO);
 	
+	List<AnswersVO> getFrontAnswerList(AnswersVO answersVO);
+	
 	int insertAnswers(AnswersVO answersVO);
 
 	int updateAnswers(AnswersVO answersVO);

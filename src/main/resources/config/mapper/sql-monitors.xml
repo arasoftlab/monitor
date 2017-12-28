@@ -58,7 +58,7 @@
             AND M.SUBJECT_ID = #{subject_id }
             
     	)
-    	SELECT M.MEMBER_ID, M.MEMBER_NAME, M.PHONE, M.EMAIL, A.TEMPORARY
+    	SELECT DISTINCT M.MEMBER_ID, M.MEMBER_NAME, M.PHONE, M.EMAIL, A.TEMPORARY
     	FROM MEMINFO M, ANSWERS A
     	WHERE M.MEMBER_ID = A.MEMBER_ID
     </select>
@@ -78,22 +78,30 @@
 	                			ORDER BY SUBJECT_ID DESC
 	                		) 
 	                		WHERE  ROWNUM <![CDATA[< ]]> 4
+			            ), N_M AS ( --과제수 가 여러개일 경우를 대비해 1개만 쿼리하도록 함
+			            	SELECT DISTINCT MEMBER_ID, IS_SELECTION, SUBJECT_ID
+			            	FROM N_MONITORS N, BASEQ Q
+			            	WHERE N.POLL_NUM = Q.POLL_NUM 
 			            ), TOT AS( --토탈정보 선정횟수 미선정횟수
 			            	SELECT 
 			            	SUM(CASE WHEN IS_SELECTION='Y' THEN 1 ELSE 0 END) SP, --선정 
-			            	SUM(CASE WHEN IS_SELECTION='N' THEN 1 ELSE 0 END) AP, MEMBER_ID --미선정
-			        		FROM N_MONITORS N, BASEQ Q
-			        		WHERE N.POLL_NUM = Q.POLL_NUM
+			            	SUM(CASE WHEN IS_SELECTION='N' THEN 1 ELSE 0 END) AP, 
+			            	MEMBER_ID --미선정
+			        		FROM N_M 
 			        		GROUP BY MEMBER_ID
 			            ), MEMINFO AS ( 
 					    	SELECT M.ID MEMBER_ID,  H.M001_NM MEMBER_NAME, H.M001_SSN BIRTH, H.M001_PHONE PHONE, H.M001_EMAIL EMAIL, 
 		                	M.SIDO, M.GUGUN, M.DONG, M.JOB, M.REGDATE, M.MEMO
 					    	FROM HISIP.VW_MEM001_M_MONITOR@SIP2 H, MEMBER M, BASEQ Q
 					    	WHERE M.ID = H.M001_ID AND M.POLL_NUM = Q.POLL_NUM
+					    ), NA AS ( --응답목록에서 해당과제에 대한 응답햇수 DISTINCT
+					    	SELECT DISTINCT A.MEMBER_ID, A.TEMPORARY, A.SUBJECT_ID
+					    	FROM N_ANSWERS A, BASEID B	
+					    	WHERE A.SUBJECT_ID IN (B.SUBJECT_ID)
 					    ), TMPSUM AS( 
 			               SELECT A.MEMBER_ID, A.TEMPORARY
-			               FROM N_ANSWERS A, BASEID B
-			               WHERE A.SUBJECT_ID IN ( B.SUBJECT_ID) AND A.MEMBER_ID = B.MEMBER_ID
+			               FROM NA A, BASEID B
+			               WHERE  A.MEMBER_ID = B.MEMBER_ID
 			               AND A.TEMPORARY ='N'
 		              )
 		              SELECT 

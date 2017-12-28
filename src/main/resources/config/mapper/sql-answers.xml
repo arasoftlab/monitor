@@ -84,7 +84,7 @@
          ,(select M001_PHONE from hisip.vw_mem001_m_monitor@sip2 where M001_ID = a.member_id) phone
          from 
          n_monitors a
-         where subject_id = 301
+         where subject_id = ${subject_id}
          )c        
         where rnd between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
          AND temporary <![CDATA[< ]]> question_cnt
@@ -168,7 +168,58 @@
 				</if>  
 				
 				                		
-                        order by regdate ASC
+                       <!--  order by regdate ASC -->
+                )c
+                where 1=1
+
+		       	<if test="member_id != null and member_id !=''">
+			   		and member_id = '${member_id}' 
+				</if>
+
+	   			<choose>
+					    <when test='searchCategory != null and searchCategory == "member_name" and  searchCategory != ""'>
+							and member_name like '%' || #{searchText} || '%'
+					    </when>
+					    <when test='searchCategory != null and searchCategory == "member_id" and  searchCategory != ""'>
+					   		and member_id like '%' || #{searchText} || '%' 
+					    </when>
+		
+				</choose>
+							
+	    )
+        where rn between #{pagingVO.startRow} and #{pagingVO.nextPageRow}
+    </select>
+    
+    <select id="getFrontAnswerList" parameterType="seoul.admin.vo.AnswersVO" resultType="seoul.admin.vo.AnswersVO">
+		select * from (
+                select c.*,row_number() over (order by report_num ASC ) rn
+                        from (
+                select a.answers_id
+                      ,a.subject_id
+                      ,a.questions
+                      ,a.answers
+                      ,a.member_id
+                      ,a.temporary
+                      ,a.regdate
+                      ,a.poll_num
+                      ,a.report_num
+                      ,(select team_num from n_monitors b where b.member_id = a.member_id AND b.subject_id = #{subject_id} ) team_num
+                      ,(select M001_NM from hisip.vw_mem001_m_monitor@sip2 t where M001_ID = a.member_id) member_name
+                  from n_answers a, n_monitors m
+                 where 
+                 		a.member_id = m.member_id and a.subject_id = m.subject_id and 
+                 		a.poll_num=m.poll_num and a.subject_id = #{subject_id}
+
+				<if test="team_num != null and team_num !=''">
+						and m.team_num = '${team_num}'
+				</if>  
+				
+				<if test='temporary == "Y"'>
+						and a.temporary = '${temporary}'
+				</if>  
+				
+				 		order by a.answers_id DESC           		
+                       <!--  order by regdate ASC -->
                 )c
                 where 1=1
 

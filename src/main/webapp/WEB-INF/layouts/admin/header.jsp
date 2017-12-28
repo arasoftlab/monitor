@@ -28,17 +28,6 @@ function fnCheckSession(){
 		}
 	});
 }
-
-$(function(){
-	$.datepicker.setDefaults($.datepicker.regional['ko']);
-
-	var $ajaxProcessing = $('#ajaxProcessing');
-	//$(document)
-		//.ajaxStart(function () { $ajaxProcessing.modal(); })
-		//.ajaxStop(function () { window.setTimeout(function(){$ajaxProcessing.modal('hide');},1500); });	
-	
-});
-
 </script>
 
 <!-- start header -->
@@ -60,7 +49,7 @@ $(function(){
                        <li class="<c:if test="${menu.depth2 eq 'subject' }">active</c:if>"><a href="<c:url value='/admin/subject/list.do'/>">모니터링과제</a></li>
                        <li class="<c:if test="${menu.depth4 eq 'all_list' }">active</c:if>"><a href="<c:url value='/admin/subject/money/all_list.do'/>">활동비</a></li>
                        <li class="<c:if test="${menu.depth2 eq 'monitor' }">active</c:if>"><a href="<c:url value='/admin/monitor/list.do'/>">회원관리</a></li>
-                       <li class="<c:if test="${menu.depth2 eq 'community' }">active</c:if>"><a href="<c:url value='/admin/community/alllist.do'/>">게시판관리</a></li>
+                       <li class="<c:if test="${menu.depth2 eq 'community' }">active</c:if>"><a href="<c:url value='/admin/community/story/list.do'/>">게시판관리</a></li>
                        <li class="<c:if test="${menu.depth2 eq 'setting' }">active</c:if>"><a href="<c:url value='/admin/setting/info.do'/>">설정</a></li>
                        <li class="<c:if test="${menu.depth1 eq 'member' }">active</c:if>"><a href="<c:url value='/member/adminLogout.do'/>">Logout</a></li>                       
                    </ul>

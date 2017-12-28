@@ -108,7 +108,7 @@ public class MonitorMonitorController {
 				answersVO.setMember_id(mem.getId());
 				answersVO.setSubject_id(subjectVO.getSubject_id());
 				
-				aL = answersService.getAnswerList(answersVO);
+				aL = answersService.getFrontAnswerList(answersVO);
 				
 				model.addAttribute("a_list" , aL);
 				aLength = aL.size();

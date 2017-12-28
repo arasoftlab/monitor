@@ -321,7 +321,7 @@
 				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()" >신청 취소</button>
 			</c:if>
 			
-			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
+			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do?stype=${vo.stype }'/>'">목록</button>
 		</div>
 
 		<!-- 게시판 끝  WEB -->
@@ -336,7 +336,7 @@
 				<button type="button" class="btn btn-warning button_blue button_white" onclick="onDelte()">신청 취소</button>
 			</c:if>
 			
-			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do'/>'">목록</button>
+			<button type="button" class="btn btn-primary button_blue button_white" onclick="location.href='<c:url value='list.do?stype=${vo.stype }'/>'">목록</button>
 		</div>
 			
 		<div class="clearfix divider_dashed7"></div>

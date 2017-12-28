@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import common.AES256Cipher;
 import common.SessionContants;
 import util.BaseUtil;
 import util.SessionUtil;
@@ -29,6 +30,9 @@ public class MemberController {
 	@RequestMapping("checkAdminMember.do")
 	public @ResponseBody Map<String, Object> checkAdminMember(@ModelAttribute MemberVO memberVO) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String pswd = AES256Cipher.AES_Encode(memberVO.getPassword());
+		memberVO.setPassword(pswd);
 		
 		memberVO = memberService.checkAdminMember(memberVO);
 				

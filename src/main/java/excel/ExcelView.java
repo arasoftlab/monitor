@@ -1371,6 +1371,8 @@ public class ExcelView extends AbstractXlsView{
 
 	     
 		 for(int i=1;i<list.size()+1;i++){
+			 
+			 System.out.println("미응답자 목록 출력 확인 : " + list.get(i-1).toString());
 		     row = worksheet.createRow(i);
 		
 		     Cell cell0 = row.createCell(0);

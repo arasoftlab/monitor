@@ -307,6 +307,15 @@ function chkValidation()
 	history_params = history_params.replace(/&lt;br&gt;/g, '<br>');
 	history_params = history_params.replace(/&amp;amp;lt;br&amp;amp;gt;/g, '<br>');
 
+	
+	if(examrequirechk =='Y'){
+		if($("textarea").val().length < 1){
+			alert("설명이 필수여서 기록해 주셔야 합니다.");
+			$("textarea").focus();
+			return;
+		}
+	}
+	
 	if (chk == "Y")
 	{
 		if ( !fnFileChecked() ) 
@@ -318,15 +327,6 @@ function chkValidation()
 				
 				//alert(examrequirechk);
 				//alert($("textarea").val());
-				
-				if(examrequirechk =='Y'){
-					if($("textarea").val().length < 1){
-						alert("설명이 필수여서 기록해 주셔야 합니다.");
-						$("textarea").focus();
-						return;
-					}
-
-				}
 				
 				historyAppend('${nextpage.question_id }' , '${history_arr}', '${nextpage.question_num}',0 ,history_params);		
 			}else{

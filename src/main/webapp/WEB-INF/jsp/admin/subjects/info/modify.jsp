@@ -9,6 +9,11 @@ pageEncoding="UTF-8"%>
 var oEditors = [];
 
 $(function(){
+	
+
+	$.datepicker.setDefaults($.datepicker.regional['ko']);
+
+	
 	$('input:text[numberOnly]').keypress(function (event) {
 		if(event.which && (event.which <= 47 || event.which >= 58) && event.which != 8) {
 			event.preventDefault();
@@ -31,11 +36,11 @@ $(function(){
 	});
 	
 	$(".date").datepicker({
-		language: 'kr',
+		language: 'ko',
 		format:'yyyy/mm/dd',
 		todayHighlight: true
 	}).on('changeDate', function(e) {
-	       return get_url_and_refresh_link();
+	       //return get_url_and_refresh_link();
 	});
 });
 
@@ -207,9 +212,9 @@ function fnSubjectChecked(val){
 								<td class="td1">모니터 신청기간</td>
 								<td colspan=3 class="left">
 									<div class="col-xs-12" style="padding:0;">
-										<label class="col-xs-3"><input type="text" class="form-control date" id="monitorDate1" value="<fmt:formatDate value="${vo.apply_s_date }" pattern="yyyy/MM/dd" />" name="apply_s_date"/></label>
+										<label class="col-xs-3"><input type="text" class="form-control date " id="monitorDate1" value="<fmt:formatDate value="${vo.apply_s_date }" pattern="yyyy/MM/dd" />" name="apply_s_date"/></label>
 										<label class="col-xs-1">&nbsp;&nbsp;&nbsp;~</label>
-										<label class="col-xs-3"><input type="text" class="form-control date" id="monitorDate2" value="<fmt:formatDate value="${vo.apply_e_date }" pattern="yyyy/MM/dd" />" name="apply_e_date"/></label>
+										<label class="col-xs-3"><input type="text" class="form-control date " id="monitorDate2" value="<fmt:formatDate value="${vo.apply_e_date }" pattern="yyyy/MM/dd" />" name="apply_e_date"/></label>
 									</div> 
 								</td>
 							</tr>
@@ -217,9 +222,9 @@ function fnSubjectChecked(val){
 								<td class="td1">*과제 제출기간</td>
 								<td colspan=3 class="left">
 									<div class="col-xs-12" style="padding:0;">
-										<label class="col-xs-3"><input type="text" class="form-control date" id="asmDate1" value="<fmt:formatDate value="${vo.submit_s_date }" pattern="yyyy/MM/dd" />" name="submit_s_date"/></label>
+										<label class="col-xs-3"><input type="text" class="form-control date " id="asmDate1" value="<fmt:formatDate value="${vo.submit_s_date }" pattern="yyyy/MM/dd" />" name="submit_s_date"/></label>
 										<label class="col-xs-1">&nbsp;&nbsp;&nbsp;~</label>
-										<label class="col-xs-3"><input type="text" class="form-control date" id="asmDate2" value="<fmt:formatDate value="${vo.submit_e_date }" pattern="yyyy/MM/dd" />" name="submit_e_date"/></label>
+										<label class="col-xs-3"><input type="text" class="form-control date " id="asmDate2" value="<fmt:formatDate value="${vo.submit_e_date }" pattern="yyyy/MM/dd" />" name="submit_e_date"/></label>
 									</div> 
 								</td>
 							</tr>

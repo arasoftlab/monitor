@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
  
   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-    <!-- <param name="threshold" value="INFO"/> -->
-    <param name="threshold" value="INFO" />
+    <!-- <param name="threshold" value="DEBUG"/> -->
+    <param name="threshold" value="DEBUG" />
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="[%d{yy.MM.dd HH:mm:ss}] [%-5p] [%t %C:%L ] - %m%n" />
       <!-- <param name="ConversionPattern" value="[%d{HH:mm:ss}] [%-5p] - %m%n" 
@@ -14,47 +14,47 @@
  
 
 	<logger name="org.springframework.core" additivity="false">
-	    <level value="OFF" />
+	    <level value="DEBUG" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	<logger name="org.springframework.beans" additivity="false">
-	    <level value="OFF" />
+	    <level value="DEBUG" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	
 	<logger name="org.springframework.context" additivity="false">
-	    <level value="OFF" />
+	    <level value="DEBUG" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 	
 	
-	<logger name="org.springframework.web">
-	    <level value="OFF" />
+	<logger name="org.springframework.web" additivity="false">
+	    <level value="DEBUG" />
 	    <appender-ref ref="CONSOLE" />
 	</logger>
 
  
 	<logger name="seoul" additivity="false">
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 	
 	<logger name="file" additivity="false">
-		<level value="INFO"></level>
+		<level value="DEBUG"></level>
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 	
 	<logger name="excel" additivity="false">
-		<level value="INFO"></level>
+		<level value="DEBUG"></level>
 		<appender-ref ref="CONSOLE"/>
 	</logger>
   
   
 	<!-- for query -->
 	<logger name="jdbc.sqlonly" additivity="false">
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 	
@@ -66,7 +66,7 @@
 	
 	
 	<root>
-	  <level value="OFF"/>
+	  <level value="INFO"/>
 	  <appender-ref ref="CONSOLE" />
 	</root>
     

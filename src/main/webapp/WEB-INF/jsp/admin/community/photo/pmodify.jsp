@@ -230,7 +230,8 @@ pageEncoding="UTF-8"%>
 							<tr>
 								<td class="td1">작성자</td>
 								<td colspan=3 class="left">
-									<input type="text" name="member_id" id="member_id" style="width:50%;" value="${vo.member_id }" readonly>
+									<c:set var="mid" value="관리자" />	
+									<input type="text" name="member_id" id="member_id" style="width:50%;" value="${ empty vo.member_id ? mid : vo.member_id }" readonly>
 								</td>
 							</tr>
 

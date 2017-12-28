@@ -7,11 +7,6 @@ pageEncoding="UTF-8"%>
 <script type="text/javascript" src="<c:url value='/js/smartEditor/js/HuskyEZCreator.js'/>"></script>
 <script type="text/javascript">
 
-$(function(){
-
-//onTypeSet('${vo.type}');
-
-})
 
 var oEditors = [];
 function fnSave(){
@@ -45,6 +40,7 @@ function fnSave(){
 	
 	//파일 업로드 시 저장 전 필수
 	fnFileChecked();
+	console.log($("form").serialize());
 	
 	$.ajax({
 		async : true,
@@ -167,6 +163,14 @@ function onTypeSet(type)
 		$("#link_subject").css("display","none");
 		$("#link_subject_date").css("display","none");
 	}
+	
+	if (type == 'Q')
+	{
+		$("#unlink").html("");
+		
+		$("#link_subject").css("display","none");
+		$("#link_subject_date").css("display","none");
+	}
 }
 
 </script>
@@ -241,7 +245,7 @@ function onTypeSet(type)
 							<tr>
 								<td class="td1">첨부파일</td>
 								<td colspan=3 class="left">
-									<%@ include file="/WEB-INF/inc/fileUpload.jsp" %>
+									<jsp:include page="/WEB-INF/inc/fileUpload.jsp" ></jsp:include>
 								</td>
 							</tr>
 						</tbody>

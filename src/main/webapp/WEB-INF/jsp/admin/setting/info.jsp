@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
-
+var aType = "I";
 function onApply_admin()
 {	
 	if ($("#id").val()=="")
@@ -32,21 +32,22 @@ function onApply_admin()
 	}
 	
 	
-	if ($("#location").val()=='U') 
+	if (aType=='U') 
 	{
 		$.ajax({
 			async : true,
 			type : "POST",
-			url : "<c:url value='/admin/setting/update.do'/>",
+			url : "<c:url value='/admin/setting/updateAdmin.do'/>",
 			data : $("form").serialize(),
 			success : function(data){
 				if (data.result == "success") 
 				{
 					alert("수정되었습니다.");
+					window.location.reload();
 				}			
 			},
 			error : function(request,status,error) {
-				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				alert("error!!");
 			}
 		});
@@ -54,7 +55,7 @@ function onApply_admin()
 		$.ajax({
 			async : true,
 			type : "POST",
-			url : "<c:url value='/admin/setting/insert.do'/>",
+			url : "<c:url value='/admin/setting/createAdmin.do'/>",
 			data : $("form").serialize(),
 			success : function(data){
 				if (data.result == "success") 
@@ -69,7 +70,7 @@ function onApply_admin()
 				}
 			},
 			error : function(request,status,error) {
-				//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				alert("error!!");
 			}
 		});
@@ -79,34 +80,34 @@ function onApply_admin()
 function onDelete()
 {
 	var index = 0;
-	
+
 	var checkboxValues = [];
+	var report_num =[];
 	$("input[name='chk']:checked").each(function(i) {
 	    checkboxValues.push($(this).val());
-	    
-	    if ($(this).val() == 'webmaster')
-	    {
-			alert("webmaster는 삭제할 수 없습니다.");
-			return false;
-	    }
-	    
 	    index ++;
 	});
-		
+	
 	if (index <= 0)
 	{
 		alert("하나 이상 선택해야합니다.");
 		return false;
+	}else{
+		var r = confirm("선택한 관리자를 삭제하시겠습니다. ?");
+		
+		if(r == false){
+			return ;
+		}
 	}
 	
 	var allData = {
-			"select_arr" : checkboxValues 
+			"id" : checkboxValues 	
 	};
 	
 	$.ajax({
 		async : true,
 		type : "POST",
-		url : "<c:url value='/admin/setting/delete.do'/>",
+		url : "<c:url value='/admin/setting/deleteAdmin.do'/>",
 		data : allData,
 		success : function(data){
 			if (data.result=="success")
@@ -123,17 +124,18 @@ function onDelete()
 	});
 }
 
-function modify(member_id)
-{
+
+function onModify(aId)
+{	
+	aType ="U";
 	$.ajax({
 		async : true,
 		type : "POST",
-		url : "<c:url value='/admin/setting/modify.do'/>",
-		data : {"member_id" : member_id},
+		url : "<c:url value='/admin/setting/adminModify.do'/>",
+		data: {"id": aId},
 		success : function(data){
-			$("#modal-body").html(data);
-			//fnBtnView("Q");			
-			$("#btn_go").trigger('click');
+			$("#modal-body").html(data);	
+			$("#myModal").modal('show');
 		},
 		error : function(request,status,error) {
 			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -144,14 +146,15 @@ function modify(member_id)
 
 function onApply()
 {
+	aType ="I";
 	$.ajax({
 		async : true,
 		type : "POST",
-		url : "<c:url value='/admin/setting/apply.do'/>",
+		url : "<c:url value='/admin/setting/adminModify.do'/>",
 		success : function(data){
 			$("#modal-body").html(data);
-			//fnBtnView("Q");			
-			$("#btn_go").trigger('click');
+			//fnBtnView("Q");	
+			$("#myModal").modal('show');
 		},
 		error : function(request,status,error) {
 			//console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -195,38 +198,35 @@ $(document).ready(function(){
 				</div>
 				
 				<table class="table table-bordered table-striped table2 modal_table">
-					<colgroup>
-						<%-- <col width="3%;">
-						<col width="5%;">
-						<col width="10%;" >
-						<col width="7%;">
-						<col width="12%;"> --%>
-					</colgroup>
 					<thead>
 						<tr>
 							<th><input type="checkbox" id="checkall"> </th>
 							<th>번호</th>
-							<th>아이디</th>
 							<th>이름</th>
-							<th>연락처</th>
+							<th>부서</th>
+							<th>아이디</th>
+							<th>비밀번호</th>
+							<th>허용IP</th>
+							<th>생성일자</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:choose>
 							<c:when test="${!empty list }">
-								<c:forEach var="item" items="${list }">					
+								<c:forEach var="item" items="${list }" varStatus="seq">					
 									<tr>
 										<td><input type="checkbox" name="chk" value="${item.id }"></td>
-										<td>${item.rn }</td>
-										<td>
-											<button id="btn_go" type="button" class="modal_btn" data-toggle="modal" data-target=".info_modal"></button>
-											<a href="javascript:modify('${item.id}')">${item.id }</a>
-										</td>
-										<td>${item.name }</td>
-										<td>${item.phone }</td>
+										<td>${seq.index + 1 }</td>
+										<td><a href="javascript:onModify('${item.id}')">${item.name }</a></td>
+										<td>${item.dept }</td>
+										<td><a href="javascript:onModify('${item.id}')">${item.id }</a></td>
+										<td>${item.password }</td>
+										<td>${item.allowip }</td>
+										<td><fmt:formatDate value="${item.createdate }" pattern="YYYY-MM-dd HH:mm"/></td>
 									</tr>
 								</c:forEach>
 							</c:when>
+														
 						</c:choose>
 					</tbody>
 					

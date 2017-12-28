@@ -78,7 +78,7 @@
 								</c:choose>												
 								</td>
 							</tr>
-							<c:if test="${vo.type ne 'S'}">
+							<c:if test="${vo.type eq 'F' || vo.type eq 'V'}">
 								<tr>
 									<th>참여 신청 기간</th>
 									<td style="color:blue;">

@@ -102,11 +102,17 @@ function onBankPopup()
 	location.href = "/monitor/front/subject/bank.do?subject_id="+subject_id+"&poll_num="+is_pollnum+"&member_id="+is_member+"&report_num"+ report_num;
 }
 
-function goEndpage(history_params , answers_id, com){
+function goEndpage(history_params , answers_id, com, isA){
 	var params = {};	
 	params = $("form").serialize();
-	var endMsg = "${headertitle.close_comment}";
-	endMsg = endMsg == "" ? com : endMsg;
+	var endMsg = "";
+	
+	
+	if(isA =="1") {
+		endMsg = com;
+	}else{
+		endMsg = "${headertitle.close_comment}";
+	}
 
 	
 	$.ajax({
@@ -140,9 +146,9 @@ function goEndpage(history_params , answers_id, com){
 
 }
 
-function goEndCommentpage(com , history_params )
+function goEndCommentpage(com , history_params, isA )
 {	
-	goEndpage(history_params, answers_id, com);
+	goEndpage(history_params, answers_id, com, isA);
 }
 
 function historyDelete(question_id,history_org , history_params){

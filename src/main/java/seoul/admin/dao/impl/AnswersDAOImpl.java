@@ -20,6 +20,11 @@ public class AnswersDAOImpl extends SqlSessionDaoSupport implements AnswersDAO{
 	}
 	
 	@Override
+	public List<AnswersVO> getFrontAnswerList(AnswersVO answersVO) {
+		return getSqlSession().selectList("answers.getFrontAnswerList", answersVO);
+	}
+	
+	@Override
 	public int insertAnswers(AnswersVO answersVO) {
 		return getSqlSession().insert("answers.insertAnswers", answersVO);
 	}

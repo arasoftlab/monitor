@@ -46,6 +46,7 @@ public class NoticeServiceImpl implements NoticeService{
 		if(!BaseUtil.isEmpty(noticeVO.getSubject_id())) {		
 			SubjectVO svo = new SubjectVO(noticeVO.getSubject_id());
 			noticeVO.setSubjectVO(subjectInfoDAO.getSubject(svo));
+			noticeVO.setFileList(fileDAO.getFileList(new FileMappingVO(noticeVO.getCont_uuid(), null)));
 		}else {
 			noticeVO.setFileList(fileDAO.getFileList(new FileMappingVO(noticeVO.getCont_uuid(), null)));
 		}
@@ -53,6 +54,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	@Override
 	public int saveNotice(NoticeVO noticeVO) {
+		System.out.println(" 저장작업된 데이터 확인 : " + noticeVO);
 		int effectRows = 0;
 		if(BaseUtil.isEmpty(noticeVO.getNotice_id()) || noticeVO.getNotice_id() == 0 ){
 			//noticeVO.setNotice_id(BaseUtil.uuid());
@@ -64,9 +66,12 @@ public class NoticeServiceImpl implements NoticeService{
 					effectRows += fileDAO.insertFileMapping(new FileMappingVO(noticeVO.getCont_uuid(), file_id));
 				}
 			}
+			System.out.println(" 신규저장된 데이터 확인 : " + noticeVO);
 		}else{
+			System.out.println(" 업데이트전 데이터 확인 : " + noticeVO);
 			effectRows = noticeDAO.updateNotice(noticeVO);
 		}
+		System.out.println(" 신규저장된 결과 확인 : " + effectRows);
 		return effectRows;
 	}
 	@Override
