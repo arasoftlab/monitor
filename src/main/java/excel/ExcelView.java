@@ -57,6 +57,7 @@ public class ExcelView extends AbstractXlsView{
 			//int nominator = 45000 * 100 / width;
 			//if (nominator < 100)
 				//sheetData.setZoom(nominator, 100);
+			width = 0 + width;
 
 		} catch (HeadlessException he) {
 			// No UI, no autosize :(
@@ -445,7 +446,7 @@ public class ExcelView extends AbstractXlsView{
 	     
 	     Cell t_cell1 = row.createCell(1);
 	     colNums = colNums + 1;
-	     t_cell1.setCellValue("재출일");
+	     t_cell1.setCellValue("제출일");
 	     t_cell1.setCellStyle(center);
 
 	     Cell t_cell2 = row.createCell(2);
@@ -1400,7 +1401,7 @@ public class ExcelView extends AbstractXlsView{
 	}
 	
 	
-	protected Object buildExtra(Map<String, Object> model, Workbook workbook) throws Exception {
+/*	protected Object buildExtra(Map<String, Object> model, Workbook workbook) throws Exception {
 		
 		 String excelName = model.get("target").toString();
 		 Sheet worksheet = null;
@@ -1419,6 +1420,6 @@ public class ExcelView extends AbstractXlsView{
 		 
 		 return workbook;
 		 
-	}
+	}*/
 		 
 }
