@@ -64,14 +64,14 @@ $(function(){
 	});
 	
 
-	$.datepicker.setDefaults($.datepicker.regional['ko']);
 	
 	$(".date").datepicker({
+		language: 'ko',
 		format:'yyyy/mm/dd',
 		todayHighlight: true,
         dateFormat: 'yy-mm-dd'		
 	}).on('changeDate', function(e) {
-	       return get_url_and_refresh_link();
+	       //return get_url_and_refresh_link();
 	});
 });
 

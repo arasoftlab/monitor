@@ -193,7 +193,7 @@ $(document).ready(function(){
 				<div class="col-lg-12" style="padding:0;">
 					<div class="pull-right">
 						<button class="btn btn-theme " onclick="onDelete()">관리자 삭제</button>
-						<button class="btn btn-theme" onclick="onApply()">관리자 등록</button>
+						<button class="btn btn-theme"  onclick="onApply()" >관리자 등록</button>
 					</div>
 				</div>
 				
@@ -205,8 +205,7 @@ $(document).ready(function(){
 							<th>이름</th>
 							<th>부서</th>
 							<th>아이디</th>
-							<th>비밀번호</th>
-							<th>허용IP</th>
+							<th>IP</th>
 							<th>생성일자</th>
 						</tr>
 					</thead>
@@ -220,7 +219,6 @@ $(document).ready(function(){
 										<td><a href="javascript:onModify('${item.id}')">${item.name }</a></td>
 										<td>${item.dept }</td>
 										<td><a href="javascript:onModify('${item.id}')">${item.id }</a></td>
-										<td>${item.password }</td>
 										<td>${item.allowip }</td>
 										<td><fmt:formatDate value="${item.createdate }" pattern="YYYY-MM-dd HH:mm"/></td>
 									</tr>

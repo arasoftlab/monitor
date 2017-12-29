@@ -34,6 +34,7 @@ public class MemberController {
 		String pswd = AES256Cipher.AES_Encode(memberVO.getPassword());
 		memberVO.setPassword(pswd);
 		
+		System.out.println(memberVO.toString());
 		memberVO = memberService.checkAdminMember(memberVO);
 				
 		if(BaseUtil.isEmpty(memberVO)){

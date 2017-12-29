@@ -8,34 +8,34 @@
 <script>
 function fnSave(){
 
-	if ( $("#id").val() == "" )
+	if ( $("#id").val().trim() == "" )
 	{
 		alert("ID를 입력하세요.");
-		return false;	
+		return;	
 	}
 	
-	if ( $("#password").val() == "" )
+	if ( $("#password").val().trim() == "" )
 	{
 		alert("암호를 입력하세요.");
-		return false;	
+		return;	
 	}
 	
-	if ( $("#dept").val() == "" )
+	if ( $("#dept").val().trim() == "" )
 	{
 		alert("부서를 입력하세요.");
-		return false;	
+		return;	
 	}
 	
-	if ( $("#allowip").val() == "" )
+	if ( $("#allowip").val().trim() == "" )
 	{
-		alert("허용할 IP를 입력하세요.");
-		return false;	
+		alert(" IP를 입력하세요.");
+		return;	
 	}
 	
-	if ( $("#name").val() == "" )
+	if ( $("#name").val().trim() == "" )
 	{
 		alert("이름을 입력하세요.");
-		return false;	
+		return;	
 	}
 	
 	$.ajax({
@@ -113,7 +113,7 @@ function fnDelete(){
 			</td>
 		</tr>
 		<tr>
-			<td class="td1 width">* 허용할 IP</td>
+			<td class="td1 width">* IP</td>
 			<td colspan="3" class="left">
 				<input type="text" id="allowip" name="allowip"  class="form-control" value="${vo.allowip}" autocomplete="off">
 			</td>
