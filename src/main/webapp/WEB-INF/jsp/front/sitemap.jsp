@@ -42,10 +42,13 @@ pageEncoding="UTF-8"%>
 					<th>공지사항</th>
 				</tr>
 				<tr>
-					<td><a href="<c:url value='/front/notice/all/list.do'/>">전체공지</a></td>
+					<td><a href="<c:url value='/front/notice/all/list.do?stype=A'/>">전체공지</a></td>
 				</tr>
 				<tr>
-					<td><a href="<c:url value='/front/notice/subject/list.do'/>">현장과제 참여공지</a></td>
+					<td><a href="<c:url value='/front/notice/all/list.do?stype=S'/>">현장과제 참여공지</a></td>
+				</tr>
+				<tr>
+					<td><a href="<c:url value='/front/notice/all/list.do?stype=Q'/>">FAQ </a></td>
 				</tr>
 			</table>
 			

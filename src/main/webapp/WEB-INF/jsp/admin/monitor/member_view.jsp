@@ -59,7 +59,7 @@
 		<tr>
 			<td class="td1">회원메모</td>
 			<td colspan="3" class="left_t">
-				<input type="text" name="memo" placeholder="${mem.memo }" class="form-control"></input>
+				<input type="text" name="memo" class="form-control" value="${mem.memo }"></input>
 			</td>
 		</tr>
 		
